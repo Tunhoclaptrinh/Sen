@@ -11,13 +11,13 @@ class NotificationService extends BaseService {
       ...options,
       filter: {
         ...options.filter,
-        userId: userId
+        user_id: userId
       },
-      sort: 'createdAt',
+      sort: 'created_at',
       order: 'desc'
     });
 
-    const unreadCount = result.data.filter(n => !n.isRead).length;
+    const unreadCount = result.data.filter(n => !n.is_read).length;
 
     return {
       success: true,
@@ -30,7 +30,7 @@ class NotificationService extends BaseService {
   async markAsRead(notificationId, userId) {
     const notification = db.findById('notifications', notificationId);
 
-    if (!notification) {
+    if (!notification || notification.user_id !== userId) {
       return {
         success: false,
         message: 'Notification not found',
@@ -38,86 +38,13 @@ class NotificationService extends BaseService {
       };
     }
 
-    if (notification.userId !== userId) {
-      return {
-        success: false,
-        message: 'Not authorized',
-        statusCode: 403
-      };
-    }
-
     const updated = db.update('notifications', notificationId, {
-      isRead: true
+      is_read: true
     });
 
     return {
       success: true,
       data: updated
-    };
-  }
-
-  async markAllAsRead(userId) {
-    const notifications = db.findMany('notifications', {
-      userId,
-      isRead: false
-    });
-
-    notifications.forEach(notification => {
-      db.update('notifications', notification.id, { isRead: true });
-    });
-
-    return {
-      success: true,
-      message: 'All notifications marked as read',
-      count: notifications.length
-    };
-  }
-
-  async deleteNotification(notificationId, userId) {
-    const notification = db.findById('notifications', notificationId);
-
-    if (!notification) {
-      return {
-        success: false,
-        message: 'Notification not found',
-        statusCode: 404
-      };
-    }
-
-    if (notification.userId !== userId) {
-      return {
-        success: false,
-        message: 'Not authorized',
-        statusCode: 403
-      };
-    }
-
-    db.delete('notifications', notificationId);
-
-    return {
-      success: true,
-      message: 'Notification deleted'
-    };
-  }
-
-  async clearAll(userId) {
-    const notifications = db.findMany('notifications', { userId });
-
-    if (notifications.length === 0) {
-      return {
-        success: true,
-        message: 'No notifications to clear'
-      };
-    }
-
-    notifications.forEach(notification => {
-      db.delete('notifications', notification.id);
-    });
-
-    return {
-      success: true,
-      message: 'All notifications cleared',
-      count: notifications.length
     };
   }
 }

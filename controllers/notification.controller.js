@@ -1,5 +1,5 @@
-const notificationService = require('../services/notification.service');
 const BaseController = require('../utils/BaseController');
+const notificationService = require('../services/notification.service');
 
 class NotificationController extends BaseController {
   constructor() {
@@ -14,8 +14,7 @@ class NotificationController extends BaseController {
         success: true,
         count: result.data.length,
         unreadCount: result.unreadCount,
-        data: result.data,
-        pagination: result.pagination
+        data: result.data
       });
     } catch (error) {
       next(error);
@@ -27,48 +26,8 @@ class NotificationController extends BaseController {
       const result = await this.service.markAsRead(req.params.id, req.user.id);
 
       if (!result.success) {
-        return res.status(result.statusCode || 400).json({
-          success: false,
-          message: result.message
-        });
+        return res.status(result.statusCode || 400).json(result);
       }
-
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  markAllAsRead = async (req, res, next) => {
-    try {
-      const result = await this.service.markAllAsRead(req.user.id);
-
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  deleteNotification = async (req, res, next) => {
-    try {
-      const result = await this.service.deleteNotification(req.params.id, req.user.id);
-
-      if (!result.success) {
-        return res.status(result.statusCode || 400).json({
-          success: false,
-          message: result.message
-        });
-      }
-
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  clearAll = async (req, res, next) => {
-    try {
-      const result = await this.service.clearAll(req.user.id);
 
       res.json(result);
     } catch (error) {

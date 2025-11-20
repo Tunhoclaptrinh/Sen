@@ -20,114 +20,61 @@ app.use(logQuery);
 // Import routes
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
+const heritageSiteRoutes = require('./routes/heritage_site.routes');
+const artifactRoutes = require('./routes/artifact.routes');
+const exhibitionRoutes = require('./routes/exhibition.routes');
 const categoryRoutes = require('./routes/category.routes');
 const favoriteRoutes = require('./routes/favorite.routes');
-const promotionRoutes = require('./routes/promotion.routes');
+const reviewRoutes = require('./routes/review.routes');
 const notificationRoutes = require('./routes/notification.routes');
-const paymentRoutes = require('./routes/payment.routes');
-
-// Optional routes
-let shipperRoutes, managerRoutes;
-try {
-  shipperRoutes = require('./routes/shipper.routes');
-} catch (err) {
-  console.log('⚠️  Shipper routes not found');
-}
-try {
-  managerRoutes = require('./routes/manager.routes');
-} catch (err) {
-  console.log('⚠️  Manager routes not found');
-}
-
-const endpoints = require('./config/endpoints');
 
 // ==================== ROUTES ====================
 
-// API v1
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/heritage-sites', heritageSiteRoutes);
+app.use('/api/artifacts', artifactRoutes);
+app.use('/api/exhibitions', exhibitionRoutes);
 app.use('/api/categories', categoryRoutes);
-app.use('/api/restaurants', restaurantRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/cart', cartRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/reviews', reviewRoutes);
-app.use('/api/promotions', promotionRoutes);
-app.use('/api/addresses', addressRoutes);
 app.use('/api/notifications', notificationRoutes);
-app.use('/api/payment', paymentRoutes);
-
-if (shipperRoutes) {
-  app.use('/api/shipper', shipperRoutes);
-}
-if (managerRoutes) {
-  app.use('/api/manager', managerRoutes);
-}
 
 // ==================== UTILITIES ====================
-
-// Permissions endpoint
-try {
-  const { getUserPermissions } = require('./middleware/rbac.middleware');
-  app.get('/api/permissions', require('./middleware/auth.middleware').protect, getUserPermissions);
-} catch (err) {
-  console.log('⚠️  RBAC permissions endpoint not available');
-}
 
 // API Documentation
 app.get('/api', (req, res) => {
   res.json({
-    message: 'FunFood API v2.0 - JSON Server Style',
-    version: '2.0.0',
+    message: '🏛️ CultureVault API v1.0 - Di Sản Văn hóa Platform',
+    version: '1.0.0',
     environment: process.env.NODE_ENV || 'development',
     features: [
       'Authentication (JWT)',
-      'Role-based Access Control',
-      'GPS-based Restaurant Search',
-      'Dynamic Delivery Fee Calculation',
-      'Advanced Query Filtering (pagination, sorting, search)',
-      'Payment Processing (Cash, MoMo, ZaloPay, Card)',
-      'Notification System',
-      'Import/Export (Excel, CSV)',
-      'Data Analytics'
+      'Heritage Sites Management',
+      'Artifacts & Collections',
+      'Virtual Exhibitions',
+      'GPS-based Discovery',
+      'Timeline & History',
+      'Community Reviews & Ratings',
+      'Favorite Collections',
+      'Notification System'
     ],
     documentation: {
-      full_docs: '/docs/API_ENDPOINTS.md',
-      postman_collection: '/docs/funfood-api.postman_collection.json',
-      status_page: '/api/health',
-      endpoints: '/api/endpoints',
-
+      api_docs: '/docs/API_ENDPOINTS.md',
+      status: '/api/health'
     }
   });
 });
-
-app.get('/api/endpoints', (req, res) => {
-  res.json({
-    documentation: {
-      ...endpoints
-    }
-  });
-});
-
 
 // Health Check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
-    message: 'FunFood API is running',
-    version: '2.0.0',
+    message: 'CultureVault API is running',
+    version: '1.0.0',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    environment: process.env.NODE_ENV || 'development',
-    database: 'JSON File (Mock)',
-    features: {
-      authentication: true,
-      rbac: true,
-      gps: true,
-      payments: true,
-      notifications: true
-    }
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
@@ -139,8 +86,7 @@ app.use((req, res) => {
     success: false,
     message: 'Route not found',
     path: req.path,
-    method: req.method,
-    available_endpoints: '/api'
+    method: req.method
   });
 });
 
@@ -148,7 +94,6 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error('❌ Error:', {
     message: err.message,
-    stack: err.stack,
     path: req.path,
     method: req.method
   });
@@ -172,7 +117,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`
 ╔══════════════════════════════════════════════════════════════════╗
-║   🚀 FunFood Server Started!                                     ║
+║   🏛️ CultureVault Server Started!                               ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║   📍 URL: http://localhost:${PORT}                                  ║
 ║   🌍 Environment: ${process.env.NODE_ENV || 'development'}                                    ║
@@ -180,24 +125,6 @@ app.listen(PORT, () => {
 ║   ❤️  Health: http://localhost:${PORT}/api/health                    ║
 ╚══════════════════════════════════════════════════════════════════╝
   `);
-});
-
-// ==================== GRACEFUL SHUTDOWN ====================
-
-process.on('SIGTERM', () => {
-  console.log('👋 SIGTERM received, shutting down gracefully...');
-  server.close(() => {
-    console.log('Server closed');
-    process.exit(0);
-  });
-});
-
-process.on('SIGINT', () => {
-  console.log('👋 SIGINT received, shutting down gracefully...');
-  server.close(() => {
-    console.log('Server closed');
-    process.exit(0);
-  });
 });
 
 module.exports = app;

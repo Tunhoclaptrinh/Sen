@@ -1,13 +1,12 @@
-/**
- * Schemas Index
- * Central export for all schemas
- */
-
 module.exports = {
   user: require('./user.schema'),
-  category: require('./category.schema'),
-  promotion: require('./promotion.schema'),
+  heritage_site: require('./heritage_site.schema'),
+  artifact: require('./artifact.schema'),
+  cultural_category: require('./cultural_category.schema'),
+  exhibition: require('./exhibition.schema'),
+  timeline: require('./timeline.schema'),
+  collection: require('./collection.schema'),
   favorite: require('./favorite.schema'),
-  notification: require('./notification.schema'),
-  payment: require('./payment.schema')
+  review: require('./review.schema'),
+  notification: require('./notification.schema')
 };

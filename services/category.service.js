@@ -1,33 +1,21 @@
 const BaseService = require('../utils/BaseService');
 const db = require('../config/database');
-const categorySchema = require('../schemas/category.schema');
 
 class CategoryService extends BaseService {
   constructor() {
-    super('categories');
+    super('cultural_categories');
   }
 
-  /**
-   * Get schema for import/export
-   */
-  getSchema() {
-    return categorySchema;
-  }
-
-  // Chỉ cần validate delete
   async validateDelete(id) {
-    // Check nếu category đang được dùng
-    const restaurants = db.findMany('restaurants', { categoryId: parseInt(id) });
-    const products = db.findMany('products', { categoryId: parseInt(id) });
+    const artifacts = db.findMany('artifacts', { category_id: parseInt(id) });
 
-    if (restaurants.length > 0 || products.length > 0) {
+    if (artifacts.length > 0) {
       return {
         success: false,
-        message: 'Cannot delete category that is in use',
+        message: 'Cannot delete category in use',
         statusCode: 400,
         details: {
-          restaurants: restaurants.length,
-          products: products.length
+          artifacts_count: artifacts.length
         }
       };
     }

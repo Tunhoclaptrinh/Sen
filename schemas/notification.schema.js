@@ -4,30 +4,30 @@ module.exports = {
     required: true,
     minLength: 1,
     maxLength: 100,
-    description: 'Notification title'
+    description: 'Tiêu đề thông báo'
   },
   message: {
     type: 'string',
     required: true,
     minLength: 1,
     maxLength: 500,
-    description: 'Notification message'
+    description: 'Nội dung thông báo'
   },
   type: {
     type: 'enum',
-    enum: ['order', 'promotion', 'favorite', 'payment', 'review'],
+    enum: ['heritage', 'artifact', 'exhibition', 'review', 'system'],
     required: true,
-    description: 'Notification type'
+    description: 'Loại thông báo'
   },
-  refId: {
+  ref_id: {
     type: 'number',
-    required: true,
-    description: 'Reference ID (order, promotion, etc.)'
+    required: false,
+    description: 'ID của di sản/cổ vật liên quan'
   },
-  isRead: {
+  is_read: {
     type: 'boolean',
     required: false,
     default: false,
-    description: 'Read status'
+    description: 'Đã đọc'
   }
 };

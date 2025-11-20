@@ -1,13 +1,13 @@
 module.exports = {
   type: {
     type: 'enum',
-    enum: ['restaurant', 'product'],
+    enum: ['heritage_site', 'artifact', 'exhibition'],
     required: true,
-    description: 'Favorite type'
+    description: 'Loại yêu thích'
   },
-  referenceId: {
+  reference_id: {
     type: 'number',
     required: true,
-    description: 'Restaurant or Product ID'
+    description: 'ID tài liệu'
   }
 };
