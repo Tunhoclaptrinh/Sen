@@ -10,58 +10,48 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const { parseQuery, formatResponse, validateQuery, logQuery } = require('./middleware/query.middleware');
-
-// Apply query parsing to all routes
 app.use(parseQuery);
 app.use(formatResponse);
 app.use(validateQuery);
 app.use(logQuery);
 
-// Import routes
+// Import Routes
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const heritageSiteRoutes = require('./routes/heritage_site.routes');
 const artifactRoutes = require('./routes/artifact.routes');
+const questRoutes = require('./routes/quest.routes');
+const learningRoutes = require('./routes/learning.routes');
 const exhibitionRoutes = require('./routes/exhibition.routes');
-const categoryRoutes = require('./routes/category.routes');
-const favoriteRoutes = require('./routes/favorite.routes');
+const collectionRoutes = require('./routes/collection.routes');
 const reviewRoutes = require('./routes/review.routes');
-const notificationRoutes = require('./routes/notification.routes');
 
-// ==================== ROUTES ====================
-
+// Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/heritage-sites', heritageSiteRoutes);
 app.use('/api/artifacts', artifactRoutes);
+app.use('/api/quests', questRoutes);
+app.use('/api/learning', learningRoutes);
 app.use('/api/exhibitions', exhibitionRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/favorites', favoriteRoutes);
+app.use('/api/collections', collectionRoutes);
 app.use('/api/reviews', reviewRoutes);
-app.use('/api/notifications', notificationRoutes);
-
-// ==================== UTILITIES ====================
 
 // API Documentation
 app.get('/api', (req, res) => {
   res.json({
-    message: '🏛️ CultureVault API v1.0 - Di Sản Văn hóa Platform',
-    version: '1.0.0',
-    environment: process.env.NODE_ENV || 'development',
-    features: [
-      'Authentication (JWT)',
-      'Heritage Sites Management',
-      'Artifacts & Collections',
-      'Virtual Exhibitions',
-      'GPS-based Discovery',
-      'Timeline & History',
-      'Community Reviews & Ratings',
-      'Favorite Collections',
-      'Notification System'
-    ],
-    documentation: {
-      api_docs: '/docs/API_ENDPOINTS.md',
-      status: '/api/health'
+    message: '🏛️ CultureVault API v3.0',
+    version: '3.0.0',
+    endpoints: {
+      heritage_sites: '/api/heritage-sites',
+      artifacts: '/api/artifacts',
+      quests: '/api/quests',
+      learning: '/api/learning',
+      exhibitions: '/api/exhibitions',
+      collections: '/api/collections',
+      reviews: '/api/reviews',
+      auth: '/api/auth',
+      users: '/api/users'
     }
   });
 });
@@ -70,11 +60,7 @@ app.get('/api', (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
-    message: 'CultureVault API is running',
-    version: '1.0.0',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    environment: process.env.NODE_ENV || 'development'
+    message: 'CultureVault API is running'
   });
 });
 
@@ -117,7 +103,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`
 ╔══════════════════════════════════════════════════════════════════╗
-║   🏛️ CultureVault Server Started!                               ║
+║   🏛️ CultureVault Server Started!                                 ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║   📍 URL: http://localhost:${PORT}                                  ║
 ║   🌍 Environment: ${process.env.NODE_ENV || 'development'}                                    ║

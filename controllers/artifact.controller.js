@@ -1,17 +1,52 @@
-const BaseController = require('../utils/BaseController');
-const artifactService = require('../services/artifact.service');
+const db = require('../config/database');
 
-class ArtifactController extends BaseController {
-  constructor() {
-    super(artifactService);
-  }
-
-  getByHeritageSite = async (req, res, next) => {
+class ArtifactController {
+  getAll = async (req, res, next) => {
     try {
-      const result = await this.service.findByHeritageSite(
-        req.params.siteId,
-        req.parsedQuery
-      );
+      const result = db.findAllAdvanced('artifacts', req.parsedQuery);
+      res.json({
+        success: true,
+        count: result.data.length,
+        data: result.data,
+        pagination: result.pagination
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getById = async (req, res, next) => {
+    try {
+      const artifact = db.findById('artifacts', req.params.id);
+      if (!artifact) {
+        return res.status(404).json({
+          success: false,
+          message: 'Artifact not found'
+        });
+      }
+      res.json({
+        success: true,
+        data: artifact
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  search = async (req, res, next) => {
+    try {
+      const { q } = req.query;
+      if (!q) {
+        return res.status(400).json({
+          success: false,
+          message: 'Search query required'
+        });
+      }
+
+      const result = db.findAllAdvanced('artifacts', {
+        q: q,
+        ...req.parsedQuery
+      });
 
       res.json({
         success: true,
@@ -24,18 +59,90 @@ class ArtifactController extends BaseController {
     }
   };
 
-  getByCategory = async (req, res, next) => {
+  getRelated = async (req, res, next) => {
     try {
-      const result = await this.service.findByCategory(
-        req.params.categoryId,
-        req.parsedQuery
-      );
+      const artifact = db.findById('artifacts', req.params.id);
+      if (!artifact) {
+        return res.status(404).json({
+          success: false,
+          message: 'Artifact not found'
+        });
+      }
+
+      const related = db.findAll('artifacts')
+        .filter(a =>
+          a.id !== parseInt(req.params.id) &&
+          (a.heritage_site_id === artifact.heritage_site_id ||
+            a.cultural_category_id === artifact.cultural_category_id)
+        )
+        .slice(0, 5);
 
       res.json({
         success: true,
-        count: result.data.length,
-        data: result.data,
-        pagination: result.pagination
+        data: related,
+        count: related.length
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  create = async (req, res, next) => {
+    try {
+      const artifact = db.create('artifacts', {
+        ...req.body,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      });
+      res.status(201).json({
+        success: true,
+        message: 'Artifact created',
+        data: artifact
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  update = async (req, res, next) => {
+    try {
+      const artifact = db.findById('artifacts', req.params.id);
+      if (!artifact) {
+        return res.status(404).json({
+          success: false,
+          message: 'Artifact not found'
+        });
+      }
+
+      const updated = db.update('artifacts', req.params.id, {
+        ...req.body,
+        updatedAt: new Date().toISOString()
+      });
+
+      res.json({
+        success: true,
+        message: 'Artifact updated',
+        data: updated
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  delete = async (req, res, next) => {
+    try {
+      const artifact = db.findById('artifacts', req.params.id);
+      if (!artifact) {
+        return res.status(404).json({
+          success: false,
+          message: 'Artifact not found'
+        });
+      }
+
+      db.delete('artifacts', req.params.id);
+      res.json({
+        success: true,
+        message: 'Artifact deleted'
       });
     } catch (error) {
       next(error);

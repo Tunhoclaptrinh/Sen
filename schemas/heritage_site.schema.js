@@ -5,14 +5,14 @@ module.exports = {
     unique: true,
     minLength: 5,
     maxLength: 200,
-    description: 'Tên di sản'
+    description: 'Tên di sản văn hóa'
   },
   description: {
     type: 'string',
     required: true,
     minLength: 20,
     maxLength: 5000,
-    description: 'Mô tả chi tiết'
+    description: 'Mô tả chi tiết về di sản'
   },
   type: {
     type: 'enum',
@@ -23,12 +23,12 @@ module.exports = {
   cultural_period: {
     type: 'string',
     required: true,
-    description: 'Thời kỳ'
+    description: 'Thời kỳ văn hóa (VD: Triều Nguyễn, Thời Lý, ...)'
   },
   region: {
     type: 'string',
     required: true,
-    description: 'Vùng'
+    description: 'Vùng miền (Bắc, Trung, Nam)'
   },
   latitude: {
     type: 'number',
@@ -49,22 +49,27 @@ module.exports = {
     required: true,
     minLength: 10,
     maxLength: 300,
-    description: 'Địa chỉ'
+    description: 'Địa chỉ cụ thể'
   },
   year_established: {
     type: 'number',
     required: false,
-    description: 'Năm thành lập'
+    description: 'Năm thành lập/xây dựng'
   },
   year_restored: {
     type: 'number',
     required: false,
-    description: 'Năm tu bổ'
+    description: 'Năm tu bổ gần nhất'
   },
   image: {
     type: 'string',
     required: false,
-    description: 'Hình ảnh'
+    description: 'URL hình ảnh chính'
+  },
+  gallery: {
+    type: 'array',
+    required: false,
+    description: 'Bộ sưu tập hình ảnh'
   },
   rating: {
     type: 'number',
@@ -72,36 +77,36 @@ module.exports = {
     min: 0,
     max: 5,
     default: 0,
-    description: 'Đánh giá'
+    description: 'Đánh giá trung bình'
   },
   total_reviews: {
     type: 'number',
     required: false,
     default: 0,
-    description: 'Số đánh giá'
+    description: 'Tổng số đánh giá'
   },
   visit_hours: {
     type: 'string',
     required: false,
-    description: 'Giờ mở cửa'
+    description: 'Giờ mở cửa (VD: 8:00 - 17:00)'
   },
   entrance_fee: {
     type: 'number',
     required: false,
     default: 0,
-    description: 'Phí vào'
+    description: 'Phí vào cửa (VNĐ)'
   },
   is_active: {
     type: 'boolean',
     required: false,
     default: true,
-    description: 'Hoạt động'
+    description: 'Đang hoạt động'
   },
   unesco_listed: {
     type: 'boolean',
     required: false,
     default: false,
-    description: 'UNESCO công nhận'
+    description: 'Được UNESCO công nhận'
   },
   significance: {
     type: 'enum',
@@ -109,5 +114,21 @@ module.exports = {
     required: false,
     default: 'local',
     description: 'Tầm quan trọng'
+  },
+  historical_events: {
+    type: 'array',
+    required: false,
+    description: 'Các sự kiện lịch sử liên quan'
+  },
+  legends: {
+    type: 'array',
+    required: false,
+    description: 'Các câu chuyện dã sử, truyền thuyết'
+  },
+  visit_count: {
+    type: 'number',
+    required: false,
+    default: 0,
+    description: 'Số lượt khám phá (gamification)'
   }
 };

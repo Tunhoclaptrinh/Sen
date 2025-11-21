@@ -6,7 +6,7 @@ class HeritageSiteController extends BaseController {
     super(heritageSiteService);
   }
 
-  nearbyHeritageSites = async (req, res, next) => {
+  getNearby = async (req, res, next) => {
     try {
       const { latitude, longitude, radius = 5 } = req.query;
 
@@ -20,32 +20,19 @@ class HeritageSiteController extends BaseController {
       const result = await this.service.findNearby(
         parseFloat(latitude),
         parseFloat(longitude),
-        parseFloat(radius),
-        req.parsedQuery
+        parseFloat(radius)
       );
 
-      res.json({
-        success: true,
-        count: result.data.length,
-        data: result.data,
-        pagination: result.pagination
-      });
+      res.json(result);
     } catch (error) {
       next(error);
     }
   };
 
-  getByPeriod = async (req, res, next) => {
+  getArtifacts = async (req, res, next) => {
     try {
-      const { period } = req.params;
-      const result = await this.service.findByPeriod(period, req.parsedQuery);
-
-      res.json({
-        success: true,
-        count: result.data.length,
-        data: result.data,
-        pagination: result.pagination
-      });
+      const result = await this.service.getArtifacts(req.params.id);
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -54,11 +41,6 @@ class HeritageSiteController extends BaseController {
   getTimeline = async (req, res, next) => {
     try {
       const result = await this.service.getTimeline(req.params.id);
-
-      if (!result.success) {
-        return res.status(404).json(result);
-      }
-
       res.json(result);
     } catch (error) {
       next(error);

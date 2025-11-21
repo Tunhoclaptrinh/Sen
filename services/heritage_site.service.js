@@ -7,7 +7,7 @@ class HeritageSiteService extends BaseService {
     super('heritage_sites');
   }
 
-  async findNearby(lat, lon, radius, options = {}) {
+  async findNearby(lat, lon, radius = 5, options = {}) {
     const allSites = db.findAll('heritage_sites');
 
     const nearby = allSites
@@ -19,47 +19,28 @@ class HeritageSiteService extends BaseService {
       .filter(site => site.distance <= radius)
       .sort((a, b) => a.distance - b.distance);
 
-    const pagination = this.applyPagination(nearby, options.page, options.limit);
-
     return {
       success: true,
-      data: pagination.data,
-      pagination: pagination
+      data: nearby,
+      count: nearby.length
     };
   }
 
-  async findByPeriod(period, options = {}) {
-    const result = db.findAllAdvanced('heritage_sites', {
-      ...options,
-      filter: {
-        ...options.filter,
-        cultural_period: period
-      }
-    });
-
-    return result;
+  async getArtifacts(siteId) {
+    const artifacts = db.findMany('artifacts', { heritage_site_id: parseInt(siteId) });
+    return {
+      success: true,
+      data: artifacts,
+      count: artifacts.length
+    };
   }
 
   async getTimeline(siteId) {
-    const site = db.findById('heritage_sites', siteId);
-
-    if (!site) {
-      return {
-        success: false,
-        message: 'Heritage site not found',
-        statusCode: 404
-      };
-    }
-
     const timelines = db.findMany('timelines', { heritage_site_id: parseInt(siteId) })
       .sort((a, b) => a.year - b.year);
-
     return {
       success: true,
-      data: {
-        site,
-        timelines
-      }
+      data: timelines
     };
   }
 }
