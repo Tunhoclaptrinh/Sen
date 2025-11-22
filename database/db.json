@@ -4,19 +4,20 @@
       "id": 1,
       "name": "Admin",
       "email": "admin@culturevault.com",
-      "password": "$2a$10$...",
+      "password": "$2a$10$1dvFD.8HpR3YBQ4QwljxwOjdHxsqojU4JVSsUTj8YUjEE1ut6TJ.u",
       "phone": "0912345678",
       "role": "admin",
       "avatar": "https://ui-avatars.com/api/?name=Admin",
       "bio": "Quản trị viên hệ thống",
       "isActive": true,
-      "createdAt": "2024-01-15T10:30:00Z"
+      "createdAt": "2024-01-15T10:30:00Z",
+      "lastLogin": "2025-11-22T02:38:04.698Z"
     },
     {
       "id": 2,
       "name": "Nguyễn Văn A",
       "email": "user@culturevault.com",
-      "password": "$2a$10$...",
+      "password": "$2a$10$1dvFD.8HpR3YBQ4QwljxwOjdHxsqojU4JVSsUTj8YUjEE1ut6TJ.u",
       "phone": "0987654321",
       "role": "customer",
       "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A",
@@ -25,7 +26,6 @@
       "createdAt": "2024-02-20T14:20:00Z"
     }
   ],
-
   "cultural_categories": [
     {
       "id": 1,
@@ -56,7 +56,6 @@
       "description": "Gốm cổ, sứ, đồ gốm mỹ nghệ"
     }
   ],
-
   "heritage_sites": [
     {
       "id": 1,
@@ -119,7 +118,6 @@
       "updatedAt": "2024-10-26T12:00:00Z"
     }
   ],
-
   "artifacts": [
     {
       "id": 1,
@@ -138,7 +136,9 @@
       "condition": "excellent",
       "damage_description": "Không có",
       "conservation_notes": "Được bảo quản trong phòng kiểm soát độ ẩm",
-      "images": ["https://images.unsplash.com/photo-1578321272176-b7899d21b5d5?w=600"],
+      "images": [
+        "https://images.unsplash.com/photo-1578321272176-b7899d21b5d5?w=600"
+      ],
       "location_in_site": "Phòng tranh 1, Tầng 1",
       "storage_location": "Kho 3",
       "historical_context": "Được vẽ vào giai đoạn Việt Nam hiện đại",
@@ -169,7 +169,9 @@
       "condition": "good",
       "damage_description": "Một số chỗ bị sứt mẻ nhẹ",
       "conservation_notes": "Đã được tu bổ năm 2010",
-      "images": ["https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=600"],
+      "images": [
+        "https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=600"
+      ],
       "location_in_site": "Phòng gốm, Tầng 2",
       "storage_location": "Kho 1",
       "historical_context": "Sản phẩm thương mại từ các nhà gốm Trung Quốc",
@@ -184,7 +186,6 @@
       "updatedAt": "2024-10-26T12:00:00Z"
     }
   ],
-
   "timelines": [
     {
       "id": 1,
@@ -195,7 +196,10 @@
       "heritage_site_id": 1,
       "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600",
       "impact": "Trở thành trung tâm thương mại",
-      "participants": ["Các nhà thương nhân Hàn Quốc", "Nhà thương nhân Trung Quốc"],
+      "participants": [
+        "Các nhà thương nhân Hàn Quốc",
+        "Nhà thương nhân Trung Quốc"
+      ],
       "is_featured": true,
       "createdAt": "2024-01-15T10:30:00Z"
     },
@@ -224,7 +228,6 @@
       "createdAt": "2024-01-15T10:30:00Z"
     }
   ],
-
   "exhibitions": [
     {
       "id": 1,
@@ -235,8 +238,15 @@
       "start_date": "2024-01-01T00:00:00Z",
       "end_date": "2024-12-31T23:59:59Z",
       "heritage_site_id": 1,
-      "featured_artifacts": [1, 2],
-      "featured_timelines": [1, 2, 3],
+      "featured_artifacts": [
+        1,
+        2
+      ],
+      "featured_timelines": [
+        1,
+        2,
+        3
+      ],
       "poster": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
       "visitor_count": 1500,
       "rating": 4.8,
@@ -245,7 +255,6 @@
       "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
-
   "learning_modules": [
     {
       "id": 1,
@@ -256,10 +265,22 @@
       "content_type": "article",
       "order": 1,
       "body": "Hội An là một thị trấn ven sông lịch sử nằm ở Việt Nam, được UNESCO công nhận là Di sản Thế giới...",
-      "artifacts": [1, 2],
-      "heritage_sites": [1],
-      "learning_objectives": ["Hiểu được lịch sử Hội An", "Nhận biết các công trình kiến trúc"],
-      "key_concepts": ["Hội An", "Thương mại", "Kiến trúc"],
+      "artifacts": [
+        1,
+        2
+      ],
+      "heritage_sites": [
+        1
+      ],
+      "learning_objectives": [
+        "Hiểu được lịch sử Hội An",
+        "Nhận biết các công trình kiến trúc"
+      ],
+      "key_concepts": [
+        "Hội An",
+        "Thương mại",
+        "Kiến trúc"
+      ],
       "has_quiz": true,
       "passing_score": 70,
       "rating": 4.7,
@@ -276,10 +297,21 @@
       "content_type": "video",
       "order": 2,
       "content_url": "https://example.com/video/gom-su",
-      "artifacts": [2],
-      "heritage_sites": [1],
-      "learning_objectives": ["Hiểu về gốm sứ thương mại", "Nhận biết kỹ thuật làm gốm"],
-      "key_concepts": ["Gốm sứ", "Thương mại", "Kỹ thuật"],
+      "artifacts": [
+        2
+      ],
+      "heritage_sites": [
+        1
+      ],
+      "learning_objectives": [
+        "Hiểu về gốm sứ thương mại",
+        "Nhận biết kỹ thuật làm gốm"
+      ],
+      "key_concepts": [
+        "Gốm sứ",
+        "Thương mại",
+        "Kỹ thuật"
+      ],
       "has_quiz": true,
       "passing_score": 70,
       "rating": 4.5,
@@ -288,7 +320,6 @@
       "createdAt": "2024-01-20T10:30:00Z"
     }
   ],
-
   "game_quests": [
     {
       "id": 1,
@@ -300,10 +331,16 @@
       "story_context": "Bạn là một nhà khảo cổ mới tập sự, hãy khám phá phố cổ Hội An",
       "instructions": "Trả lời đúng 3/5 câu hỏi để hoàn thành nhiệm vụ",
       "heritage_site_id": 1,
-      "artifact_ids": [1, 2],
+      "artifact_ids": [
+        1,
+        2
+      ],
       "order": 1,
       "points": 100,
-      "badges": ["Explorer", "History_Seeker"],
+      "badges": [
+        "Explorer",
+        "History_Seeker"
+      ],
       "game_config": {
         "type": "multiple_choice",
         "total_questions": 5,
@@ -314,7 +351,12 @@
           "id": 1,
           "type": "multiple_choice",
           "question": "Hội An được thành lập vào năm nào?",
-          "options": ["1620", "1624", "1630", "1650"],
+          "options": [
+            "1620",
+            "1624",
+            "1630",
+            "1650"
+          ],
           "correct_answer": "1624",
           "explanation": "Hội An được thành lập vào năm 1624 như một cảng thương mại"
         },
@@ -322,7 +364,12 @@
           "id": 2,
           "type": "multiple_choice",
           "question": "Hội An được UNESCO công nhận là Di sản Thế giới vào năm nào?",
-          "options": ["1995", "1997", "1999", "2001"],
+          "options": [
+            "1995",
+            "1997",
+            "1999",
+            "2001"
+          ],
           "correct_answer": "1999",
           "explanation": "Năm 1999 là năm Hội An được UNESCO công nhận"
         },
@@ -330,7 +377,10 @@
           "id": 3,
           "type": "true_false",
           "question": "Phố cổ Hội An có kiến trúc Trung Quốc, Nhật Bản và Pháp",
-          "options": ["Đúng", "Sai"],
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
           "correct_answer": "Đúng",
           "explanation": "Hội An là sự kết hợp của kiến trúc từ nhiều nước"
         }
@@ -352,7 +402,9 @@
       "heritage_site_id": 1,
       "order": 2,
       "points": 150,
-      "badges": ["Timeline_Master"],
+      "badges": [
+        "Timeline_Master"
+      ],
       "game_config": {
         "type": "drag_and_drop",
         "events_count": 5,
@@ -372,10 +424,14 @@
       "difficulty": "easy",
       "story_context": "Hãy ghép đôi các gốm sứ cổ",
       "instructions": "Nhấp vào các thẻ để tìm các cặp giống nhau",
-      "artifact_ids": [2],
+      "artifact_ids": [
+        2
+      ],
       "order": 3,
       "points": 80,
-      "badges": ["Memory_Master"],
+      "badges": [
+        "Memory_Master"
+      ],
       "game_config": {
         "type": "memory_game",
         "pairs_count": 6,
@@ -387,23 +443,28 @@
       "createdAt": "2024-01-25T10:30:00Z"
     }
   ],
-
   "collections": [
     {
       "id": 1,
       "user_id": 2,
       "name": "Những Di Sản Yêu Thích",
       "description": "Bộ sưu tập những di sản văn hóa mà tôi yêu thích",
-      "artifact_ids": [1, 2],
-      "heritage_site_ids": [1],
-      "exhibition_ids": [1],
+      "artifact_ids": [
+        1,
+        2
+      ],
+      "heritage_site_ids": [
+        1
+      ],
+      "exhibition_ids": [
+        1
+      ],
       "is_public": true,
       "is_shared": false,
       "total_items": 4,
       "createdAt": "2024-02-20T14:20:00Z"
     }
   ],
-
   "user_progress": [
     {
       "id": 1,
@@ -422,17 +483,29 @@
           "completed_date": "2024-10-22T10:15:00Z",
           "score": 100,
           "points_earned": 100,
-          "badges_earned": ["Explorer"]
+          "badges_earned": [
+            "Explorer"
+          ]
         }
       ],
       "total_points": 180,
       "level": 2,
-      "badges": ["Explorer", "Learner"],
-      "achievements": ["First_Quest", "First_Module"],
+      "badges": [
+        "Explorer",
+        "Learner"
+      ],
+      "achievements": [
+        "First_Quest",
+        "First_Module"
+      ],
       "streak": 5,
       "total_learning_time": 1800,
-      "bookmarked_artifacts": [1],
-      "bookmarked_sites": [1],
+      "bookmarked_artifacts": [
+        1
+      ],
+      "bookmarked_sites": [
+        1
+      ],
       "createdAt": "2024-02-20T14:20:00Z"
     }
   ]
