@@ -23,7 +23,21 @@
       "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A",
       "bio": "Yêu thích lịch sử Việt Nam",
       "isActive": true,
-      "createdAt": "2024-02-20T14:20:00Z"
+      "createdAt": "2024-02-20T14:20:00Z",
+      "lastLogin": "2025-11-27T15:41:58.371Z"
+    },
+    {
+      "id": 3,
+      "email": "tuannguyentien16@gmail.com",
+      "password": "$2a$10$BEBbSOhud5cFJmEYrFnCH.xgNsUbHek4mH3pZE0s701sRuqCucSLu",
+      "name": "Nguyễn Tiến Tuấn",
+      "phone": "0945650883",
+      "address": "",
+      "avatar": "https://ui-avatars.com/api/?name=Nguy%E1%BB%85n%20Ti%E1%BA%BFn%20Tu%E1%BA%A5n&background=random",
+      "role": "customer",
+      "isActive": true,
+      "createdAt": "2025-11-27T15:47:20.699Z",
+      "lastLogin": "2025-11-27T16:14:18.777Z"
     }
   ],
   "cultural_categories": [
