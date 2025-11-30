@@ -9,6 +9,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const apiLogger = require('./middleware/logger.middleware');
+app.use(apiLogger);
+
 const { parseQuery, formatResponse, validateQuery, logQuery } = require('./middleware/query.middleware');
 app.use(parseQuery);
 app.use(formatResponse);
@@ -25,6 +28,8 @@ const learningRoutes = require('./routes/learning.routes');
 const exhibitionRoutes = require('./routes/exhibition.routes');
 const collectionRoutes = require('./routes/collection.routes');
 const reviewRoutes = require('./routes/review.routes');
+const uploadRoutes = require('./routes/upload.routes');
+
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
@@ -36,6 +41,8 @@ app.use('/api/learning', learningRoutes);
 app.use('/api/exhibitions', exhibitionRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/upload', uploadRoutes);
+
 
 // API Documentation
 app.get('/api', (req, res) => {
