@@ -67,7 +67,7 @@ app.get('/api', (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
-    message: 'CultureVault API is running'
+    message: 'Sen API is running'
   });
 });
 
@@ -110,7 +110,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`
 ╔══════════════════════════════════════════════════════════════════╗
-║   🏛️ CultureVault Server Started!                                 ║
+║   🏛️ Sen Server Started!                                 ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║   📍 URL: http://localhost:${PORT}                                  ║
 ║   🌍 Environment: ${process.env.NODE_ENV || 'development'}                                    ║

@@ -12,8 +12,8 @@ const seedData = {
   users: [
     {
       id: 1,
-      name: "Admin CultureVault",
-      email: "admin@culturevault.com",
+      name: "Admin Sen",
+      email: "admin@sen.com",
       password: hashedPassword,
       phone: "0912345678",
       role: "admin",
@@ -23,7 +23,7 @@ const seedData = {
     {
       id: 2,
       name: "Phạm Văn Tuấn",
-      email: "tuanpham@culturevault.com",
+      email: "tuanpham@sen.com",
       password: hashedPassword,
       phone: "0987654321",
       role: "researcher",
@@ -33,7 +33,7 @@ const seedData = {
     {
       id: 3,
       name: "Đỗ Thị Hương",
-      email: "huong.do@culturevault.com",
+      email: "huong.do@sen.com",
       password: hashedPassword,
       phone: "0901234567",
       role: "customer",

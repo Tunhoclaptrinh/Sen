@@ -1,4 +1,4 @@
-# 🏛️ CultureVault Backend - Tài Liệu Toàn Bộ
+# 🏛️ SEN Backend - Tài Liệu Toàn Bộ
 
 **Phiên bản:** 1.0.0  
 **Trạng thái:** Development  
@@ -23,7 +23,7 @@
 
 ### Mục Đích Dự Án
 
-CultureVault là hệ thống quản lý và bảo tồn di sản văn hóa số, cung cấp nền tảng toàn diện cho:
+Sen là hệ thống quản lý và bảo tồn di sản văn hóa số, cung cấp nền tảng toàn diện cho:
 
 - Khám phá và tra cứu di tích, hiện vật lịch sử
 - Quản lý bộ sưu tập cá nhân
@@ -71,8 +71,8 @@ Git
 #### 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourname/culturevault-backend.git
-cd culturevault-backend
+git clone https://github.com/yourname/sen-backend.git
+cd sen-backend
 ```
 
 #### 2. Cài Đặt Dependencies
@@ -119,7 +119,7 @@ Phản hồi:
 ```json
 {
   "status": "OK",
-  "message": "CultureVault API is running"
+  "message": "Sen API is running"
 }
 ```
 
@@ -130,7 +130,7 @@ Phản hồi:
 ### Cấu Trúc Thư Mục
 
 ```
-culturevault-backend/
+sen-backend/
 ├── config/
 │   ├── database.js           # Database configuration
 │   └── endpoints.js          # API endpoints reference
@@ -236,7 +236,7 @@ Content-Type: application/json
 
 {
   "name": "Nguyễn Văn A",
-  "email": "user@culturevault.com",
+  "email": "user@sen.com",
   "password": "SecurePassword123!",
   "phone": "0987654321"
 }
@@ -252,7 +252,7 @@ Content-Type: application/json
     "user": {
       "id": 1,
       "name": "Nguyễn Văn A",
-      "email": "user@culturevault.com",
+      "email": "user@sen.com",
       "phone": "0987654321",
       "role": "customer",
       "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A",
@@ -271,7 +271,7 @@ POST /auth/login
 Content-Type: application/json
 
 {
-  "email": "user@culturevault.com",
+  "email": "user@sen.com",
   "password": "SecurePassword123!"
 }
 ```
@@ -286,7 +286,7 @@ Content-Type: application/json
     "user": {
       "id": 1,
       "name": "Nguyễn Văn A",
-      "email": "user@culturevault.com",
+      "email": "user@sen.com",
       "role": "customer",
       "isActive": true
     },
@@ -310,7 +310,7 @@ Authorization: Bearer {token}
   "data": {
     "id": 1,
     "name": "Nguyễn Văn A",
-    "email": "user@culturevault.com",
+    "email": "user@sen.com",
     "phone": "0987654321",
     "role": "customer"
   }
@@ -1305,7 +1305,7 @@ curl -X POST http://localhost:3000/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Phạm Văn Tuấn",
-    "email": "tuanpham@culturevault.com",
+    "email": "tuanpham@sen.com",
     "password": "SecurePass123!",
     "phone": "0987654321"
   }'
@@ -1320,7 +1320,7 @@ Response:
     "user": {
       "id": 5,
       "name": "Phạm Văn Tuấn",
-      "email": "tuanpham@culturevault.com",
+      "email": "tuanpham@sen.com",
       "role": "customer"
     },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiYXQiOjE2MzI1NDM0MDB9..."
@@ -1627,7 +1627,7 @@ PORT=3000
 NODE_ENV=production
 JWT_SECRET=your_very_strong_secret_key_at_least_32_chars
 JWT_EXPIRE=7d
-DATABASE_URL=mongodb://username:password@host:27017/culturevault
+DATABASE_URL=mongodb://username:password@host:27017/sen
 CORS_ORIGIN=https://yourdomain.com
 LOG_LEVEL=info
 ```
@@ -1639,14 +1639,14 @@ LOG_LEVEL=info
 npm run build
 
 # 2. Start with PM2
-pm2 start server.js --name "culturevault-api"
+pm2 start server.js --name "sen-api"
 
 # 3. Enable auto-restart
 pm2 startup
 pm2 save
 
 # 4. View logs
-pm2 logs culturevault-api
+pm2 logs sen-api
 
 # 5. Monitor
 pm2 monit
@@ -1677,7 +1677,7 @@ CMD ["node", "server.js"]
 version: "3.8"
 
 services:
-  culturevault-api:
+  sen-api:
     build: .
     ports:
       - "3000:3000"
@@ -1763,7 +1763,7 @@ migrate();
 #### Step 3: Chạy Migration
 
 ```bash
-MONGODB_URI=mongodb://localhost:27017/culturevault node scripts/migrate-to-mongodb.js
+MONGODB_URI=mongodb://localhost:27017/sen node scripts/migrate-to-mongodb.js
 ```
 
 ---
@@ -1779,7 +1779,7 @@ curl http://localhost:3000/api/health
 # Response:
 # {
 #   "status": "OK",
-#   "message": "CultureVault API is running"
+#   "message": "Sen API is running"
 # }
 ```
 

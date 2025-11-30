@@ -1,4 +1,4 @@
-# 🏗️ CultureVault Backend - Architecture & System Design
+# 🏗️ Sen Backend - Architecture & System Design
 
 **Version:** 3.0.0  
 **Design Pattern:** MVC + Service Layer  
@@ -102,7 +102,7 @@
 ### Complete File Organization
 
 ```
-culturevault-backend/
+sen-backend/
 │
 ├── 📁 config/
 │   ├── database.js              # Database initialization & CRUD operations
