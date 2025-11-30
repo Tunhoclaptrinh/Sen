@@ -47,7 +47,7 @@ app.use('/api/upload', uploadRoutes);
 // API Documentation
 app.get('/api', (req, res) => {
   res.json({
-    message: '🏛️ CultureVault API v3.0',
+    message: 'SEN API v3.0',
     version: '3.0.0',
     endpoints: {
       heritage_sites: '/api/heritage-sites',

@@ -1,3 +1,13 @@
+const fs = require('fs');
+const path = require('path');
+const bcrypt = require('bcryptjs');
+
+const DB_FILE = path.join(__dirname, '../database/db.json');
+
+// Mật khẩu đã băm cho "123456"
+const hashedPassword = bcrypt.hashSync('123456', 10);
+
+
 const seedData = {
   users: [
     {
@@ -275,5 +285,367 @@ const seedData = {
       comment: "Những tư liệu gốm rất quý hiếm và được trưng bày cẩn thận.",
       createdAt: "2024-10-22T16:30:00Z"
     }
+  ],
+
+  // Chapters - Lớp cánh hoa sen
+  game_chapters: [
+    {
+      id: 1,
+      name: "Lịch sử 18xx - 19xx",
+      description: "Khám phá giai đoạn lịch sử Việt Nam thế kỷ 18-19",
+      theme: "Lịch sử",
+      order: 1,
+      required_petals: 0,
+      thumbnail: "https://images.unsplash.com/photo-1555169062-013468b47731?w=400",
+      color: "#E74C3C",
+      is_active: true,
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 2,
+      name: "Văn hóa Bắc Bộ",
+      description: "Khám phá văn hóa truyền thống miền Bắc Việt Nam",
+      theme: "Văn hóa",
+      order: 2,
+      required_petals: 5,
+      thumbnail: "https://images.unsplash.com/photo-1528127269322-539801943592?w=400",
+      color: "#3498DB",
+      is_active: true,
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 3,
+      name: "Hoàng Thành Thăng Long",
+      description: "Khám phá di tích Hoàng Thành qua các triều đại",
+      theme: "Di tích",
+      order: 3,
+      required_petals: 12,
+      thumbnail: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400",
+      color: "#F39C12",
+      is_active: true,
+      created_at: "2024-01-01T00:00:00Z"
+    }
+  ],
+
+  // Game Characters - AI NPC
+  game_characters: [
+    {
+      id: 1,
+      name: "Chú Tễu",
+      description: "Nhân vật rối nước vui tính, thông minh",
+      persona: "Bạn là Chú Tễu, một nhân vật rối nước vui tính từ múa rối Bắc Bộ. Bạn đang bị mất trí nhớ và mất màu sơn. Bạn cần sự giúp đỡ của người chơi để tìm lại ký ức.",
+      speaking_style: "Vui vẻ, hài hước, sử dụng từ ngữ dân dã, có chút nhí nhảnh",
+      avatar: "https://example.com/teu-colored.png",
+      avatar_uncolored: "https://example.com/teu-uncolored.png",
+      rarity: "rare",
+      origin: "Múa rối nước",
+      is_collectible: true,
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 2,
+      name: "Thị Kính",
+      description: "Nhân vật trong truyền thuyết Quan Âm Thị Kính",
+      persona: "Bạn là Thị Kính, người phụ nữ kiên cường và nhân từ. Bạn hướng dẫn người chơi với sự dịu dàng và khôn ngoan.",
+      speaking_style: "Nhẹ nhàng, từ tốn, khôn ngoan",
+      avatar: "https://example.com/thikinh.png",
+      rarity: "epic",
+      origin: "Truyền thuyết dân gian",
+      is_collectible: true,
+      created_at: "2024-01-01T00:00:00Z"
+    }
+  ],
+
+  // Game Levels - Màn chơi
+  game_levels: [
+    {
+      id: 1,
+      chapter_id: 1,
+      name: "Dòng thời gian lịch sử",
+      description: "Sắp xếp các sự kiện lịch sử theo đúng thứ tự thời gian",
+      type: "timeline",
+      difficulty: "easy",
+      order: 1,
+      required_level: null,
+      background_image: "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+      background_music: "https://example.com/audio/history-theme.mp3",
+      ai_character_id: 2,
+      knowledge_base: `Giai đoạn 18xx-19xx là thời kỳ quan trọng của lịch sử Việt Nam:
+- 1802: Nguyễn Ánh lên ngôi, lập triều Nguyễn
+- 1858: Pháp tấn công Đà Nẵng, bắt đầu xâm lược
+- 1862: Ký hiệp ước Nhâm Tuất, mất 3 tỉnh miền Đông
+- 1884: Hiệp ước Giáp Thân, Việt Nam thành thuộc địa
+- 1945: Cách mạng Tháng Tám thành công`,
+      clues: [
+        {
+          id: "evt1",
+          name: "Năm 1802",
+          content: "Nguyễn Ánh lên ngôi hoàng đế",
+          points: 10,
+          hint: "Đây là sự kiện đầu triều Nguyễn"
+        },
+        {
+          id: "evt2",
+          name: "Năm 1858",
+          content: "Pháp tấn công Đà Nẵng",
+          points: 10,
+          hint: "Sự kiện này đánh dấu bắt đầu chiến tranh"
+        }
+      ],
+      artifact_ids: [],
+      heritage_site_id: null,
+      rewards: {
+        petals: 1,
+        coins: 50,
+        character: null
+      },
+      time_limit: 300,
+      passing_score: 70,
+      thumbnail: "https://images.unsplash.com/photo-1555169062-013468b47731?w=400",
+      is_active: true,
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 2,
+      chapter_id: 2,
+      name: "Ký ức chú Tễu",
+      description: "Giúp chú Tễu tìm lại ký ức qua các vật phẩm trong múa rối nước",
+      type: "hidden_object",
+      difficulty: "medium",
+      order: 1,
+      required_level: 1,
+      background_image: "https://example.com/bg/water-puppet-stage.jpg",
+      background_music: "https://example.com/audio/cheo-instrumental.mp3",
+      ai_character_id: 1,
+      knowledge_base: `Múa rối nước là nghệ thuật độc đáo của Việt Nam:
+- Ra đời từ thời Lý (thế kỷ 11-12)
+- Biểu diễn trên mặt nước (thủy đình)
+- Chú Tễu là nhân vật kể chuyện chính
+- Các con rối được điều khiển bằng tre và dây
+- Thường biểu diễn trong các dịp lễ hội`,
+      clues: [
+        {
+          id: "clue1",
+          name: "Cái quạt mo",
+          content: "Cái quạt của chú Tễu dùng để phe phẩy, dẫn chuyện",
+          coordinates: { x: 15, y: 45, width: 10, height: 10 },
+          points: 15,
+          hint: "Hãy tìm ở góc trái màn hình, gần con rối"
+        },
+        {
+          id: "clue2",
+          name: "Cờ hội",
+          content: "Cờ hội thường được cắm quanh thủy đình trong dịp lễ",
+          coordinates: { x: 80, y: 20, width: 5, height: 15 },
+          points: 15,
+          hint: "Nhìn lên cao, nơi có gió"
+        },
+        {
+          id: "clue3",
+          name: "Con trâu",
+          content: "Trâu là biểu tượng của nông nghiệp Việt Nam",
+          coordinates: { x: 50, y: 60, width: 15, height: 12 },
+          points: 20,
+          hint: "Ở giữa sân khấu, gần mặt nước"
+        }
+      ],
+      artifact_ids: [2],
+      heritage_site_id: 1,
+      rewards: {
+        petals: 2,
+        coins: 100,
+        character: "teu_full_color"
+      },
+      time_limit: 600,
+      passing_score: 80,
+      thumbnail: "https://example.com/thumb/water-puppet.jpg",
+      is_active: true,
+      created_at: "2024-01-01T00:00:00Z"
+    }
+  ],
+
+  // Scan Objects - QR codes tại di tích
+  scan_objects: [
+    {
+      id: 1,
+      code: "HOIAN001",
+      name: "Chùa Cầu Hội An",
+      type: "heritage_site",
+      reference_id: 1,
+      latitude: 15.8795,
+      longitude: 108.3274,
+      reward_coins: 200,
+      reward_petals: 2,
+      reward_character: "guardian_hoian",
+      is_active: true,
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 2,
+      code: "ARTIFACT001",
+      name: "Bức tranh Hội An",
+      type: "artifact",
+      reference_id: 1,
+      latitude: 15.8801,
+      longitude: 108.3288,
+      reward_coins: 150,
+      reward_petals: 1,
+      reward_character: null,
+      is_active: true,
+      created_at: "2024-01-01T00:00:00Z"
+    }
+  ],
+
+  // Shop Items
+  shop_items: [
+    {
+      id: 1,
+      name: "Gợi ý thông minh",
+      description: "Nhận gợi ý từ AI về manh mối đang tìm",
+      type: "hint",
+      price: 10,
+      icon: "💡",
+      effect: "reveal_hint",
+      is_consumable: true,
+      max_stack: 99,
+      is_available: true,
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 2,
+      name: "Tăng tốc 2x",
+      description: "Tăng gấp đôi điểm trong 5 phút",
+      type: "boost",
+      price: 50,
+      icon: "⚡",
+      effect: "double_points_5min",
+      is_consumable: true,
+      max_stack: 10,
+      is_available: true,
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 3,
+      name: "Trang phục chú Tễu vàng",
+      description: "Skin đặc biệt cho chú Tễu",
+      type: "character_skin",
+      price: 500,
+      icon: "👘",
+      effect: "change_skin_teu_gold",
+      is_consumable: false,
+      max_stack: 1,
+      is_available: true,
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 4,
+      name: "Đèn lồng trang trí",
+      description: "Trang trí bảo tàng của bạn",
+      type: "decoration",
+      price: 200,
+      icon: "🏮",
+      effect: "museum_decoration",
+      is_consumable: false,
+      max_stack: 10,
+      is_available: true,
+      created_at: "2024-01-01T00:00:00Z"
+    }
+  ],
+
+  // Game Badges
+  game_badges: [
+    {
+      id: 1,
+      name: "Nhà thám hiểm",
+      description: "Hoàn thành chapter đầu tiên",
+      icon: "🗺️",
+      requirement: "complete_chapter_1",
+      rarity: "common",
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 2,
+      name: "Bậc thầy lịch sử",
+      description: "Hoàn thành tất cả các màn lịch sử",
+      icon: "📜",
+      requirement: "complete_all_history_levels",
+      rarity: "rare",
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 3,
+      name: "Người sưu tầm",
+      description: "Thu thập 10 nhân vật",
+      icon: "🎭",
+      requirement: "collect_10_characters",
+      rarity: "epic",
+      created_at: "2024-01-01T00:00:00Z"
+    }
+  ],
+
+  // Game Achievements
+  game_achievements: [
+    {
+      id: 1,
+      name: "Bước đầu tiên",
+      description: "Hoàn thành màn chơi đầu tiên",
+      type: "level_completion",
+      requirement: { levels_completed: 1 },
+      reward_coins: 50,
+      icon: "🌟",
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 2,
+      name: "Hoa sen nở rộ",
+      description: "Thu thập 20 cánh hoa sen",
+      type: "collection",
+      requirement: { total_petals: 20 },
+      reward_coins: 200,
+      icon: "🌸",
+      created_at: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: 3,
+      name: "Chuyên gia quét mã",
+      description: "Quét 5 QR code tại di tích thực tế",
+      type: "scan",
+      requirement: { scans_count: 5 },
+      reward_coins: 300,
+      reward_character: "scanner_master",
+      icon: "📱",
+      created_at: "2024-01-01T00:00:00Z"
+    }
   ]
 };
+
+// Hàm để seed database
+function seedDatabase() {
+  try {
+    // Tạo thư mục database nếu chưa tồn tại
+    const dbDir = path.join(__dirname, '../database');
+    if (!fs.existsSync(dbDir)) {
+      fs.mkdirSync(dbDir, { recursive: true });
+    }
+
+    // Ghi dữ liệu seed vào db.json
+    fs.writeFileSync(DB_FILE, JSON.stringify(seedData, null, 2));
+
+    console.log('✅ Database seeded successfully!');
+
+    console.log('\n🔑 Test accounts (Password: 123456):');
+    console.log(`   Admin: ${seedData.users[0].email}`);
+    console.log(`   User 1: ${seedData.users[1].email}`);
+    console.log(`   User 2: ${seedData.users[2].email}`);
+  } catch (error) {
+    console.error('❌ Error seeding database:', error);
+    process.exit(1);
+  }
+}
+
+// Chạy nếu được gọi trực tiếp
+if (require.main === module) {
+  seedDatabase();
+}
+
+module.exports = { seedDatabase, seedData };

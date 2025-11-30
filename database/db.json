@@ -2,525 +2,604 @@
   "users": [
     {
       "id": 1,
-      "name": "Admin",
+      "name": "Admin CultureVault",
       "email": "admin@culturevault.com",
-      "password": "$2a$10$1dvFD.8HpR3YBQ4QwljxwOjdHxsqojU4JVSsUTj8YUjEE1ut6TJ.u",
+      "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
       "phone": "0912345678",
       "role": "admin",
-      "avatar": "https://ui-avatars.com/api/?name=Admin",
-      "bio": "Quản trị viên hệ thống",
       "isActive": true,
-      "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2025-11-22T02:38:04.698Z"
+      "createdAt": "2024-01-15T10:30:00Z"
     },
     {
       "id": 2,
-      "name": "Nguyễn Văn A",
-      "email": "user@culturevault.com",
-      "password": "$2a$10$1dvFD.8HpR3YBQ4QwljxwOjdHxsqojU4JVSsUTj8YUjEE1ut6TJ.u",
+      "name": "Phạm Văn Tuấn",
+      "email": "tuanpham@culturevault.com",
+      "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
       "phone": "0987654321",
-      "role": "customer",
-      "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A",
-      "bio": "Yêu thích lịch sử Việt Nam",
+      "role": "researcher",
       "isActive": true,
-      "createdAt": "2024-02-20T14:20:00Z",
-      "lastLogin": "2025-11-27T15:41:58.371Z"
+      "createdAt": "2024-02-20T14:20:00Z"
     },
     {
       "id": 3,
-      "email": "tuannguyentien16@gmail.com",
-      "password": "$2a$10$BEBbSOhud5cFJmEYrFnCH.xgNsUbHek4mH3pZE0s701sRuqCucSLu",
-      "name": "Nguyễn Tiến Tuấn",
-      "phone": "0945650883",
-      "address": "",
-      "avatar": "https://ui-avatars.com/api/?name=Nguy%E1%BB%85n%20Ti%E1%BA%BFn%20Tu%E1%BA%A5n&background=random",
+      "name": "Đỗ Thị Hương",
+      "email": "huong.do@culturevault.com",
+      "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
+      "phone": "0901234567",
       "role": "customer",
       "isActive": true,
-      "createdAt": "2025-11-27T15:47:20.699Z",
-      "lastLogin": "2025-11-27T16:14:18.777Z"
+      "createdAt": "2024-03-10T09:15:00Z"
     }
   ],
   "cultural_categories": [
     {
       "id": 1,
-      "name": "Kiến Trúc Cổ",
+      "name": "Kiến trúc cổ",
       "icon": "🏯",
-      "image": "https://images.unsplash.com/photo-1513404300967-3a14121e0d1d?w=400",
       "description": "Công trình kiến trúc lịch sử"
     },
     {
       "id": 2,
-      "name": "Mỹ Thuật",
+      "name": "Mỹ thuật",
       "icon": "🎨",
-      "image": "https://images.unsplash.com/photo-1578301978162-7aae4d755744?w=400",
       "description": "Tranh vẽ, điêu khắc, tác phẩm mỹ thuật"
     },
     {
       "id": 3,
-      "name": "Tư Liệu Lịch Sử",
+      "name": "Tư liệu lịch sử",
       "icon": "📚",
-      "image": "https://images.unsplash.com/photo-1507842217343-583f20270319?w=400",
       "description": "Tài liệu, sách vở, bản thảo"
     },
     {
       "id": 4,
-      "name": "Gốm Sứ",
+      "name": "Gốm sứ",
       "icon": "🏺",
-      "image": "https://images.unsplash.com/photo-1569605803921-4bc9b9f15d5a?w=400",
       "description": "Gốm cổ, sứ, đồ gốm mỹ nghệ"
+    },
+    {
+      "id": 5,
+      "name": "Vàng bạc đá quý",
+      "icon": "💎",
+      "description": "Trang sức, đồ trang trí bằng vàng bạc"
+    },
+    {
+      "id": 6,
+      "name": "Dệt may truyền thống",
+      "icon": "🧵",
+      "description": "Lụa, vải thêu, trang phục truyền thống"
+    },
+    {
+      "id": 7,
+      "name": "Di sản phi vật thể",
+      "icon": "🎭",
+      "description": "Âm nhạc, múa, phong tục truyền thống"
     }
   ],
   "heritage_sites": [
     {
       "id": 1,
-      "name": "Phố Cổ Hội An",
+      "name": "Thành Phố Hội An",
       "type": "historic_building",
-      "description": "Phố cổ Hội An là một thị trấn ven sông lịch sử nằm ở Việt Nam",
       "cultural_period": "Triều Nguyễn - Pháp thuộc",
       "region": "Quảng Nam",
       "latitude": 15.8801,
       "longitude": 108.3288,
-      "address": "Thành phố Hội An, Quảng Nam, Việt Nam",
+      "address": "Thành phố Hội An, Quảng Nam",
       "year_established": 1624,
       "year_restored": 1999,
-      "historical_significance": "Một trong những thị trấn ven sông cổ nhất Đông Nam Á",
       "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600",
-      "gallery": [
-        "https://images.unsplash.com/photo-1578107982254-eb158fc3a0e7?w=600",
-        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600"
-      ],
       "rating": 4.9,
       "total_reviews": 523,
-      "visit_hours": "08:00 - 17:00",
+      "visit_hours": "8:00 - 17:00",
       "entrance_fee": 120000,
-      "is_accessible": true,
-      "accessibility_info": "Có đường dành cho xe lăn",
-      "curator": "ThS. Trần Văn An",
-      "institution": "Bộ Văn Hóa, Thể Thao và Du Lịch",
-      "unesco_listed": true,
-      "significance": "international",
-      "heritage_status": "active",
       "is_active": true,
-      "createdAt": "2024-01-15T10:30:00Z",
-      "updatedAt": "2024-10-26T12:00:00Z"
+      "unesco_listed": true,
+      "significance": "international"
     },
     {
       "id": 2,
-      "name": "Tháp Rùa - Hà Nội",
+      "name": "Tháp Cầu Golden Gate Hànộ",
       "type": "monument",
-      "description": "Tháp Rùa là một biểu tượng nổi tiếng của Hà Nội, nằm giữa hồ Hoàn Kiếm",
       "cultural_period": "Triều Lý",
       "region": "Hà Nội",
       "latitude": 20.8268,
       "longitude": 106.2674,
-      "address": "Hồ Hoàn Kiếm, Hà Nội",
+      "address": "Khu phố cổ Hànội, Hà Nội",
       "year_established": 1010,
-      "historical_significance": "Liên quan đến truyền thuyết vàng Điền Vũ",
       "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600",
       "rating": 4.7,
       "total_reviews": 892,
-      "visit_hours": "08:00 - 17:00",
-      "entrance_fee": 0,
-      "is_accessible": true,
-      "curator": "TS. Lê Quốc Thanh",
-      "institution": "Bảo tàng Lịch sử Hà Nội",
-      "unesco_listed": true,
-      "significance": "international",
-      "heritage_status": "active",
+      "visit_hours": "7:00 - 18:00",
+      "entrance_fee": 80000,
       "is_active": true,
-      "createdAt": "2024-01-20T14:00:00Z",
-      "updatedAt": "2024-10-26T12:00:00Z"
+      "unesco_listed": true,
+      "significance": "international"
+    },
+    {
+      "id": 3,
+      "name": "Bảo tàng Thành phố Hồ Chí Minh",
+      "type": "museum",
+      "cultural_period": "Hiện đại",
+      "region": "TP. Hồ Chí Minh",
+      "latitude": 10.7929,
+      "longitude": 106.6955,
+      "address": "65 Lý Tự Trọng, Q. 1, TP. Hồ Chí Minh",
+      "year_established": 1956,
+      "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
+      "rating": 4.5,
+      "total_reviews": 234,
+      "visit_hours": "8:00 - 17:00",
+      "entrance_fee": 50000,
+      "is_active": true,
+      "unesco_listed": false,
+      "significance": "national"
+    },
+    {
+      "id": 4,
+      "name": "Khu khảo cổ Óc Eo",
+      "type": "archaeological_site",
+      "cultural_period": "Thời kỳ Óc Eo",
+      "region": "An Giang",
+      "latitude": 10.1333,
+      "longitude": 104.7667,
+      "address": "Xã Tân Trung, huyện Tịnh Biên, An Giang",
+      "year_established": 150,
+      "year_restored": 2000,
+      "image": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=600",
+      "rating": 4.3,
+      "total_reviews": 145,
+      "visit_hours": "8:00 - 16:30",
+      "entrance_fee": 30000,
+      "is_active": true,
+      "unesco_listed": false,
+      "significance": "national"
     }
   ],
   "artifacts": [
     {
       "id": 1,
-      "name": "Bức Tranh Sơn Dầu 'Phố Cổ Hội An'",
-      "description": "Tranh sơn dầu thế kỷ 20 mô tả quang cảnh phố cổ Hội An với những ngôi nhà cổ kính",
-      "artifact_type": "painting",
+      "name": "Bức tranh sơn dầu 'Phố cổ Hội An'",
+      "description": "Tranh sơn dầu thế kỷ 20 mô tả quang cảnh phố cổ Hội An",
       "heritage_site_id": 1,
-      "cultural_category_id": 2,
+      "category_id": 2,
+      "artifact_type": "painting",
       "year_created": 1985,
-      "year_discovered": 1990,
-      "era": "Thế kỷ 20",
       "creator": "Nguyễn Tường",
       "material": "Sơn dầu trên vải",
       "dimensions": "100 x 80 cm",
       "weight": 5,
       "condition": "excellent",
-      "damage_description": "Không có",
-      "conservation_notes": "Được bảo quản trong phòng kiểm soát độ ẩm",
-      "images": [
-        "https://images.unsplash.com/photo-1578321272176-b7899d21b5d5?w=600"
-      ],
-      "location_in_site": "Phòng tranh 1, Tầng 1",
-      "storage_location": "Kho 3",
-      "historical_context": "Được vẽ vào giai đoạn Việt Nam hiện đại",
-      "cultural_significance": "Phản ánh vẻ đẹp kiến trúc Hội An",
-      "story": "Tác phẩm này được tạo ra để lưu giữ hình ảnh phố cổ Hội An",
-      "rating": 4.8,
-      "total_reviews": 45,
+      "image": "https://images.unsplash.com/photo-1578321272176-b7899d21b5d5?w=600",
       "is_on_display": true,
-      "is_public": true,
-      "related_artifacts": [],
-      "createdAt": "2024-01-15T10:30:00Z",
-      "updatedAt": "2024-10-26T12:00:00Z"
+      "location_in_site": "Phòng tranh 1, Tầng 1"
     },
     {
       "id": 2,
-      "name": "Bộ Gốm Sứ Thương Tín",
+      "name": "Bộ đồ gốm Thương Tín",
       "description": "Bộ gốm sứ thương mại từ thế kỷ 15-16 thời kỳ Hội An",
-      "artifact_type": "pottery",
       "heritage_site_id": 1,
-      "cultural_category_id": 4,
+      "category_id": 4,
+      "artifact_type": "pottery",
       "year_created": 1500,
-      "year_discovered": 1988,
-      "era": "Thế kỷ 15-16",
-      "creator": "Thợ gốm nước ngoài",
       "material": "Gốm sứ xanh",
       "dimensions": "Cao 30cm",
-      "weight": 2.5,
       "condition": "good",
-      "damage_description": "Một số chỗ bị sứt mẻ nhẹ",
-      "conservation_notes": "Đã được tu bổ năm 2010",
-      "images": [
-        "https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=600"
-      ],
-      "location_in_site": "Phòng gốm, Tầng 2",
-      "storage_location": "Kho 1",
-      "historical_context": "Sản phẩm thương mại từ các nhà gốm Trung Quốc",
-      "cultural_significance": "Chứng minh giao thương của Hội An",
-      "story": "Bộ gốm này được tìm thấy trong khai quật tại Hội An",
-      "rating": 4.6,
-      "total_reviews": 32,
+      "image": "https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=600",
       "is_on_display": true,
-      "is_public": true,
-      "related_artifacts": [],
-      "createdAt": "2024-01-18T10:30:00Z",
-      "updatedAt": "2024-10-26T12:00:00Z"
+      "location_in_site": "Phòng gốm, Tầng 2"
     }
   ],
   "timelines": [
     {
       "id": 1,
       "title": "Thành lập Hội An",
-      "description": "Hội An được thành lập như một cảng thương mại quan trọng của Đông Nam Á",
+      "description": "Hội An được thành lập như một cảng thương mại quan trọng",
       "year": 1624,
-      "category": "founded",
       "heritage_site_id": 1,
-      "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600",
-      "impact": "Trở thành trung tâm thương mại",
-      "participants": [
-        "Các nhà thương nhân Hàn Quốc",
-        "Nhà thương nhân Trung Quốc"
-      ],
-      "is_featured": true,
-      "createdAt": "2024-01-15T10:30:00Z"
+      "category": "founded",
+      "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600"
     },
     {
       "id": 2,
-      "title": "Tu bổ Phố Cổ",
+      "title": "Tu bổ Phố cổ",
       "description": "Bắt đầu công trình tu bổ toàn diện phố cổ Hội An",
       "year": 1999,
-      "category": "restored",
       "heritage_site_id": 1,
-      "image": "https://images.unsplash.com/photo-1578107982254-eb158fc3a0e7?w=600",
-      "impact": "Bảo tồn di sản cho thế hệ tương lai",
-      "is_featured": true,
-      "createdAt": "2024-01-15T10:30:00Z"
+      "category": "restored",
+      "image": "https://images.unsplash.com/photo-1578107982254-eb158fc3a0e7?w=600"
     },
     {
       "id": 3,
-      "title": "UNESCO Công Nhận",
+      "title": "UNESCO công nhận",
       "description": "Phố cổ Hội An được UNESCO công nhận là Di sản Thế giới",
       "year": 1999,
-      "category": "recognition",
       "heritage_site_id": 1,
-      "image": "https://images.unsplash.com/photo-1579722821273-8a36ae95db51?w=600",
-      "impact": "Tăng cường bảo vệ quốc tế",
-      "is_featured": true,
-      "createdAt": "2024-01-15T10:30:00Z"
+      "category": "recognition",
+      "image": "https://images.unsplash.com/photo-1579722821273-8a36ae95db51?w=600"
     }
   ],
   "exhibitions": [
     {
       "id": 1,
-      "name": "Hành Trình Hội An Qua 400 Năm",
+      "name": "Hành trình Hội An qua 400 năm",
       "description": "Triển lãm lịch sử toàn diện về Hội An từ thế kỷ 17 đến nay",
-      "curator": "ThS. Trần Văn An",
-      "theme": "Lịch sử & Văn Hóa Hội An",
+      "heritage_site_id": 1,
+      "theme": "Lịch sử & Văn hóa Hội An",
       "start_date": "2024-01-01T00:00:00Z",
       "end_date": "2024-12-31T23:59:59Z",
-      "heritage_site_id": 1,
-      "featured_artifacts": [
-        1,
-        2
-      ],
-      "featured_timelines": [
-        1,
-        2,
-        3
-      ],
-      "poster": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
-      "visitor_count": 1500,
-      "rating": 4.8,
-      "is_active": true,
-      "is_virtual": false,
-      "createdAt": "2024-01-01T00:00:00Z"
-    }
-  ],
-  "learning_modules": [
-    {
-      "id": 1,
-      "title": "Giới Thiệu Lịch Sử Hội An",
-      "description": "Tìm hiểu về lịch sử hình thành và phát triển của Hội An",
-      "difficulty": "beginner",
-      "estimated_duration": 15,
-      "content_type": "article",
-      "order": 1,
-      "body": "Hội An là một thị trấn ven sông lịch sử nằm ở Việt Nam, được UNESCO công nhận là Di sản Thế giới...",
-      "artifacts": [
-        1,
-        2
-      ],
-      "heritage_sites": [
-        1
-      ],
-      "learning_objectives": [
-        "Hiểu được lịch sử Hội An",
-        "Nhận biết các công trình kiến trúc"
-      ],
-      "key_concepts": [
-        "Hội An",
-        "Thương mại",
-        "Kiến trúc"
-      ],
-      "has_quiz": true,
-      "passing_score": 70,
-      "rating": 4.7,
-      "total_reviews": 120,
-      "is_featured": true,
-      "createdAt": "2024-01-15T10:30:00Z"
-    },
-    {
-      "id": 2,
-      "title": "Gốm Sứ Thương Tín",
-      "description": "Khám phá về gốm sứ thương mại từ thế kỷ 15-16",
-      "difficulty": "intermediate",
-      "estimated_duration": 20,
-      "content_type": "video",
-      "order": 2,
-      "content_url": "https://example.com/video/gom-su",
-      "artifacts": [
-        2
-      ],
-      "heritage_sites": [
-        1
-      ],
-      "learning_objectives": [
-        "Hiểu về gốm sứ thương mại",
-        "Nhận biết kỹ thuật làm gốm"
-      ],
-      "key_concepts": [
-        "Gốm sứ",
-        "Thương mại",
-        "Kỹ thuật"
-      ],
-      "has_quiz": true,
-      "passing_score": 70,
-      "rating": 4.5,
-      "total_reviews": 80,
-      "is_featured": true,
-      "createdAt": "2024-01-20T10:30:00Z"
-    }
-  ],
-  "game_quests": [
-    {
-      "id": 1,
-      "title": "Khám Phá Hội An",
-      "description": "Khám phá phố cổ Hội An và tìm hiểu về các di tích lịch sử",
-      "quest_type": "discovery",
-      "level": 1,
-      "difficulty": "easy",
-      "story_context": "Bạn là một nhà khảo cổ mới tập sự, hãy khám phá phố cổ Hội An",
-      "instructions": "Trả lời đúng 3/5 câu hỏi để hoàn thành nhiệm vụ",
-      "heritage_site_id": 1,
+      "curator": "ThS. Trần Văn An",
+      "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
       "artifact_ids": [
         1,
         2
       ],
-      "order": 1,
-      "points": 100,
-      "badges": [
-        "Explorer",
-        "History_Seeker"
-      ],
-      "game_config": {
-        "type": "multiple_choice",
-        "total_questions": 5,
-        "time_limit": 300
-      },
-      "questions": [
-        {
-          "id": 1,
-          "type": "multiple_choice",
-          "question": "Hội An được thành lập vào năm nào?",
-          "options": [
-            "1620",
-            "1624",
-            "1630",
-            "1650"
-          ],
-          "correct_answer": "1624",
-          "explanation": "Hội An được thành lập vào năm 1624 như một cảng thương mại"
-        },
-        {
-          "id": 2,
-          "type": "multiple_choice",
-          "question": "Hội An được UNESCO công nhận là Di sản Thế giới vào năm nào?",
-          "options": [
-            "1995",
-            "1997",
-            "1999",
-            "2001"
-          ],
-          "correct_answer": "1999",
-          "explanation": "Năm 1999 là năm Hội An được UNESCO công nhận"
-        },
-        {
-          "id": 3,
-          "type": "true_false",
-          "question": "Phố cổ Hội An có kiến trúc Trung Quốc, Nhật Bản và Pháp",
-          "options": [
-            "Đúng",
-            "Sai"
-          ],
-          "correct_answer": "Đúng",
-          "explanation": "Hội An là sự kết hợp của kiến trúc từ nhiều nước"
-        }
-      ],
-      "completion_rate": 85,
-      "average_time": 250,
-      "is_active": true,
-      "createdAt": "2024-01-15T10:30:00Z"
+      "is_active": true
+    }
+  ],
+  "favorites": [
+    {
+      "id": 1,
+      "userId": 2,
+      "type": "heritage_site",
+      "referenceId": 1,
+      "createdAt": "2024-10-15T10:00:00Z"
     },
     {
       "id": 2,
-      "title": "Sắp Xếp Dòng Thời Gian",
-      "description": "Sắp xếp lại các sự kiện lịch sử của Hội An theo đúng thứ tự",
-      "quest_type": "timeline_puzzle",
-      "level": 2,
-      "difficulty": "medium",
-      "story_context": "Dòng thời gian bị xáo trộn, hãy sắp xếp lại",
-      "instructions": "Kéo thả các sự kiện vào đúng vị trí theo thứ tự thời gian",
+      "userId": 3,
+      "type": "artifact",
+      "referenceId": 1,
+      "createdAt": "2024-10-22T11:45:00Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "userId": 2,
+      "type": "heritage_site",
       "heritage_site_id": 1,
-      "order": 2,
-      "points": 150,
-      "badges": [
-        "Timeline_Master"
-      ],
-      "game_config": {
-        "type": "drag_and_drop",
-        "events_count": 5,
-        "time_limit": 300
-      },
-      "completion_rate": 72,
-      "average_time": 280,
+      "rating": 5,
+      "comment": "Hội An thật tuyệt vời! Di sản văn hóa được bảo tồn rất tốt. Rất đáng ghé thăm!",
+      "createdAt": "2024-10-20T14:00:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "type": "artifact",
+      "heritage_site_id": 1,
+      "rating": 4,
+      "comment": "Những tư liệu gốm rất quý hiếm và được trưng bày cẩn thận.",
+      "createdAt": "2024-10-22T16:30:00Z"
+    }
+  ],
+  "game_chapters": [
+    {
+      "id": 1,
+      "name": "Lịch sử 18xx - 19xx",
+      "description": "Khám phá giai đoạn lịch sử Việt Nam thế kỷ 18-19",
+      "theme": "Lịch sử",
+      "order": 1,
+      "required_petals": 0,
+      "thumbnail": "https://images.unsplash.com/photo-1555169062-013468b47731?w=400",
+      "color": "#E74C3C",
       "is_active": true,
-      "createdAt": "2024-01-20T10:30:00Z"
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Văn hóa Bắc Bộ",
+      "description": "Khám phá văn hóa truyền thống miền Bắc Việt Nam",
+      "theme": "Văn hóa",
+      "order": 2,
+      "required_petals": 5,
+      "thumbnail": "https://images.unsplash.com/photo-1528127269322-539801943592?w=400",
+      "color": "#3498DB",
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z"
     },
     {
       "id": 3,
-      "title": "Trò Chơi Trí Nhớ Gốm Sứ",
-      "description": "Tìm các cặp gốm sứ giống nhau",
-      "quest_type": "memory_game",
-      "level": 1,
-      "difficulty": "easy",
-      "story_context": "Hãy ghép đôi các gốm sứ cổ",
-      "instructions": "Nhấp vào các thẻ để tìm các cặp giống nhau",
-      "artifact_ids": [
-        2
-      ],
+      "name": "Hoàng Thành Thăng Long",
+      "description": "Khám phá di tích Hoàng Thành qua các triều đại",
+      "theme": "Di tích",
       "order": 3,
-      "points": 80,
-      "badges": [
-        "Memory_Master"
-      ],
-      "game_config": {
-        "type": "memory_game",
-        "pairs_count": 6,
-        "time_limit": 180
-      },
-      "completion_rate": 90,
-      "average_time": 150,
+      "required_petals": 12,
+      "thumbnail": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400",
+      "color": "#F39C12",
       "is_active": true,
-      "createdAt": "2024-01-25T10:30:00Z"
+      "created_at": "2024-01-01T00:00:00Z"
     }
   ],
-  "collections": [
+  "game_characters": [
     {
       "id": 1,
-      "user_id": 2,
-      "name": "Những Di Sản Yêu Thích",
-      "description": "Bộ sưu tập những di sản văn hóa mà tôi yêu thích",
+      "name": "Chú Tễu",
+      "description": "Nhân vật rối nước vui tính, thông minh",
+      "persona": "Bạn là Chú Tễu, một nhân vật rối nước vui tính từ múa rối Bắc Bộ. Bạn đang bị mất trí nhớ và mất màu sơn. Bạn cần sự giúp đỡ của người chơi để tìm lại ký ức.",
+      "speaking_style": "Vui vẻ, hài hước, sử dụng từ ngữ dân dã, có chút nhí nhảnh",
+      "avatar": "https://example.com/teu-colored.png",
+      "avatar_uncolored": "https://example.com/teu-uncolored.png",
+      "rarity": "rare",
+      "origin": "Múa rối nước",
+      "is_collectible": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Thị Kính",
+      "description": "Nhân vật trong truyền thuyết Quan Âm Thị Kính",
+      "persona": "Bạn là Thị Kính, người phụ nữ kiên cường và nhân từ. Bạn hướng dẫn người chơi với sự dịu dàng và khôn ngoan.",
+      "speaking_style": "Nhẹ nhàng, từ tốn, khôn ngoan",
+      "avatar": "https://example.com/thikinh.png",
+      "rarity": "epic",
+      "origin": "Truyền thuyết dân gian",
+      "is_collectible": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "game_levels": [
+    {
+      "id": 1,
+      "chapter_id": 1,
+      "name": "Dòng thời gian lịch sử",
+      "description": "Sắp xếp các sự kiện lịch sử theo đúng thứ tự thời gian",
+      "type": "timeline",
+      "difficulty": "easy",
+      "order": 1,
+      "required_level": null,
+      "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+      "background_music": "https://example.com/audio/history-theme.mp3",
+      "ai_character_id": 2,
+      "knowledge_base": "Giai đoạn 18xx-19xx là thời kỳ quan trọng của lịch sử Việt Nam:\n- 1802: Nguyễn Ánh lên ngôi, lập triều Nguyễn\n- 1858: Pháp tấn công Đà Nẵng, bắt đầu xâm lược\n- 1862: Ký hiệp ước Nhâm Tuất, mất 3 tỉnh miền Đông\n- 1884: Hiệp ước Giáp Thân, Việt Nam thành thuộc địa\n- 1945: Cách mạng Tháng Tám thành công",
+      "clues": [
+        {
+          "id": "evt1",
+          "name": "Năm 1802",
+          "content": "Nguyễn Ánh lên ngôi hoàng đế",
+          "points": 10,
+          "hint": "Đây là sự kiện đầu triều Nguyễn"
+        },
+        {
+          "id": "evt2",
+          "name": "Năm 1858",
+          "content": "Pháp tấn công Đà Nẵng",
+          "points": 10,
+          "hint": "Sự kiện này đánh dấu bắt đầu chiến tranh"
+        }
+      ],
+      "artifact_ids": [],
+      "heritage_site_id": null,
+      "rewards": {
+        "petals": 1,
+        "coins": 50,
+        "character": null
+      },
+      "time_limit": 300,
+      "passing_score": 70,
+      "thumbnail": "https://images.unsplash.com/photo-1555169062-013468b47731?w=400",
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "chapter_id": 2,
+      "name": "Ký ức chú Tễu",
+      "description": "Giúp chú Tễu tìm lại ký ức qua các vật phẩm trong múa rối nước",
+      "type": "hidden_object",
+      "difficulty": "medium",
+      "order": 1,
+      "required_level": 1,
+      "background_image": "https://example.com/bg/water-puppet-stage.jpg",
+      "background_music": "https://example.com/audio/cheo-instrumental.mp3",
+      "ai_character_id": 1,
+      "knowledge_base": "Múa rối nước là nghệ thuật độc đáo của Việt Nam:\n- Ra đời từ thời Lý (thế kỷ 11-12)\n- Biểu diễn trên mặt nước (thủy đình)\n- Chú Tễu là nhân vật kể chuyện chính\n- Các con rối được điều khiển bằng tre và dây\n- Thường biểu diễn trong các dịp lễ hội",
+      "clues": [
+        {
+          "id": "clue1",
+          "name": "Cái quạt mo",
+          "content": "Cái quạt của chú Tễu dùng để phe phẩy, dẫn chuyện",
+          "coordinates": {
+            "x": 15,
+            "y": 45,
+            "width": 10,
+            "height": 10
+          },
+          "points": 15,
+          "hint": "Hãy tìm ở góc trái màn hình, gần con rối"
+        },
+        {
+          "id": "clue2",
+          "name": "Cờ hội",
+          "content": "Cờ hội thường được cắm quanh thủy đình trong dịp lễ",
+          "coordinates": {
+            "x": 80,
+            "y": 20,
+            "width": 5,
+            "height": 15
+          },
+          "points": 15,
+          "hint": "Nhìn lên cao, nơi có gió"
+        },
+        {
+          "id": "clue3",
+          "name": "Con trâu",
+          "content": "Trâu là biểu tượng của nông nghiệp Việt Nam",
+          "coordinates": {
+            "x": 50,
+            "y": 60,
+            "width": 15,
+            "height": 12
+          },
+          "points": 20,
+          "hint": "Ở giữa sân khấu, gần mặt nước"
+        }
+      ],
       "artifact_ids": [
-        1,
         2
       ],
-      "heritage_site_ids": [
-        1
-      ],
-      "exhibition_ids": [
-        1
-      ],
-      "is_public": true,
-      "is_shared": false,
-      "total_items": 4,
-      "createdAt": "2024-02-20T14:20:00Z"
+      "heritage_site_id": 1,
+      "rewards": {
+        "petals": 2,
+        "coins": 100,
+        "character": "teu_full_color"
+      },
+      "time_limit": 600,
+      "passing_score": 80,
+      "thumbnail": "https://example.com/thumb/water-puppet.jpg",
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z"
     }
   ],
-  "user_progress": [
+  "scan_objects": [
     {
       "id": 1,
-      "user_id": 2,
-      "completed_modules": [
-        {
-          "module_id": 1,
-          "completed_date": "2024-10-20T15:30:00Z",
-          "score": 85,
-          "time_spent": 900
-        }
-      ],
-      "completed_quests": [
-        {
-          "quest_id": 1,
-          "completed_date": "2024-10-22T10:15:00Z",
-          "score": 100,
-          "points_earned": 100,
-          "badges_earned": [
-            "Explorer"
-          ]
-        }
-      ],
-      "total_points": 180,
-      "level": 2,
-      "badges": [
-        "Explorer",
-        "Learner"
-      ],
-      "achievements": [
-        "First_Quest",
-        "First_Module"
-      ],
-      "streak": 5,
-      "total_learning_time": 1800,
-      "bookmarked_artifacts": [
-        1
-      ],
-      "bookmarked_sites": [
-        1
-      ],
-      "createdAt": "2024-02-20T14:20:00Z"
+      "code": "HOIAN001",
+      "name": "Chùa Cầu Hội An",
+      "type": "heritage_site",
+      "reference_id": 1,
+      "latitude": 15.8795,
+      "longitude": 108.3274,
+      "reward_coins": 200,
+      "reward_petals": 2,
+      "reward_character": "guardian_hoian",
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "code": "ARTIFACT001",
+      "name": "Bức tranh Hội An",
+      "type": "artifact",
+      "reference_id": 1,
+      "latitude": 15.8801,
+      "longitude": 108.3288,
+      "reward_coins": 150,
+      "reward_petals": 1,
+      "reward_character": null,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "shop_items": [
+    {
+      "id": 1,
+      "name": "Gợi ý thông minh",
+      "description": "Nhận gợi ý từ AI về manh mối đang tìm",
+      "type": "hint",
+      "price": 10,
+      "icon": "💡",
+      "effect": "reveal_hint",
+      "is_consumable": true,
+      "max_stack": 99,
+      "is_available": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Tăng tốc 2x",
+      "description": "Tăng gấp đôi điểm trong 5 phút",
+      "type": "boost",
+      "price": 50,
+      "icon": "⚡",
+      "effect": "double_points_5min",
+      "is_consumable": true,
+      "max_stack": 10,
+      "is_available": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Trang phục chú Tễu vàng",
+      "description": "Skin đặc biệt cho chú Tễu",
+      "type": "character_skin",
+      "price": 500,
+      "icon": "👘",
+      "effect": "change_skin_teu_gold",
+      "is_consumable": false,
+      "max_stack": 1,
+      "is_available": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Đèn lồng trang trí",
+      "description": "Trang trí bảo tàng của bạn",
+      "type": "decoration",
+      "price": 200,
+      "icon": "🏮",
+      "effect": "museum_decoration",
+      "is_consumable": false,
+      "max_stack": 10,
+      "is_available": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "game_badges": [
+    {
+      "id": 1,
+      "name": "Nhà thám hiểm",
+      "description": "Hoàn thành chapter đầu tiên",
+      "icon": "🗺️",
+      "requirement": "complete_chapter_1",
+      "rarity": "common",
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Bậc thầy lịch sử",
+      "description": "Hoàn thành tất cả các màn lịch sử",
+      "icon": "📜",
+      "requirement": "complete_all_history_levels",
+      "rarity": "rare",
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Người sưu tầm",
+      "description": "Thu thập 10 nhân vật",
+      "icon": "🎭",
+      "requirement": "collect_10_characters",
+      "rarity": "epic",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "game_achievements": [
+    {
+      "id": 1,
+      "name": "Bước đầu tiên",
+      "description": "Hoàn thành màn chơi đầu tiên",
+      "type": "level_completion",
+      "requirement": {
+        "levels_completed": 1
+      },
+      "reward_coins": 50,
+      "icon": "🌟",
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Hoa sen nở rộ",
+      "description": "Thu thập 20 cánh hoa sen",
+      "type": "collection",
+      "requirement": {
+        "total_petals": 20
+      },
+      "reward_coins": 200,
+      "icon": "🌸",
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Chuyên gia quét mã",
+      "description": "Quét 5 QR code tại di tích thực tế",
+      "type": "scan",
+      "requirement": {
+        "scans_count": 5
+      },
+      "reward_coins": 300,
+      "reward_character": "scanner_master",
+      "icon": "📱",
+      "created_at": "2024-01-01T00:00:00Z"
     }
   ]
 }
