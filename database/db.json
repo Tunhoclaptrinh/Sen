@@ -2,8 +2,8 @@
   "users": [
     {
       "id": 1,
-      "name": "Admin CultureVault",
-      "email": "admin@culturevault.com",
+      "name": "Admin Sen",
+      "email": "admin@sen.com",
       "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
       "phone": "0912345678",
       "role": "admin",
@@ -13,17 +13,18 @@
     {
       "id": 2,
       "name": "Phạm Văn Tuấn",
-      "email": "tuanpham@culturevault.com",
+      "email": "tuanpham@sen.com",
       "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
       "phone": "0987654321",
       "role": "researcher",
       "isActive": true,
-      "createdAt": "2024-02-20T14:20:00Z"
+      "createdAt": "2024-02-20T14:20:00Z",
+      "lastLogin": "2025-11-30T03:19:00.249Z"
     },
     {
       "id": 3,
       "name": "Đỗ Thị Hương",
-      "email": "huong.do@culturevault.com",
+      "email": "huong.do@sen.com",
       "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
       "phone": "0901234567",
       "role": "customer",

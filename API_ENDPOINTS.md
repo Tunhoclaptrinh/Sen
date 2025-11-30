@@ -1,4 +1,4 @@
-# 📡 CultureVault API Endpoints - Chi Tiết Toàn Bộ
+# 📡 SEN API Endpoints - Chi Tiết Toàn Bộ
 
 **Base URL:** `http://localhost:3000/api`  
 **API Version:** 1.0.0  
@@ -38,7 +38,7 @@ Content-Type: application/json
 ```json
 {
   "name": "Nguyễn Văn A",
-  "email": "user@culturevault.com",
+  "email": "user@sen.com",
   "password": "SecurePassword123!",
   "phone": "0987654321",
   "address": "123 Đường ABC, Hà Nội"
@@ -55,7 +55,7 @@ Content-Type: application/json
     "user": {
       "id": 1,
       "name": "Nguyễn Văn A",
-      "email": "user@culturevault.com",
+      "email": "user@sen.com",
       "phone": "0987654321",
       "role": "customer",
       "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A",
@@ -102,7 +102,7 @@ Content-Type: application/json
 
 ```json
 {
-  "email": "user@culturevault.com",
+  "email": "user@sen.com",
   "password": "SecurePassword123!"
 }
 ```
@@ -117,7 +117,7 @@ Content-Type: application/json
     "user": {
       "id": 1,
       "name": "Nguyễn Văn A",
-      "email": "user@culturevault.com",
+      "email": "user@sen.com",
       "phone": "0987654321",
       "role": "customer",
       "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A",
@@ -143,7 +143,7 @@ Content-Type: application/json
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
-    "email": "user@culturevault.com",
+    "email": "user@sen.com",
     "password": "SecurePassword123!"
   }'
 ```
@@ -168,7 +168,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
   "data": {
     "id": 1,
     "name": "Nguyễn Văn A",
-    "email": "user@culturevault.com",
+    "email": "user@sen.com",
     "phone": "0987654321",
     "role": "customer",
     "avatar": "https://...",
@@ -1436,7 +1436,7 @@ Authorization: Bearer {token}
   "data": {
     "id": 1,
     "name": "Nguyễn Văn A",
-    "email": "user@culturevault.com",
+    "email": "user@sen.com",
     "phone": "0987654321",
     "role": "customer",
     "avatar": "https://...",
@@ -1507,7 +1507,7 @@ Authorization: Bearer {token}
     "user": {
       "id": 1,
       "name": "Nguyễn Văn A",
-      "email": "user@culturevault.com"
+      "email": "user@sen.com"
     },
     "stats": {
       "total_reviews": 12,
