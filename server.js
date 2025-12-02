@@ -22,6 +22,7 @@ app.use(logQuery);
 // Import Routes
 // Mount all routes
 app.use('/api', require('./routes'));
+app.use('/api/admin', require('./routes/admin'));
 
 // API Documentation
 app.get('/api', (req, res) => {

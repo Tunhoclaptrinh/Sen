@@ -1,3 +1,4 @@
+// schemas/game_level.schema.js - ENHANCED VERSION
 module.exports = {
   chapter_id: {
     type: 'number',
@@ -21,9 +22,9 @@ module.exports = {
   },
   type: {
     type: 'enum',
-    enum: ['hidden_object', 'timeline', 'quiz', 'memory', 'puzzle'],
+    enum: ['story', 'hidden_object', 'timeline', 'quiz', 'memory', 'puzzle', 'mixed'],
     required: true,
-    description: 'Loại gameplay'
+    description: 'Loại gameplay chính (mixed = nhiều loại)'
   },
   difficulty: {
     type: 'enum',
@@ -44,16 +45,8 @@ module.exports = {
     foreignKey: 'game_levels',
     description: 'Level trước cần hoàn thành'
   },
-  background_image: {
-    type: 'string',
-    required: false,
-    description: 'Ảnh nền màn chơi'
-  },
-  background_music: {
-    type: 'string',
-    required: false,
-    description: 'Nhạc nền'
-  },
+
+  // === AI CHARACTER CONFIG ===
   ai_character_id: {
     type: 'number',
     required: false,
@@ -63,12 +56,102 @@ module.exports = {
   knowledge_base: {
     type: 'string',
     required: false,
-    description: 'Kiến thức cho AI'
+    description: 'Kiến thức cho AI (plain text hoặc markdown)'
   },
-  clues: {
+
+  // === SCREENS CONFIGURATION (CORE FEATURE) ===
+  screens: {
     type: 'array',
+    required: true,
+    description: 'Danh sách các màn hình trong level (JSON Array)',
+    example: [
+      {
+        id: 'screen_01',
+        type: 'DIALOGUE',
+        background_image: 'url',
+        background_music: 'url',
+        content: [
+          { speaker: 'AI', text: 'Chào bạn!', avatar: 'url' }
+        ],
+        next_screen_id: 'screen_02',
+        skip_allowed: true
+      },
+      {
+        id: 'screen_02',
+        type: 'HIDDEN_OBJECT',
+        background_image: 'url',
+        guide_text: 'Tìm 3 vật phẩm...',
+        items: [
+          {
+            id: 'item1',
+            name: 'Cái quạt',
+            coordinates: { x: 15, y: 45, width: 10, height: 10 },
+            fact_popup: 'Đây là cái quạt mo',
+            on_collect_effect: 'play_sound_fan',
+            points: 10
+          }
+        ],
+        required_items: 3,
+        next_screen_id: 'screen_03',
+        ai_hints_enabled: true
+      },
+      {
+        id: 'screen_03',
+        type: 'QUIZ',
+        question: 'Câu hỏi về vật phẩm vừa tìm?',
+        options: [
+          { text: 'Đáp án A', is_correct: false },
+          { text: 'Đáp án B', is_correct: true }
+        ],
+        time_limit: 60,
+        next_screen_id: 'screen_04',
+        reward: {
+          points: 50,
+          coins: 20
+        }
+      }
+    ]
+  },
+
+  // === COMPLETION & REWARDS ===
+  rewards: {
+    type: 'object',
     required: false,
-    description: 'Danh sách manh mối (JSON)'
+    description: 'Phần thưởng khi hoàn thành (JSON)',
+    example: {
+      petals: 2,
+      coins: 100,
+      character: 'teu_full_color',
+      badges: ['badge_01']
+    }
+  },
+  time_limit: {
+    type: 'number',
+    required: false,
+    description: 'Giới hạn thời gian toàn bộ level (giây)'
+  },
+  passing_score: {
+    type: 'number',
+    required: false,
+    default: 70,
+    description: 'Điểm tối thiểu để pass'
+  },
+
+  // === METADATA ===
+  thumbnail: {
+    type: 'string',
+    required: false,
+    description: 'Thumbnail cho level'
+  },
+  background_image: {
+    type: 'string',
+    required: false,
+    description: 'Background mặc định (nếu screens không có)'
+  },
+  background_music: {
+    type: 'string',
+    required: false,
+    description: 'Nhạc nền mặc định'
   },
   artifact_ids: {
     type: 'array',
@@ -81,31 +164,16 @@ module.exports = {
     foreignKey: 'heritage_sites',
     description: 'Di sản liên quan'
   },
-  rewards: {
-    type: 'object',
-    required: false,
-    description: 'Phần thưởng (JSON: {petals, coins, character})'
-  },
-  time_limit: {
-    type: 'number',
-    required: false,
-    description: 'Giới hạn thời gian (giây)'
-  },
-  passing_score: {
-    type: 'number',
-    required: false,
-    default: 70,
-    description: 'Điểm tối thiểu để pass'
-  },
-  thumbnail: {
-    type: 'string',
-    required: false,
-    description: 'Thumbnail'
-  },
   is_active: {
     type: 'boolean',
     required: false,
     default: true,
     description: 'Active'
+  },
+  created_by: {
+    type: 'number',
+    required: false,
+    foreignKey: 'users',
+    description: 'Admin/Creator ID'
   }
 };
