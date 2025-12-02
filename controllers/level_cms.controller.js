@@ -2,7 +2,7 @@
  * Level CMS Controller - Admin routes để quản lý levels
  */
 
-const levelManagementService = require('../services/level_management.service');
+const levelManagementService = require('../services/level_cms.service');
 const { protect, authorize } = require('../middleware/auth.middleware');
 
 class LevelCMSController {

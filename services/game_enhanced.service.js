@@ -261,7 +261,10 @@ class EnhancedGameService {
           collected: updatedSession.collected_items.length,
           required: requiredItems,
           all_collected: allCollected
-        }
+        },
+        points_earned: item.points,
+        // Trigger AI chủ động nói chuyện khi nhặt được đồ
+        ai_reaction_prompt: `Người chơi vừa tìm thấy ${item.name}. Hãy giải thích ngắn gọn về ý nghĩa của nó bằng giọng điệu của bạn.`
       }
     };
   }

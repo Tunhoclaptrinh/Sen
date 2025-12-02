@@ -46,5 +46,18 @@ module.exports = {
     required: false,
     default: true,
     description: 'Có active không'
-  }
+  },
+  layer_index: {
+    type: 'number',
+    required: true,
+    description: 'Vị trí lớp cánh hoa (1: Trong cùng, 2: Giữa, 3: Ngoài)'
+  },
+  petal_image_closed: {
+    type: 'string',
+    description: 'Ảnh cánh sen khi chưa nở (nụ)'
+  },
+  petal_image_bloom: {
+    type: 'string',
+    description: 'Ảnh cánh sen khi đã nở rộ'
+  },
 };

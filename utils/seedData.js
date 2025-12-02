@@ -288,42 +288,115 @@ const seedData = {
   ],
 
   // Chapters - Lớp cánh hoa sen
+  // 1. Chapters (Lớp cánh sen)
   game_chapters: [
     {
       id: 1,
-      name: "Lịch sử 18xx - 19xx",
-      description: "Khám phá giai đoạn lịch sử Việt Nam thế kỷ 18-19",
-      theme: "Lịch sử",
-      order: 1,
+      name: "Lớp Cánh 1: Cội Nguồn",
+      description: "Những câu chuyện khởi nguồn của văn hóa Bắc Bộ.",
+      layer_index: 1, // Lớp trong cùng
+      petal_state: "blooming",
       required_petals: 0,
-      thumbnail: "https://images.unsplash.com/photo-1555169062-013468b47731?w=400",
-      color: "#E74C3C",
-      is_active: true,
-      created_at: "2024-01-01T00:00:00Z"
+      is_active: true
     },
     {
       id: 2,
-      name: "Văn hóa Bắc Bộ",
-      description: "Khám phá văn hóa truyền thống miền Bắc Việt Nam",
-      theme: "Văn hóa",
-      order: 2,
+      name: "Lớp Cánh 2: Giao Thoa",
+      description: "Sự giao thoa văn hóa thế kỷ 18-19.",
+      layer_index: 2, // Lớp giữa
+      petal_state: "locked",
       required_petals: 5,
-      thumbnail: "https://images.unsplash.com/photo-1528127269322-539801943592?w=400",
-      color: "#3498DB",
-      is_active: true,
-      created_at: "2024-01-01T00:00:00Z"
-    },
+      is_active: true
+    }
+  ],
+
+  // 2. Characters (Chú Tễu với 2 trạng thái)
+  game_characters: [
     {
-      id: 3,
-      name: "Hoàng Thành Thăng Long",
-      description: "Khám phá di tích Hoàng Thành qua các triều đại",
-      theme: "Di tích",
-      order: 3,
-      required_petals: 12,
-      thumbnail: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400",
-      color: "#F39C12",
-      is_active: true,
-      created_at: "2024-01-01T00:00:00Z"
+      id: 1,
+      name: "Chú Tễu",
+      description: "Nhân vật dẫn chuyện hóm hỉnh của múa rối nước.",
+
+      // Trạng thái Mất trí nhớ (Locked)
+      avatar_locked: "https://example.com/assets/teu_bw.png",
+      persona_amnesia: "Hỡi ôi... Ta là ai? Đây là đâu? Sao người ta nhạt nhòa, đầu óc trống rỗng thế này? Người anh em có biết ta là ai không?",
+
+      // Trạng thái Hồi phục (Unlocked)
+      avatar_unlocked: "https://example.com/assets/teu_color.png",
+      persona_restored: "Hề hề! Ta nhớ ra rồi! Ta là Chú Tễu, người dẫn chuyện lừng danh thiên hạ đây! Cảm ơn người anh em đã giúp ta tìm lại sắc màu nhé!",
+
+      speaking_style: "Vui vẻ, dân dã, dùng từ ngữ cổ (hỡi ôi, hề hề, người anh em)",
+      origin: "Múa rối nước",
+      rarity: "epic",
+      is_collectible: true
+    }
+  ],
+
+  // 3. Levels (Màn chơi Múa Rối Nước)
+  game_levels: [
+    {
+      id: 1,
+      chapter_id: 1,
+      name: "Ký ức Chú Tễu",
+      description: "Giúp chú Tễu tìm lại các vật phẩm thất lạc để khôi phục trí nhớ.",
+      type: "mixed", // Kết hợp nhiều loại màn hình
+      difficulty: "easy",
+      ai_character_id: 1, // Link với Chú Tễu
+
+      // Kiến thức để AI trả lời không bị "ảo giác"
+      knowledge_base: "Múa rối nước là nghệ thuật sân khấu dân gian truyền thống độc đáo, ra đời từ nền văn minh lúa nước. Chú Tễu là nhân vật tiêu biểu nhất, có thân hình to béo, cởi trần, đóng khố, luôn vui vẻ.",
+
+      screens: [
+        {
+          id: "screen_01",
+          type: "DIALOGUE",
+          content: [
+            { speaker: "AI", text: "Chào người anh em! Ta thấy quen quen mà không nhớ ra tên mình. Người có thấy cái gì rơi rớt quanh đây không?" }
+          ],
+          next_screen_id: "screen_02"
+        },
+        {
+          id: "screen_02",
+          type: "HIDDEN_OBJECT",
+          guide_text: "Tìm 2 vật phẩm: Cái Quạt và Lá Cờ để giúp Tễu nhớ lại.",
+          background_image: "https://example.com/assets/bg_thuy_dinh.jpg",
+          items: [
+            {
+              id: "item_fan",
+              name: "Cái Quạt Mo",
+              coordinates: { x: 15, y: 45, width: 10, height: 10 },
+              fact_popup: "Cái quạt mo gắn liền với hình ảnh Chú Tễu, dùng để phe phẩy dẫn chuyện.",
+              points: 10
+            },
+            {
+              id: "item_flag",
+              name: "Cờ Hội",
+              coordinates: { x: 80, y: 20, width: 5, height: 15 },
+              fact_popup: "Cờ hội ngũ sắc thường được cắm quanh thủy đình trong các dịp lễ hội.",
+              points: 10
+            }
+          ],
+          required_items: 2,
+          next_screen_id: "screen_03"
+        },
+        {
+          id: "screen_03",
+          type: "QUIZ",
+          question: "Dựa vào vật phẩm vừa tìm được, đố bạn biết Múa rối nước thường diễn ra ở đâu?",
+          options: [
+            { text: "Trên sân đình", is_correct: false },
+            { text: "Trên mặt nước (Thủy đình)", is_correct: true },
+            { text: "Trong nhà hát", is_correct: false }
+          ],
+          reward: { points: 50, coins: 20 }
+        }
+      ],
+
+      rewards: {
+        petals: 1,
+        coins: 100,
+        character: "teu_full_color" // Tên mã nhân vật nhận được
+      }
     }
   ],
 

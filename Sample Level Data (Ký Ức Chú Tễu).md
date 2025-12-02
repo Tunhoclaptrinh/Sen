@@ -51,40 +51,47 @@ auto_advance: false
       background_image: "assets/bg/san_khau_roi_nuoc.jpg",
       background_music: "assets/audio/bg_cheo_instrumental.mp3",
       guide_text: "Tìm 3 vật phẩm giúp Tễu nhớ lại: Cờ hội, Cái quạt, Con trâu.",
-      items: [
-        {
-          id: "item_fan",
-          name: "Cái quạt mo",
-          coordinates: { x: 15, y: 45, width: 10, height: 10 },
-          fact_popup: "Cái quạt của chú Tễu dùng để phe phẩy, dẫn chuyện.",
-          on_collect_effect: "play_sound_fan_open",
-          points: 15,
-          hint: "Hãy tìm ở góc trái màn hình, gần con rối"
-        },
-        {
-          id: "item_flag",
-          name: "Cờ hội",
-          coordinates: { x: 80, y: 20, width: 5, height: 15 },
-          fact_popup: "Cờ hội thường được cắm quanh thủy đình trong dịp lễ.",
-          on_collect_effect: "play_sound_flag",
-          points: 15,
-          hint: "Nhìn lên cao, nơi có gió"
-        },
-        {
-          id: "item_buffalo",
-          name: "Con trâu",
-          coordinates: { x: 50, y: 60, width: 15, height: 12 },
-          fact_popup: "Trâu là biểu tượng của nông nghiệp Việt Nam.",
-          on_collect_effect: "play_sound_buffalo",
-          points: 20,
-          hint: "Ở giữa sân khấu, gần mặt nước"
-        }
-      ],
-      required_items: 3,
-      next_screen_id: "screen_03_quiz",
-      ai_hints_enabled: true,
-      hint_cost: 10 // coins
-    },
+      transition_effect: "FADE_OUT", // Hiệu ứng chuyển cảnh
+      ,
+
+completion_condition: {
+"type": "COLLECT_ALL",
+"count": 3
+}
+items: [
+{
+id: "item_fan",
+name: "Cái quạt mo",
+coordinates: { x: 15, y: 45, width: 10, height: 10 },
+fact_popup: "Cái quạt của chú Tễu dùng để phe phẩy, dẫn chuyện.",
+on_collect_effect: "play_sound_fan_open",
+points: 15,
+hint: "Hãy tìm ở góc trái màn hình, gần con rối"
+},
+{
+id: "item_flag",
+name: "Cờ hội",
+coordinates: { x: 80, y: 20, width: 5, height: 15 },
+fact_popup: "Cờ hội thường được cắm quanh thủy đình trong dịp lễ.",
+on_collect_effect: "play_sound_flag",
+points: 15,
+hint: "Nhìn lên cao, nơi có gió"
+},
+{
+id: "item_buffalo",
+name: "Con trâu",
+coordinates: { x: 50, y: 60, width: 15, height: 12 },
+fact_popup: "Trâu là biểu tượng của nông nghiệp Việt Nam.",
+on_collect_effect: "play_sound_buffalo",
+points: 20,
+hint: "Ở giữa sân khấu, gần mặt nước"
+}
+],
+required_items: 3,
+next_screen_id: "screen_03_quiz",
+ai_hints_enabled: true,
+hint_cost: 10 // coins
+},
 
     // Màn hình 3: Trắc nghiệm để phục hồi trí nhớ
     {

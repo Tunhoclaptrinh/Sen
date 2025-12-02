@@ -510,6 +510,8 @@ class GameService {
   async scanObject(userId, code, location) {
     // Tìm heritage site hoặc artifact từ code
     const artifact = db.findOne('scan_objects', { code: code.toUpperCase() });
+    // XỬ LÝ PHẦN THƯỞNG ĐẶC BIỆT: HIDDEN PETAL
+    const objectData = db.findOne('scan_objects', { code: code.toUpperCase() });
 
     if (!artifact) {
       return {
@@ -534,6 +536,20 @@ class GameService {
           message: 'You are too far from the location',
           statusCode: 400
         };
+      }
+    }
+
+    // Nếu là vật phẩm đặc biệt mở khóa Chapter ẩn
+    if (objectData.unlocks_hidden_chapter_id) {
+      const progress = db.findOne('game_progress', { user_id: userId });
+      const hiddenChapterId = objectData.unlocks_hidden_chapter_id;
+
+      if (!progress.unlocked_chapters.includes(hiddenChapterId)) {
+        db.update('game_progress', progress.id, {
+          unlocked_chapters: [...progress.unlocked_chapters, hiddenChapterId],
+          // Thông báo đặc biệt
+          special_event: "HIDDEN_LOTUS_PETAL_REVEALED"
+        });
       }
     }
 
@@ -564,6 +580,8 @@ class GameService {
       location: location,
       scanned_at: new Date().toISOString()
     });
+
+
 
     return {
       success: true,

@@ -271,6 +271,7 @@ class GameController {
   scanObject = async (req, res, next) => {
     try {
       const { code, latitude, longitude } = req.body;
+      const objectData = db.findOne('scan_objects', { code: code.toUpperCase() });
 
       if (!code) {
         return res.status(400).json({
@@ -290,6 +291,19 @@ class GameController {
           success: false,
           message: result.message
         });
+      }
+
+      if (objectData.unlocks_hidden_chapter_id) {
+        const progress = db.findOne('game_progress', { user_id: userId });
+        const hiddenChapterId = objectData.unlocks_hidden_chapter_id;
+
+        if (!progress.unlocked_chapters.includes(hiddenChapterId)) {
+          db.update('game_progress', progress.id, {
+            unlocked_chapters: [...progress.unlocked_chapters, hiddenChapterId],
+            // Thông báo đặc biệt
+            special_event: "HIDDEN_LOTUS_PETAL_REVEALED"
+          });
+        }
       }
 
       res.json(result);

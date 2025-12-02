@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Admin Sen",
       "email": "admin@sen.com",
-      "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
+      "password": "$2a$10$ljLMJFWpt4uYURYEkQdvGeBijln.p8.XQjHSP/iKWCesuPVaLhg/m",
       "phone": "0912345678",
       "role": "admin",
       "isActive": true,
@@ -14,18 +14,17 @@
       "id": 2,
       "name": "Phạm Văn Tuấn",
       "email": "tuanpham@sen.com",
-      "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
+      "password": "$2a$10$ljLMJFWpt4uYURYEkQdvGeBijln.p8.XQjHSP/iKWCesuPVaLhg/m",
       "phone": "0987654321",
       "role": "researcher",
       "isActive": true,
-      "createdAt": "2024-02-20T14:20:00Z",
-      "lastLogin": "2025-11-30T03:19:00.249Z"
+      "createdAt": "2024-02-20T14:20:00Z"
     },
     {
       "id": 3,
       "name": "Đỗ Thị Hương",
       "email": "huong.do@sen.com",
-      "password": "$2a$10$/MGxVa9wg0jw0Sf95h6lcegII/j8HmJJIkuxXkbU7TRGWKt6KiVSK",
+      "password": "$2a$10$ljLMJFWpt4uYURYEkQdvGeBijln.p8.XQjHSP/iKWCesuPVaLhg/m",
       "phone": "0901234567",
       "role": "customer",
       "isActive": true,
@@ -230,7 +229,10 @@
       "end_date": "2024-12-31T23:59:59Z",
       "curator": "ThS. Trần Văn An",
       "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
-      "artifact_ids": [1, 2],
+      "artifact_ids": [
+        1,
+        2
+      ],
       "is_active": true
     }
   ],
@@ -273,39 +275,21 @@
   "game_chapters": [
     {
       "id": 1,
-      "name": "Lịch sử 18xx - 19xx",
-      "description": "Khám phá giai đoạn lịch sử Việt Nam thế kỷ 18-19",
-      "theme": "Lịch sử",
-      "order": 1,
+      "name": "Lớp Cánh 1: Cội Nguồn",
+      "description": "Những câu chuyện khởi nguồn của văn hóa Bắc Bộ.",
+      "layer_index": 1,
+      "petal_state": "blooming",
       "required_petals": 0,
-      "thumbnail": "https://images.unsplash.com/photo-1555169062-013468b47731?w=400",
-      "color": "#E74C3C",
-      "is_active": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "is_active": true
     },
     {
       "id": 2,
-      "name": "Văn hóa Bắc Bộ",
-      "description": "Khám phá văn hóa truyền thống miền Bắc Việt Nam",
-      "theme": "Văn hóa",
-      "order": 2,
+      "name": "Lớp Cánh 2: Giao Thoa",
+      "description": "Sự giao thoa văn hóa thế kỷ 18-19.",
+      "layer_index": 2,
+      "petal_state": "locked",
       "required_petals": 5,
-      "thumbnail": "https://images.unsplash.com/photo-1528127269322-539801943592?w=400",
-      "color": "#3498DB",
-      "is_active": true,
-      "created_at": "2024-01-01T00:00:00Z"
-    },
-    {
-      "id": 3,
-      "name": "Hoàng Thành Thăng Long",
-      "description": "Khám phá di tích Hoàng Thành qua các triều đại",
-      "theme": "Di tích",
-      "order": 3,
-      "required_petals": 12,
-      "thumbnail": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400",
-      "color": "#F39C12",
-      "is_active": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "is_active": true
     }
   ],
   "game_characters": [
@@ -432,7 +416,9 @@
           "hint": "Ở giữa sân khấu, gần mặt nước"
         }
       ],
-      "artifact_ids": [2],
+      "artifact_ids": [
+        2
+      ],
       "heritage_site_id": 1,
       "rewards": {
         "petals": 2,
@@ -597,12 +583,5 @@
       "icon": "📱",
       "created_at": "2024-01-01T00:00:00Z"
     }
-  ],
-  "collections": [],
-  "notifications": [],
-  "game_progress": [],
-  "game_sessions": [],
-  "user_inventory": [],
-  "scan_history": [],
-  "ai_chat_history": []
+  ]
 }

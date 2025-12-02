@@ -49,5 +49,30 @@ module.exports = {
     required: false,
     default: true,
     description: 'Có thể thu thập'
+  },
+  // Avatar: 2 trạng thái
+  avatar_locked: {
+    type: 'string',
+    description: 'Ảnh đen trắng/mờ khi chưa mở khóa'
+  },
+  avatar_unlocked: {
+    type: 'string',
+    description: 'Ảnh có màu khi đã hoàn thành level'
+  },
+
+  // AI Persona: 2 trạng thái tâm lý
+  persona_amnesia: {
+    type: 'string',
+    description: 'Prompt khi nhân vật đang mất trí nhớ (Ngơ ngác, hỏi người chơi là ai)'
+  },
+  persona_restored: {
+    type: 'string',
+    description: 'Prompt khi nhân vật đã nhớ lại (Vui vẻ, kể chuyện lịch sử)'
+  },
+
+  // Cho tính năng Bảo tàng sống
+  museum_interaction: {
+    type: 'string',
+    description: 'Hành động khi click vào trong bảo tàng (VD: "Hát một đoạn chèo")'
   }
 };
