@@ -1,4 +1,4 @@
-odule.exports = {
+module.exports = {
   // Auth & User
   user: require('./user.schema'),
 
