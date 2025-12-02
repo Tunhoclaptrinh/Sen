@@ -230,10 +230,7 @@
       "end_date": "2024-12-31T23:59:59Z",
       "curator": "ThS. Trần Văn An",
       "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
-      "artifact_ids": [
-        1,
-        2
-      ],
+      "artifact_ids": [1, 2],
       "is_active": true
     }
   ],
@@ -435,9 +432,7 @@
           "hint": "Ở giữa sân khấu, gần mặt nước"
         }
       ],
-      "artifact_ids": [
-        2
-      ],
+      "artifact_ids": [2],
       "heritage_site_id": 1,
       "rewards": {
         "petals": 2,
@@ -602,5 +597,12 @@
       "icon": "📱",
       "created_at": "2024-01-01T00:00:00Z"
     }
-  ]
+  ],
+  "collections": [],
+  "notifications": [],
+  "game_progress": [],
+  "game_sessions": [],
+  "user_inventory": [],
+  "scan_history": [],
+  "ai_chat_history": []
 }
