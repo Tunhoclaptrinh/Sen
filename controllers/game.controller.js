@@ -4,8 +4,8 @@
  */
 
 const db = require('../config/database');
-const gameService = require('../services/game.service');
-
+// const gameService = require('../services/game.service'); // Cũ
+const gameService = require('../services/game_enhanced.service'); // Mới
 class GameController {
   /**
    * GET /api/game/progress

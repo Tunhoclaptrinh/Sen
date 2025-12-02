@@ -22,7 +22,7 @@ router.use('/game', require('./game.routes'));
 router.use('/ai', require('./ai.routes'));
 router.use('/quests', require('./quest.routes'));
 
-router.use('/quests', require('./upload.routes'));
+router.use('/upload', require('./upload.routes'));
 
 
 module.exports = router;
