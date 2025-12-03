@@ -1,7 +1,6 @@
 /**
- * Unified Game Service - Tất cả logic game trong 1 service
- * Kết hợp: game.service + game_enhanced.service + game_session.service
- * Hỗ trợ: Progress, Chapters, Levels, Screen-based gameplay, Museum, Scan, Shop
+ * Unified Game Service - FIXED VERSION
+ * Sửa lỗi duplicate methods, thêm missing implementations
  */
 
 const db = require('../config/database');
@@ -377,7 +376,7 @@ class GameService {
   }
 
   /**
-   * Submit answer cho QUIZ screen
+   * Submit answer for QUIZ screen
    */
   async submitAnswer(sessionId, userId, answerId) {
     const session = db.findOne('game_sessions', {
@@ -445,7 +444,7 @@ class GameService {
   }
 
   /**
-   * Navigate to next screen
+   * Navigate to next screen in level
    */
   async navigateToNextScreen(sessionId, userId) {
     const session = db.findOne('game_sessions', {
@@ -465,13 +464,13 @@ class GameService {
     const level = db.findById('game_levels', session.level_id);
     const currentScreen = level.screens[session.current_screen_index];
 
-    // Check if can proceed (đã hoàn thành yêu cầu của screen hiện tại chưa)
+    // Check if can proceed (completed current screen requirements)
     const canProceed = this.validateScreenCompletion(currentScreen, session);
     if (!canProceed.success) {
       return canProceed;
     }
 
-    // Tìm next screen
+    // Find next screen
     let nextScreenIndex = session.current_screen_index + 1;
 
     // Check if has custom next_screen_id
@@ -523,6 +522,67 @@ class GameService {
         }
       }
     };
+  }
+
+  /**
+   * Validate if current screen is completed
+   */
+  validateScreenCompletion(screen, session) {
+    switch (screen.type) {
+      case 'HIDDEN_OBJECT':
+        const requiredItems = screen.required_items || screen.items?.length || 0;
+        const collectedCount = session.collected_items.filter(
+          item => screen.items?.some(i => i.id === item)
+        ).length;
+
+        if (collectedCount < requiredItems) {
+          return {
+            success: false,
+            message: `Need to collect ${requiredItems - collectedCount} more items`,
+            statusCode: 400
+          };
+        }
+        break;
+
+      case 'QUIZ':
+        const hasAnswered = session.answered_questions.some(
+          q => q.screen_id === screen.id
+        );
+        if (!hasAnswered) {
+          return {
+            success: false,
+            message: 'Must answer the question first',
+            statusCode: 400
+          };
+        }
+        break;
+
+      case 'DIALOGUE':
+        if (!screen.skip_allowed && !screen.auto_advance) {
+          const screenState = session.screen_states?.[screen.id];
+          if (!screenState?.read) {
+            return {
+              success: false,
+              message: 'Must read the dialogue first',
+              statusCode: 400
+            };
+          }
+        }
+        break;
+
+      case 'TIMELINE':
+        const hasOrdered = session.timeline_order && session.timeline_order.length > 0;
+        if (!hasOrdered) {
+          return {
+            success: false,
+            message: 'Must arrange timeline events first',
+            statusCode: 400
+          };
+        }
+        break;
+    }
+
+    return { success: true };
   }
 
   async completeLevel(levelId, userId, { score, timeSpent } = {}) {
@@ -614,53 +674,6 @@ class GameService {
   }
 
   // ==================== VALIDATION ====================
-
-  validateScreenCompletion(screen, session) {
-    switch (screen.type) {
-      case 'HIDDEN_OBJECT':
-        const requiredItems = screen.required_items || screen.items?.length || 0;
-        const collectedCount = session.collected_items.filter(
-          item => screen.items?.some(i => i.id === item)
-        ).length;
-
-        if (collectedCount < requiredItems) {
-          return {
-            success: false,
-            message: `Need to collect ${requiredItems - collectedCount} more items`,
-            statusCode: 400
-          };
-        }
-        break;
-
-      case 'QUIZ':
-        const hasAnswered = session.answered_questions.some(
-          q => q.screen_id === screen.id
-        );
-        if (!hasAnswered) {
-          return {
-            success: false,
-            message: 'Must answer the question first',
-            statusCode: 400
-          };
-        }
-        break;
-
-      case 'DIALOGUE':
-        if (!screen.skip_allowed && !screen.auto_advance) {
-          const screenState = session.screen_states?.[screen.id];
-          if (!screenState?.read) {
-            return {
-              success: false,
-              message: 'Must read the dialogue first',
-              statusCode: 400
-            };
-          }
-        }
-        break;
-    }
-
-    return { success: true };
-  }
 
   validateScreensStructure(screens) {
     if (!Array.isArray(screens) || screens.length === 0) {

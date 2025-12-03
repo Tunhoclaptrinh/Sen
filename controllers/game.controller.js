@@ -176,6 +176,67 @@ class GameController {
     }
   };
 
+  // ==================== SCREEN NAVIGATION (NEW) ====================
+
+  /**
+   * POST /api/game/sessions/:id/next-screen
+   * Navigate to next screen in level
+   */
+  navigateToNextScreen = async (req, res, next) => {
+    try {
+      const result = await gameService.navigateToNextScreen(
+        req.params.id,
+        req.user.id
+      );
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message,
+          data: result.data
+        });
+      }
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * POST /api/game/sessions/:id/submit-answer
+   * Submit answer for QUIZ screen
+   */
+  submitAnswer = async (req, res, next) => {
+    try {
+      const { answerId } = req.body;
+
+      if (!answerId) {
+        return res.status(400).json({
+          success: false,
+          message: 'Answer ID is required'
+        });
+      }
+
+      const result = await gameService.submitAnswer(
+        req.params.id,
+        req.user.id,
+        answerId
+      );
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message
+        });
+      }
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // ==================== MUSEUM ====================
 
   getMuseum = async (req, res, next) => {
