@@ -1,5 +1,6 @@
 /**
  * Unified Game Service - Tất cả logic game trong 1 service
+ * Kết hợp: game.service + game_enhanced.service + game_session.service
  * Hỗ trợ: Progress, Chapters, Levels, Screen-based gameplay, Museum, Scan, Shop
  */
 
@@ -909,8 +910,6 @@ class GameService {
   }
 
   // ==================== SHOP & INVENTORY ====================
-
-
 
   /**
    * Mua item trong shop
