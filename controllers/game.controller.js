@@ -1,16 +1,14 @@
 /**
  * Game Controller - Xử lý game logic cho SEN
- * Quản lý Sen flowers, levels, game progression
+ * Sử dụng unified game.service.js
  */
 
-const db = require('../config/database');
 const gameService = require('../services/game.service');
 
 class GameController {
-  /**
-   * GET /api/game/progress
-   * Lấy tiến độ chơi của user
-   */
+
+  // ==================== PROGRESS ====================
+
   getProgress = async (req, res, next) => {
     try {
       const result = await gameService.getProgress(req.user.id);
@@ -20,10 +18,8 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/chapters
-   * Lấy danh sách chapters (lớp cánh hoa sen)
-   */
+  // ==================== CHAPTERS ====================
+
   getChapters = async (req, res, next) => {
     try {
       const result = await gameService.getChapters(req.user.id);
@@ -33,10 +29,6 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/chapters/:id
-   * Chi tiết một chapter
-   */
   getChapterDetail = async (req, res, next) => {
     try {
       const result = await gameService.getChapterDetail(
@@ -57,10 +49,6 @@ class GameController {
     }
   };
 
-  /**
-   * POST /api/game/chapters/:id/unlock
-   * Mở khóa chapter
-   */
   unlockChapter = async (req, res, next) => {
     try {
       const result = await gameService.unlockChapter(
@@ -81,10 +69,8 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/levels/:chapterId
-   * Lấy danh sách levels trong chapter
-   */
+  // ==================== LEVELS ====================
+
   getLevels = async (req, res, next) => {
     try {
       const result = await gameService.getLevels(
@@ -97,10 +83,6 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/levels/:id/detail
-   * Chi tiết level (màn chơi)
-   */
   getLevelDetail = async (req, res, next) => {
     try {
       const result = await gameService.getLevelDetail(
@@ -121,10 +103,6 @@ class GameController {
     }
   };
 
-  /**
-   * POST /api/game/levels/:id/start
-   * Bắt đầu chơi level
-   */
   startLevel = async (req, res, next) => {
     try {
       const result = await gameService.startLevel(
@@ -145,10 +123,6 @@ class GameController {
     }
   };
 
-  /**
-   * POST /api/game/levels/:id/collect-clue
-   * Thu thập manh mối trong level
-   */
   collectClue = async (req, res, next) => {
     try {
       const { clueId } = req.body;
@@ -179,10 +153,6 @@ class GameController {
     }
   };
 
-  /**
-   * POST /api/game/levels/:id/complete
-   * Hoàn thành level
-   */
   completeLevel = async (req, res, next) => {
     try {
       const { score, timeSpent } = req.body;
@@ -206,10 +176,69 @@ class GameController {
     }
   };
 
+  // ==================== SCREEN NAVIGATION (NEW) ====================
+
   /**
-   * GET /api/game/museum
-   * Lấy bộ sưu tập bảo tàng của user
+   * POST /api/game/sessions/:id/next-screen
+   * Navigate to next screen in level
    */
+  navigateToNextScreen = async (req, res, next) => {
+    try {
+      const result = await gameService.navigateToNextScreen(
+        req.params.id,
+        req.user.id
+      );
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message,
+          data: result.data
+        });
+      }
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * POST /api/game/sessions/:id/submit-answer
+   * Submit answer for QUIZ screen
+   */
+  submitAnswer = async (req, res, next) => {
+    try {
+      const { answerId } = req.body;
+
+      if (!answerId) {
+        return res.status(400).json({
+          success: false,
+          message: 'Answer ID is required'
+        });
+      }
+
+      const result = await gameService.submitAnswer(
+        req.params.id,
+        req.user.id,
+        answerId
+      );
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message
+        });
+      }
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // ==================== MUSEUM ====================
+
   getMuseum = async (req, res, next) => {
     try {
       const result = await gameService.getMuseum(req.user.id);
@@ -219,10 +248,6 @@ class GameController {
     }
   };
 
-  /**
-   * POST /api/game/museum/toggle
-   * Mở/đóng bảo tàng để kiếm tiền
-   */
   toggleMuseum = async (req, res, next) => {
     try {
       const { isOpen } = req.body;
@@ -238,10 +263,8 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/badges
-   * Lấy danh sách badges đã thu thập
-   */
+  // ==================== BADGES & ACHIEVEMENTS ====================
+
   getBadges = async (req, res, next) => {
     try {
       const result = await gameService.getBadges(req.user.id);
@@ -251,10 +274,6 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/achievements
-   * Lấy danh sách achievements
-   */
   getAchievements = async (req, res, next) => {
     try {
       const result = await gameService.getAchievements(req.user.id);
@@ -264,10 +283,8 @@ class GameController {
     }
   };
 
-  /**
-   * POST /api/game/scan
-   * Scan QR code/object tại di tích thực tế
-   */
+  // ==================== SCAN ====================
+
   scanObject = async (req, res, next) => {
     try {
       const { code, latitude, longitude } = req.body;
@@ -298,10 +315,8 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/leaderboard
-   * Bảng xếp hạng
-   */
+  // ==================== LEADERBOARD ====================
+
   getLeaderboard = async (req, res, next) => {
     try {
       const { type = 'global', limit = 20 } = req.query;
@@ -317,10 +332,6 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/daily-reward
-   * Nhận phần thưởng hàng ngày
-   */
   getDailyReward = async (req, res, next) => {
     try {
       const result = await gameService.getDailyReward(req.user.id);
@@ -338,10 +349,8 @@ class GameController {
     }
   };
 
-  /**
-   * POST /api/game/shop/purchase
-   * Mua items trong shop
-   */
+  // ==================== SHOP & INVENTORY ====================
+
   purchaseItem = async (req, res, next) => {
     try {
       const { itemId, quantity = 1 } = req.body;
@@ -372,10 +381,6 @@ class GameController {
     }
   };
 
-  /**
-   * GET /api/game/inventory
-   * Lấy túi đồ của user
-   */
   getInventory = async (req, res, next) => {
     try {
       const result = await gameService.getInventory(req.user.id);
@@ -385,10 +390,6 @@ class GameController {
     }
   };
 
-  /**
-   * POST /api/game/inventory/use
-   * Sử dụng item từ inventory
-   */
   useItem = async (req, res, next) => {
     try {
       const { itemId, targetId } = req.body;

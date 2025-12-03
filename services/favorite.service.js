@@ -33,7 +33,8 @@ class FavoriteService extends BaseService {
 
     return {
       success: true,
-      data: enriched
+      data: enriched,
+      count: enriched.length
     };
   }
 
@@ -94,6 +95,81 @@ class FavoriteService extends BaseService {
     return {
       success: true,
       message: 'Removed from favorites'
+    };
+  }
+
+  // --- NEW METHODS ---
+
+  async checkFavorite(userId, type, referenceId) {
+    const favorite = db.findOne('favorites', {
+      user_id: userId,
+      type,
+      reference_id: parseInt(referenceId)
+    });
+
+    return {
+      success: true,
+      data: {
+        isFavorited: !!favorite,
+        favoriteId: favorite ? favorite.id : null
+      }
+    };
+  }
+
+  async toggleFavorite(userId, type, referenceId) {
+    const check = await this.checkFavorite(userId, type, referenceId);
+
+    if (check.data.isFavorited) {
+      await this.removeFavorite(userId, type, referenceId);
+      return {
+        success: true,
+        message: 'Removed from favorites',
+        data: { isFavorited: false }
+      };
+    } else {
+      await this.addFavorite(userId, type, referenceId);
+      return {
+        success: true,
+        message: 'Added to favorites',
+        data: { isFavorited: true }
+      };
+    }
+  }
+
+  async clearFavorites(userId, type = null) {
+    const query = { user_id: userId };
+    if (type) query.type = type;
+
+    const favorites = db.findMany('favorites', query);
+
+    let count = 0;
+    favorites.forEach(fav => {
+      db.delete('favorites', fav.id);
+      count++;
+    });
+
+    return {
+      success: true,
+      message: `Cleared ${count} favorites`,
+      data: { count }
+    };
+  }
+
+  async getFavoriteStats(userId) {
+    const favorites = db.findMany('favorites', { user_id: userId });
+
+    const stats = {
+      total: favorites.length,
+      byType: {
+        heritage_site: favorites.filter(f => f.type === 'heritage_site').length,
+        artifact: favorites.filter(f => f.type === 'artifact').length,
+        exhibition: favorites.filter(f => f.type === 'exhibition').length
+      }
+    };
+
+    return {
+      success: true,
+      data: stats
     };
   }
 }

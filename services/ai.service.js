@@ -20,7 +20,7 @@ class AIService {
   async chat(userId, message, context = {}) {
     try {
       // Lấy character context từ level hiện tại
-      const character = await this.getCharacterContext(context);
+      const character = await this.getCharacterContext(context, userId);
 
       // Lấy knowledge base
       const knowledge = await this.getKnowledgeBase(context);
@@ -66,25 +66,40 @@ class AIService {
   /**
    * Lấy context của character
    */
-  async getCharacterContext(context) {
-    if (context.characterId) {
-      return db.findById('game_characters', context.characterId);
-    }
+  async getCharacterContext(context, userId) {
+    // Lấy thông tin nhân vật gốc
+    let characterId = context.characterId;
 
-    if (context.levelId) {
+    // Nếu đang trong game session, lấy character của level đó
+    if (!characterId && context.levelId) {
       const level = db.findById('game_levels', context.levelId);
-      if (level && level.ai_character_id) {
-        return db.findById('game_characters', level.ai_character_id);
-      }
+      if (level) characterId = level.ai_character_id;
     }
 
-    // Default character
+    if (!characterId) return null; // Fallback default character
+
+    const character = db.findById('game_characters', characterId);
+
+    // KIỂM TRA TRẠNG THÁI TIẾN ĐỘ CỦA USER VỚI LEVEL NÀY
+    // Để quyết định dùng persona nào (Mất trí nhớ hay Đã hồi phục)
+    const progress = db.findOne('game_progress', { user_id: userId });
+    const isLevelCompleted = progress?.completed_levels?.includes(context.levelId);
+
+    // Logic chọn Persona
+    let activePersona = character.persona_amnesia; // Mặc định là mất trí nhớ
+    let activeAvatar = character.avatar_locked;
+
+    // Nếu đã hoàn thành level HOẶC đang ở màn hình kết thúc (completion screen)
+    if (isLevelCompleted || context.screenType === 'COMPLETION') {
+      activePersona = character.persona_restored;
+      activeAvatar = character.avatar_unlocked;
+    }
+
     return {
-      id: 1,
-      name: "Chú Tễu",
-      persona: "Bạn là Chú Tễu, nhân vật rối nước vui tính, thông minh. Bạn hướng dẫn người chơi khám phá lịch sử và văn hóa Việt Nam.",
-      speaking_style: "Vui vẻ, hài hước, sử dụng từ ngữ dân dã",
-      avatar: "https://example.com/teu.png"
+      name: character.name,
+      persona: activePersona, // Dùng persona động
+      speaking_style: character.speaking_style,
+      avatar: activeAvatar,
     };
   }
 

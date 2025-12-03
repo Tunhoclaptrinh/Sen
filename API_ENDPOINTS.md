@@ -1,1203 +1,306 @@
-# 📡 SEN API Endpoints - Chi Tiết Toàn Bộ
+# 📡 SEN API Endpoints - Toàn Bộ Chi Tiết
 
 **Base URL:** `http://localhost:3000/api`  
-**API Version:** 1.0.0  
-**Last Updated:** 2024-11-22
+**API Version:** 2.0.0  
+**Last Updated:** 2024-12-02
 
 ---
 
 ## 📋 Mục Lục
 
-1. [Authentication](#authentication-apis)
-2. [Heritage Sites](#heritage-sites-apis)
-3. [Artifacts](#artifacts-apis)
-4. [Collections](#collections-apis)
-5. [Reviews & Ratings](#reviews-ratings-apis)
-6. [Favorites](#favorites-apis)
-7. [Exhibitions](#exhibitions-apis)
-8. [Learning & Quests](#learning-quests-apis)
-9. [User Management](#user-management-apis)
-10. [Import/Export](#import-export-apis)
+1. [Authentication](#1-authentication)
+2. [Heritage Sites](#2-heritage-sites)
+3. [Artifacts](#3-artifacts)
+4. [Collections](#4-collections)
+5. [Reviews & Ratings](#5-reviews--ratings)
+6. [Favorites](#6-favorites)
+7. [Exhibitions](#7-exhibitions)
+8. [Learning Modules](#8-learning-modules)
+9. [Game System](#9-game-system-new)
+10. [AI Chatbot](#10-ai-chatbot-new)
+11. [Admin CMS](#11-admin-cms-new)
+12. [User Management](#12-user-management)
 
 ---
 
-## 🔐 Authentication APIs
+## 1. Authentication
 
-### 1. Register (Đăng Ký)
+### Register
 
-**Endpoint:** `POST /auth/register`
-
-**Headers:**
-
-```
+```http
+POST /api/auth/register
 Content-Type: application/json
-```
 
-**Request Body:**
-
-```json
 {
   "name": "Nguyễn Văn A",
   "email": "user@sen.com",
-  "password": "SecurePassword123!",
-  "phone": "0987654321",
-  "address": "123 Đường ABC, Hà Nội"
+  "password": "123456",
+  "phone": "0987654321"
 }
-```
 
-**Response 201 - Success:**
-
-```json
+Response 201:
 {
   "success": true,
-  "message": "User registered successfully",
   "data": {
-    "user": {
-      "id": 1,
-      "name": "Nguyễn Văn A",
-      "email": "user@sen.com",
-      "phone": "0987654321",
-      "role": "customer",
-      "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A",
-      "isActive": true,
-      "createdAt": "2024-11-22T10:30:00Z"
-    },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    "user": { ... },
+    "token": "eyJhbGci..."
   }
 }
 ```
 
-**Response 400 - Validation Error:**
+### Login
 
-```json
-{
-  "success": false,
-  "errors": [
-    {
-      "field": "email",
-      "message": "Invalid email format"
-    },
-    {
-      "field": "password",
-      "message": "Password must be at least 6 characters"
-    }
-  ]
-}
-```
+```http
+POST /api/auth/login
+Content-Type: application/json
 
-**Validation Rules:**
-
-- `name`: 2-100 characters, required
-- `email`: Valid email, unique, required
-- `password`: Min 6 chars, required
-- `phone`: 10-11 digits, required
-
----
-
-### 2. Login (Đăng Nhập)
-
-**Endpoint:** `POST /auth/login`
-
-**Request Body:**
-
-```json
 {
   "email": "user@sen.com",
-  "password": "SecurePassword123!"
+  "password": "123456"
 }
 ```
 
-**Response 200 - Success:**
+### Get Current User
 
-```json
-{
-  "success": true,
-  "message": "Login successful",
-  "data": {
-    "user": {
-      "id": 1,
-      "name": "Nguyễn Văn A",
-      "email": "user@sen.com",
-      "phone": "0987654321",
-      "role": "customer",
-      "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A",
-      "isActive": true
-    },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-  }
-}
-```
-
-**Response 401 - Invalid Credentials:**
-
-```json
-{
-  "success": false,
-  "message": "Invalid email or password"
-}
-```
-
-**cURL Example:**
-
-```bash
-curl -X POST http://localhost:3000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "user@sen.com",
-    "password": "SecurePassword123!"
-  }'
-```
-
----
-
-### 3. Get Current User (Lấy Thông Tin Hiện Tại)
-
-**Endpoint:** `GET /auth/me`
-
-**Headers:**
-
-```
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "data": {
-    "id": 1,
-    "name": "Nguyễn Văn A",
-    "email": "user@sen.com",
-    "phone": "0987654321",
-    "role": "customer",
-    "avatar": "https://...",
-    "bio": "Yêu thích lịch sử Việt Nam",
-    "isActive": true,
-    "createdAt": "2024-11-22T10:30:00Z"
-  }
-}
-```
-
-**cURL Example:**
-
-```bash
-curl http://localhost:3000/api/auth/me \
-  -H "Authorization: Bearer $TOKEN"
-```
-
----
-
-### 4. Change Password (Đổi Mật Khẩu)
-
-**Endpoint:** `PUT /auth/change-password`
-
-**Headers:**
-
-```
-Authorization: Bearer {token}
-Content-Type: application/json
-```
-
-**Request Body:**
-
-```json
-{
-  "currentPassword": "OldPassword123!",
-  "newPassword": "NewPassword456!"
-}
-```
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "message": "Password changed successfully"
-}
-```
-
-**Response 400 - Wrong Current Password:**
-
-```json
-{
-  "success": false,
-  "message": "Current password is incorrect"
-}
-```
-
----
-
-### 5. Logout (Đăng Xuất)
-
-**Endpoint:** `POST /auth/logout`
-
-**Headers:**
-
-```
+```http
+GET /api/auth/me
 Authorization: Bearer {token}
 ```
 
-**Response 200:**
+### Change Password
 
-```json
+```http
+PUT /api/auth/change-password
+Authorization: Bearer {token}
+
 {
-  "success": true,
-  "message": "Logout successful"
+  "currentPassword": "123456",
+  "newPassword": "newpass"
 }
 ```
 
 ---
 
-## 🏛️ Heritage Sites APIs
+## 2. Heritage Sites
 
-### 1. Get All Heritage Sites (Danh Sách Di Sản)
+### Get All Heritage Sites
 
-**Endpoint:** `GET /heritage-sites`
+```http
+GET /api/heritage-sites?page=1&limit=10&sort=rating&order=desc
 
-**Query Parameters:**
+Query Parameters:
+- page: number (default: 1)
+- limit: number (default: 10, max: 100)
+- sort: string (name, rating, year_established)
+- order: asc | desc
+- type: monument | temple | museum | historic_building
+- region: string (Quảng Nam, Hà Nội...)
+- unesco_listed: boolean
+- q: string (full-text search)
 
-```
-?page=1&limit=10&sort=rating&order=desc&type=monument&region=Quảng%20Nam&unesco_listed=true&q=hội
-```
-
-**Parameters Detail:**
-| Param | Type | Default | Description |
-|-------|------|---------|-------------|
-| `page` | number | 1 | Trang (1-based) |
-| `limit` | number | 10 | Items/trang (max: 100) |
-| `sort` | string | id | Field để sort |
-| `order` | string | asc | asc hoặc desc |
-| `type` | string | - | monument, temple, museum... |
-| `region` | string | - | Quảng Nam, Hà Nội... |
-| `unesco_listed` | boolean | - | true/false |
-| `q` | string | - | Full-text search |
-
-**Response 200:**
-
-```json
+Response 200:
 {
   "success": true,
-  "count": 25,
+  "count": 15,
+  "data": [ ... ],
+  "pagination": { ... }
+}
+```
+
+### Get Heritage Site Details
+
+```http
+GET /api/heritage-sites/:id
+```
+
+### Find Nearby Heritage Sites
+
+```http
+GET /api/heritage-sites/nearby?latitude=15.8801&longitude=108.3288&radius=5
+
+Parameters:
+- latitude: number (required)
+- longitude: number (required)
+- radius: number (km, default: 5)
+
+Response 200:
+{
+  "success": true,
   "data": [
     {
       "id": 1,
       "name": "Phố Cổ Hội An",
-      "type": "historic_building",
-      "description": "Thị trấn ven sông lịch sử...",
-      "region": "Quảng Nam",
-      "latitude": 15.8801,
-      "longitude": 108.3288,
-      "address": "Thành phố Hội An, Quảng Nam, Việt Nam",
-      "year_established": 1624,
-      "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600",
-      "rating": 4.9,
-      "total_reviews": 523,
-      "visit_hours": "08:00 - 17:00",
-      "entrance_fee": 120000,
-      "is_accessible": true,
-      "curator": "ThS. Trần Văn An",
-      "institution": "Bộ Văn Hóa, Thể Thao và Du Lịch",
-      "unesco_listed": true,
-      "significance": "international",
-      "heritage_status": "active",
-      "is_active": true
-    }
-  ],
-  "pagination": {
-    "page": 1,
-    "limit": 10,
-    "total": 25,
-    "totalPages": 3,
-    "hasNext": true,
-    "hasPrev": false
-  }
-}
-```
-
-**cURL Example:**
-
-```bash
-curl "http://localhost:3000/api/heritage-sites?page=1&limit=5&sort=rating&order=desc&type=monument" \
-  -H "Authorization: Bearer $TOKEN"
-```
-
----
-
-### 2. Get Heritage Site Details (Chi Tiết Di Sản)
-
-**Endpoint:** `GET /heritage-sites/:id`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "data": {
-    "id": 1,
-    "name": "Phố Cổ Hội An",
-    "type": "historic_building",
-    "description": "Phố cổ Hội An là một thị trấn ven sông lịch sử...",
-    "cultural_period": "Triều Nguyễn - Pháp thuộc",
-    "region": "Quảng Nam",
-    "latitude": 15.8801,
-    "longitude": 108.3288,
-    "address": "Thành phố Hội An, Quảng Nam, Việt Nam",
-    "year_established": 1624,
-    "year_restored": 1999,
-    "image": "https://...",
-    "gallery": [
-      "https://images.unsplash.com/photo-1578107982254-eb158fc3a0e7?w=600",
-      "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600"
-    ],
-    "rating": 4.9,
-    "total_reviews": 523,
-    "visit_hours": "08:00 - 17:00",
-    "entrance_fee": 120000,
-    "is_accessible": true,
-    "accessibility_info": "Có đường dành cho xe lăn",
-    "curator": "ThS. Trần Văn An",
-    "institution": "Bộ Văn Hóa, Thể Thao và Du Lịch",
-    "unesco_listed": true,
-    "significance": "international",
-    "heritage_status": "active",
-    "is_active": true,
-    "createdAt": "2024-01-15T10:30:00Z",
-    "updatedAt": "2024-10-26T12:00:00Z"
-  }
-}
-```
-
----
-
-### 3. Search Heritage Sites (Tìm Kiếm)
-
-**Endpoint:** `GET /heritage-sites/search?q=hội+an`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 5,
-  "data": [
-    {
-      "id": 1,
-      "name": "Phố Cổ Hội An",
-      "description": "Thị trấn ven sông lịch sử..."
-    }
-  ],
-  "pagination": {
-    "page": 1,
-    "limit": 10,
-    "total": 5,
-    "totalPages": 1
-  }
-}
-```
-
----
-
-### 4. Find Nearby Heritage Sites (Tìm Quanh Đây)
-
-**Endpoint:** `GET /heritage-sites/nearby?latitude=20.8268&longitude=106.2674&radius=10`
-
-**Parameters:**
-
-- `latitude` (required): Vĩ độ
-- `longitude` (required): Kinh độ
-- `radius` (optional): Bán kính km, default=5
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 3,
-  "data": [
-    {
-      "id": 2,
-      "name": "Tháp Rùa - Hà Nội",
-      "latitude": 20.8268,
-      "longitude": 106.2674,
       "distance": 0.5,
-      "rating": 4.7
-    },
-    {
-      "id": 3,
-      "name": "Khu Phố Cổ Hà Nội",
-      "latitude": 20.83,
-      "longitude": 106.265,
-      "distance": 0.8,
-      "rating": 4.5
+      "rating": 4.9
     }
   ]
 }
 ```
 
----
+### Get Artifacts of Heritage Site
 
-### 5. Get Heritage Site Artifacts (Hiện Vật Của Di Sản)
+```http
+GET /api/heritage-sites/:id/artifacts
+```
 
-**Endpoint:** `GET /heritage-sites/:id/artifacts`
+### Get Timeline of Heritage Site
 
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 12,
-  "data": [
-    {
-      "id": 1,
-      "name": "Bức Tranh Sơn Dầu 'Phố Cổ Hội An'",
-      "artifact_type": "painting",
-      "year_created": 1985,
-      "condition": "excellent",
-      "image": "https://...",
-      "rating": 4.8
-    }
-  ]
-}
+```http
+GET /api/heritage-sites/:id/timeline
 ```
 
 ---
 
-### 6. Get Heritage Site Timeline (Dòng Thời Gian)
+## 3. Artifacts
 
-**Endpoint:** `GET /heritage-sites/:id/timeline`
+### Get All Artifacts
 
-**Response 200:**
+```http
+GET /api/artifacts?artifact_type=painting&condition=excellent
 
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "id": 1,
-      "title": "Thành lập Hội An",
-      "year": 1624,
-      "description": "Hội An được thành lập như một cảng thương mại...",
-      "category": "founded",
-      "image": "https://...",
-      "impact": "Trở thành trung tâm thương mại"
-    },
-    {
-      "id": 2,
-      "title": "Tu bổ Phố cổ",
-      "year": 1999,
-      "description": "Bắt đầu công trình tu bổ toàn diện phố cổ",
-      "category": "restored",
-      "impact": "Bảo tồn di sản cho thế hệ tương lai"
-    }
-  ]
-}
+Query Parameters:
+- artifact_type: sculpture | painting | pottery | textile
+- condition: excellent | good | fair | poor
+```
+
+### Search Artifacts
+
+```http
+GET /api/artifacts/search?q=tranh+sơn+dầu
+```
+
+### Get Related Artifacts
+
+```http
+GET /api/artifacts/:id/related
 ```
 
 ---
 
-### 7. Create Heritage Site (Admin Only)
+## 4. Collections
 
-**Endpoint:** `POST /heritage-sites`
+### Get My Collections
 
-**Headers:**
-
-```
-Authorization: Bearer {admin_token}
-Content-Type: application/json
-```
-
-**Request Body:**
-
-```json
-{
-  "name": "Di Sản Mới",
-  "type": "monument",
-  "description": "Mô tả chi tiết...",
-  "region": "Hà Nội",
-  "latitude": 20.8268,
-  "longitude": 106.2674,
-  "address": "Địa chỉ cụ thể",
-  "year_established": 1000,
-  "image": "https://...",
-  "is_active": true
-}
-```
-
-**Response 201:**
-
-```json
-{
-  "success": true,
-  "message": "Heritage site created successfully",
-  "data": {
-    "id": 25,
-    "name": "Di Sản Mới",
-    "createdAt": "2024-11-22T10:30:00Z"
-  }
-}
-```
-
----
-
-## 🏺 Artifacts APIs
-
-### 1. Get All Artifacts (Danh Sách Hiện Vật)
-
-**Endpoint:** `GET /artifacts?page=1&limit=10&artifact_type=painting&condition=excellent`
-
-**Query Parameters:**
-
-```
-artifact_type: sculpture, painting, document, pottery, textile, tool, weapon, jewelry
-condition: excellent, good, fair, poor
-```
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 50,
-  "data": [
-    {
-      "id": 1,
-      "name": "Bức Tranh Sơn Dầu 'Phố Cổ Hội An'",
-      "description": "Tranh sơn dầu thế kỷ 20...",
-      "heritage_site_id": 1,
-      "category_id": 2,
-      "artifact_type": "painting",
-      "year_created": 1985,
-      "creator": "Nguyễn Tường",
-      "material": "Sơn dầu trên vải",
-      "condition": "excellent",
-      "image": "https://...",
-      "rating": 4.8,
-      "is_on_display": true
-    }
-  ],
-  "pagination": {
-    "page": 1,
-    "limit": 10,
-    "total": 50,
-    "totalPages": 5
-  }
-}
-```
-
----
-
-### 2. Search Artifacts (Tìm Kiếm Hiện Vật)
-
-**Endpoint:** `GET /artifacts/search?q=tranh+sơn+dầu`
-
----
-
-### 3. Get Artifact Details (Chi Tiết Hiện Vật)
-
-**Endpoint:** `GET /artifacts/:id`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "data": {
-    "id": 1,
-    "name": "Bức Tranh Sơn Dầu 'Phố Cổ Hội An'",
-    "description": "Tranh sơn dầu thế kỷ 20 mô tả quang cảnh...",
-    "heritage_site_id": 1,
-    "category_id": 2,
-    "artifact_type": "painting",
-    "year_created": 1985,
-    "year_discovered": 1990,
-    "creator": "Nguyễn Tường",
-    "material": "Sơn dầu trên vải",
-    "dimensions": "100 x 80 cm",
-    "weight": 5,
-    "condition": "excellent",
-    "damage_description": "Không có",
-    "conservation_notes": "Được bảo quản trong phòng kiểm soát độ ẩm",
-    "images": ["https://..."],
-    "location_in_site": "Phòng tranh 1, Tầng 1",
-    "storage_location": "Kho 3",
-    "historical_context": "Được vẽ vào giai đoạn Việt Nam hiện đại",
-    "cultural_significance": "Phản ánh vẻ đẹp kiến trúc Hội An",
-    "story": "Tác phẩm này được tạo ra để lưu giữ hình ảnh...",
-    "rating": 4.8,
-    "total_reviews": 45,
-    "is_on_display": true,
-    "is_public": true,
-    "createdAt": "2024-01-15T10:30:00Z"
-  }
-}
-```
-
----
-
-### 4. Get Related Artifacts (Hiện Vật Liên Quan)
-
-**Endpoint:** `GET /artifacts/:id/related`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 3,
-  "data": [
-    {
-      "id": 2,
-      "name": "Bộ Gốm Sứ Thương Tín",
-      "artifact_type": "pottery",
-      "rating": 4.6
-    }
-  ]
-}
-```
-
----
-
-### 5. Create Artifact (Admin Only)
-
-**Endpoint:** `POST /artifacts`
-
-**Request Body:**
-
-```json
-{
-  "name": "Hiện Vật Mới",
-  "description": "Mô tả chi tiết...",
-  "heritage_site_id": 1,
-  "category_id": 2,
-  "artifact_type": "painting",
-  "year_created": 1980,
-  "creator": "Tác Giả",
-  "material": "Chất liệu",
-  "condition": "good"
-}
-```
-
----
-
-## 💾 Collections APIs
-
-### 1. Get My Collections (Danh Sách Bộ Sưu Tập)
-
-**Endpoint:** `GET /collections`
-
-**Headers:**
-
-```
+```http
+GET /api/collections
 Authorization: Bearer {token}
 ```
 
-**Response 200:**
+### Create Collection
 
-```json
-{
-  "success": true,
-  "count": 3,
-  "data": [
-    {
-      "id": 1,
-      "user_id": 2,
-      "name": "Những Di Sản Yêu Thích",
-      "description": "Bộ sưu tập những di sản...",
-      "artifact_ids": [1, 2, 5],
-      "heritage_site_ids": [1, 2],
-      "exhibition_ids": [1],
-      "total_items": 8,
-      "is_public": true,
-      "is_shared": false,
-      "createdAt": "2024-10-15T10:00:00Z",
-      "updatedAt": "2024-10-20T14:30:00Z"
-    }
-  ]
-}
-```
-
----
-
-### 2. Get Collection Details (Chi Tiết Bộ Sưu Tập)
-
-**Endpoint:** `GET /collections/:id`
-
----
-
-### 3. Create Collection (Tạo Bộ Sưu Tập)
-
-**Endpoint:** `POST /collections`
-
-**Headers:**
-
-```
+```http
+POST /api/collections
 Authorization: Bearer {token}
-Content-Type: application/json
-```
 
-**Request Body:**
-
-```json
 {
   "name": "Bộ Sưu Tập Mới",
-  "description": "Mô tả bộ sưu tập",
+  "description": "Mô tả...",
   "is_public": true,
   "artifact_ids": [1, 2, 3]
 }
 ```
 
-**Response 201:**
+### Add Artifact to Collection
 
-```json
-{
-  "success": true,
-  "message": "Collection created successfully",
-  "data": {
-    "id": 4,
-    "user_id": 2,
-    "name": "Bộ Sưu Tập Mới",
-    "total_items": 3,
-    "createdAt": "2024-11-22T10:30:00Z"
-  }
-}
-```
-
----
-
-### 4. Update Collection (Cập Nhật Bộ Sưu Tập)
-
-**Endpoint:** `PUT /collections/:id`
-
-**Request Body:**
-
-```json
-{
-  "name": "Bộ Sưu Tập Được Cập Nhật",
-  "description": "Mô tả mới",
-  "is_public": false
-}
-```
-
----
-
-### 5. Add Artifact to Collection (Thêm Hiện Vật)
-
-**Endpoint:** `POST /collections/:collectionId/artifacts/:artifactId`
-
-**Headers:**
-
-```
+```http
+POST /api/collections/:collectionId/artifacts/:artifactId
 Authorization: Bearer {token}
 ```
 
-**Response 200:**
+### Remove Artifact from Collection
 
-```json
-{
-  "success": true,
-  "message": "Artifact added to collection",
-  "data": {
-    "id": 4,
-    "total_items": 4
-  }
-}
-```
-
----
-
-### 6. Remove Artifact from Collection (Xóa Hiện Vật)
-
-**Endpoint:** `DELETE /collections/:collectionId/artifacts/:artifactId`
-
-**Headers:**
-
-```
-Authorization: Bearer {token}
-```
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "message": "Artifact removed from collection"
-}
-```
-
----
-
-### 7. Delete Collection (Xóa Bộ Sưu Tập)
-
-**Endpoint:** `DELETE /collections/:id`
-
-**Headers:**
-
-```
+```http
+DELETE /api/collections/:collectionId/artifacts/:artifactId
 Authorization: Bearer {token}
 ```
 
 ---
 
-## ⭐ Reviews & Ratings APIs
+## 5. Reviews & Ratings
 
-### 1. Get Reviews by Type (Danh Sách Đánh Giá)
+### Get Reviews by Type
 
-**Endpoint:** `GET /reviews/type/:type?page=1&limit=10`
-
-**Parameters:**
-
-- `type`: heritage_site, artifact
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 523,
-  "data": [
-    {
-      "id": 1,
-      "user_id": 2,
-      "type": "heritage_site",
-      "heritage_site_id": 1,
-      "rating": 5,
-      "comment": "Hội An thật tuyệt vời!",
-      "user": {
-        "id": 2,
-        "name": "Nguyễn Văn A",
-        "avatar": "https://..."
-      },
-      "createdAt": "2024-10-20T14:00:00Z"
-    }
-  ],
-  "pagination": {
-    "page": 1,
-    "limit": 10,
-    "total": 523
-  }
-}
+```http
+GET /api/reviews/type/heritage_site?page=1&limit=10
 ```
 
----
+### Create Review
 
-### 2. Create Review (Tạo Đánh Giá)
-
-**Endpoint:** `POST /reviews`
-
-**Headers:**
-
-```
+```http
+POST /api/reviews
 Authorization: Bearer {token}
-Content-Type: application/json
-```
 
-**Request Body:**
-
-```json
 {
   "type": "heritage_site",
   "heritage_site_id": 1,
   "rating": 5,
-  "comment": "Hội An thật tuyệt vời! Di sản văn hóa được bảo tồn rất tốt."
-}
-```
-
-**Response 201:**
-
-```json
-{
-  "success": true,
-  "message": "Review created successfully",
-  "data": {
-    "id": 524,
-    "user_id": 2,
-    "type": "heritage_site",
-    "heritage_site_id": 1,
-    "rating": 5,
-    "comment": "Hội An thật tuyệt vời!",
-    "createdAt": "2024-11-22T10:30:00Z"
-  }
-}
-```
-
-**Validation:**
-
-- `rating`: 1-5, required
-- `comment`: 5-1000 characters, required
-- `type`: heritage_site hoặc artifact
-
----
-
-### 3. Update Review (Cập Nhật Đánh Giá)
-
-**Endpoint:** `PUT /reviews/:id`
-
-**Request Body:**
-
-```json
-{
-  "rating": 4,
-  "comment": "Cập nhật bình luận..."
+  "comment": "Tuyệt vời!"
 }
 ```
 
 ---
 
-### 4. Delete Review (Xóa Đánh Giá)
+## 6. Favorites
 
-**Endpoint:** `DELETE /reviews/:id`
+### Get Favorites
 
-**Headers:**
-
+```http
+GET /api/favorites
+Authorization: Bearer {token}
 ```
+
+### Add to Favorites
+
+```http
+POST /api/favorites/:type/:id
+Authorization: Bearer {token}
+
+URL Examples:
+/api/favorites/heritage_site/1
+/api/favorites/artifact/5
+```
+
+### Toggle Favorite
+
+```http
+POST /api/favorites/:type/:id/toggle
+Authorization: Bearer {token}
+```
+
+### Check Favorite Status
+
+```http
+GET /api/favorites/:type/:id/check
 Authorization: Bearer {token}
 ```
 
 ---
 
-### 5. Get Reviews (Danh Sách Tất Cả)
+## 7. Exhibitions
 
-**Endpoint:** `GET /reviews?page=1&limit=20`
+### Get All Exhibitions
 
----
-
-### 6. Search Reviews (Tìm Kiếm)
-
-**Endpoint:** `GET /reviews/search?q=kiến+trúc`
-
----
-
-## ❤️ Favorites APIs
-
-### 1. Get My Favorites (Danh Sách Yêu Thích)
-
-**Endpoint:** `GET /favorites`
-
-**Headers:**
-
+```http
+GET /api/exhibitions
 ```
+
+### Get Active Exhibitions
+
+```http
+GET /api/exhibitions/active
+```
+
+---
+
+## 8. Learning Modules
+
+### Get Learning Path
+
+```http
+GET /api/learning/path
 Authorization: Bearer {token}
-```
 
-**Query Parameters:**
-
-```
-?page=1&limit=10&type=heritage_site
-```
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 5,
-  "data": [
-    {
-      "id": 1,
-      "user_id": 2,
-      "type": "heritage_site",
-      "reference_id": 1,
-      "item": {
-        "id": 1,
-        "name": "Phố Cổ Hội An",
-        "image": "https://...",
-        "rating": 4.9
-      },
-      "createdAt": "2024-10-15T10:00:00Z"
-    }
-  ]
-}
-```
-
----
-
-### 2. Add to Favorites (Thêm Yêu Thích)
-
-**Endpoint:** `POST /favorites/:type/:id`
-
-**URL Examples:**
-
-```
-/favorites/heritage_site/1
-/favorites/artifact/5
-/favorites/exhibition/2
-```
-
-**Headers:**
-
-```
-Authorization: Bearer {token}
-```
-
-**Response 201:**
-
-```json
-{
-  "success": true,
-  "message": "Added to favorites",
-  "data": {
-    "id": 6,
-    "type": "heritage_site",
-    "reference_id": 1,
-    "createdAt": "2024-11-22T10:30:00Z"
-  }
-}
-```
-
----
-
-### 3. Toggle Favorite (Bật/Tắt Yêu Thích)
-
-**Endpoint:** `POST /favorites/:type/:id/toggle`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "message": "Favorite toggled",
-  "data": {
-    "isFavorited": true
-  }
-}
-```
-
----
-
-### 4. Check Favorite Status (Kiểm Tra)
-
-**Endpoint:** `GET /favorites/:type/:id/check`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "data": {
-    "isFavorited": true,
-    "addedAt": "2024-10-15T10:00:00Z"
-  }
-}
-```
-
----
-
-### 5. Remove from Favorites (Xóa Yêu Thích)
-
-**Endpoint:** `DELETE /favorites/:type/:id`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "message": "Removed from favorites"
-}
-```
-
----
-
-## 🎭 Exhibitions APIs
-
-### 1. Get All Exhibitions (Danh Sách Triển Lãm)
-
-**Endpoint:** `GET /exhibitions?page=1&limit=10`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 5,
-  "data": [
-    {
-      "id": 1,
-      "name": "Hành Trình Hội An Qua 400 Năm",
-      "description": "Triển lãm lịch sử toàn diện...",
-      "heritage_site_id": 1,
-      "theme": "Lịch sử & Văn Hóa Hội An",
-      "curator": "ThS. Trần Văn An",
-      "start_date": "2024-01-01T00:00:00Z",
-      "end_date": "2024-12-31T23:59:59Z",
-      "poster": "https://...",
-      "visitor_count": 1500,
-      "rating": 4.8,
-      "is_active": true,
-      "is_virtual": false
-    }
-  ]
-}
-```
-
----
-
-### 2. Get Active Exhibitions (Triển Lãm Đang Diễn Ra)
-
-**Endpoint:** `GET /exhibitions/active`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "count": 2,
-  "data": [
-    {
-      "id": 1,
-      "name": "Hành Trình Hội An Qua 400 Năm",
-      "is_active": true,
-      "start_date": "2024-01-01T00:00:00Z",
-      "end_date": "2024-12-31T23:59:59Z"
-    }
-  ]
-}
-```
-
----
-
-### 3. Get Exhibition Details (Chi Tiết Triển Lãm)
-
-**Endpoint:** `GET /exhibitions/:id`
-
----
-
-### 4. Create Exhibition (Admin Only)
-
-**Endpoint:** `POST /exhibitions`
-
-**Request Body:**
-
-```json
-{
-  "name": "Triển Lãm Mới",
-  "description": "Mô tả chi tiết...",
-  "heritage_site_id": 1,
-  "theme": "Chủ đề",
-  "curator": "Người quản lý",
-  "start_date": "2024-12-01T00:00:00Z",
-  "end_date": "2024-12-31T23:59:59Z",
-  "is_active": true
-}
-```
-
----
-
-## 📚 Learning & Quests APIs
-
-### 1. Get Learning Path (Lộ Trình Học Tập)
-
-**Endpoint:** `GET /learning/path`
-
-**Headers:**
-
-```
-Authorization: Bearer {token}
-```
-
-**Response 200:**
-
-```json
+Response 200:
 {
   "success": true,
   "data": [
@@ -1205,21 +308,7 @@ Authorization: Bearer {token}
       "id": 1,
       "title": "Giới Thiệu Lịch Sử Hội An",
       "difficulty": "beginner",
-      "estimated_duration": 15,
-      "content_type": "article",
-      "is_completed": false,
-      "score": null,
-      "rating": 4.7
-    },
-    {
-      "id": 2,
-      "title": "Gốm Sứ Thương Tín",
-      "difficulty": "intermediate",
-      "estimated_duration": 20,
-      "content_type": "video",
-      "is_completed": true,
-      "score": 85,
-      "rating": 4.5
+      "is_completed": false
     }
   ],
   "progress": {
@@ -1230,612 +319,713 @@ Authorization: Bearer {token}
 }
 ```
 
----
+### Complete Learning Module
 
-### 2. Get Learning Module (Chi Tiết Module)
-
-**Endpoint:** `GET /learning/:id`
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "data": {
-    "id": 1,
-    "title": "Giới Thiệu Lịch Sử Hội An",
-    "description": "Tìm hiểu về lịch sử...",
-    "difficulty": "beginner",
-    "estimated_duration": 15,
-    "content_type": "article",
-    "body": "Nội dung bài học...",
-    "artifacts": [1, 2],
-    "heritage_sites": [1],
-    "learning_objectives": ["Hiểu được lịch sử Hội An", "Nhận biết các công trình kiến trúc"],
-    "key_concepts": ["Hội An", "Thương mại", "Kiến trúc"],
-    "has_quiz": true,
-    "passing_score": 70,
-    "rating": 4.7,
-    "total_reviews": 120
-  }
-}
-```
-
----
-
-### 3. Complete Learning Module (Hoàn Thành Module)
-
-**Endpoint:** `POST /learning/:id/complete`
-
-**Headers:**
-
-```
+```http
+POST /api/learning/:id/complete
 Authorization: Bearer {token}
-Content-Type: application/json
-```
 
-**Request Body:**
-
-```json
 {
-  "score": 92
+  "score": 85
 }
-```
 
-**Response 200:**
-
-```json
+Response 200:
 {
   "success": true,
-  "message": "Module completed",
   "data": {
-    "module_title": "Giới Thiệu Lịch Sử Hội An",
-    "score": 92,
     "points_earned": 50,
-    "passed": true,
-    "next_module_id": 2
+    "passed": true
   }
 }
 ```
 
 ---
 
-### 4. Get Available Quests (Nhiệm Vụ Khả Dụng)
+## 9. Game System (NEW)
 
-**Endpoint:** `GET /quests/available`
+### Get Game Progress
 
-**Headers:**
-
-```
+```http
+GET /api/game/progress
 Authorization: Bearer {token}
+
+Response 200:
+{
+  "success": true,
+  "data": {
+    "current_chapter": 1,
+    "total_sen_petals": 5,
+    "total_points": 280,
+    "level": 2,
+    "coins": 1500,
+    "collected_characters": ["teu_full_color"],
+    "stats": {
+      "completion_rate": 25,
+      "chapters_unlocked": 1
+    }
+  }
+}
 ```
 
-**Response 200:**
+### Get Chapters (Sen Flowers)
 
-```json
+```http
+GET /api/game/chapters
+Authorization: Bearer {token}
+
+Response 200:
 {
   "success": true,
   "data": [
     {
       "id": 1,
-      "title": "Khám Phá Hội An",
-      "description": "Khám phá phố cổ Hội An...",
-      "quest_type": "discovery",
-      "level": 1,
-      "difficulty": "easy",
-      "points": 100,
-      "badges": ["Explorer", "History_Seeker"],
-      "is_completed": false
-    },
-    {
-      "id": 2,
-      "title": "Sắp Xếp Dòng Thời Gian",
-      "quest_type": "timeline_puzzle",
-      "level": 2,
-      "difficulty": "medium",
-      "points": 150,
-      "is_completed": false
+      "name": "Lớp Cánh 1: Cội Nguồn",
+      "layer_index": 1,
+      "is_unlocked": true,
+      "total_levels": 5,
+      "completed_levels": 2,
+      "completion_rate": 40
     }
-  ],
-  "completed_count": 0,
-  "available_count": 3
+  ]
 }
 ```
 
----
+### Get Chapter Detail
 
-### 5. Complete Quest (Hoàn Thành Nhiệm Vụ)
-
-**Endpoint:** `POST /quests/:id/complete`
-
-**Headers:**
-
-```
+```http
+GET /api/game/chapters/:id
 Authorization: Bearer {token}
-Content-Type: application/json
 ```
 
-**Request Body:**
+### Unlock Chapter
 
-```json
-{
-  "score": 100
-}
-```
+```http
+POST /api/game/chapters/:id/unlock
+Authorization: Bearer {token}
 
-**Response 200:**
-
-```json
+Response 200:
 {
   "success": true,
-  "message": "Quest completed successfully",
+  "message": "Chapter unlocked",
   "data": {
-    "quest_title": "Khám Phá Hội An",
-    "points_earned": 100,
-    "badges_earned": ["Explorer"],
-    "new_level": 2,
-    "total_points": 380,
-    "streak": 5
+    "chapter_id": 2,
+    "chapter_name": "Lớp Cánh 2: Giao Thoa"
   }
 }
 ```
 
----
+### Get Levels in Chapter
 
-### 6. Get Leaderboard (Bảng Xếp Hạng)
+```http
+GET /api/game/levels/:chapterId
+Authorization: Bearer {token}
+```
 
-**Endpoint:** `GET /quests/leaderboard`
+### Get Level Detail
 
-**Response 200:**
+```http
+GET /api/game/levels/:id/detail
+Authorization: Bearer {token}
 
-```json
+Response 200:
+{
+  "success": true,
+  "data": {
+    "id": 2,
+    "name": "Ký ức chú Tễu",
+    "type": "mixed",
+    "difficulty": "medium",
+    "screens": [
+      {
+        "id": "screen_01",
+        "type": "DIALOGUE",
+        "content": [ ... ]
+      },
+      {
+        "id": "screen_02",
+        "type": "HIDDEN_OBJECT",
+        "items": [ ... ]
+      }
+    ],
+    "rewards": {
+      "petals": 2,
+      "coins": 100,
+      "character": "teu_full_color"
+    }
+  }
+}
+```
+
+### Start Level
+
+```http
+POST /api/game/levels/:id/start
+Authorization: Bearer {token}
+
+Response 200:
+{
+  "success": true,
+  "data": {
+    "session_id": 123,
+    "level": { ... },
+    "current_screen": {
+      "id": "screen_01",
+      "type": "DIALOGUE",
+      "index": 0,
+      "is_first": true
+    }
+  }
+}
+```
+
+### Collect Clue/Item
+
+```http
+POST /api/game/levels/:id/collect-clue
+Authorization: Bearer {token}
+
+{
+  "clueId": "item_fan"
+}
+
+Response 200:
+{
+  "success": true,
+  "data": {
+    "item": {
+      "id": "item_fan",
+      "name": "Cái Quạt Mo",
+      "points": 10
+    },
+    "progress": "1/3",
+    "all_collected": false
+  }
+}
+```
+
+### Complete Level
+
+```http
+POST /api/game/levels/:id/complete
+Authorization: Bearer {token}
+
+{
+  "score": 85,
+  "timeSpent": 300
+}
+
+Response 200:
+{
+  "success": true,
+  "data": {
+    "passed": true,
+    "score": 85,
+    "rewards": {
+      "petals": 2,
+      "coins": 100,
+      "character": "teu_full_color"
+    }
+  }
+}
+```
+
+### Get Museum
+
+```http
+GET /api/game/museum
+Authorization: Bearer {token}
+
+Response 200:
+{
+  "success": true,
+  "data": {
+    "is_open": true,
+    "income_per_hour": 25,
+    "characters": ["teu_full_color", "thikinh"],
+    "visitor_count": 20
+  }
+}
+```
+
+### Toggle Museum
+
+```http
+POST /api/game/museum/toggle
+Authorization: Bearer {token}
+
+{
+  "isOpen": true
+}
+```
+
+### Get Badges
+
+```http
+GET /api/game/badges
+Authorization: Bearer {token}
+```
+
+### Get Achievements
+
+```http
+GET /api/game/achievements
+Authorization: Bearer {token}
+```
+
+### Scan QR Code
+
+```http
+POST /api/game/scan
+Authorization: Bearer {token}
+
+{
+  "code": "HOIAN001",
+  "latitude": 15.8795,
+  "longitude": 108.3274
+}
+
+Response 200:
+{
+  "success": true,
+  "message": "Scan successful!",
+  "data": {
+    "artifact": { ... },
+    "rewards": {
+      "coins": 200,
+      "petals": 2,
+      "character": "guardian_hoian"
+    }
+  }
+}
+```
+
+### Get Leaderboard
+
+```http
+GET /api/game/leaderboard?type=global&limit=20
+Authorization: Bearer {token}
+
+Response 200:
 {
   "success": true,
   "data": [
     {
       "rank": 1,
       "user_name": "Phạm Văn Tuấn",
-      "user_avatar": "https://...",
       "total_points": 5200,
-      "level": 12,
-      "badges_count": 8,
-      "completed_quests": 45
-    },
-    {
-      "rank": 2,
-      "user_name": "Đỗ Thị Hương",
-      "user_avatar": "https://...",
-      "total_points": 4800,
-      "level": 11,
-      "badges_count": 7,
-      "completed_quests": 42
+      "level": 12
     }
   ]
 }
 ```
 
----
+### Get Daily Reward
 
-## 👥 User Management APIs
-
-### 1. Get User Profile (Chi Tiết Hồ Sơ)
-
-**Endpoint:** `GET /users/:id`
-
-**Headers:**
-
-```
+```http
+GET /api/game/daily-reward
 Authorization: Bearer {token}
 ```
 
-**Response 200:**
+### Purchase Shop Item
 
-```json
+```http
+POST /api/game/shop/purchase
+Authorization: Bearer {token}
+
+{
+  "itemId": 1,
+  "quantity": 5
+}
+
+Response 200:
 {
   "success": true,
   "data": {
-    "id": 1,
-    "name": "Nguyễn Văn A",
-    "email": "user@sen.com",
-    "phone": "0987654321",
-    "role": "customer",
-    "avatar": "https://...",
-    "bio": "Yêu thích lịch sử Việt Nam",
-    "isActive": true,
-    "createdAt": "2024-11-22T10:30:00Z"
+    "item": { ... },
+    "total_cost": 50,
+    "remaining_coins": 1450
   }
 }
 ```
 
----
+### Get Inventory
 
-### 2. Update User Profile (Cập Nhật Hồ Sơ)
-
-**Endpoint:** `PUT /users/profile`
-
-**Headers:**
-
-```
-Authorization: Bearer {token}
-Content-Type: application/json
-```
-
-**Request Body:**
-
-```json
-{
-  "name": "Nguyễn Văn B",
-  "phone": "0912345678",
-  "bio": "Yêu thích lịch sử và tìm tòi",
-  "avatar": "https://..."
-}
-```
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "message": "Profile updated successfully",
-  "data": {
-    "id": 1,
-    "name": "Nguyễn Văn B",
-    "phone": "0912345678",
-    "bio": "Yêu thích lịch sử và tìm tòi"
-  }
-}
-```
-
----
-
-### 3. Get User Activity (Hoạt Động của User)
-
-**Endpoint:** `GET /users/:id/activity`
-
-**Headers:**
-
-```
+```http
+GET /api/game/inventory
 Authorization: Bearer {token}
 ```
 
-**Response 200:**
+### Use Item
 
-```json
-{
-  "success": true,
-  "data": {
-    "user": {
-      "id": 1,
-      "name": "Nguyễn Văn A",
-      "email": "user@sen.com"
-    },
-    "stats": {
-      "total_reviews": 12,
-      "avg_rating": 4.5,
-      "total_favorites": 25,
-      "collections_count": 3,
-      "learning_progress": "35%"
-    },
-    "recent_activities": [
-      {
-        "type": "review",
-        "title": "Đánh giá Phố Cổ Hội An",
-        "timestamp": "2024-11-20T10:00:00Z"
-      },
-      {
-        "type": "collection",
-        "title": "Tạo bộ sưu tập mới",
-        "timestamp": "2024-11-19T14:30:00Z"
-      }
-    ]
-  }
-}
-```
-
----
-
-### 4. Get All Users (Admin Only)
-
-**Endpoint:** `GET /users?page=1&limit=20&role=customer`
-
-**Headers:**
-
-```
-Authorization: Bearer {admin_token}
-```
-
-**Query Parameters:**
-
-```
-page: 1
-limit: 20
-role: customer, researcher, curator, admin
-sort: name, email, createdAt
-order: asc, desc
-```
-
----
-
-### 5. Toggle User Status (Admin Only)
-
-**Endpoint:** `PATCH /users/:id/status`
-
-**Headers:**
-
-```
-Authorization: Bearer {admin_token}
-Content-Type: application/json
-```
-
-**Request Body:**
-
-```json
-{
-  "isActive": false
-}
-```
-
----
-
-### 6. Get User Stats (Admin Only)
-
-**Endpoint:** `GET /users/stats/summary`
-
-**Headers:**
-
-```
-Authorization: Bearer {admin_token}
-```
-
-**Response 200:**
-
-```json
-{
-  "success": true,
-  "data": {
-    "total": 156,
-    "active": 142,
-    "inactive": 14,
-    "byRole": {
-      "customer": 120,
-      "researcher": 25,
-      "curator": 10,
-      "admin": 1
-    },
-    "with_orders": 89,
-    "recent_signups": 12
-  }
-}
-```
-
----
-
-## 📤 Import/Export APIs
-
-### 1. Download Import Template (Tải Template)
-
-**Endpoint:** `GET /:entity/template?format=xlsx`
-
-**URL Examples:**
-
-```
-/heritage-sites/template?format=xlsx
-/artifacts/template?format=csv
-/users/template?format=xlsx
-```
-
-**Headers:**
-
-```
+```http
+POST /api/game/inventory/use
 Authorization: Bearer {token}
-```
 
-**Response:** File (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
-
-**cURL Example:**
-
-```bash
-curl "http://localhost:3000/api/artifacts/template?format=xlsx" \
-  -H "Authorization: Bearer $ADMIN_TOKEN" \
-  -o artifacts_template.xlsx
+{
+  "itemId": 1,
+  "targetId": null
+}
 ```
 
 ---
 
-### 2. Get Entity Schema (Lấy Schema)
+## 10. AI Chatbot (NEW)
 
-**Endpoint:** `GET /:entity/schema`
+### Chat with AI
 
-**Headers:**
+```http
+POST /api/ai/chat
+Authorization: Bearer {token}
 
-```
-Authorization: Bearer {admin_token}
-```
+{
+  "message": "Chú Tễu ơi, cái quạt này có ý nghĩa gì?",
+  "context": {
+    "levelId": 2,
+    "characterId": 1,
+    "screenType": "HIDDEN_OBJECT"
+  }
+}
 
-**Response 200:**
-
-```json
+Response 200:
 {
   "success": true,
   "data": {
-    "entity": "artifacts",
-    "schema": {
-      "name": {
-        "type": "string",
-        "required": true,
-        "minLength": 3,
-        "maxLength": 150
-      },
-      "description": {
-        "type": "string",
-        "required": true,
-        "minLength": 20,
-        "maxLength": 3000
-      },
-      "heritage_site_id": {
-        "type": "number",
-        "required": true,
-        "foreignKey": "heritage_sites"
-      },
-      "artifact_type": {
-        "type": "enum",
-        "enum": ["sculpture", "painting", "document", "pottery"],
-        "required": true
-      },
-      "condition": {
-        "type": "enum",
-        "enum": ["excellent", "good", "fair", "poor"],
-        "required": false,
-        "default": "fair"
-      }
+    "message": "Hề hề! Cái quạt mo này ta dùng để phe phẩy dẫn chuyện đấy!",
+    "character": {
+      "name": "Chú Tễu",
+      "avatar": "...",
+      "speaking_style": "Vui vẻ, dân dã"
     }
   }
 }
 ```
 
----
+### Get Chat History
 
-### 3. Import Data from File (Import Dữ Liệu)
-
-**Endpoint:** `POST /:entity/import`
-
-**Headers:**
-
-```
-Authorization: Bearer {admin_token}
-Content-Type: multipart/form-data
+```http
+GET /api/ai/history?levelId=2&limit=20
+Authorization: Bearer {token}
 ```
 
-**Form Data:**
+### Ask for Hint
 
-```
-file: (binary file - .xlsx, .xls, .csv)
-options: (optional JSON string)
-```
+```http
+POST /api/ai/ask-hint
+Authorization: Bearer {token}
 
-**Response 200 (or 207 for partial success):**
+{
+  "levelId": 2,
+  "clueId": "item_fan"
+}
 
-```json
+Response 200:
 {
   "success": true,
-  "message": "Import completed: 50 succeeded, 2 failed",
   "data": {
-    "summary": {
-      "total": 52,
-      "success": 50,
-      "failed": 2
-    },
-    "inserted": [
-      {
-        "id": 45,
-        "name": "Di Sản Mới",
-        "type": "monument"
-      }
-    ],
-    "errors": [
-      {
-        "row": 3,
-        "data": {
-          "name": "Invalid Data",
-          "type": "monument"
-        },
-        "errors": ["heritage_site_id is required", "description length must be at least 20 characters"]
+    "hint": "Hãy tìm ở góc trái màn hình, gần con rối",
+    "cost": 10,
+    "remaining_coins": 1490
+  }
+}
+```
+
+### Explain Artifact/Heritage Site
+
+```http
+POST /api/ai/explain
+Authorization: Bearer {token}
+
+{
+  "type": "artifact",
+  "id": 1
+}
+
+Response 200:
+{
+  "success": true,
+  "data": {
+    "item": { ... },
+    "explanation": "Bức tranh này thể hiện...",
+    "character": { ... }
+  }
+}
+```
+
+### Generate Quiz
+
+```http
+POST /api/ai/quiz
+Authorization: Bearer {token}
+
+{
+  "topicId": 1,
+  "difficulty": "medium"
+}
+```
+
+### Clear Chat History
+
+```http
+DELETE /api/ai/history
+Authorization: Bearer {token}
+```
+
+---
+
+## 11. Admin CMS (NEW)
+
+### Manage Levels
+
+#### Get All Levels
+
+```http
+GET /api/admin/levels?chapter_id=1
+Authorization: Bearer {admin_token}
+```
+
+#### Get Level Templates
+
+```http
+GET /api/admin/levels/templates
+Authorization: Bearer {admin_token}
+
+Response 200:
+{
+  "success": true,
+  "data": [
+    {
+      "id": "template_hidden_object",
+      "name": "Hidden Object Game",
+      "screens": [ ... ]
+    }
+  ]
+}
+```
+
+#### Create Level
+
+```http
+POST /api/admin/levels
+Authorization: Bearer {admin_token}
+
+{
+  "chapter_id": 1,
+  "name": "Màn Chơi Mới",
+  "description": "Mô tả...",
+  "type": "mixed",
+  "difficulty": "medium",
+  "screens": [
+    {
+      "id": "screen_01",
+      "type": "DIALOGUE",
+      "content": [ ... ]
+    }
+  ],
+  "rewards": {
+    "petals": 1,
+    "coins": 50
+  }
+}
+
+Response 201:
+{
+  "success": true,
+  "data": { ... }
+}
+```
+
+#### Update Level
+
+```http
+PUT /api/admin/levels/:id
+Authorization: Bearer {admin_token}
+```
+
+#### Clone Level
+
+```http
+POST /api/admin/levels/:id/clone
+Authorization: Bearer {admin_token}
+
+{
+  "newName": "Bản Sao Màn Chơi"
+}
+```
+
+#### Preview Level
+
+```http
+GET /api/admin/levels/:id/preview
+Authorization: Bearer {admin_token}
+
+Response 200:
+{
+  "success": true,
+  "data": {
+    "metadata": {
+      "total_screens": 5,
+      "screen_types": {
+        "DIALOGUE": 2,
+        "HIDDEN_OBJECT": 1,
+        "QUIZ": 2
       },
-      {
-        "row": 15,
-        "data": {
-          "name": "Di Sản Duplicate"
-        },
-        "errors": ["name 'Di Sản Duplicate' already exists"]
-      }
-    ]
+      "estimated_time": 420,
+      "difficulty_score": 6
+    }
   }
 }
 ```
 
-**cURL Example:**
+#### Validate Level
 
-```bash
-curl -X POST http://localhost:3000/api/artifacts/import \
-  -H "Authorization: Bearer $ADMIN_TOKEN" \
-  -F "file=@artifacts.xlsx" \
-  -F "options={\"skipEmpty\": true}"
+```http
+POST /api/admin/levels/validate
+Authorization: Bearer {admin_token}
+
+{
+  "screens": [ ... ]
+}
+
+Response 200:
+{
+  "success": true,
+  "message": "Validation passed",
+  "data": {
+    "metadata": { ... }
+  }
+}
+```
+
+#### Bulk Import Levels
+
+```http
+POST /api/admin/levels/bulk/import
+Authorization: Bearer {admin_token}
+
+{
+  "levels": [ ... ],
+  "chapterId": 1
+}
+```
+
+#### Reorder Levels
+
+```http
+PUT /api/admin/chapters/:chapterId/reorder
+Authorization: Bearer {admin_token}
+
+{
+  "levelIds": [3, 1, 2, 4]
+}
+```
+
+### Manage Chapters
+
+```http
+GET /api/admin/chapters
+POST /api/admin/chapters
+PUT /api/admin/chapters/:id
+DELETE /api/admin/chapters/:id
+```
+
+### Manage Characters
+
+```http
+GET /api/admin/characters
+POST /api/admin/characters
+PUT /api/admin/characters/:id
+DELETE /api/admin/characters/:id
+```
+
+### Manage Assets (Scan Objects)
+
+```http
+GET /api/admin/assets
+POST /api/admin/assets
+PUT /api/admin/assets/:id
+DELETE /api/admin/assets/:id
 ```
 
 ---
 
-### 4. Export Data to File (Export Dữ Liệu)
+## 12. User Management
 
-**Endpoint:** `GET /:entity/export?format=xlsx&includeRelations=true`
+### Get All Users (Admin)
 
-**Query Parameters:**
-
-```
-format: xlsx, csv (default: xlsx)
-includeRelations: true, false (default: false)
-page: 1
-limit: 1000
-sort: field
-order: asc, desc
-filter: custom filters
-```
-
-**Headers:**
-
-```
+```http
+GET /api/users?page=1&limit=20&role=customer
 Authorization: Bearer {admin_token}
 ```
 
-**Response:** File
+### Get User Stats (Admin)
 
-**cURL Example:**
-
-```bash
-curl "http://localhost:3000/api/artifacts/export?format=xlsx&includeRelations=true" \
-  -H "Authorization: Bearer $ADMIN_TOKEN" \
-  -o artifacts_export.xlsx
+```http
+GET /api/users/stats/summary
+Authorization: Bearer {admin_token}
 ```
 
----
+### Toggle User Status (Admin)
 
-### 5. Bulk Update (Cập Nhật Hàng Loạt)
+```http
+PATCH /api/users/:id/status
+Authorization: Bearer {admin_token}
 
-**Endpoint:** `PATCH /:entity/bulk`
-
-**Request Body:**
-
-```json
 {
-  "ids": [1, 2, 3, 4, 5],
-  "updates": {
-    "is_active": true,
-    "status": "approved"
-  }
+  "isActive": false
 }
 ```
 
-**Response 200:**
+### Update Profile
 
-```json
+```http
+PUT /api/users/profile
+Authorization: Bearer {token}
+
 {
-  "success": true,
-  "message": "5 records updated successfully",
-  "data": {
-    "updated": 5,
-    "failed": 0
-  }
+  "name": "Tên Mới",
+  "phone": "0912345678",
+  "bio": "Yêu thích lịch sử"
 }
 ```
 
 ---
 
-## 🔍 Query Parameters Reference
+## 📊 Response Status Codes
+
+| Code | Meaning      | Example                  |
+| ---- | ------------ | ------------------------ |
+| 200  | OK           | GET request successful   |
+| 201  | Created      | POST request successful  |
+| 400  | Bad Request  | Validation error         |
+| 401  | Unauthorized | Missing/invalid token    |
+| 403  | Forbidden    | Insufficient permissions |
+| 404  | Not Found    | Resource doesn't exist   |
+| 500  | Server Error | Internal error           |
+
+---
+
+## 🔐 Authentication
+
+All protected endpoints require:
+
+```http
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**How to get token:**
+
+1. Call `POST /api/auth/login`
+2. Extract `data.token`
+3. Include in `Authorization` header
+
+---
+
+## 📝 Query Parameters Reference
 
 ### Pagination
 
 ```
 ?page=1&limit=10
-?_page=1&_limit=10    (alternative syntax)
 ```
 
 ### Sorting
@@ -1843,7 +1033,6 @@ curl "http://localhost:3000/api/artifacts/export?format=xlsx&includeRelations=tr
 ```
 ?sort=name&order=asc
 ?sort=rating,createdAt&order=desc
-?_sort=name&_order=asc    (alternative)
 ```
 
 ### Filtering
@@ -1851,105 +1040,43 @@ curl "http://localhost:3000/api/artifacts/export?format=xlsx&includeRelations=tr
 ```
 ?type=monument&region=Hà%20Nội
 ?rating_gte=4&rating_lte=5
-?name_like=hội
-?is_active=true
-?id_in=1,2,3,4
 ```
 
 ### Search
 
 ```
 ?q=kiến%20trúc
-?_q=heritage      (alternative)
-```
-
-### Relationships
-
-```
-?_embed=artifacts,reviews
-?_expand=category,author
-```
-
-### Combined
-
-```
-?page=1&limit=10&sort=rating&order=desc&q=hội&type=monument&rating_gte=4
 ```
 
 ---
 
-## 📊 Response Status Codes
+## 🧪 Testing with cURL
 
-| Code    | Meaning       | Example                  |
-| ------- | ------------- | ------------------------ |
-| **200** | OK            | GET request successful   |
-| **201** | Created       | POST request successful  |
-| **204** | No Content    | DELETE successful        |
-| **400** | Bad Request   | Validation error         |
-| **401** | Unauthorized  | Missing/invalid token    |
-| **403** | Forbidden     | Insufficient permissions |
-| **404** | Not Found     | Resource doesn't exist   |
-| **409** | Conflict      | Duplicate resource       |
-| **422** | Unprocessable | Validation failed        |
-| **500** | Server Error  | Internal error           |
+### Login Example
 
----
-
-## 🔐 Authentication Header Format
-
-All protected endpoints require:
-
-```
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYXQiOjE2MzI1NDM0MDB9...
+```bash
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@sen.com","password":"123456"}'
 ```
 
-**How to get token:**
+### Get Progress Example
 
-1. Call `POST /auth/login` with email & password
-2. Extract `data.token` from response
-3. Include in `Authorization` header for protected endpoints
+```bash
+export TOKEN="your_token_here"
+curl http://localhost:3000/api/game/progress \
+  -H "Authorization: Bearer $TOKEN"
+```
 
----
+### Start Level Example
 
-## 🐛 Error Response Format
-
-**All errors follow this format:**
-
-```json
-{
-  "success": false,
-  "message": "Error description",
-  "errors": [
-    {
-      "field": "email",
-      "message": "Invalid email format"
-    }
-  ],
-  "statusCode": 400
-}
+```bash
+curl -X POST http://localhost:3000/api/game/levels/2/start \
+  -H "Authorization: Bearer $TOKEN"
 ```
 
 ---
 
-## ⚡ Rate Limiting
-
-**Per hour limits by role:**
-
-- **Guest:** 50 requests
-- **Customer:** 100 requests
-- **Researcher:** 500 requests
-- **Admin:** 1000 requests
-
-**Headers returned:**
-
-```
-X-RateLimit-Limit: 100
-X-RateLimit-Remaining: 87
-X-RateLimit-Reset: 2024-11-22T12:00:00Z
-```
-
----
-
-**Last Updated:** November 22, 2024  
-**API Version:** 1.0.0  
+**API Version:** 2.0.0  
+**Last Updated:** December 2, 2024  
 **Status:** Production Ready

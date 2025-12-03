@@ -9,9 +9,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const apiLogger = require('./middleware/logger.middleware');
-app.use(apiLogger);
+// Logging
+app.use(require('./middleware/logger.middleware'));
 
+// Query parsing
 const { parseQuery, formatResponse, validateQuery, logQuery } = require('./middleware/query.middleware');
 app.use(parseQuery);
 app.use(formatResponse);
@@ -19,46 +20,25 @@ app.use(validateQuery);
 app.use(logQuery);
 
 // Import Routes
-const authRoutes = require('./routes/auth.routes');
-const userRoutes = require('./routes/user.routes');
-const heritageSiteRoutes = require('./routes/heritage_site.routes');
-const artifactRoutes = require('./routes/artifact.routes');
-const questRoutes = require('./routes/quest.routes');
-const learningRoutes = require('./routes/learning.routes');
-const exhibitionRoutes = require('./routes/exhibition.routes');
-const collectionRoutes = require('./routes/collection.routes');
-const reviewRoutes = require('./routes/review.routes');
-const uploadRoutes = require('./routes/upload.routes');
-
-
-// Mount Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/heritage-sites', heritageSiteRoutes);
-app.use('/api/artifacts', artifactRoutes);
-app.use('/api/quests', questRoutes);
-app.use('/api/learning', learningRoutes);
-app.use('/api/exhibitions', exhibitionRoutes);
-app.use('/api/collections', collectionRoutes);
-app.use('/api/reviews', reviewRoutes);
-app.use('/api/upload', uploadRoutes);
-
+// Mount all routes
+app.use('/api', require('./routes'));
+app.use('/api/admin', require('./routes/admin'));
 
 // API Documentation
 app.get('/api', (req, res) => {
   res.json({
-    message: 'SEN API v3.0',
-    version: '3.0.0',
+    name: 'SEN API - Cultural Heritage Game',
+    version: '1.0.0',
+    description: 'Backend cho game giáo dục lịch sử văn hóa Việt Nam',
     endpoints: {
-      heritage_sites: '/api/heritage-sites',
-      artifacts: '/api/artifacts',
-      quests: '/api/quests',
-      learning: '/api/learning',
-      exhibitions: '/api/exhibitions',
-      collections: '/api/collections',
-      reviews: '/api/reviews',
       auth: '/api/auth',
-      users: '/api/users'
+      users: '/api/users',
+      heritage: '/api/heritage-sites',
+      artifacts: '/api/artifacts',
+      game: '/api/game',
+      ai: '/api/ai',
+      learning: '/api/learning',
+      quests: '/api/quests'
     }
   });
 });
