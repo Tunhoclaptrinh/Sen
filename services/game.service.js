@@ -1,10 +1,14 @@
 /**
- * Game Service - Business logic cho SEN game
+ * Unified Game Service - Kết hợp logic từ cả 2 services cũ
+ * Hỗ trợ: Screen-based gameplay + Progress tracking + Museum + Scan
  */
 
 const db = require('../config/database');
 
 class GameService {
+
+  // ==================== INITIALIZATION ====================
+
   /**
    * Khởi tạo game progress cho user mới
    */
@@ -18,7 +22,7 @@ class GameService {
       total_sen_petals: 0,
       total_points: 0,
       level: 1,
-      coins: 1000, // Tiền game
+      coins: 1000,
       unlocked_chapters: [1], // Chapter 1 mở sẵn
       completed_levels: [],
       collected_characters: [],
@@ -32,12 +36,13 @@ class GameService {
     });
   }
 
+  // ==================== PROGRESS & STATS ====================
+
   /**
-   * Lấy tiến độ game của user
-   */
+ * Lấy tiến độ game của user
+ */
   async getProgress(userId) {
     let progress = db.findOne('game_progress', { user_id: userId });
-
     if (!progress) {
       progress = await this.initializeProgress(userId);
     }
@@ -61,13 +66,14 @@ class GameService {
     };
   }
 
+  // ==================== CHAPTERS ====================
+
   /**
-   * Lấy danh sách chapters (cánh hoa sen)
-   */
+ * Lấy danh sách chapters (cánh hoa sen)
+ */
   async getChapters(userId) {
     const progress = await this.getProgress(userId);
-    const chapters = db.findAll('game_chapters')
-      .sort((a, b) => a.order - b.order);
+    const chapters = db.findAll('game_chapters').sort((a, b) => a.order - b.order);
 
     const enriched = chapters.map(chapter => {
       const isUnlocked = progress.data.unlocked_chapters.includes(chapter.id);
@@ -88,10 +94,7 @@ class GameService {
       };
     });
 
-    return {
-      success: true,
-      data: enriched
-    };
+    return { success: true, data: enriched };
   }
 
   /**
@@ -108,11 +111,7 @@ class GameService {
   async getChapterDetail(chapterId, userId) {
     const chapter = db.findById('game_chapters', chapterId);
     if (!chapter) {
-      return {
-        success: false,
-        message: 'Chapter not found',
-        statusCode: 404
-      };
+      return { success: false, message: 'Chapter not found', statusCode: 404 };
     }
 
     const progress = await this.getProgress(userId);
@@ -142,21 +141,13 @@ class GameService {
   async unlockChapter(chapterId, userId) {
     const chapter = db.findById('game_chapters', chapterId);
     if (!chapter) {
-      return {
-        success: false,
-        message: 'Chapter not found',
-        statusCode: 404
-      };
+      return { success: false, message: 'Chapter not found', statusCode: 404 };
     }
 
     const progress = db.findOne('game_progress', { user_id: userId });
 
     if (progress.unlocked_chapters.includes(parseInt(chapterId))) {
-      return {
-        success: false,
-        message: 'Chapter already unlocked',
-        statusCode: 400
-      };
+      return { success: false, message: 'Chapter already unlocked', statusCode: 400 };
     }
 
     if (!this.canUnlockChapter(chapter, progress)) {
@@ -168,7 +159,7 @@ class GameService {
     }
 
     // Mở khóa chapter
-    const updated = db.update('game_progress', progress.id, {
+    db.update('game_progress', progress.id, {
       unlocked_chapters: [...progress.unlocked_chapters, parseInt(chapterId)],
       current_chapter: parseInt(chapterId)
     });
@@ -176,16 +167,15 @@ class GameService {
     return {
       success: true,
       message: 'Chapter unlocked successfully',
-      data: {
-        chapter_id: parseInt(chapterId),
-        chapter_name: chapter.name
-      }
+      data: { chapter_id: parseInt(chapterId), chapter_name: chapter.name }
     };
   }
 
+  // ==================== LEVELS ====================
+
   /**
-   * Lấy danh sách levels trong chapter
-   */
+ * Lấy danh sách levels trong chapter
+ */
   async getLevels(chapterId, userId) {
     const progress = await this.getProgress(userId);
     const levels = db.findMany('game_levels', { chapter_id: parseInt(chapterId) })
@@ -204,10 +194,7 @@ class GameService {
       required_level: level.required_level
     }));
 
-    return {
-      success: true,
-      data: enriched
-    };
+    return { success: true, data: enriched };
   }
 
   /**
@@ -246,21 +233,13 @@ class GameService {
   async getLevelDetail(levelId, userId) {
     const level = db.findById('game_levels', levelId);
     if (!level) {
-      return {
-        success: false,
-        message: 'Level not found',
-        statusCode: 404
-      };
+      return { success: false, message: 'Level not found', statusCode: 404 };
     }
 
     const progress = await this.getProgress(userId);
 
     if (!this.canPlayLevel(level, progress.data)) {
-      return {
-        success: false,
-        message: 'Level is locked',
-        statusCode: 403
-      };
+      return { success: false, message: 'Level is locked', statusCode: 403 };
     }
 
     return {
@@ -277,191 +256,217 @@ class GameService {
     };
   }
 
+  // ==================== SCREEN-BASED GAMEPLAY ====================
+
   /**
-   * Bắt đầu chơi level
-   */
+ * Bắt đầu chơi level
+ */
   async startLevel(levelId, userId) {
     const level = db.findById('game_levels', levelId);
     if (!level) {
-      return {
-        success: false,
-        message: 'Level not found',
-        statusCode: 404
-      };
+      return { success: false, message: 'Level not found', statusCode: 404 };
     }
 
-    // Tạo game session
+    const progress = db.findOne('game_progress', { user_id: userId });
+    if (!this.canPlayLevel(level, progress)) {
+      return { success: false, message: 'Level is locked', statusCode: 403 };
+    }
+
+    // Validate screens structure
+    if (!level.screens || level.screens.length === 0) {
+      return { success: false, message: 'Level has no screens configured', statusCode: 500 };
+    }
+
+    // Create session
     const session = db.create('game_sessions', {
       user_id: userId,
       level_id: levelId,
       status: 'in_progress',
-      collected_clues: [],
+      current_screen_id: level.screens[0].id,
+      current_screen_index: 0,
+      collected_items: [],
+      answered_questions: [],
       score: 0,
+      total_screens: level.screens.length,
+      completed_screens: [],
       time_spent: 0,
+      hints_used: 0,
       started_at: new Date().toISOString()
     });
+
+    const firstScreen = level.screens[0];
 
     return {
       success: true,
       message: 'Level started',
       data: {
         session_id: session.id,
-        level: level
-      }
-    };
-  }
-
-  /**
-   * Thu thập manh mối
-   */
-  async collectClue(levelId, userId, clueId) {
-    const level = db.findById('game_levels', levelId);
-    if (!level) {
-      return {
-        success: false,
-        message: 'Level not found',
-        statusCode: 404
-      };
-    }
-
-    // Tìm session hiện tại
-    const session = db.findOne('game_sessions', {
-      user_id: userId,
-      level_id: levelId,
-      status: 'in_progress'
-    });
-
-    if (!session) {
-      return {
-        success: false,
-        message: 'No active session found',
-        statusCode: 404
-      };
-    }
-
-    // Kiểm tra clue có trong level không
-    const clue = level.clues?.find(c => c.id === clueId);
-    if (!clue) {
-      return {
-        success: false,
-        message: 'Invalid clue',
-        statusCode: 400
-      };
-    }
-
-    // Kiểm tra đã collect chưa
-    if (session.collected_clues.includes(clueId)) {
-      return {
-        success: false,
-        message: 'Clue already collected',
-        statusCode: 400
-      };
-    }
-
-    // Cập nhật session
-    const updated = db.update('game_sessions', session.id, {
-      collected_clues: [...session.collected_clues, clueId],
-      score: session.score + (clue.points || 10)
-    });
-
-    // Kiểm tra đã collect đủ chưa
-    const allCollected = updated.collected_clues.length === level.clues.length;
-
-    return {
-      success: true,
-      message: 'Clue collected',
-      data: {
-        clue: clue,
-        progress: `${updated.collected_clues.length}/${level.clues.length}`,
-        all_collected: allCollected,
-        current_score: updated.score
-      }
-    };
-  }
-
-  /**
-   * Hoàn thành level
-   */
-  async completeLevel(levelId, userId, { score, timeSpent }) {
-    const level = db.findById('game_levels', levelId);
-    if (!level) {
-      return {
-        success: false,
-        message: 'Level not found',
-        statusCode: 404
-      };
-    }
-
-    const session = db.findOne('game_sessions', {
-      user_id: userId,
-      level_id: levelId,
-      status: 'in_progress'
-    });
-
-    if (!session) {
-      return {
-        success: false,
-        message: 'No active session',
-        statusCode: 404
-      };
-    }
-
-    // Cập nhật session
-    db.update('game_sessions', session.id, {
-      status: 'completed',
-      score: score || session.score,
-      time_spent: timeSpent || 0,
-      completed_at: new Date().toISOString()
-    });
-
-    // Cập nhật progress
-    const progress = db.findOne('game_progress', { user_id: userId });
-
-    const newCompleted = progress.completed_levels.includes(levelId)
-      ? progress.completed_levels
-      : [...progress.completed_levels, levelId];
-
-    const newPetals = progress.total_sen_petals + (level.rewards?.petals || 1);
-    const newPoints = progress.total_points + (score || 0);
-    const newCoins = progress.coins + (level.rewards?.coins || 50);
-
-    // Thêm character vào collection nếu có
-    let newCharacters = [...progress.collected_characters];
-    if (level.rewards?.character && !newCharacters.includes(level.rewards.character)) {
-      newCharacters.push(level.rewards.character);
-    }
-
-    db.update('game_progress', progress.id, {
-      completed_levels: newCompleted,
-      total_sen_petals: newPetals,
-      total_points: newPoints,
-      coins: newCoins,
-      collected_characters: newCharacters
-    });
-
-    return {
-      success: true,
-      message: 'Level completed',
-      data: {
-        level_name: level.name,
-        score: score || session.score,
-        rewards: {
-          petals: level.rewards?.petals || 1,
-          coins: level.rewards?.coins || 50,
-          character: level.rewards?.character || null
+        level: {
+          id: level.id,
+          name: level.name,
+          description: level.description,
+          total_screens: level.screens.length,
+          ai_character: level.ai_character_id
+            ? db.findById('game_characters', level.ai_character_id)
+            : null
         },
-        new_totals: {
-          petals: newPetals,
-          points: newPoints,
-          coins: newCoins
+        current_screen: {
+          ...firstScreen,
+          index: 0,
+          is_first: true,
+          is_last: level.screens.length === 1
         }
       }
     };
   }
 
   /**
-   * Lấy bảo tàng của user
-   */
+ * Thu thập manh mối
+ */
+  async collectClue(levelId, userId, clueId) {
+    const session = db.findOne('game_sessions', {
+      level_id: levelId,
+      user_id: userId,
+      status: 'in_progress'
+    });
+
+    if (!session) {
+      return { success: false, message: 'No active session', statusCode: 404 };
+    }
+
+    const level = db.findById('game_levels', levelId);
+    const currentScreen = level.screens[session.current_screen_index];
+
+    if (currentScreen.type !== 'HIDDEN_OBJECT') {
+      return { success: false, message: 'Not a hidden object screen', statusCode: 400 };
+    }
+
+    const item = currentScreen.items?.find(i => i.id === clueId);
+    if (!item) {
+      return { success: false, message: 'Item not found', statusCode: 404 };
+    }
+
+    if (session.collected_items.includes(clueId)) {
+      return { success: false, message: 'Item already collected', statusCode: 400 };
+    }
+
+    const updatedSession = db.update('game_sessions', session.id, {
+      collected_items: [...session.collected_items, clueId],
+      score: session.score + (item.points || 10)
+    });
+
+    const requiredItems = currentScreen.required_items || currentScreen.items.length;
+    const allCollected = updatedSession.collected_items.length >= requiredItems;
+
+    return {
+      success: true,
+      message: 'Item collected',
+      data: {
+        item,
+        points_earned: item.points || 10,
+        total_score: updatedSession.score,
+        progress: {
+          collected: updatedSession.collected_items.length,
+          required: requiredItems,
+          all_collected: allCollected
+        }
+      }
+    };
+  }
+
+  /**
+ * Hoàn thành level
+ */
+  async completeLevel(levelId, userId, { score, timeSpent } = {}) {
+    const session = db.findOne('game_sessions', {
+      level_id: levelId,
+      user_id: userId,
+      status: 'in_progress'
+    });
+
+    if (!session) {
+      return { success: false, message: 'No active session', statusCode: 404 };
+    }
+
+    const level = db.findById('game_levels', levelId);
+
+    const timeBonus = this.calculateTimeBonus(timeSpent || session.time_spent, level.time_limit);
+    const hintPenalty = session.hints_used * 5;
+    const finalScore = Math.max(0, (score || session.score) + timeBonus - hintPenalty);
+    const passed = finalScore >= (level.passing_score || 70);
+
+    // Cập nhật session
+    db.update('game_sessions', session.id, {
+      status: 'completed',
+      score: finalScore,
+      completed_at: new Date().toISOString()
+    });
+
+    if (!passed) {
+      return {
+        success: true,
+        message: 'Level completed but not passed',
+        data: {
+          passed: false,
+          score: finalScore,
+          required_score: level.passing_score || 70,
+          can_retry: true
+        }
+      };
+    }
+
+    // Update progress
+    const progress = db.findOne('game_progress', { user_id: userId });
+    const newCompleted = progress.completed_levels.includes(levelId)
+      ? progress.completed_levels
+      : [...progress.completed_levels, levelId];
+
+    const rewards = level.rewards || {};
+    const newPetals = progress.total_sen_petals + (rewards.petals || 1);
+    const newCoins = progress.coins + (rewards.coins || 50);
+
+    // Thêm character vào collection nếu có
+    let newCharacters = [...progress.collected_characters];
+    if (rewards.character && !newCharacters.includes(rewards.character)) {
+      newCharacters.push(rewards.character);
+    }
+
+    db.update('game_progress', progress.id, {
+      completed_levels: newCompleted,
+      total_sen_petals: newPetals,
+      total_points: progress.total_points + finalScore,
+      coins: newCoins,
+      collected_characters: newCharacters
+    });
+
+    return {
+      success: true,
+      message: 'Level completed successfully!',
+      data: {
+        passed: true,
+        score: finalScore,
+        rewards: {
+          petals: rewards.petals || 1,
+          coins: rewards.coins || 50,
+          character: rewards.character || null
+        },
+        new_totals: {
+          petals: newPetals,
+          points: progress.total_points + finalScore,
+          coins: newCoins
+        }
+      }
+    };
+  }
+
+  calculateTimeBonus(timeSpent, timeLimit) {
+    if (!timeLimit) return 0;
+    const remaining = timeLimit - timeSpent;
+    return remaining > 0 ? Math.floor(remaining / 10) : 0;
+  }
+
+  // ==================== MUSEUM ====================
+
   async getMuseum(userId) {
     const progress = await this.getProgress(userId);
 
@@ -481,7 +486,7 @@ class GameService {
    * Tính thu nhập bảo tàng
    */
   calculateMuseumIncome(progress) {
-    return progress.collected_characters.length * 5; // 5 coins/character/hour
+    return progress.collected_characters.length * 5;
   }
 
   /**
@@ -504,21 +509,17 @@ class GameService {
     };
   }
 
+  // ==================== SCAN TO PLAY ====================
+
+
   /**
    * Scan object tại di tích
    */
   async scanObject(userId, code, location) {
-    // Tìm heritage site hoặc artifact từ code
     const artifact = db.findOne('scan_objects', { code: code.toUpperCase() });
-    // XỬ LÝ PHẦN THƯỞNG ĐẶC BIỆT: HIDDEN PETAL
-    const objectData = db.findOne('scan_objects', { code: code.toUpperCase() });
 
     if (!artifact) {
-      return {
-        success: false,
-        message: 'Invalid scan code',
-        statusCode: 404
-      };
+      return { success: false, message: 'Invalid scan code', statusCode: 404 };
     }
 
     // Kiểm tra vị trí nếu có
@@ -530,30 +531,11 @@ class GameService {
         artifact.longitude
       );
 
-      if (distance > 0.5) { // 500m
-        return {
-          success: false,
-          message: 'You are too far from the location',
-          statusCode: 400
-        };
+      if (distance > 0.5) {
+        return { success: false, message: 'You are too far from the location', statusCode: 400 };
       }
     }
 
-    // Nếu là vật phẩm đặc biệt mở khóa Chapter ẩn
-    if (objectData.unlocks_hidden_chapter_id) {
-      const progress = db.findOne('game_progress', { user_id: userId });
-      const hiddenChapterId = objectData.unlocks_hidden_chapter_id;
-
-      if (!progress.unlocked_chapters.includes(hiddenChapterId)) {
-        db.update('game_progress', progress.id, {
-          unlocked_chapters: [...progress.unlocked_chapters, hiddenChapterId],
-          // Thông báo đặc biệt
-          special_event: "HIDDEN_LOTUS_PETAL_REVEALED"
-        });
-      }
-    }
-
-    // Thưởng cho user
     const progress = db.findOne('game_progress', { user_id: userId });
 
     const reward = {
@@ -586,10 +568,7 @@ class GameService {
     return {
       success: true,
       message: 'Scan successful!',
-      data: {
-        artifact: artifact,
-        rewards: reward
-      }
+      data: { artifact, rewards: reward }
     };
   }
 
@@ -608,6 +587,8 @@ class GameService {
     return R * c;
   }
 
+  // ==================== BADGES & ACHIEVEMENTS ====================
+
   /**
    * Lấy badges
    */
@@ -617,48 +598,29 @@ class GameService {
 
     const enriched = allBadges.map(badge => ({
       ...badge,
-      is_unlocked: progress.data.badges.includes(badge.id),
-      unlock_date: this.getBadgeUnlockDate(badge.id, userId)
+      is_unlocked: progress.data.badges.includes(badge.id)
     }));
 
-    return {
-      success: true,
-      data: enriched
-    };
+    return { success: true, data: enriched };
   }
 
-  getBadgeUnlockDate(badgeId, userId) {
-    // Implementation
-    return null;
-  }
-
-  /**
-   * Lấy achievements
-   */
   async getAchievements(userId) {
     const progress = await this.getProgress(userId);
     const allAchievements = db.findAll('game_achievements');
 
     const enriched = allAchievements.map(achievement => ({
       ...achievement,
-      is_completed: progress.data.achievements.includes(achievement.id),
-      progress: this.calculateAchievementProgress(achievement, progress.data)
+      is_completed: progress.data.achievements.includes(achievement.id)
     }));
 
-    return {
-      success: true,
-      data: enriched
-    };
+    return { success: true, data: enriched };
   }
 
-  calculateAchievementProgress(achievement, progress) {
-    // Implementation based on achievement type
-    return 0;
-  }
+  // ==================== LEADERBOARD & REWARDS ====================
 
   /**
-   * Bảng xếp hạng
-   */
+ * Bảng xếp hạng
+ */
   async getLeaderboard(type = 'global', limit = 20) {
     const allProgress = db.findAll('game_progress')
       .sort((a, b) => b.total_points - a.total_points)
@@ -678,10 +640,7 @@ class GameService {
       };
     });
 
-    return {
-      success: true,
-      data: leaderboard
-    };
+    return { success: true, data: leaderboard };
   }
 
   /**
@@ -693,22 +652,14 @@ class GameService {
     const lastLogin = new Date(progress.last_login).toISOString().split('T')[0];
 
     if (today === lastLogin) {
-      return {
-        success: false,
-        message: 'Daily reward already claimed',
-        statusCode: 400
-      };
+      return { success: false, message: 'Daily reward already claimed', statusCode: 400 };
     }
 
-    const reward = {
-      coins: 50,
-      petals: 1
-    };
+    const reward = { coins: 50, petals: 1 };
 
     db.update('game_progress', progress.id, {
       coins: progress.coins + reward.coins,
       total_sen_petals: progress.total_sen_petals + reward.petals,
-      streak_days: lastLogin === this.getYesterday() ? progress.streak_days + 1 : 1,
       last_login: new Date().toISOString()
     });
 
@@ -719,11 +670,9 @@ class GameService {
     };
   }
 
-  getYesterday() {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    return yesterday.toISOString().split('T')[0];
-  }
+  // ==================== SHOP & INVENTORY ====================
+
+
 
   /**
    * Mua item trong shop
@@ -731,22 +680,14 @@ class GameService {
   async purchaseItem(userId, itemId, quantity) {
     const item = db.findById('shop_items', itemId);
     if (!item) {
-      return {
-        success: false,
-        message: 'Item not found',
-        statusCode: 404
-      };
+      return { success: false, message: 'Item not found', statusCode: 404 };
     }
 
     const progress = db.findOne('game_progress', { user_id: userId });
     const totalCost = item.price * quantity;
 
     if (progress.coins < totalCost) {
-      return {
-        success: false,
-        message: 'Not enough coins',
-        statusCode: 400
-      };
+      return { success: false, message: 'Not enough coins', statusCode: 400 };
     }
 
     // Trừ tiền
@@ -754,9 +695,10 @@ class GameService {
       coins: progress.coins - totalCost
     });
 
-    // Thêm vào inventory
-    const inventory = db.findOne('user_inventory', { user_id: userId }) ||
-      db.create('user_inventory', { user_id: userId, items: [] });
+    let inventory = db.findOne('user_inventory', { user_id: userId });
+    if (!inventory) {
+      inventory = db.create('user_inventory', { user_id: userId, items: [] });
+    }
 
     const existingItem = inventory.items.find(i => i.item_id === itemId);
     if (existingItem) {
@@ -769,16 +711,14 @@ class GameService {
       });
     }
 
-    db.update('user_inventory', inventory.id, {
-      items: inventory.items
-    });
+    db.update('user_inventory', inventory.id, { items: inventory.items });
 
     return {
       success: true,
       message: 'Purchase successful',
       data: {
-        item: item,
-        quantity: quantity,
+        item,
+        quantity,
         total_cost: totalCost,
         remaining_coins: progress.coins - totalCost
       }
@@ -792,26 +732,15 @@ class GameService {
     const inventory = db.findOne('user_inventory', { user_id: userId });
 
     if (!inventory) {
-      return {
-        success: true,
-        data: { items: [] }
-      };
+      return { success: true, data: { items: [] } };
     }
 
     const enriched = inventory.items.map(item => {
       const itemData = db.findById('shop_items', item.item_id);
-      return {
-        ...item,
-        ...itemData
-      };
+      return { ...item, ...itemData };
     });
 
-    return {
-      success: true,
-      data: {
-        items: enriched
-      }
-    };
+    return { success: true, data: { items: enriched } };
   }
 
   /**
@@ -821,38 +750,23 @@ class GameService {
     const inventory = db.findOne('user_inventory', { user_id: userId });
 
     if (!inventory) {
-      return {
-        success: false,
-        message: 'No inventory found',
-        statusCode: 404
-      };
+      return { success: false, message: 'No inventory found', statusCode: 404 };
     }
 
     const item = inventory.items.find(i => i.item_id === itemId);
     if (!item || item.quantity <= 0) {
-      return {
-        success: false,
-        message: 'Item not found or quantity is 0',
-        statusCode: 400
-      };
+      return { success: false, message: 'Item not found or quantity is 0', statusCode: 400 };
     }
 
-    // Logic sử dụng item (tuỳ loại item)
     const itemData = db.findById('shop_items', itemId);
 
-    // Giảm quantity
     item.quantity -= 1;
-    db.update('user_inventory', inventory.id, {
-      items: inventory.items
-    });
+    db.update('user_inventory', inventory.id, { items: inventory.items });
 
     return {
       success: true,
       message: 'Item used successfully',
-      data: {
-        item: itemData,
-        effect: 'Applied successfully'
-      }
+      data: { item: itemData, effect: 'Applied successfully' }
     };
   }
 }
