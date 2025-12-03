@@ -1,6 +1,6 @@
 /**
- * Unified Game Service - Kết hợp logic từ cả 2 services cũ
- * Hỗ trợ: Screen-based gameplay + Progress tracking + Museum + Scan
+ * Unified Game Service - Tất cả logic game trong 1 service
+ * Hỗ trợ: Progress, Chapters, Levels, Screen-based gameplay, Museum, Scan, Shop
  */
 
 const db = require('../config/database');
@@ -23,7 +23,7 @@ class GameService {
       total_points: 0,
       level: 1,
       coins: 1000,
-      unlocked_chapters: [1], // Chapter 1 mở sẵn
+      unlocked_chapters: [1],
       completed_levels: [],
       collected_characters: [],
       badges: [],
@@ -203,8 +203,6 @@ class GameService {
   canPlayLevel(level, progress) {
     // Level đầu luôn chơi được
     if (level.order === 1) return true;
-
-    // Kiểm tra level trước đã hoàn thành chưa
     if (level.required_level) {
       return progress.completed_levels.includes(level.required_level);
     }
@@ -277,7 +275,11 @@ class GameService {
       return { success: false, message: 'Level has no screens configured', statusCode: 500 };
     }
 
-    // Create session
+    const validation = this.validateScreensStructure(level.screens);
+    if (!validation.success) {
+      return validation;
+    }
+
     const session = db.create('game_sessions', {
       user_id: userId,
       level_id: levelId,
@@ -286,15 +288,18 @@ class GameService {
       current_screen_index: 0,
       collected_items: [],
       answered_questions: [],
+      timeline_order: [],
       score: 0,
       total_screens: level.screens.length,
       completed_screens: [],
+      screen_states: {},
       time_spent: 0,
       hints_used: 0,
-      started_at: new Date().toISOString()
+      started_at: new Date().toISOString(),
+      last_activity: new Date().toISOString()
     });
 
-    const firstScreen = level.screens[0];
+    const firstScreen = this.enrichScreen(level.screens[0], session, 0, level.screens.length);
 
     return {
       success: true,
@@ -310,12 +315,7 @@ class GameService {
             ? db.findById('game_characters', level.ai_character_id)
             : null
         },
-        current_screen: {
-          ...firstScreen,
-          index: 0,
-          is_first: true,
-          is_last: level.screens.length === 1
-        }
+        current_screen: firstScreen
       }
     };
   }
@@ -352,7 +352,8 @@ class GameService {
 
     const updatedSession = db.update('game_sessions', session.id, {
       collected_items: [...session.collected_items, clueId],
-      score: session.score + (item.points || 10)
+      score: session.score + (item.points || 10),
+      last_activity: new Date().toISOString()
     });
 
     const requiredItems = currentScreen.required_items || currentScreen.items.length;
@@ -375,8 +376,154 @@ class GameService {
   }
 
   /**
- * Hoàn thành level
- */
+   * Submit answer cho QUIZ screen
+   */
+  async submitAnswer(sessionId, userId, answerId) {
+    const session = db.findOne('game_sessions', {
+      id: parseInt(sessionId),
+      user_id: userId,
+      status: 'in_progress'
+    });
+
+    if (!session) {
+      return { success: false, message: 'Session not found', statusCode: 404 };
+    }
+
+    const level = db.findById('game_levels', session.level_id);
+    const currentScreen = level.screens[session.current_screen_index];
+
+    if (currentScreen.type !== 'QUIZ') {
+      return { success: false, message: 'Current screen is not a quiz', statusCode: 400 };
+    }
+
+    // Check if already answered
+    const hasAnswered = session.answered_questions.some(
+      q => q.screen_id === currentScreen.id
+    );
+
+    if (hasAnswered) {
+      return { success: false, message: 'Already answered this question', statusCode: 400 };
+    }
+
+    // Find answer
+    const selectedOption = currentScreen.options?.find(o => o.text === answerId);
+    if (!selectedOption) {
+      return { success: false, message: 'Invalid answer', statusCode: 400 };
+    }
+
+    const isCorrect = selectedOption.is_correct;
+    const pointsEarned = isCorrect ? (currentScreen.reward?.points || 20) : 0;
+
+    // Update session
+    const updatedSession = db.update('game_sessions', sessionId, {
+      answered_questions: [
+        ...session.answered_questions,
+        {
+          screen_id: currentScreen.id,
+          answer: answerId,
+          is_correct: isCorrect,
+          points: pointsEarned,
+          answered_at: new Date().toISOString()
+        }
+      ],
+      score: session.score + pointsEarned,
+      last_activity: new Date().toISOString()
+    });
+
+    return {
+      success: true,
+      message: isCorrect ? 'Correct answer!' : 'Wrong answer',
+      data: {
+        is_correct: isCorrect,
+        points_earned: pointsEarned,
+        total_score: updatedSession.score,
+        explanation: selectedOption.explanation,
+        correct_answer: isCorrect ? null : currentScreen.options.find(o => o.is_correct)?.text
+      }
+    };
+  }
+
+  /**
+   * Navigate to next screen
+   */
+  async navigateToNextScreen(sessionId, userId) {
+    const session = db.findOne('game_sessions', {
+      id: parseInt(sessionId),
+      user_id: userId,
+      status: 'in_progress'
+    });
+
+    if (!session) {
+      return {
+        success: false,
+        message: 'Session not found or already completed',
+        statusCode: 404
+      };
+    }
+
+    const level = db.findById('game_levels', session.level_id);
+    const currentScreen = level.screens[session.current_screen_index];
+
+    // Check if can proceed (đã hoàn thành yêu cầu của screen hiện tại chưa)
+    const canProceed = this.validateScreenCompletion(currentScreen, session);
+    if (!canProceed.success) {
+      return canProceed;
+    }
+
+    // Tìm next screen
+    let nextScreenIndex = session.current_screen_index + 1;
+
+    // Check if has custom next_screen_id
+    if (currentScreen.next_screen_id) {
+      nextScreenIndex = level.screens.findIndex(s => s.id === currentScreen.next_screen_id);
+      if (nextScreenIndex === -1) {
+        return {
+          success: false,
+          message: 'Invalid next_screen_id configuration',
+          statusCode: 500
+        };
+      }
+    }
+
+    // Check if finished
+    if (nextScreenIndex >= level.screens.length) {
+      // Auto complete level
+      return {
+        success: false,
+        message: 'Level completed. Please call completeLevel endpoint.',
+        statusCode: 400,
+        data: {
+          level_finished: true,
+          final_score: session.score
+        }
+      };
+    }
+
+    const nextScreen = level.screens[nextScreenIndex];
+
+    // Update session
+    const updatedSession = db.update('game_sessions', sessionId, {
+      current_screen_id: nextScreen.id,
+      current_screen_index: nextScreenIndex,
+      completed_screens: [...session.completed_screens, currentScreen.id],
+      last_activity: new Date().toISOString()
+    });
+
+    return {
+      success: true,
+      message: 'Navigated to next screen',
+      data: {
+        session_id: session.id,
+        current_screen: this.enrichScreen(nextScreen, updatedSession, nextScreenIndex, level.screens.length),
+        progress: {
+          completed_screens: updatedSession.completed_screens.length,
+          total_screens: level.screens.length,
+          percentage: Math.round((updatedSession.completed_screens.length / level.screens.length) * 100)
+        }
+      }
+    };
+  }
+
   async completeLevel(levelId, userId, { score, timeSpent } = {}) {
     const session = db.findOne('game_sessions', {
       level_id: levelId,
@@ -465,6 +612,99 @@ class GameService {
     return remaining > 0 ? Math.floor(remaining / 10) : 0;
   }
 
+  // ==================== VALIDATION ====================
+
+  validateScreenCompletion(screen, session) {
+    switch (screen.type) {
+      case 'HIDDEN_OBJECT':
+        const requiredItems = screen.required_items || screen.items?.length || 0;
+        const collectedCount = session.collected_items.filter(
+          item => screen.items?.some(i => i.id === item)
+        ).length;
+
+        if (collectedCount < requiredItems) {
+          return {
+            success: false,
+            message: `Need to collect ${requiredItems - collectedCount} more items`,
+            statusCode: 400
+          };
+        }
+        break;
+
+      case 'QUIZ':
+        const hasAnswered = session.answered_questions.some(
+          q => q.screen_id === screen.id
+        );
+        if (!hasAnswered) {
+          return {
+            success: false,
+            message: 'Must answer the question first',
+            statusCode: 400
+          };
+        }
+        break;
+
+      case 'DIALOGUE':
+        if (!screen.skip_allowed && !screen.auto_advance) {
+          const screenState = session.screen_states?.[screen.id];
+          if (!screenState?.read) {
+            return {
+              success: false,
+              message: 'Must read the dialogue first',
+              statusCode: 400
+            };
+          }
+        }
+        break;
+    }
+
+    return { success: true };
+  }
+
+  validateScreensStructure(screens) {
+    if (!Array.isArray(screens) || screens.length === 0) {
+      return {
+        success: false,
+        message: 'Screens must be a non-empty array',
+        statusCode: 400
+      };
+    }
+
+    const errors = [];
+    const screenIds = new Set();
+
+    screens.forEach((screen, index) => {
+      if (!screen.id) {
+        errors.push(`Screen ${index}: Missing id`);
+      } else if (screenIds.has(screen.id)) {
+        errors.push(`Screen ${index}: Duplicate id '${screen.id}'`);
+      } else {
+        screenIds.add(screen.id);
+      }
+
+      if (!screen.type) {
+        errors.push(`Screen ${index}: Missing type`);
+      }
+    });
+
+    if (errors.length > 0) {
+      return { success: false, message: 'Invalid screens structure', errors };
+    }
+
+    return { success: true };
+  }
+
+  enrichScreen(screen, session, index, totalScreens) {
+    return {
+      ...screen,
+      index,
+      is_first: index === 0,
+      is_last: index === totalScreens - 1,
+      is_completed: session.completed_screens.includes(screen.id),
+      state: session.screen_states?.[screen.id] || {}
+    };
+  }
+
   // ==================== MUSEUM ====================
 
   async getMuseum(userId) {
@@ -509,7 +749,7 @@ class GameService {
     };
   }
 
-  // ==================== SCAN TO PLAY ====================
+  // ==================== SCAN ====================
 
 
   /**
@@ -563,8 +803,6 @@ class GameService {
       scanned_at: new Date().toISOString()
     });
 
-
-
     return {
       success: true,
       message: 'Scan successful!',
@@ -616,7 +854,7 @@ class GameService {
     return { success: true, data: enriched };
   }
 
-  // ==================== LEADERBOARD & REWARDS ====================
+  // ==================== LEADERBOARD ====================
 
   /**
  * Bảng xếp hạng
