@@ -723,13 +723,18 @@ class GameService {
 
   async getMuseum(userId) {
     const progress = await this.getProgress(userId);
+    const lastCollection = progress.data.last_museum_collection || progress.data.created_at;
+
+    // Tính thu nhập tích lũy
+    const incomeInfo = this.calculatePendingIncome(progress.data, lastCollection);
 
     return {
       success: true,
       data: {
         is_open: progress.data.museum_open,
-        income_per_hour: this.calculateMuseumIncome(progress.data),
-        total_income: progress.data.museum_income,
+        income_per_hour: incomeInfo.rate,
+        total_income_generated: progress.data.museum_income, // Tổng lịch sử
+        pending_income: incomeInfo.pending, // Tiền đang chờ nhận
         characters: progress.data.collected_characters,
         visitor_count: progress.data.collected_characters.length * 10
       }
@@ -737,10 +742,25 @@ class GameService {
   }
 
   /**
-   * Tính thu nhập bảo tàng
+   * Tính toán thu nhập đang chờ
    */
-  calculateMuseumIncome(progress) {
-    return progress.collected_characters.length * 5;
+  calculatePendingIncome(progressData, lastCollectionTime) {
+    if (!progressData.museum_open || progressData.collected_characters.length === 0) {
+      return { rate: 0, pending: 0 };
+    }
+
+    const ratePerHour = progressData.collected_characters.length * 5; // 5 coins mỗi nhân vật/giờ
+    const now = new Date();
+    const last = new Date(lastCollectionTime);
+    const diffHours = Math.abs(now - last) / 36e5;
+
+    // Giới hạn max 24h để bắt user login
+    const cappedHours = Math.min(diffHours, 24);
+
+    return {
+      rate: ratePerHour,
+      pending: Math.floor(ratePerHour * cappedHours)
+    };
   }
 
   /**
@@ -759,6 +779,43 @@ class GameService {
       data: {
         is_open: isOpen,
         income_per_hour: this.calculateMuseumIncome(progress)
+      }
+    };
+  }
+
+  /**
+   * Thu hoạch tiền từ bảo tàng (NEW FEATURE)
+   */
+  async collectMuseumIncome(userId) {
+    const progress = db.findOne('game_progress', { user_id: userId });
+
+    if (!progress.museum_open) {
+      return { success: false, message: 'Museum is closed', statusCode: 400 };
+    }
+
+    const lastCollection = progress.last_museum_collection || progress.created_at;
+    const incomeInfo = this.calculatePendingIncome(progress, lastCollection);
+
+    if (incomeInfo.pending <= 0) {
+      return { success: false, message: 'No income to collect yet', statusCode: 400 };
+    }
+
+    // Update DB
+    const newCoins = (progress.coins || 0) + incomeInfo.pending;
+    const newTotalMuseumIncome = (progress.museum_income || 0) + incomeInfo.pending;
+
+    db.update('game_progress', progress.id, {
+      coins: newCoins,
+      museum_income: newTotalMuseumIncome,
+      last_museum_collection: new Date().toISOString()
+    });
+
+    return {
+      success: true,
+      message: `Collected ${incomeInfo.pending} coins from Museum!`,
+      data: {
+        collected: incomeInfo.pending,
+        total_coins: newCoins
       }
     };
   }
