@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { protect, authorize } = require('../middleware/auth.middleware');
+const { protect } = require('../middleware/auth.middleware');
+const { checkPermission } = require('../middleware/rbac.middleware');
 const categoryController = require('../controllers/category.controller');
 const { validateSchema } = require('../middleware/validation.middleware');
 
@@ -8,24 +9,25 @@ const { validateSchema } = require('../middleware/validation.middleware');
 router.get('/', categoryController.getAll);
 router.get('/:id', categoryController.getById);
 
-// Admin only
+// Protected (Admin & Researcher có thể tạo category mới nếu cần)
 router.post('/',
   protect,
-  authorize('admin'),
+  checkPermission('categories', 'create'),
   validateSchema('cultural_category'),
   categoryController.create
 );
 
 router.put('/:id',
   protect,
-  authorize('admin'),
+  checkPermission('categories', 'update'),
   validateSchema('cultural_category'),
   categoryController.update
 );
 
+// Chỉ Admin được xóa danh mục (tránh vỡ data)
 router.delete('/:id',
   protect,
-  authorize('admin'),
+  checkPermission('categories', 'delete'),
   categoryController.delete
 );
 

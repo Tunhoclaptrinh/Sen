@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/auth.middleware');
-const { checkPermission } = require('../middleware/rbac.middleware'); // Import RBAC mới
+const { checkPermission } = require('../middleware/rbac.middleware');
 const heritageSiteController = require('../controllers/heritage_site.controller');
 
-// Public routes (Ai cũng xem được)
+// Public Routes
 router.get('/', heritageSiteController.getAll);
 router.get('/search', heritageSiteController.search);
 router.get('/nearby', heritageSiteController.getNearby);
@@ -12,7 +12,7 @@ router.get('/:id', heritageSiteController.getById);
 router.get('/:id/artifacts', heritageSiteController.getArtifacts);
 router.get('/:id/timeline', heritageSiteController.getTimeline);
 
-// Chỉ Admin hoặc Researcher mới được tạo/sửa
+// Protected Routes (Researcher/Admin)
 router.post('/',
   protect,
   checkPermission('heritage_sites', 'create'),
@@ -25,7 +25,7 @@ router.put('/:id',
   heritageSiteController.update
 );
 
-// Chỉ Admin mới được xóa
+// Chỉ Admin được xóa
 router.delete('/:id',
   protect,
   checkPermission('heritage_sites', 'delete'),

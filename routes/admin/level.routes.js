@@ -6,30 +6,30 @@
 
 const express = require('express');
 const router = express.Router();
-const { protect, authorize } = require('../../middleware/auth.middleware');
+const { protect } = require('../../middleware/auth.middleware');
+const { checkPermission } = require('../../middleware/rbac.middleware');
 const levelCMSController = require('../../controllers/level_cms.controller');
 
-// All admin routes require authentication and admin role
-router.use(protect, authorize('admin'));
+// Yêu cầu đăng nhập và quyền 'game_content'
+router.use(protect, checkPermission('game_content', 'read'));
 
-// ==================== TEMPLATES & HELPERS ====================
+// Templates & Stats
 router.get('/templates', levelCMSController.getTemplates);
 router.get('/stats', levelCMSController.getStats);
-router.post('/validate', levelCMSController.validateLevel);
+router.post('/validate', checkPermission('game_content', 'create'), levelCMSController.validateLevel);
 
 // ==================== CRUD ====================
 router.get('/', levelCMSController.getAllLevels);
 router.get('/:id', levelCMSController.getLevelDetail);
 router.get('/:id/preview', levelCMSController.previewLevel);
-router.get('/:id/assets', levelCMSController.getUsedAssets);
 
-router.post('/', levelCMSController.createLevel);
-router.put('/:id', levelCMSController.updateLevel);
-router.delete('/:id', levelCMSController.deleteLevel);
+router.post('/', checkPermission('game_content', 'create'), levelCMSController.createLevel);
+router.put('/:id', checkPermission('game_content', 'update'), levelCMSController.updateLevel);
+router.delete('/:id', checkPermission('game_content', 'delete'), levelCMSController.deleteLevel);
 
 // ==================== ADVANCED OPERATIONS ====================
-router.post('/:id/clone', levelCMSController.cloneLevel);
-router.post('/bulk/import', levelCMSController.bulkImport);
-router.put('/chapters/:chapterId/reorder', levelCMSController.reorderLevels);
+router.post('/:id/clone', checkPermission('game_content', 'create'), levelCMSController.cloneLevel);
+router.post('/bulk/import', checkPermission('game_content', 'import'), levelCMSController.bulkImport);
+router.put('/chapters/:chapterId/reorder', checkPermission('game_content', 'update'), levelCMSController.reorderLevels);
 
 module.exports = router;

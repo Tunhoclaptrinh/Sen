@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/auth.middleware');
+const { checkPermission } = require('../middleware/rbac.middleware');
 const gameController = require('../controllers/game.controller');
 
-// All game routes require authentication
-router.use(protect);
+router.use(protect); // Bắt buộc đăng nhập
 
-// ==================== PROGRESS & STATS ====================
-router.get('/progress', gameController.getProgress);
-router.get('/leaderboard', gameController.getLeaderboard);
-router.get('/daily-reward', gameController.getDailyReward);
+// Áp dụng quyền 'game_play' cho các action chơi game
+const requireGamePlay = checkPermission('game_play', 'play');
+
+router.get('/progress', requireGamePlay, gameController.getProgress);
+router.get('/leaderboard', requireGamePlay, gameController.getLeaderboard);
+router.get('/daily-reward', checkPermission('game_play', 'earn_rewards'), gameController.getDailyReward);
 
 // ==================== CHAPTERS (SEN FLOWERS) ====================
 router.get('/chapters', gameController.getChapters);
@@ -21,29 +23,29 @@ router.get('/levels/:chapterId', gameController.getLevels);
 router.get('/levels/:id/detail', gameController.getLevelDetail);
 
 // Level Session Management
-router.post('/levels/:id/start', gameController.startLevel);
-router.post('/levels/:id/collect-clue', gameController.collectClue);
-router.post('/levels/:id/complete', gameController.completeLevel);
+router.post('/levels/:id/start', requireGamePlay, gameController.startLevel);
+router.post('/levels/:id/collect-clue', requireGamePlay, gameController.collectClue);
+router.post('/levels/:id/complete', requireGamePlay, gameController.completeLevel);
 
 // ==================== SCREEN NAVIGATION (NEW) ====================
-router.post('/sessions/:id/next-screen', gameController.navigateToNextScreen);
-router.post('/sessions/:id/submit-answer', gameController.submitAnswer);
+router.post('/sessions/:id/next-screen', requireGamePlay, gameController.navigateToNextScreen);
+router.post('/sessions/:id/submit-answer', requireGamePlay, gameController.submitAnswer);
 
 // ==================== MUSEUM ====================
-router.get('/museum', gameController.getMuseum);
-router.post('/museum/toggle', gameController.toggleMuseum);
-router.post('/museum/collect', gameController.collectMuseumIncome);
+router.get('/museum', requireGamePlay, gameController.getMuseum);
+router.post('/museum/toggle', requireGamePlay, gameController.toggleMuseum);
+router.post('/museum/collect', checkPermission('game_play', 'earn_rewards'), gameController.collectMuseumIncome);
 
 // ==================== BADGES & ACHIEVEMENTS ====================
 router.get('/badges', gameController.getBadges);
 router.get('/achievements', gameController.getAchievements);
 
 // ==================== SCAN TO PLAY ====================
-router.post('/scan', gameController.scanObject);
+router.post('/scan', checkPermission('game_play', 'scan_qr'), gameController.scanObject);
 
 // ==================== SHOP & INVENTORY ====================
-router.post('/shop/purchase', gameController.purchaseItem);
-router.get('/inventory', gameController.getInventory);
-router.post('/inventory/use', gameController.useItem);
+router.post('/shop/purchase', checkPermission('shop', 'purchase'), gameController.purchaseItem);
+router.get('/inventory', requireGamePlay, gameController.getInventory);
+router.post('/inventory/use', checkPermission('shop', 'use_item'), gameController.useItem);
 
 module.exports = router;
