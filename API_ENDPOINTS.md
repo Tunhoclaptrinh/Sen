@@ -1,1082 +1,2570 @@
-# 📡 SEN API Endpoints - Toàn Bộ Chi Tiết
+# 📚 SEN API Documentation
 
+> Backend API cho game giáo dục văn hóa Việt Nam - SEN (Sen)
+
+**Version:** 2.0.0  
 **Base URL:** `http://localhost:3000/api`  
-**API Version:** 2.0.0  
-**Last Updated:** 2024-12-02
+**Environment:** Development  
+**Last Updated:** December 3, 2025
 
 ---
 
-## 📋 Mục Lục
+## 📋 Table of Contents
 
-1. [Authentication](#1-authentication)
-2. [Heritage Sites](#2-heritage-sites)
-3. [Artifacts](#3-artifacts)
-4. [Collections](#4-collections)
-5. [Reviews & Ratings](#5-reviews--ratings)
-6. [Favorites](#6-favorites)
-7. [Exhibitions](#7-exhibitions)
-8. [Learning Modules](#8-learning-modules)
-9. [Game System](#9-game-system-new)
-10. [AI Chatbot](#10-ai-chatbot-new)
-11. [Admin CMS](#11-admin-cms-new)
-12. [User Management](#12-user-management)
+- [Overview](#overview)
+- [Authentication](#authentication)
+- [Response Format](#response-format)
+- [Error Handling](#error-handling)
+- [Endpoints](#endpoints)
+  - [1. Authentication & Users](#1-authentication--users)
+  - [2. Heritage & Artifacts](#2-heritage--artifacts)
+  - [3. Game System](#3-game-system)
+  - [4. AI Assistant](#4-ai-assistant)
+  - [5. Learning & Quests](#5-learning--quests)
+  - [6. User Content](#6-user-content)
+  - [7. Upload & Media](#7-upload--media)
+  - [8. Admin CMS](#8-admin-cms)
+  - [9. Notifications](#9-notifications)
 
 ---
 
-## 1. Authentication
+## 🔐 Overview
 
-### Register
+API này cung cấp backend cho ứng dụng game giáo dục văn hóa Việt Nam, cho phép người dùng:
+- Khám phá di sản văn hóa và hiện vật lịch sử
+- Chơi game tương tác với các màn chơi theo chương
+- Tương tác với AI assistant để học tập
+- Quản lý bộ sưu tập cá nhân và yêu thích
+- Hoàn thành nhiệm vụ và nhận phần thưởng
+
+---
+
+## 🔑 Authentication
+
+API sử dụng **JWT (JSON Web Token)** để xác thực.
+
+### Request Headers
 
 ```http
-POST /api/auth/register
+Authorization: Bearer <token>
 Content-Type: application/json
+```
 
-{
-  "name": "Nguyễn Văn A",
-  "email": "user@sen.com",
-  "password": "123456",
-  "phone": "0987654321"
-}
+### User Roles
 
-Response 201:
+- `customer` - Người dùng thông thường
+- `admin` - Quản trị viên (full access)
+
+---
+
+## 📦 Response Format
+
+### Success Response
+
+```json
 {
   "success": true,
-  "data": {
-    "user": { ... },
-    "token": "eyJhbGci..."
+  "message": "Operation successful",
+  "data": { ... },
+  "metadata": {
+    "total": 100,
+    "page": 1,
+    "limit": 20
   }
 }
 ```
 
-### Login
+### Error Response
 
-```http
-POST /api/auth/login
-Content-Type: application/json
-
+```json
 {
-  "email": "user@sen.com",
-  "password": "123456"
-}
-```
-
-### Get Current User
-
-```http
-GET /api/auth/me
-Authorization: Bearer {token}
-```
-
-### Change Password
-
-```http
-PUT /api/auth/change-password
-Authorization: Bearer {token}
-
-{
-  "currentPassword": "123456",
-  "newPassword": "newpass"
+  "success": false,
+  "message": "Error description",
+  "errors": [
+    {
+      "field": "email",
+      "message": "Invalid email format"
+    }
+  ]
 }
 ```
 
 ---
 
-## 2. Heritage Sites
+## ⚠️ Error Handling
 
-### Get All Heritage Sites
+### HTTP Status Codes
 
+| Code | Description |
+|------|-------------|
+| 200 | OK - Request successful |
+| 201 | Created - Resource created successfully |
+| 400 | Bad Request - Invalid input |
+| 401 | Unauthorized - Authentication required |
+| 403 | Forbidden - Insufficient permissions |
+| 404 | Not Found - Resource not found |
+| 500 | Internal Server Error |
+
+---
+
+## 📡 Endpoints
+
+---
+
+## 1. Authentication & Users
+
+### 1.1 Authentication
+
+#### Register New User
 ```http
-GET /api/heritage-sites?page=1&limit=10&sort=rating&order=desc
+POST /api/auth/register
+Content-Type: application/json
+```
 
-Query Parameters:
-- page: number (default: 1)
-- limit: number (default: 10, max: 100)
-- sort: string (name, rating, year_established)
-- order: asc | desc
-- type: monument | temple | museum | historic_building
-- region: string (Quảng Nam, Hà Nội...)
-- unesco_listed: boolean
-- q: string (full-text search)
-
-Response 200:
+**Body:**
+```json
 {
-  "success": true,
-  "count": 15,
-  "data": [ ... ],
-  "pagination": { ... }
+  "email": "user@example.com",
+  "password": "password123",
+  "name": "Nguyễn Văn A",
+  "phone": "0123456789",
+  "address": "123 Street, City"
 }
 ```
 
-### Get Heritage Site Details
+**Response:** `201 Created`
+```json
+{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "user": {
+      "id": 1,
+      "email": "user@example.com",
+      "name": "Nguyễn Văn A",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Nguyen+Van+A"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
 
+---
+
+#### Login
+```http
+POST /api/auth/login
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "id": 1,
+      "email": "user@example.com",
+      "name": "Nguyễn Văn A",
+      "role": "customer"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
+
+---
+
+#### Get Current User
+```http
+GET /api/auth/me
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "email": "user@example.com",
+    "name": "Nguyễn Văn A",
+    "role": "customer",
+    "isActive": true
+  }
+}
+```
+
+---
+
+#### Logout
+```http
+POST /api/auth/logout
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Logout successful"
+}
+```
+
+---
+
+#### Change Password
+```http
+PUT /api/auth/change-password
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "currentPassword": "oldpassword123",
+  "newPassword": "newpassword456"
+}
+```
+
+**Response:** `200 OK`
+
+---
+
+### 1.2 User Management
+
+#### Get All Users (Admin Only)
+```http
+GET /api/users
+Authorization: Bearer <admin-token>
+```
+
+**Query Parameters:**
+- `page` (default: 1)
+- `limit` (default: 20)
+- `role` (filter by role)
+- `isActive` (filter by status)
+
+**Response:** `200 OK`
+
+---
+
+#### Get User by ID
+```http
+GET /api/users/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Update User Profile
+```http
+PUT /api/users/profile
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "name": "Nguyễn Văn B",
+  "phone": "0987654321",
+  "address": "456 New Street",
+  "avatar": "https://example.com/avatar.jpg"
+}
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get User Activity
+```http
+GET /api/users/:id/activity
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "recentGames": [...],
+    "achievements": [...],
+    "favorites": [...]
+  }
+}
+```
+
+---
+
+#### Get User Stats (Admin Only)
+```http
+GET /api/users/stats/summary
+Authorization: Bearer <admin-token>
+```
+
+**Response:** User statistics including total users, active users, etc.
+
+---
+
+#### Toggle User Status (Admin Only)
+```http
+PATCH /api/users/:id/status
+Authorization: Bearer <admin-token>
+```
+
+**Response:** Updates user active/inactive status
+
+---
+
+#### Delete User Permanently (Admin Only)
+```http
+DELETE /api/users/:id/permanent
+Authorization: Bearer <admin-token>
+```
+
+**Response:** Permanently deletes user
+
+---
+
+#### Import/Export Users (Admin Only)
+
+**Download Template:**
+```http
+GET /api/users/template
+Authorization: Bearer <admin-token>
+```
+
+**Get Schema:**
+```http
+GET /api/users/schema
+Authorization: Bearer <admin-token>
+```
+
+**Import Users:**
+```http
+POST /api/users/import
+Authorization: Bearer <admin-token>
+Content-Type: multipart/form-data
+```
+
+**Export Users:**
+```http
+GET /api/users/export
+Authorization: Bearer <admin-token>
+```
+
+---
+
+## 2. Heritage & Artifacts
+
+### 2.1 Heritage Sites
+
+#### Get All Heritage Sites
+```http
+GET /api/heritage-sites
+```
+
+**Query Parameters:**
+- `page` (default: 1)
+- `limit` (default: 20)
+- `category` (filter by category)
+- `province` (filter by province)
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Hoàng Thành Thăng Long",
+      "description": "Di tích lịch sử...",
+      "location": {
+        "address": "Hoàn Kiếm, Hà Nội",
+        "latitude": 21.0285,
+        "longitude": 105.8542
+      },
+      "images": [...],
+      "category": "Đình chùa",
+      "period": "Thời Lý"
+    }
+  ],
+  "metadata": {
+    "total": 50,
+    "page": 1,
+    "limit": 20
+  }
+}
+```
+
+---
+
+#### Search Heritage Sites
+```http
+GET /api/heritage-sites/search
+```
+
+**Query Parameters:**
+- `q` - Search query
+- `category` - Filter by category
+- `province` - Filter by province
+
+**Response:** `200 OK`
+
+---
+
+#### Get Nearby Heritage Sites
+```http
+GET /api/heritage-sites/nearby
+```
+
+**Query Parameters:**
+- `latitude` (required)
+- `longitude` (required)
+- `radius` (km, default: 10)
+
+**Response:** `200 OK`
+
+---
+
+#### Get Heritage Site by ID
 ```http
 GET /api/heritage-sites/:id
 ```
 
-### Find Nearby Heritage Sites
+**Response:** `200 OK`
 
-```http
-GET /api/heritage-sites/nearby?latitude=15.8801&longitude=108.3288&radius=5
+---
 
-Parameters:
-- latitude: number (required)
-- longitude: number (required)
-- radius: number (km, default: 5)
-
-Response 200:
-{
-  "success": true,
-  "data": [
-    {
-      "id": 1,
-      "name": "Phố Cổ Hội An",
-      "distance": 0.5,
-      "rating": 4.9
-    }
-  ]
-}
-```
-
-### Get Artifacts of Heritage Site
-
+#### Get Heritage Site Artifacts
 ```http
 GET /api/heritage-sites/:id/artifacts
 ```
 
-### Get Timeline of Heritage Site
+**Response:** List of artifacts at this heritage site
 
+---
+
+#### Get Heritage Site Timeline
 ```http
 GET /api/heritage-sites/:id/timeline
 ```
 
+**Response:** Historical timeline of the site
+
 ---
 
-## 3. Artifacts
-
-### Get All Artifacts
-
+#### Create Heritage Site (Auth Required)
 ```http
-GET /api/artifacts?artifact_type=painting&condition=excellent
-
-Query Parameters:
-- artifact_type: sculpture | painting | pottery | textile
-- condition: excellent | good | fair | poor
+POST /api/heritage-sites
+Authorization: Bearer <token>
+Content-Type: application/json
 ```
 
-### Search Artifacts
-
-```http
-GET /api/artifacts/search?q=tranh+sơn+dầu
+**Body:**
+```json
+{
+  "name": "Site Name",
+  "description": "Description",
+  "location": {
+    "address": "Address",
+    "latitude": 21.0285,
+    "longitude": 105.8542
+  },
+  "category": "Category",
+  "period": "Period"
+}
 ```
 
-### Get Related Artifacts
+**Response:** `201 Created`
 
+---
+
+#### Update Heritage Site (Auth Required)
+```http
+PUT /api/heritage-sites/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Heritage Site (Auth Required)
+```http
+DELETE /api/heritage-sites/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 2.2 Artifacts
+
+#### Get All Artifacts
+```http
+GET /api/artifacts
+```
+
+**Query Parameters:**
+- `page` (default: 1)
+- `limit` (default: 20)
+- `category` - Filter by category
+- `period` - Filter by period
+- `heritageSite` - Filter by heritage site
+
+**Response:** `200 OK`
+
+---
+
+#### Search Artifacts
+```http
+GET /api/artifacts/search
+```
+
+**Query Parameters:**
+- `q` - Search query
+- `category` - Filter by category
+
+**Response:** `200 OK`
+
+---
+
+#### Get Artifact by ID
+```http
+GET /api/artifacts/:id
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "Trống đồng Ngọc Lũ",
+    "description": "Trống đồng thời Đông Sơn...",
+    "images": [...],
+    "category": "Nhạc cụ",
+    "period": "Đông Sơn",
+    "heritageSite": {
+      "id": 1,
+      "name": "Bảo tàng Lịch sử"
+    },
+    "culturalSignificance": "..."
+  }
+}
+```
+
+---
+
+#### Get Related Artifacts
 ```http
 GET /api/artifacts/:id/related
 ```
 
----
-
-## 4. Collections
-
-### Get My Collections
-
-```http
-GET /api/collections
-Authorization: Bearer {token}
-```
-
-### Create Collection
-
-```http
-POST /api/collections
-Authorization: Bearer {token}
-
-{
-  "name": "Bộ Sưu Tập Mới",
-  "description": "Mô tả...",
-  "is_public": true,
-  "artifact_ids": [1, 2, 3]
-}
-```
-
-### Add Artifact to Collection
-
-```http
-POST /api/collections/:collectionId/artifacts/:artifactId
-Authorization: Bearer {token}
-```
-
-### Remove Artifact from Collection
-
-```http
-DELETE /api/collections/:collectionId/artifacts/:artifactId
-Authorization: Bearer {token}
-```
+**Response:** List of related artifacts
 
 ---
 
-## 5. Reviews & Ratings
-
-### Get Reviews by Type
-
+#### Create Artifact (Admin Only)
 ```http
-GET /api/reviews/type/heritage_site?page=1&limit=10
+POST /api/artifacts
+Authorization: Bearer <admin-token>
 ```
 
-### Create Review
-
-```http
-POST /api/reviews
-Authorization: Bearer {token}
-
-{
-  "type": "heritage_site",
-  "heritage_site_id": 1,
-  "rating": 5,
-  "comment": "Tuyệt vời!"
-}
-```
+**Response:** `201 Created`
 
 ---
 
-## 6. Favorites
-
-### Get Favorites
-
+#### Update Artifact (Admin Only)
 ```http
-GET /api/favorites
-Authorization: Bearer {token}
+PUT /api/artifacts/:id
+Authorization: Bearer <admin-token>
 ```
 
-### Add to Favorites
-
-```http
-POST /api/favorites/:type/:id
-Authorization: Bearer {token}
-
-URL Examples:
-/api/favorites/heritage_site/1
-/api/favorites/artifact/5
-```
-
-### Toggle Favorite
-
-```http
-POST /api/favorites/:type/:id/toggle
-Authorization: Bearer {token}
-```
-
-### Check Favorite Status
-
-```http
-GET /api/favorites/:type/:id/check
-Authorization: Bearer {token}
-```
+**Response:** `200 OK`
 
 ---
 
-## 7. Exhibitions
+#### Delete Artifact (Admin Only)
+```http
+DELETE /api/artifacts/:id
+Authorization: Bearer <admin-token>
+```
 
-### Get All Exhibitions
+**Response:** `200 OK`
 
+---
+
+### 2.3 Categories
+
+#### Get All Categories
+```http
+GET /api/categories
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Category by ID
+```http
+GET /api/categories/:id
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Create Category (Admin Only)
+```http
+POST /api/categories
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Update Category (Admin Only)
+```http
+PUT /api/categories/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Category (Admin Only)
+```http
+DELETE /api/categories/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 2.4 Exhibitions
+
+#### Get All Exhibitions
 ```http
 GET /api/exhibitions
 ```
 
-### Get Active Exhibitions
+**Response:** `200 OK`
 
+---
+
+#### Get Active Exhibitions
 ```http
 GET /api/exhibitions/active
 ```
 
----
-
-## 8. Learning Modules
-
-### Get Learning Path
-
-```http
-GET /api/learning/path
-Authorization: Bearer {token}
-
-Response 200:
-{
-  "success": true,
-  "data": [
-    {
-      "id": 1,
-      "title": "Giới Thiệu Lịch Sử Hội An",
-      "difficulty": "beginner",
-      "is_completed": false
-    }
-  ],
-  "progress": {
-    "completed": 1,
-    "total": 5,
-    "percentage": 20
-  }
-}
-```
-
-### Complete Learning Module
-
-```http
-POST /api/learning/:id/complete
-Authorization: Bearer {token}
-
-{
-  "score": 85
-}
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "points_earned": 50,
-    "passed": true
-  }
-}
-```
+**Response:** List of currently active exhibitions
 
 ---
 
-## 9. Game System (NEW)
+#### Get Exhibition by ID
+```http
+GET /api/exhibitions/:id
+```
 
-### Get Game Progress
+**Response:** `200 OK`
 
+---
+
+#### Create Exhibition (Admin Only)
+```http
+POST /api/exhibitions
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Update Exhibition (Admin Only)
+```http
+PUT /api/exhibitions/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Exhibition (Admin Only)
+```http
+DELETE /api/exhibitions/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+## 3. Game System
+
+### 3.1 Game Progress
+
+#### Get User Progress
 ```http
 GET /api/game/progress
-Authorization: Bearer {token}
+Authorization: Bearer <token>
+```
 
-Response 200:
+**Response:** `200 OK`
+```json
 {
   "success": true,
   "data": {
-    "current_chapter": 1,
-    "total_sen_petals": 5,
-    "total_points": 280,
-    "level": 2,
-    "coins": 1500,
-    "collected_characters": ["teu_full_color"],
-    "stats": {
-      "completion_rate": 25,
-      "chapters_unlocked": 1
+    "userId": 1,
+    "level": 5,
+    "experience": 1250,
+    "senCoins": 500,
+    "totalStars": 45,
+    "chaptersCompleted": 2,
+    "levelsCompleted": 15,
+    "badges": [...],
+    "currentChapter": {
+      "id": 3,
+      "name": "Ký Ức Chú Tễu"
     }
   }
 }
 ```
 
-### Get Chapters (Sen Flowers)
+---
 
+#### Get Leaderboard
 ```http
-GET /api/game/chapters
-Authorization: Bearer {token}
-
-Response 200:
-{
-  "success": true,
-  "data": [
-    {
-      "id": 1,
-      "name": "Lớp Cánh 1: Cội Nguồn",
-      "layer_index": 1,
-      "is_unlocked": true,
-      "total_levels": 5,
-      "completed_levels": 2,
-      "completion_rate": 40
-    }
-  ]
-}
+GET /api/game/leaderboard
+Authorization: Bearer <token>
 ```
 
-### Get Chapter Detail
+**Query Parameters:**
+- `type` - `global`, `weekly`, `monthly` (default: global)
+- `limit` (default: 20)
 
-```http
-GET /api/game/chapters/:id
-Authorization: Bearer {token}
-```
-
-### Unlock Chapter
-
-```http
-POST /api/game/chapters/:id/unlock
-Authorization: Bearer {token}
-
-Response 200:
-{
-  "success": true,
-  "message": "Chapter unlocked",
-  "data": {
-    "chapter_id": 2,
-    "chapter_name": "Lớp Cánh 2: Giao Thoa"
-  }
-}
-```
-
-### Get Levels in Chapter
-
-```http
-GET /api/game/levels/:chapterId
-Authorization: Bearer {token}
-```
-
-### Get Level Detail
-
-```http
-GET /api/game/levels/:id/detail
-Authorization: Bearer {token}
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "id": 2,
-    "name": "Ký ức chú Tễu",
-    "type": "mixed",
-    "difficulty": "medium",
-    "screens": [
-      {
-        "id": "screen_01",
-        "type": "DIALOGUE",
-        "content": [ ... ]
-      },
-      {
-        "id": "screen_02",
-        "type": "HIDDEN_OBJECT",
-        "items": [ ... ]
-      }
-    ],
-    "rewards": {
-      "petals": 2,
-      "coins": 100,
-      "character": "teu_full_color"
-    }
-  }
-}
-```
-
-### Start Level
-
-```http
-POST /api/game/levels/:id/start
-Authorization: Bearer {token}
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "session_id": 123,
-    "level": { ... },
-    "current_screen": {
-      "id": "screen_01",
-      "type": "DIALOGUE",
-      "index": 0,
-      "is_first": true
-    }
-  }
-}
-```
-
-### Collect Clue/Item
-
-```http
-POST /api/game/levels/:id/collect-clue
-Authorization: Bearer {token}
-
-{
-  "clueId": "item_fan"
-}
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "item": {
-      "id": "item_fan",
-      "name": "Cái Quạt Mo",
-      "points": 10
-    },
-    "progress": "1/3",
-    "all_collected": false
-  }
-}
-```
-
-### Complete Level
-
-```http
-POST /api/game/levels/:id/complete
-Authorization: Bearer {token}
-
-{
-  "score": 85,
-  "timeSpent": 300
-}
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "passed": true,
-    "score": 85,
-    "rewards": {
-      "petals": 2,
-      "coins": 100,
-      "character": "teu_full_color"
-    }
-  }
-}
-```
-
-### Get Museum
-
-```http
-GET /api/game/museum
-Authorization: Bearer {token}
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "is_open": true,
-    "income_per_hour": 25,
-    "characters": ["teu_full_color", "thikinh"],
-    "visitor_count": 20
-  }
-}
-```
-
-### Toggle Museum
-
-```http
-POST /api/game/museum/toggle
-Authorization: Bearer {token}
-
-{
-  "isOpen": true
-}
-```
-
-### Get Badges
-
-```http
-GET /api/game/badges
-Authorization: Bearer {token}
-```
-
-### Get Achievements
-
-```http
-GET /api/game/achievements
-Authorization: Bearer {token}
-```
-
-### Scan QR Code
-
-```http
-POST /api/game/scan
-Authorization: Bearer {token}
-
-{
-  "code": "HOIAN001",
-  "latitude": 15.8795,
-  "longitude": 108.3274
-}
-
-Response 200:
-{
-  "success": true,
-  "message": "Scan successful!",
-  "data": {
-    "artifact": { ... },
-    "rewards": {
-      "coins": 200,
-      "petals": 2,
-      "character": "guardian_hoian"
-    }
-  }
-}
-```
-
-### Get Leaderboard
-
-```http
-GET /api/game/leaderboard?type=global&limit=20
-Authorization: Bearer {token}
-
-Response 200:
+**Response:** `200 OK`
+```json
 {
   "success": true,
   "data": [
     {
       "rank": 1,
-      "user_name": "Phạm Văn Tuấn",
-      "total_points": 5200,
-      "level": 12
+      "user": {
+        "id": 5,
+        "name": "Nguyễn Văn A",
+        "avatar": "..."
+      },
+      "totalScore": 9500,
+      "totalStars": 150,
+      "level": 20
     }
   ]
 }
 ```
 
-### Get Daily Reward
-
-```http
-GET /api/game/daily-reward
-Authorization: Bearer {token}
-```
-
-### Purchase Shop Item
-
-```http
-POST /api/game/shop/purchase
-Authorization: Bearer {token}
-
-{
-  "itemId": 1,
-  "quantity": 5
-}
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "item": { ... },
-    "total_cost": 50,
-    "remaining_coins": 1450
-  }
-}
-```
-
-### Get Inventory
-
-```http
-GET /api/game/inventory
-Authorization: Bearer {token}
-```
-
-### Use Item
-
-```http
-POST /api/game/inventory/use
-Authorization: Bearer {token}
-
-{
-  "itemId": 1,
-  "targetId": null
-}
-```
-
 ---
 
-## 10. AI Chatbot (NEW)
-
-### Chat with AI
-
+#### Get Daily Reward
 ```http
-POST /api/ai/chat
-Authorization: Bearer {token}
+GET /api/game/daily-reward
+Authorization: Bearer <token>
+```
 
-{
-  "message": "Chú Tễu ơi, cái quạt này có ý nghĩa gì?",
-  "context": {
-    "levelId": 2,
-    "characterId": 1,
-    "screenType": "HIDDEN_OBJECT"
-  }
-}
-
-Response 200:
+**Response:** `200 OK`
+```json
 {
   "success": true,
   "data": {
-    "message": "Hề hề! Cái quạt mo này ta dùng để phe phẩy dẫn chuyện đấy!",
-    "character": {
-      "name": "Chú Tễu",
-      "avatar": "...",
-      "speaking_style": "Vui vẻ, dân dã"
+    "canClaim": true,
+    "streakDays": 5,
+    "reward": {
+      "senCoins": 50,
+      "items": [...]
     }
   }
 }
 ```
 
-### Get Chat History
+---
 
+### 3.2 Chapters (Sen Flowers)
+
+#### Get All Chapters
 ```http
-GET /api/ai/history?levelId=2&limit=20
-Authorization: Bearer {token}
+GET /api/game/chapters
+Authorization: Bearer <token>
 ```
 
-### Ask for Hint
-
-```http
-POST /api/ai/ask-hint
-Authorization: Bearer {token}
-
-{
-  "levelId": 2,
-  "clueId": "item_fan"
-}
-
-Response 200:
+**Response:** `200 OK`
+```json
 {
   "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Sen Hồng - Ký Ức Đầu Tiên",
+      "description": "Chương đầu tiên...",
+      "order": 1,
+      "icon": "🌸",
+      "isUnlocked": true,
+      "progress": {
+        "completed": 5,
+        "total": 5,
+        "stars": 12
+      },
+      "levels": [...]
+    }
+  ]
+}
+```
+
+---
+
+#### Get Chapter Detail
+```http
+GET /api/game/chapters/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Unlock Chapter
+```http
+POST /api/game/chapters/:id/unlock
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Chapter unlocked",
   "data": {
-    "hint": "Hãy tìm ở góc trái màn hình, gần con rối",
-    "cost": 10,
-    "remaining_coins": 1490
+    "chapterId": 2,
+    "costSenCoins": 100,
+    "remainingSenCoins": 400
   }
 }
 ```
 
-### Explain Artifact/Heritage Site
+---
 
+### 3.3 Levels (Màn Chơi)
+
+#### Get Levels by Chapter
+```http
+GET /api/game/levels/:chapterId
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Khám Phá Đinh Bộ Lĩnh",
+      "description": "Màn đầu tiên...",
+      "order": 1,
+      "difficulty": "easy",
+      "isUnlocked": true,
+      "stars": 3,
+      "bestScore": 950,
+      "status": "completed"
+    }
+  ]
+}
+```
+
+---
+
+#### Get Level Detail
+```http
+GET /api/game/levels/:id/detail
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "Khám Phá Đinh Bộ Lĩnh",
+    "description": "...",
+    "objectives": [...],
+    "screens": [
+      {
+        "id": "screen_1",
+        "type": "STORY",
+        "content": "..."
+      },
+      {
+        "id": "screen_2",
+        "type": "QUIZ",
+        "question": "...",
+        "answers": [...]
+      }
+    ],
+    "rewards": {
+      "senCoins": 50,
+      "experience": 100,
+      "items": [...]
+    }
+  }
+}
+```
+
+---
+
+#### Start Level
+```http
+POST /api/game/levels/:id/start
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Level started",
+  "data": {
+    "sessionId": "session_123",
+    "levelId": 1,
+    "startedAt": "2025-12-03T10:00:00Z",
+    "currentScreen": {
+      "id": "screen_1",
+      "type": "STORY",
+      "content": "..."
+    }
+  }
+}
+```
+
+---
+
+#### Navigate to Next Screen
+```http
+POST /api/game/sessions/:id/next-screen
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "currentScreen": {
+      "id": "screen_2",
+      "type": "QUIZ",
+      "question": "...",
+      "answers": [...]
+    },
+    "isComplete": false
+  }
+}
+```
+
+---
+
+#### Submit Answer (for QUIZ screens)
+```http
+POST /api/game/sessions/:id/submit-answer
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "answerId": "answer_1"
+}
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Correct answer!",
+  "data": {
+    "isCorrect": true,
+    "explanation": "...",
+    "scoreEarned": 100,
+    "canProceed": true
+  }
+}
+```
+
+---
+
+#### Collect Clue
+```http
+POST /api/game/levels/:id/collect-clue
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "clueId": "clue_1"
+}
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Complete Level
+```http
+POST /api/game/levels/:id/complete
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "score": 950,
+  "timeSpent": 300
+}
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Level completed!",
+  "data": {
+    "stars": 3,
+    "score": 950,
+    "rewards": {
+      "senCoins": 50,
+      "experience": 100,
+      "items": [...]
+    },
+    "nextLevel": {
+      "id": 2,
+      "isUnlocked": true
+    }
+  }
+}
+```
+
+---
+
+### 3.4 Museum
+
+#### Get Museum Collection
+```http
+GET /api/game/museum
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "isOpen": true,
+    "artifacts": [
+      {
+        "id": 1,
+        "name": "Trống đồng Ngọc Lũ",
+        "isUnlocked": true,
+        "unlockedAt": "2025-11-20T10:00:00Z"
+      }
+    ],
+    "totalArtifacts": 50,
+    "unlockedArtifacts": 12,
+    "completionPercentage": 24
+  }
+}
+```
+
+---
+
+#### Toggle Museum Status
+```http
+POST /api/game/museum/toggle
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "isOpen": true
+}
+```
+
+**Response:** `200 OK`
+
+---
+
+### 3.5 Badges & Achievements
+
+#### Get User Badges
+```http
+GET /api/game/badges
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get User Achievements
+```http
+GET /api/game/achievements
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 3.6 Scan to Play
+
+#### Scan Object
+```http
+POST /api/game/scan
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "code": "QR_CODE_VALUE",
+  "latitude": 21.0285,
+  "longitude": 105.8542
+}
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Object found!",
+  "data": {
+    "artifact": {
+      "id": 1,
+      "name": "Trống đồng Ngọc Lũ"
+    },
+    "rewards": {
+      "senCoins": 20,
+      "experience": 50
+    },
+    "unlocked": true
+  }
+}
+```
+
+---
+
+### 3.7 Shop & Inventory
+
+#### Purchase Item
+```http
+POST /api/game/shop/purchase
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "itemId": 1,
+  "quantity": 1
+}
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get User Inventory
+```http
+GET /api/game/inventory
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Use Item
+```http
+POST /api/game/inventory/use
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "itemId": 1,
+  "targetId": 5
+}
+```
+
+**Response:** `200 OK`
+
+---
+
+## 4. AI Assistant
+
+### Chat with AI
+```http
+POST /api/ai/chat
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "message": "Chú Tễu ơi, hãy kể cho em nghe về Trống đồng Ngọc Lũ",
+  "context": {
+    "levelId": 1,
+    "artifactId": 1
+  }
+}
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "response": "Trống đồng Ngọc Lũ là một trong những...",
+    "character": {
+      "name": "Chú Tễu",
+      "avatar": "..."
+    },
+    "timestamp": "2025-12-03T10:00:00Z"
+  }
+}
+```
+
+---
+
+### Get Chat History
+```http
+GET /api/ai/history
+Authorization: Bearer <token>
+```
+
+**Query Parameters:**
+- `levelId` (optional) - Filter by level
+- `limit` (default: 20)
+
+**Response:** `200 OK`
+
+---
+
+### Ask for Hint
+```http
+POST /api/ai/ask-hint
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "levelId": 1,
+  "clueId": "clue_1"
+}
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "hint": "Hãy tìm kiếm ở khu vực phía Đông...",
+    "costSenCoins": 10,
+    "remainingSenCoins": 490
+  }
+}
+```
+
+---
+
+### Explain Artifact/Heritage Site
 ```http
 POST /api/ai/explain
-Authorization: Bearer {token}
+Authorization: Bearer <token>
+Content-Type: application/json
+```
 
+**Body:**
+```json
 {
   "type": "artifact",
   "id": 1
 }
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "item": { ... },
-    "explanation": "Bức tranh này thể hiện...",
-    "character": { ... }
-  }
-}
 ```
 
-### Generate Quiz
+**Response:** `200 OK`
 
+---
+
+### Generate Quiz
 ```http
 POST /api/ai/quiz
-Authorization: Bearer {token}
+Authorization: Bearer <token>
+Content-Type: application/json
+```
 
+**Body:**
+```json
 {
   "topicId": 1,
   "difficulty": "medium"
 }
 ```
 
-### Clear Chat History
-
-```http
-DELETE /api/ai/history
-Authorization: Bearer {token}
-```
+**Response:** `200 OK`
 
 ---
 
-## 11. Admin CMS (NEW)
-
-### Manage Levels
-
-#### Get All Levels
-
+### Clear Chat History
 ```http
-GET /api/admin/levels?chapter_id=1
-Authorization: Bearer {admin_token}
+DELETE /api/ai/history
+Authorization: Bearer <token>
 ```
 
-#### Get Level Templates
+**Response:** `200 OK`
 
+---
+
+## 5. Learning & Quests
+
+### 5.1 Learning Paths
+
+#### Get All Learning Content
 ```http
-GET /api/admin/levels/templates
-Authorization: Bearer {admin_token}
+GET /api/learning
+```
 
-Response 200:
+**Response:** `200 OK`
+
+---
+
+#### Get Learning Path (User-specific)
+```http
+GET /api/learning/path
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Learning Content by ID
+```http
+GET /api/learning/:id
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Create Learning Content (Auth Required)
+```http
+POST /api/learning
+Authorization: Bearer <token>
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Complete Learning Content
+```http
+POST /api/learning/:id/complete
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Update Learning Content (Auth Required)
+```http
+PUT /api/learning/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Learning Content (Auth Required)
+```http
+DELETE /api/learning/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 5.2 Quests
+
+#### Get All Quests
+```http
+GET /api/quests
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Available Quests (User-specific)
+```http
+GET /api/quests/available
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
 {
   "success": true,
   "data": [
     {
-      "id": "template_hidden_object",
-      "name": "Hidden Object Game",
-      "screens": [ ... ]
+      "id": 1,
+      "title": "Hoàn thành 3 màn chơi",
+      "description": "...",
+      "type": "daily",
+      "progress": {
+        "current": 1,
+        "target": 3
+      },
+      "rewards": {
+        "senCoins": 30,
+        "experience": 50
+      },
+      "expiresAt": "2025-12-04T00:00:00Z"
     }
   ]
 }
 ```
 
-#### Create Level
+---
 
+#### Get Quest Leaderboard
+```http
+GET /api/quests/leaderboard
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Quest by ID
+```http
+GET /api/quests/:id
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Create Quest (Auth Required)
+```http
+POST /api/quests
+Authorization: Bearer <token>
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Complete Quest
+```http
+POST /api/quests/:id/complete
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Update Quest (Auth Required)
+```http
+PUT /api/quests/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Quest (Auth Required)
+```http
+DELETE /api/quests/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+## 6. User Content
+
+### 6.1 Collections
+
+#### Get User Collections
+```http
+GET /api/collections
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Collection by ID
+```http
+GET /api/collections/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Create Collection
+```http
+POST /api/collections
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "name": "Bộ sưu tập Đông Sơn",
+  "description": "Các hiện vật thời Đông Sơn",
+  "isPublic": true
+}
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Update Collection
+```http
+PUT /api/collections/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Collection
+```http
+DELETE /api/collections/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Add Artifact to Collection
+```http
+POST /api/collections/:id/artifacts/:artifactId
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Remove Artifact from Collection
+```http
+DELETE /api/collections/:id/artifacts/:artifactId
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 6.2 Favorites
+
+#### Get All Favorites
+```http
+GET /api/favorites
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Favorites by Type
+```http
+GET /api/favorites/:type
+Authorization: Bearer <token>
+```
+
+**Path Parameters:**
+- `type` - `artifact`, `heritage_site`, `exhibition`, etc.
+
+**Response:** `200 OK`
+
+---
+
+#### Get Favorite IDs by Type
+```http
+GET /api/favorites/:type/ids
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": [1, 5, 7, 12]
+}
+```
+
+---
+
+#### Check if Item is Favorited
+```http
+GET /api/favorites/:type/:id/check
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "isFavorite": true
+  }
+}
+```
+
+---
+
+#### Toggle Favorite
+```http
+POST /api/favorites/:type/:id/toggle
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Add Favorite
+```http
+POST /api/favorites/:type/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Remove Favorite
+```http
+DELETE /api/favorites/:type/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Clear Favorites by Type
+```http
+DELETE /api/favorites/:type
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Clear All Favorites
+```http
+DELETE /api/favorites
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Favorite Statistics
+```http
+GET /api/favorites/stats/summary
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Trending Favorites
+```http
+GET /api/favorites/trending/:type
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 6.3 Reviews
+
+#### Get All Reviews
+```http
+GET /api/reviews
+```
+
+**Query Parameters:**
+- `page` (default: 1)
+- `limit` (default: 20)
+- `sort` - `newest`, `oldest`, `rating`
+
+**Response:** `200 OK`
+
+---
+
+#### Search Reviews
+```http
+GET /api/reviews/search
+```
+
+**Query Parameters:**
+- `q` - Search query
+
+**Response:** `200 OK`
+
+---
+
+#### Get Reviews by Type
+```http
+GET /api/reviews/type/:type
+```
+
+**Path Parameters:**
+- `type` - `artifact`, `heritage_site`, `exhibition`
+
+**Response:** `200 OK`
+
+---
+
+#### Get Review by ID
+```http
+GET /api/reviews/:id
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Create Review
+```http
+POST /api/reviews
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "type": "artifact",
+  "itemId": 1,
+  "rating": 5,
+  "content": "Rất thú vị và có giá trị học tập!",
+  "images": [...]
+}
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Update Review
+```http
+PUT /api/reviews/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Review
+```http
+DELETE /api/reviews/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+## 7. Upload & Media
+
+#### Upload Avatar
+```http
+POST /api/upload/avatar
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+```
+
+**Body:** Form data with `file` field
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com/uploads/avatar_123.jpg",
+    "filename": "avatar_123.jpg",
+    "size": 102400
+  }
+}
+```
+
+---
+
+#### Upload Product Image (Admin/Manager)
+```http
+POST /api/upload/product/:productId
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Upload Restaurant Image (Admin Only)
+```http
+POST /api/upload/restaurant/:restaurantId
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Upload Category Image (Admin Only)
+```http
+POST /api/upload/category/:categoryId
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete File (Admin Only)
+```http
+DELETE /api/upload/file
+Authorization: Bearer <admin-token>
+```
+
+**Query Parameters:**
+- `path` - File path to delete
+
+**Response:** `200 OK`
+
+---
+
+#### Get File Info
+```http
+GET /api/upload/file/info
+Authorization: Bearer <token>
+```
+
+**Query Parameters:**
+- `path` - File path
+
+**Response:** `200 OK`
+
+---
+
+#### Get Storage Stats (Admin Only)
+```http
+GET /api/upload/stats
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Cleanup Old Files (Admin Only)
+```http
+POST /api/upload/cleanup
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+## 8. Admin CMS
+
+**Base Path:** `/api/admin`
+
+**Note:** All admin routes require authentication and admin role.
+
+---
+
+### 8.1 Level Management (CMS)
+
+#### Get All Levels (Admin)
+```http
+GET /api/admin/levels
+Authorization: Bearer <admin-token>
+```
+
+**Query Parameters:**
+- `page` (default: 1)
+- `limit` (default: 20)
+- `chapterId` - Filter by chapter
+- `status` - Filter by status
+
+**Response:** `200 OK`
+
+---
+
+#### Get Level Templates
+```http
+GET /api/admin/levels/templates
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "story_only",
+      "name": "Story Only",
+      "description": "Simple story-telling level",
+      "template": {...}
+    },
+    {
+      "id": "quiz_challenge",
+      "name": "Quiz Challenge",
+      "description": "Level with quiz screens",
+      "template": {...}
+    }
+  ]
+}
+```
+
+---
+
+#### Get Level Statistics
+```http
+GET /api/admin/levels/stats
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Validate Level Data
+```http
+POST /api/admin/levels/validate
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+```
+
+**Body:** Level data to validate
+
+**Response:** `200 OK`
+
+---
+
+#### Get Level Detail (Admin)
+```http
+GET /api/admin/levels/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Preview Level
+```http
+GET /api/admin/levels/:id/preview
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Get Used Assets in Level
+```http
+GET /api/admin/levels/:id/assets
+Authorization: Bearer <admin-token>
+```
+
+**Response:** List of assets used in this level
+
+---
+
+#### Create Level (Admin)
 ```http
 POST /api/admin/levels
-Authorization: Bearer {admin_token}
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+```
 
+**Body:**
+```json
 {
-  "chapter_id": 1,
-  "name": "Màn Chơi Mới",
-  "description": "Mô tả...",
-  "type": "mixed",
-  "difficulty": "medium",
+  "name": "Khám Phá Trống Đồng",
+  "description": "Màn chơi về trống đồng Ngọc Lũ",
+  "chapterId": 1,
+  "order": 1,
+  "difficulty": "easy",
   "screens": [
     {
-      "id": "screen_01",
-      "type": "DIALOGUE",
-      "content": [ ... ]
+      "id": "screen_1",
+      "type": "STORY",
+      "content": "Ngày xửa ngày xưa..."
+    },
+    {
+      "id": "screen_2",
+      "type": "QUIZ",
+      "question": "Trống đồng Ngọc Lũ thuộc nền văn hóa nào?",
+      "answers": [
+        {
+          "id": "a1",
+          "text": "Đông Sơn",
+          "isCorrect": true
+        }
+      ]
     }
   ],
   "rewards": {
-    "petals": 1,
-    "coins": 50
+    "senCoins": 50,
+    "experience": 100
   }
-}
-
-Response 201:
-{
-  "success": true,
-  "data": { ... }
 }
 ```
 
-#### Update Level
+**Response:** `201 Created`
 
+---
+
+#### Update Level (Admin)
 ```http
 PUT /api/admin/levels/:id
-Authorization: Bearer {admin_token}
+Authorization: Bearer <admin-token>
 ```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Level (Admin)
+```http
+DELETE /api/admin/levels/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
 
 #### Clone Level
-
 ```http
 POST /api/admin/levels/:id/clone
-Authorization: Bearer {admin_token}
-
-{
-  "newName": "Bản Sao Màn Chơi"
-}
+Authorization: Bearer <admin-token>
 ```
 
-#### Preview Level
+**Response:** `201 Created`
 
-```http
-GET /api/admin/levels/:id/preview
-Authorization: Bearer {admin_token}
-
-Response 200:
-{
-  "success": true,
-  "data": {
-    "metadata": {
-      "total_screens": 5,
-      "screen_types": {
-        "DIALOGUE": 2,
-        "HIDDEN_OBJECT": 1,
-        "QUIZ": 2
-      },
-      "estimated_time": 420,
-      "difficulty_score": 6
-    }
-  }
-}
-```
-
-#### Validate Level
-
-```http
-POST /api/admin/levels/validate
-Authorization: Bearer {admin_token}
-
-{
-  "screens": [ ... ]
-}
-
-Response 200:
-{
-  "success": true,
-  "message": "Validation passed",
-  "data": {
-    "metadata": { ... }
-  }
-}
-```
+---
 
 #### Bulk Import Levels
-
 ```http
 POST /api/admin/levels/bulk/import
-Authorization: Bearer {admin_token}
-
-{
-  "levels": [ ... ],
-  "chapterId": 1
-}
+Authorization: Bearer <admin-token>
+Content-Type: multipart/form-data
 ```
 
-#### Reorder Levels
+**Body:** JSON file with levels data
 
+**Response:** `200 OK`
+
+---
+
+#### Reorder Levels in Chapter
 ```http
-PUT /api/admin/chapters/:chapterId/reorder
-Authorization: Bearer {admin_token}
+PUT /api/admin/levels/chapters/:chapterId/reorder
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+```
 
+**Body:**
+```json
 {
-  "levelIds": [3, 1, 2, 4]
+  "levelIds": [3, 1, 2, 5, 4]
 }
 ```
 
-### Manage Chapters
+**Response:** `200 OK`
 
+---
+
+### 8.2 Chapter Management (CMS)
+
+#### Get All Chapters (Admin)
 ```http
 GET /api/admin/chapters
-POST /api/admin/chapters
-PUT /api/admin/chapters/:id
-DELETE /api/admin/chapters/:id
+Authorization: Bearer <admin-token>
 ```
 
-### Manage Characters
+**Response:** `200 OK`
 
+---
+
+#### Get Chapter by ID (Admin)
+```http
+GET /api/admin/chapters/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Create Chapter (Admin)
+```http
+POST /api/admin/chapters
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "name": "Sen Hồng - Ký Ức Đầu Tiên",
+  "description": "Chương đầu tiên của game",
+  "icon": "🌸",
+  "order": 1,
+  "unlockCost": 0
+}
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Update Chapter (Admin)
+```http
+PUT /api/admin/chapters/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Chapter (Admin)
+```http
+DELETE /api/admin/chapters/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 8.3 Character Management (CMS)
+
+#### Get All Characters (Admin)
 ```http
 GET /api/admin/characters
-POST /api/admin/characters
-PUT /api/admin/characters/:id
-DELETE /api/admin/characters/:id
+Authorization: Bearer <admin-token>
 ```
 
-### Manage Assets (Scan Objects)
+**Response:** `200 OK`
 
+---
+
+#### Get Character by ID (Admin)
+```http
+GET /api/admin/characters/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Create Character (Admin)
+```http
+POST /api/admin/characters
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "name": "Chú Tễu",
+  "description": "NPC hướng dẫn",
+  "avatar": "https://example.com/chu_teu.png",
+  "personality": "Vui vẻ, hài hước",
+  "role": "guide"
+}
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Update Character (Admin)
+```http
+PUT /api/admin/characters/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Character (Admin)
+```http
+DELETE /api/admin/characters/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 8.4 Asset Management (CMS)
+
+#### Get All Assets (Admin)
 ```http
 GET /api/admin/assets
+Authorization: Bearer <admin-token>
+```
+
+**Query Parameters:**
+- `type` - Filter by asset type (image, audio, video)
+- `page` (default: 1)
+- `limit` (default: 20)
+
+**Response:** `200 OK`
+
+---
+
+#### Get Asset by ID (Admin)
+```http
+GET /api/admin/assets/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Create Asset (Admin)
+```http
 POST /api/admin/assets
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "name": "Background Music 1",
+  "type": "audio",
+  "url": "https://example.com/music1.mp3",
+  "tags": ["background", "music", "traditional"]
+}
+```
+
+**Response:** `201 Created`
+
+---
+
+#### Update Asset (Admin)
+```http
 PUT /api/admin/assets/:id
+Authorization: Bearer <admin-token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Delete Asset (Admin)
+```http
 DELETE /api/admin/assets/:id
+Authorization: Bearer <admin-token>
 ```
+
+**Response:** `200 OK`
 
 ---
 
-## 12. User Management
+## 9. Notifications
 
-### Get All Users (Admin)
-
+#### Get User Notifications
 ```http
-GET /api/users?page=1&limit=20&role=customer
-Authorization: Bearer {admin_token}
+GET /api/notifications
+Authorization: Bearer <token>
 ```
 
-### Get User Stats (Admin)
-
-```http
-GET /api/users/stats/summary
-Authorization: Bearer {admin_token}
-```
-
-### Toggle User Status (Admin)
-
-```http
-PATCH /api/users/:id/status
-Authorization: Bearer {admin_token}
-
+**Response:** `200 OK`
+```json
 {
-  "isActive": false
-}
-```
-
-### Update Profile
-
-```http
-PUT /api/users/profile
-Authorization: Bearer {token}
-
-{
-  "name": "Tên Mới",
-  "phone": "0912345678",
-  "bio": "Yêu thích lịch sử"
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "type": "achievement",
+      "title": "Huy hiệu mới!",
+      "message": "Bạn đã nhận được huy hiệu 'Người khám phá'",
+      "isRead": false,
+      "createdAt": "2025-12-03T10:00:00Z"
+    }
+  ]
 }
 ```
 
 ---
 
-## 📊 Response Status Codes
+#### Mark Notification as Read
+```http
+PATCH /api/notifications/:id/read
+Authorization: Bearer <token>
+```
 
-| Code | Meaning      | Example                  |
-| ---- | ------------ | ------------------------ |
-| 200  | OK           | GET request successful   |
-| 201  | Created      | POST request successful  |
-| 400  | Bad Request  | Validation error         |
-| 401  | Unauthorized | Missing/invalid token    |
-| 403  | Forbidden    | Insufficient permissions |
-| 404  | Not Found    | Resource doesn't exist   |
-| 500  | Server Error | Internal error           |
+**Response:** `200 OK`
 
 ---
 
-## 🔐 Authentication
+#### Mark All Notifications as Read
+```http
+PATCH /api/notifications/read-all
+Authorization: Bearer <token>
+```
 
-All protected endpoints require:
+**Response:** `200 OK`
+
+---
+
+#### Delete Notification
+```http
+DELETE /api/notifications/:id
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Clear All Notifications
+```http
+DELETE /api/notifications
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+## 📊 Query Parameters & Filters
+
+### Common Query Parameters
+
+All GET list endpoints support these common parameters:
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `page` | number | 1 | Page number for pagination |
+| `limit` | number | 20 | Items per page |
+| `sort` | string | - | Sort field (e.g., `name`, `-createdAt`) |
+| `search` | string | - | Search query |
+| `fields` | string | - | Fields to include (comma-separated) |
+
+### Filter Examples
 
 ```http
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-
-**How to get token:**
-
-1. Call `POST /api/auth/login`
-2. Extract `data.token`
-3. Include in `Authorization` header
-
----
-
-## 📝 Query Parameters Reference
-
-### Pagination
-
-```
-?page=1&limit=10
-```
-
-### Sorting
-
-```
-?sort=name&order=asc
-?sort=rating,createdAt&order=desc
-```
-
-### Filtering
-
-```
-?type=monument&region=Hà%20Nội
-?rating_gte=4&rating_lte=5
-```
-
-### Search
-
-```
-?q=kiến%20trúc
+GET /api/artifacts?category=Nhạc+cụ&period=Đông+Sơn&page=1&limit=10
+GET /api/heritage-sites?province=Hà+Nội&sort=-createdAt
+GET /api/reviews?type=artifact&rating=5&sort=newest
 ```
 
 ---
 
-## 🧪 Testing with cURL
+## 🔒 Security & Best Practices
 
-### Login Example
+### Rate Limiting
+
+- **Standard endpoints:** 100 requests/15 minutes
+- **Auth endpoints:** 5 requests/15 minutes
+- **Upload endpoints:** 10 requests/hour
+
+### CORS
+
+CORS is enabled for all origins in development. Configure for production.
+
+### Data Validation
+
+All POST/PUT requests are validated using express-validator with defined schemas.
+
+### File Upload Limits
+
+- **Avatar:** Max 2MB, JPG/PNG only
+- **Product images:** Max 5MB
+- **Import files:** Max 10MB
+
+---
+
+## 📝 Notes
+
+1. **Token Expiration:** JWT tokens expire after 30 days
+2. **Soft Delete:** Most resources use soft delete (isDeleted flag)
+3. **Timestamps:** All resources have `createdAt` and `updatedAt`
+4. **Pagination:** Default page size is 20, max is 100
+5. **Response Time:** Aim for <200ms for standard queries
+
+---
+
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Seed database with sample data
+npm run seed
+
+# Server runs on
+http://localhost:3000
+```
+
+---
+
+## 🧪 Testing Examples
+
+### Using cURL
+
+```bash
+# Login
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"user@sen.com","password":"123456"}'
-```
 
-### Get Progress Example
-
-```bash
-export TOKEN="your_token_here"
+# Get Progress (replace TOKEN)
 curl http://localhost:3000/api/game/progress \
-  -H "Authorization: Bearer $TOKEN"
+  -H "Authorization: Bearer TOKEN"
+
+# Start Level
+curl -X POST http://localhost:3000/api/game/levels/1/start \
+  -H "Authorization: Bearer TOKEN"
 ```
 
-### Start Level Example
+### Using JavaScript (fetch)
 
-```bash
-curl -X POST http://localhost:3000/api/game/levels/2/start \
-  -H "Authorization: Bearer $TOKEN"
+```javascript
+// Login
+const login = await fetch('http://localhost:3000/api/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: 'user@sen.com',
+    password: '123456'
+  })
+});
+const { data } = await login.json();
+const token = data.token;
+
+// Get Chapters
+const chapters = await fetch('http://localhost:3000/api/game/chapters', {
+  headers: { 'Authorization': `Bearer ${token}` }
+});
+const chapterData = await chapters.json();
 ```
 
 ---
 
-**API Version:** 2.0.0  
-**Last Updated:** December 2, 2024  
-**Status:** Production Ready
+## 📞 Support
+
+For issues or questions:
+- **GitHub:** [Sen-Web Repository](https://github.com/Tunhoclaptrinh/Sen-Web)
+- **Email:** support@sen-game.com
+
+---
+
+## 📄 API Schema Reference
+
+### Main Entities
+
+- **User**: Người dùng hệ thống
+- **Heritage Site**: Di tích văn hóa
+- **Artifact**: Hiện vật lịch sử
+- **Chapter**: Chương game (Sen Flower)
+- **Level**: Màn chơi
+- **Collection**: Bộ sưu tập cá nhân
+- **Review**: Đánh giá và nhận xét
+- **Favorite**: Danh sách yêu thích
+- **Notification**: Thông báo
+
+---
+
+**Version:** 2.0.0  
+**Last Updated:** December 3, 2025  
+**Status:** Production Ready  
+**Maintained by:** Sen Development Team
