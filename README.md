@@ -503,6 +503,265 @@ Development: http://localhost:3000/api
 Production: https://api.sen.vn/api
 ```
 
+### Standard Response Format
+
+#### Success Response
+
+```json
+{
+  "success": true,
+  "message": "Operation successful",
+  "data": { /* resource or array */ },
+  "pagination": { /* if applicable */ }
+}
+```
+
+#### Error Response
+
+```json
+{
+  "success": false,
+  "message": "Error description",
+  "errors": [
+    {
+      "field": "fieldName",
+      "message": "Validation error"
+    }
+  ],
+  "statusCode": 400
+}
+```
+
+#### Paginated Response
+
+```json
+{
+  "success": true,
+  "data": [...],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 150,
+    "totalPages": 8,
+    "hasNext": true,
+    "hasPrev": false
+  }
+}
+```
+
+**Response Headers:**
+
+```
+Content-Type: application/json
+X-Total-Count: 150
+Link: <http://api.sen.vn/api/artifacts?_page=2&_limit=20>; rel="next",
+      <http://api.sen.vn/api/artifacts?_page=8&_limit=20>; rel="last"
+```
+
+### Query Parameters (JSON Server Style)
+
+Our API supports powerful query parameters for filtering, searching, sorting, and pagination:
+
+#### 🔍 Pagination
+
+| Parameter | Type     | Default | Description                    | Example                        |
+|-----------|----------|---------|--------------------------------|--------------------------------|
+| `_page`   | integer  | 1       | Page number (1-based)          | `?_page=2`                     |
+| `_limit`  | integer  | 10      | Items per page (max 100)       | `?_limit=20`                   |
+| `_start`  | integer  | 0       | Starting index (alternative)   | `?_start=20&_limit=10`         |
+| `_end`    | integer  | -       | Ending index (alternative)     | `?_start=0&_end=20`            |
+
+**Examples:**
+
+```bash
+# Get page 2 with 20 items per page
+GET /api/artifacts?_page=2&_limit=20
+
+# Get items 20-40
+GET /api/artifacts?_start=20&_end=40
+
+# Get first 50 items
+GET /api/artifacts?_limit=50
+```
+
+#### 🔎 Full-Text Search
+
+| Parameter | Type   | Description                           | Example                    |
+|-----------|--------|---------------------------------------|----------------------------|
+| `q`       | string | Search across all text fields         | `?q=pottery`               |
+
+**Examples:**
+
+```bash
+# Search for "pottery" in all fields
+GET /api/artifacts?q=pottery
+
+# Search for "Hội An"
+GET /api/heritage-sites?q=Hội%20An
+
+# Search with pagination
+GET /api/artifacts?q=ancient&_page=1&_limit=10
+```
+
+#### 🔧 Filtering
+
+**Exact Match:**
+
+```bash
+# Filter by exact value
+GET /api/artifacts?category=pottery
+GET /api/reviews?rating=5
+GET /api/users?role=admin
+```
+
+**Operators:**
+
+| Operator  | Description              | Example                              |
+|-----------|--------------------------|--------------------------------------|
+| `_gte`    | Greater than or equal    | `?rating_gte=4`                      |
+| `_lte`    | Less than or equal       | `?price_lte=1000`                    |
+| `_gt`     | Greater than             | `?views_gt=100`                      |
+| `_lt`     | Less than                | `?age_lt=30`                         |
+| `_ne`     | Not equal                | `?status_ne=deleted`                 |
+| `_like`   | Contains (case-insensitive) | `?name_like=ancient`              |
+| `_in`     | In array                 | `?category_in=pottery,sculpture`     |
+
+**Examples:**
+
+```bash
+# Artifacts with rating >= 4
+GET /api/artifacts?rating_gte=4
+
+# Heritage sites with name containing "Hội"
+GET /api/heritage-sites?name_like=Hội
+
+# Reviews with rating between 3 and 5
+GET /api/reviews?rating_gte=3&rating_lte=5
+
+# Artifacts in multiple categories
+GET /api/artifacts?category_in=pottery,sculpture,painting
+
+# Users excluding deleted status
+GET /api/users?status_ne=deleted
+
+# Levels with difficulty less than 5
+GET /api/game/levels?difficulty_lt=5
+```
+
+#### 📊 Sorting
+
+| Parameter | Type   | Description                      | Example                    |
+|-----------|--------|----------------------------------|----------------------------|
+| `_sort`   | string | Field name to sort by            | `?_sort=name`              |
+| `_order`  | string | Sort order: `asc` or `desc`      | `?_order=desc`             |
+
+**Examples:**
+
+```bash
+# Sort by name ascending (A-Z)
+GET /api/artifacts?_sort=name&_order=asc
+
+# Sort by rating descending (highest first)
+GET /api/artifacts?_sort=rating&_order=desc
+
+# Sort by created date (newest first)
+GET /api/reviews?_sort=created_at&_order=desc
+
+# Multiple sort (not directly supported, use comma)
+GET /api/artifacts?_sort=category,rating&_order=asc,desc
+```
+
+#### 🔗 Relations (Embed/Expand)
+
+| Parameter | Type   | Description                           | Example                    |
+|-----------|--------|---------------------------------------|----------------------------|
+| `_embed`  | string | Include child resources               | `?_embed=artifacts`        |
+| `_expand` | string | Include parent resource               | `?_expand=heritage_site`   |
+
+**Examples:**
+
+```bash
+# Get heritage site with embedded artifacts
+GET /api/heritage-sites/1?_embed=artifacts
+
+# Get artifact with expanded heritage site info
+GET /api/artifacts/1?_expand=heritage_site
+
+# Multiple embeds
+GET /api/heritage-sites/1?_embed=artifacts,reviews,timelines
+
+# Combination of embed and expand
+GET /api/artifacts?_expand=category&_embed=reviews
+```
+
+#### 📌 Field Selection
+
+| Parameter | Type   | Description                      | Example                         |
+|-----------|--------|----------------------------------|---------------------------------|
+| `_fields` | string | Select specific fields only      | `?_fields=id,name,image`        |
+
+**Examples:**
+
+```bash
+# Get only id, name, and image fields
+GET /api/artifacts?_fields=id,name,image
+
+# Reduce payload size for listings
+GET /api/heritage-sites?_fields=id,name,location,rating
+```
+
+#### 🌍 Geolocation (Custom)
+
+| Parameter  | Type    | Description                  | Example                    |
+|------------|---------|------------------------------|----------------------------|
+| `lat`      | float   | Latitude                     | `?lat=15.8801`             |
+| `lon`      | float   | Longitude                    | `?lon=108.3380`            |
+| `radius`   | integer | Search radius in km          | `?radius=10`               |
+
+**Examples:**
+
+```bash
+# Find heritage sites within 10km of coordinates
+GET /api/heritage-sites/nearby?lat=15.8801&lon=108.3380&radius=10
+
+# Find artifacts near location
+GET /api/artifacts/nearby?lat=21.0285&lon=105.8542&radius=5
+```
+
+#### 🎯 Complex Query Examples
+
+**Combining Multiple Parameters:**
+
+```bash
+# Search for "pottery" artifacts, rating >= 4, sorted by rating, page 1
+GET /api/artifacts?q=pottery&rating_gte=4&_sort=rating&_order=desc&_page=1&_limit=10
+
+# Heritage sites in "Quảng Nam", with reviews, sorted by name
+GET /api/heritage-sites?province=Quảng%20Nam&_embed=reviews&_sort=name&_order=asc
+
+# Recent reviews (last 30 days), rating >= 4, with user info
+GET /api/reviews?created_at_gte=2025-11-03&rating_gte=4&_expand=user&_sort=created_at&_order=desc
+
+# Active users, admin role, sorted by registration date
+GET /api/users?isActive=true&role=admin&_sort=created_at&_order=desc
+
+# Game levels in chapter 1, difficulty <= 3, sorted by order
+GET /api/game/chapters/1/levels?difficulty_lte=3&_sort=order&_order=asc
+```
+
+**Advanced Filtering:**
+
+```bash
+# Artifacts with multiple conditions
+GET /api/artifacts?category=pottery&condition=excellent&era_like=dynasty&price_gte=0&price_lte=1000
+
+# Heritage sites with rating and location
+GET /api/heritage-sites?rating_gte=4.5&province=Huế&_embed=artifacts,timelines
+
+# Reviews with specific criteria
+GET /api/reviews?rating_in=4,5&type=artifact&verified=true&_sort=created_at&_order=desc
+```
+
 ### API Endpoints Overview
 
 | Module                 | Base Path                   | Description                    |
