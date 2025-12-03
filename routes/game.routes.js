@@ -32,6 +32,7 @@ router.post('/sessions/:id/submit-answer', gameController.submitAnswer);
 // ==================== MUSEUM ====================
 router.get('/museum', gameController.getMuseum);
 router.post('/museum/toggle', gameController.toggleMuseum);
+router.post('/museum/collect', gameController.collectMuseumIncome);
 
 // ==================== BADGES & ACHIEVEMENTS ====================
 router.get('/badges', gameController.getBadges);

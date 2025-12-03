@@ -263,6 +263,20 @@ class GameController {
     }
   };
 
+  // Collect Income Endpoint
+  collectMuseumIncome = async (req, res, next) => {
+    try {
+      const result = await gameService.collectMuseumIncome(req.user.id);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // ==================== BADGES & ACHIEVEMENTS ====================
 
   getBadges = async (req, res, next) => {
