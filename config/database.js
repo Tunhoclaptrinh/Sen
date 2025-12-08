@@ -31,12 +31,15 @@ class JsonAdapter {
 
   getDefaultData() {
     return {
+      // Core Heritage Data
       users: [],
       cultural_categories: [],
       heritage_sites: [],
       artifacts: [],
       timelines: [],
       exhibitions: [],
+
+      // User Content
       collections: [],
       favorites: [],
       reviews: [],
@@ -53,16 +56,97 @@ class JsonAdapter {
 
       // Game Features
       scan_objects: [],
-      shop_items: [],
-      ai_chat_history: [],
-      user_inventory: [],
       scan_history: [],
+      shop_items: [],
+      user_inventory: [],
+      ai_chat_history: [],
 
       // Learning
       learning_modules: [],
       game_quests: [],
       user_progress: []
     };
+  }
+
+  // ==================== RELATION HELPERS (UPDATED FOR SEN) ====================
+
+  getRelatedCollection(collection, relation) {
+    const relationMap = {
+      heritage_sites: {
+        artifacts: 'artifacts',
+        reviews: 'reviews',
+        timelines: 'timelines',
+        exhibitions: 'exhibitions'
+      },
+      artifacts: {
+        heritage_site: 'heritage_sites',
+        category: 'cultural_categories'
+      },
+      users: {
+        collections: 'collections',
+        reviews: 'reviews',
+        favorites: 'favorites',
+        game_progress: 'game_progress',
+        notifications: 'notifications'
+      },
+      game_chapters: {
+        levels: 'game_levels'
+      },
+      game_levels: {
+        chapter: 'game_chapters',
+        sessions: 'game_sessions',
+        artifacts: 'artifacts',
+        heritage_site: 'heritage_sites'
+      },
+      game_sessions: {
+        level: 'game_levels',
+        user: 'users'
+      },
+      collections: {
+        user: 'users',
+        artifacts: 'artifacts'
+      }
+    };
+    return relationMap[collection]?.[relation];
+  }
+
+  getForeignKey(collection, relation) {
+    const keyMap = {
+      heritage_sites: {
+        artifacts: 'heritage_site_id',
+        reviews: 'heritage_site_id',
+        timelines: 'heritage_site_id',
+        exhibitions: 'heritage_site_id'
+      },
+      artifacts: {
+        heritage_site: 'heritage_site_id',
+        category: 'category_id'
+      },
+      users: {
+        collections: 'user_id',
+        reviews: 'user_id',
+        favorites: 'user_id',
+        game_progress: 'user_id',
+        notifications: 'user_id'
+      },
+      game_chapters: {
+        levels: 'chapter_id'
+      },
+      game_levels: {
+        chapter: 'chapter_id',
+        sessions: 'level_id',
+        artifacts: 'artifact_ids',
+        heritage_site: 'heritage_site_id'
+      },
+      game_sessions: {
+        level: 'level_id',
+        user: 'user_id'
+      },
+      collections: {
+        user: 'user_id'
+      }
+    };
+    return keyMap[collection]?.[relation];
   }
 
   // ==================== ENHANCED QUERY METHODS ====================
@@ -361,6 +445,14 @@ class JsonAdapter {
     const items = this.data[collection] || [];
     if (items.length === 0) return 1;
     return Math.max(...items.map(item => item.id)) + 1;
+  }
+
+  getSlice(collection, start, end) {
+    const items = this.data[collection] || [];
+    return {
+      data: items.slice(start, end),
+      total: items.length
+    };
   }
 }
 
