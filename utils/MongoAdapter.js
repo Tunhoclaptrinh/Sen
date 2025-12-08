@@ -6,20 +6,33 @@ class MongoAdapter {
   constructor() {
     this.models = {};
     this.relations = {
-      restaurants: {
-        products: { ref: 'products', localField: '_id', foreignField: 'restaurantId' },
-        reviews: { ref: 'reviews', localField: '_id', foreignField: 'restaurantId' }
+      heritage_sites: {
+        artifacts: { ref: 'artifacts', localField: '_id', foreignField: 'heritage_site_id' },
+        reviews: { ref: 'reviews', localField: '_id', foreignField: 'heritage_site_id' },
+        timelines: { ref: 'timelines', localField: '_id', foreignField: 'heritage_site_id' },
+        exhibitions: { ref: 'exhibitions', localField: '_id', foreignField: 'heritage_site_id' }
       },
       users: {
-        orders: { ref: 'orders', localField: '_id', foreignField: 'userId' }
+        collections: { ref: 'collections', localField: '_id', foreignField: 'user_id' },
+        reviews: { ref: 'reviews', localField: '_id', foreignField: 'user_id' },
+        favorites: { ref: 'favorites', localField: '_id', foreignField: 'user_id' },
+        game_progress: { ref: 'game_progress', localField: '_id', foreignField: 'user_id' },
+        notifications: { ref: 'notifications', localField: '_id', foreignField: 'user_id' }
       },
-      products: {
-        restaurant: { ref: 'restaurants', localField: 'restaurantId', foreignField: '_id', justOne: true },
-        category: { ref: 'categories', localField: 'categoryId', foreignField: '_id', justOne: true }
+      artifacts: {
+        heritage_site: { ref: 'heritage_sites', localField: 'heritage_site_id', foreignField: '_id', justOne: true },
+        category: { ref: 'cultural_categories', localField: 'category_id', foreignField: '_id', justOne: true }
       },
-      orders: {
-        user: { ref: 'users', localField: 'userId', foreignField: '_id', justOne: true },
-        restaurant: { ref: 'restaurants', localField: 'restaurantId', foreignField: '_id', justOne: true }
+      game_chapters: {
+        levels: { ref: 'game_levels', localField: '_id', foreignField: 'chapter_id' }
+      },
+      game_levels: {
+        chapter: { ref: 'game_chapters', localField: 'chapter_id', foreignField: '_id', justOne: true },
+        sessions: { ref: 'game_sessions', localField: '_id', foreignField: 'level_id' }
+      },
+      game_sessions: {
+        level: { ref: 'game_levels', localField: 'level_id', foreignField: '_id', justOne: true },
+        user: { ref: 'users', localField: 'user_id', foreignField: '_id', justOne: true }
       }
     };
 
@@ -30,10 +43,14 @@ class MongoAdapter {
   async initConnection() {
     if (mongoose.connection.readyState === 0) {
       try {
-        await mongoose.connect(process.env.DATABASE_URL);
+        await mongoose.connect(process.env.DATABASE_URL, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        });
         console.log('🔌 MongoDB Adapter Connected');
       } catch (error) {
         console.error('❌ MongoDB Connection Error:', error);
+        throw error;
       }
     }
   }
@@ -42,20 +59,24 @@ class MongoAdapter {
     const schemasDir = path.join(__dirname, '../schemas');
     const files = fs.readdirSync(schemasDir);
 
-    // Map schema filenames to collection names (matching db.json keys)
+    // Schema mapping cho SEN project
     const modelMapping = {
       'user.schema.js': 'users',
-      'category.schema.js': 'categories',
-      'restaurant.schema.js': 'restaurants',
-      'product.schema.js': 'products',
-      'order.schema.js': 'orders',
-      'cart.schema.js': 'cart',          // Singular to match db.json
+      'heritage_site.schema.js': 'heritage_sites',
+      'artifact.schema.js': 'artifacts',
+      'cultural_category.schema.js': 'cultural_categories',
+      'exhibition.schema.js': 'exhibitions',
+      'timeline.schema.js': 'timelines',
+      'collection.schema.js': 'collections',
       'favorite.schema.js': 'favorites',
       'review.schema.js': 'reviews',
-      'promotion.schema.js': 'promotions',
-      'address.schema.js': 'addresses',
       'notification.schema.js': 'notifications',
-      'payment.schema.js': 'payments'
+      'game_chapter.schema.js': 'game_chapters',
+      'game_level.schema.js': 'game_levels',
+      'game_character.schema.js': 'game_characters',
+      'game_progress.schema.js': 'game_progress',
+      'scan_object.schema.js': 'scan_objects',
+      'shop_item.schema.js': 'shop_items'
     };
 
     files.forEach(file => {
@@ -84,11 +105,17 @@ class MongoAdapter {
         mongooseFields[key] = {
           type: type,
           required: val.required || false,
-          default: val.default
+          default: val.default,
+          unique: val.unique || false
         };
+
+        // Add enum constraint
+        if (val.enum) {
+          mongooseFields[key].enum = val.enum;
+        }
       }
 
-      // Keep ID as Number to compatible with Frontend
+      // Keep ID as Number for frontend compatibility
       mongooseFields._id = { type: Number };
 
       if (!mongoose.models[entityName]) {
@@ -98,7 +125,7 @@ class MongoAdapter {
           toObject: { virtuals: true }
         });
 
-        // Virtual field to map _id -> id
+        // Virtual field: _id -> id
         schema.virtual('id').get(function () {
           return this._id;
         });
@@ -133,6 +160,10 @@ class MongoAdapter {
   // ==================== FIND ALL ADVANCED ====================
   async findAllAdvanced(collection, options = {}) {
     const Model = this.getModel(collection);
+    if (!Model) {
+      throw new Error(`Model not found for collection: ${collection}`);
+    }
+
     const query = {};
 
     // Build query filters
@@ -217,7 +248,7 @@ class MongoAdapter {
     const data = await queryBuilder.skip(skip).limit(limit).lean();
     const total = await Model.countDocuments(query);
 
-    // Map _id -> id cho tất cả items
+    // Map _id -> id
     const mappedData = data.map(item => ({ ...item, id: item._id }));
 
     return {
@@ -234,60 +265,50 @@ class MongoAdapter {
     };
   }
 
-  // ==================== FIND ALL ====================
+  // ==================== CRUD METHODS ====================
   async findAll(collection) {
     const Model = this.getModel(collection);
     const items = await Model.find().lean();
-    // Map _id -> id
     return items.map(item => ({ ...item, id: item._id }));
   }
 
-  // ==================== FIND BY ID ====================
   async findById(collection, id) {
     const Model = this.getModel(collection);
     try {
-      // Tìm theo _id (MongoDB ID)
       const item = await Model.findOne({ _id: parseInt(id) }).lean();
       if (!item) return null;
-
-      // Map _id -> id cho frontend
       return { ...item, id: item._id };
     } catch (e) {
       return null;
     }
   }
 
-  // ==================== FIND ONE ====================
   async findOne(collection, query) {
     const Model = this.getModel(collection);
     try {
       const item = await Model.findOne(query).lean();
       if (!item) return null;
-
-      // Map _id -> id
       return { ...item, id: item._id };
     } catch (e) {
       return null;
     }
   }
 
-  // ==================== FIND MANY ====================
   async findMany(collection, query) {
     const Model = this.getModel(collection);
     try {
       const items = await Model.find(query).lean();
-      // Map _id -> id cho tất cả items
+      // Map _id -> id 
       return items.map(item => ({ ...item, id: item._id }));
     } catch (e) {
       return [];
     }
   }
 
-  // ==================== CREATE ====================
   async create(collection, data) {
     const Model = this.getModel(collection);
 
-    // Tự sinh ID số ngẫu nhiên nếu chưa có
+    // Auto-generate ID if not provided
     if (!data._id && !data.id) {
       data._id = Date.now() + Math.floor(Math.random() * 1000);
     } else if (data.id && !data._id) {
@@ -306,7 +327,6 @@ class MongoAdapter {
     }
   }
 
-  // ==================== UPDATE ====================
   async update(collection, id, data) {
     const Model = this.getModel(collection);
     try {
@@ -329,7 +349,6 @@ class MongoAdapter {
     }
   }
 
-  // ==================== DELETE ====================
   async delete(collection, id) {
     const Model = this.getModel(collection);
     try {
@@ -341,7 +360,6 @@ class MongoAdapter {
     }
   }
 
-  // ==================== GET NEXT ID ====================
   async getNextId(collection) {
     const Model = this.getModel(collection);
     try {
@@ -437,7 +455,7 @@ class MongoAdapter {
 
   // Save data (for compatibility - not used in MongoDB)
   saveData() {
-    return true;
+    return true; // No-op for MongoDB
   }
 }
 
