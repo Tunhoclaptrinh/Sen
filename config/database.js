@@ -6,7 +6,6 @@ const DB_FILE = path.join(__dirname, '../database/db.json');
 class JsonAdapter {
   constructor() {
     this.data = this.loadData();
-
     console.log('📂 JSON Database Adapter Loaded');
   }
 
@@ -33,15 +32,36 @@ class JsonAdapter {
   getDefaultData() {
     return {
       users: [],
-      categories: [],
-      restaurants: [],
-      products: [],
-      orders: [],
-      cart: [],
+      cultural_categories: [],
+      heritage_sites: [],
+      artifacts: [],
+      timelines: [],
+      exhibitions: [],
+      collections: [],
       favorites: [],
       reviews: [],
-      promotions: [],
-      addresses: []
+      notifications: [],
+
+      // Game System
+      game_chapters: [],
+      game_levels: [],
+      game_characters: [],
+      game_progress: [],
+      game_sessions: [],
+      game_badges: [],
+      game_achievements: [],
+
+      // Game Features
+      scan_objects: [],
+      shop_items: [],
+      ai_chat_history: [],
+      user_inventory: [],
+      scan_history: [],
+
+      // Learning
+      learning_modules: [],
+      game_quests: [],
+      user_progress: []
     };
   }
 
@@ -150,7 +170,7 @@ class JsonAdapter {
     return items.map(item => {
       const enriched = { ...item };
 
-      // Embed relations
+      // Embed relations (one-to-many)
       if (options.embed) {
         const relations = options.embed.split(',');
         relations.forEach(relation => {
@@ -164,13 +184,14 @@ class JsonAdapter {
         });
       }
 
-      // Expand relations (populate foreign keys)
+      // Expand relations (many-to-one)
       if (options.expand) {
         const relations = options.expand.split(',');
         relations.forEach(relation => {
-          const foreignKey = `${relation}Id`;
+          const foreignKey = `${relation}Id` || `${relation}_id`;
           if (item[foreignKey]) {
-            enriched[relation] = this.findById(relation + 's', item[foreignKey]);
+            const targetCollection = relation + 's';
+            enriched[relation] = this.findById(targetCollection, item[foreignKey]);
           }
         });
       }
@@ -231,26 +252,54 @@ class JsonAdapter {
     };
   }
 
-  // ==================== HELPER METHODS ====================
+  // ==================== RELATION HELPERS ====================
 
   getRelatedCollection(collection, relation) {
     const relationMap = {
-      restaurants: { products: 'products', reviews: 'reviews' },
-      users: { orders: 'orders', reviews: 'reviews', addresses: 'addresses' },
-      orders: { items: 'products' }
+      heritage_sites: {
+        artifacts: 'artifacts',
+        reviews: 'reviews',
+        timelines: 'timelines'
+      },
+      users: {
+        orders: 'orders',
+        reviews: 'reviews',
+        collections: 'collections',
+        game_progress: 'game_progress'
+      },
+      game_chapters: {
+        levels: 'game_levels'
+      },
+      game_levels: {
+        sessions: 'game_sessions'
+      }
     };
     return relationMap[collection]?.[relation];
   }
 
   getForeignKey(collection, relation) {
     const keyMap = {
-      restaurants: { products: 'restaurantId', reviews: 'restaurantId' },
-      users: { orders: 'userId', reviews: 'userId', addresses: 'userId' }
+      heritage_sites: {
+        artifacts: 'heritage_site_id',
+        reviews: 'heritage_site_id',
+        timelines: 'heritage_site_id'
+      },
+      users: {
+        reviews: 'user_id',
+        collections: 'user_id',
+        game_progress: 'user_id'
+      },
+      game_chapters: {
+        levels: 'chapter_id'
+      },
+      game_levels: {
+        sessions: 'level_id'
+      }
     };
     return keyMap[collection]?.[relation];
   }
 
-  // ==================== ORIGINAL CRUD METHODS ====================
+  // ==================== CRUD METHODS ====================
 
   findAll(collection) {
     return this.data[collection] || [];
@@ -315,19 +364,19 @@ class JsonAdapter {
   }
 }
 
+// ==================== ADAPTER SELECTION ====================
+
 let dbInstance;
 
 if (process.env.DB_CONNECTION === 'mongodb') {
-  dbInstance = require('../utils/MongoAdapter');
+  dbInstance = require('./MongoAdapter');
 } else if (process.env.DB_CONNECTION === 'mysql') {
-  dbInstance = require('../utils/MySQLAdapter');
+  dbInstance = require('./MySQLAdapter');
 } else if (process.env.DB_CONNECTION === 'postgresql') {
-  dbInstance = require('../utils/PostgreSQLAdapter');
+  dbInstance = require('./PostgreSQLAdapter');
 } else {
-  // Mặc định dùng JSON file như cũ
+  // Default: JSON file
   dbInstance = new JsonAdapter();
 }
-
-// module.exports = new Database();
 
 module.exports = dbInstance;
