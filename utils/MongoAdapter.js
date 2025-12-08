@@ -28,10 +28,15 @@ class MongoAdapter {
       },
       game_levels: {
         chapter: { ref: 'game_chapters', localField: 'chapter_id', foreignField: '_id', justOne: true },
-        sessions: { ref: 'game_sessions', localField: '_id', foreignField: 'level_id' }
+        sessions: { ref: 'game_sessions', localField: '_id', foreignField: 'level_id' },
+        artifacts: { ref: 'artifacts', localField: 'artifact_ids', foreignField: '_id' },
+        heritage_site: { ref: 'heritage_sites', localField: 'heritage_site_id', foreignField: '_id', justOne: true }
       },
       game_sessions: {
         level: { ref: 'game_levels', localField: 'level_id', foreignField: '_id', justOne: true },
+        user: { ref: 'users', localField: 'user_id', foreignField: '_id', justOne: true }
+      },
+      collections: {
         user: { ref: 'users', localField: 'user_id', foreignField: '_id', justOne: true }
       }
     };
@@ -98,9 +103,7 @@ class MongoAdapter {
         if (val.type === 'date') type = Date;
         if (val.type === 'array') type = Array;
 
-        if (val.foreignKey) {
-          type = Number;
-        }
+        if (val.foreignKey) type = Number;
 
         mongooseFields[key] = {
           type: type,
@@ -110,9 +113,7 @@ class MongoAdapter {
         };
 
         // Add enum constraint
-        if (val.enum) {
-          mongooseFields[key].enum = val.enum;
-        }
+        if (val.enum) mongooseFields[key].enum = val.enum;
       }
 
       // Keep ID as Number for frontend compatibility
