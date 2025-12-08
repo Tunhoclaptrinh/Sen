@@ -68,7 +68,7 @@ class JsonAdapter {
     };
   }
 
-  // ==================== RELATION HELPERS (UPDATED FOR SEN) ====================
+  // ==================== RELATION HELPERS ====================
 
   getRelatedCollection(collection, relation) {
     const relationMap = {
@@ -336,53 +336,6 @@ class JsonAdapter {
     };
   }
 
-  // ==================== RELATION HELPERS ====================
-
-  getRelatedCollection(collection, relation) {
-    const relationMap = {
-      heritage_sites: {
-        artifacts: 'artifacts',
-        reviews: 'reviews',
-        timelines: 'timelines'
-      },
-      users: {
-        orders: 'orders',
-        reviews: 'reviews',
-        collections: 'collections',
-        game_progress: 'game_progress'
-      },
-      game_chapters: {
-        levels: 'game_levels'
-      },
-      game_levels: {
-        sessions: 'game_sessions'
-      }
-    };
-    return relationMap[collection]?.[relation];
-  }
-
-  getForeignKey(collection, relation) {
-    const keyMap = {
-      heritage_sites: {
-        artifacts: 'heritage_site_id',
-        reviews: 'heritage_site_id',
-        timelines: 'heritage_site_id'
-      },
-      users: {
-        reviews: 'user_id',
-        collections: 'user_id',
-        game_progress: 'user_id'
-      },
-      game_chapters: {
-        levels: 'chapter_id'
-      },
-      game_levels: {
-        sessions: 'level_id'
-      }
-    };
-    return keyMap[collection]?.[relation];
-  }
-
   // ==================== CRUD METHODS ====================
 
   findAll(collection) {
@@ -445,14 +398,6 @@ class JsonAdapter {
     const items = this.data[collection] || [];
     if (items.length === 0) return 1;
     return Math.max(...items.map(item => item.id)) + 1;
-  }
-
-  getSlice(collection, start, end) {
-    const items = this.data[collection] || [];
-    return {
-      data: items.slice(start, end),
-      total: items.length
-    };
   }
 }
 
