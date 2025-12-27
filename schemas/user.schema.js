@@ -15,8 +15,13 @@ module.exports = {
   password: {
     type: 'string',
     required: true,
-    minLength: 6,
-    description: 'Mật khẩu (sẽ được hash)'
+    minLength: 8,
+    description: 'Mật khẩu (sẽ được hash)',
+    custom: (value) => {
+      if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+        return 'Password must contain uppercase, lowercase, and number';
+      }
+    }
   },
   phone: {
     type: 'string',

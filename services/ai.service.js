@@ -18,6 +18,21 @@ class AIService {
    * Chat với AI
    */
   async chat(userId, message, context = {}) {
+
+    // Sanitize user input
+    const cleanMessage = sanitizeHtml(message, {
+      allowedTags: [],
+      allowedAttributes: {}
+    });
+
+    // Length limit
+    if (cleanMessage.length > 500) {
+      return {
+        success: false,
+        message: 'Message too long (max 500 characters)'
+      };
+    }
+
     try {
       // Lấy character context từ level hiện tại
       const character = await this.getCharacterContext(context, userId);

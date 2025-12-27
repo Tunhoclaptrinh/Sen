@@ -6,6 +6,13 @@
 const db = require('../config/database');
 
 class GameService {
+  constructor() {
+    // Khởi tạo Set để track sessions đang được xử lý
+    this.activeLocks = new Set();
+
+    // Bắt đầu background cleanup job
+    this.startSessionCleanup();
+  }
 
   // ==================== INITIALIZATION ====================
 
@@ -35,6 +42,96 @@ class GameService {
       created_at: new Date().toISOString()
     });
   }
+
+  // ==================== SESSION TIMEOUT CLEANUP ====================
+
+  /**
+   * Bắt đầu background job để cleanup sessions timeout
+   */
+  startSessionCleanup() {
+    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000; // 24 hours
+    const CLEANUP_INTERVAL = 60 * 60 * 1000; // Run every 1 hour
+
+    console.log('🧹 Session cleanup job started (runs every hour)');
+
+    // Run ngay lần đầu
+    this.cleanupExpiredSessions(SESSION_TIMEOUT);
+
+    // Sau đó chạy định kỳ
+    setInterval(() => {
+      this.cleanupExpiredSessions(SESSION_TIMEOUT);
+    }, CLEANUP_INTERVAL);
+  }
+
+  /**
+   * Cleanup các sessions đã expired
+   */
+  cleanupExpiredSessions(timeout) {
+    try {
+      const now = Date.now();
+      const allSessions = db.findAll('game_sessions');
+
+      let expiredCount = 0;
+
+      allSessions.forEach(session => {
+        // Chỉ cleanup sessions đang in_progress
+        if (session.status !== 'in_progress') return;
+
+        const startTime = new Date(session.started_at).getTime();
+        const lastActivity = session.last_activity
+          ? new Date(session.last_activity).getTime()
+          : startTime;
+
+        // Check theo last_activity (quan trọng hơn started_at)
+        if (now - lastActivity > timeout) {
+          db.update('game_sessions', session.id, {
+            status: 'expired',
+            expired_at: new Date().toISOString(),
+            expired_reason: 'Session timeout (24 hours inactive)'
+          });
+          expiredCount++;
+        }
+      });
+
+      if (expiredCount > 0) {
+        console.log(`🧹 Cleaned up ${expiredCount} expired sessions`);
+      }
+    } catch (error) {
+      console.error('❌ Session cleanup error:', error);
+    }
+  }
+
+  /**
+   * Get active session với timeout check
+   */
+  async getActiveSession(levelId, userId) {
+    const session = db.findOne('game_sessions', {
+      level_id: levelId,
+      user_id: userId,
+      status: 'in_progress'
+    });
+
+    if (!session) return null;
+
+    // Check timeout
+    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+    const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+    const now = Date.now();
+
+    if (now - lastActivity > SESSION_TIMEOUT) {
+      // Auto-expire
+      db.update('game_sessions', session.id, {
+        status: 'expired',
+        expired_at: new Date().toISOString(),
+        expired_reason: 'Session timeout'
+      });
+      return null;
+    }
+
+    return session;
+  }
+
+
 
   // ==================== PROGRESS & STATS ====================
 
@@ -324,14 +421,10 @@ class GameService {
  * Thu thập manh mối
  */
   async collectClue(levelId, userId, clueId) {
-    const session = db.findOne('game_sessions', {
-      level_id: levelId,
-      user_id: userId,
-      status: 'in_progress'
-    });
+    const session = await this.getActiveSession(levelId, userId);
 
     if (!session) {
-      return { success: false, message: 'No active session', statusCode: 404 };
+      return { success: false, message: 'No active session or session expired', statusCode: 404 };
     }
 
     const level = db.findById('game_levels', levelId);
@@ -353,7 +446,7 @@ class GameService {
     const updatedSession = db.update('game_sessions', session.id, {
       collected_items: [...session.collected_items, clueId],
       score: session.score + (item.points || 10),
-      last_activity: new Date().toISOString()
+      last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
     });
 
     const requiredItems = currentScreen.required_items || currentScreen.items.length;
@@ -389,6 +482,17 @@ class GameService {
       return { success: false, message: 'Session not found', statusCode: 404 };
     }
 
+    // Check timeout
+    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+    const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+    if (Date.now() - lastActivity > SESSION_TIMEOUT) {
+      db.update('game_sessions', session.id, {
+        status: 'expired',
+        expired_at: new Date().toISOString()
+      });
+      return { success: false, message: 'Session expired', statusCode: 404 };
+    }
+
     const level = db.findById('game_levels', session.level_id);
     const currentScreen = level.screens[session.current_screen_index];
 
@@ -396,7 +500,6 @@ class GameService {
       return { success: false, message: 'Current screen is not a quiz', statusCode: 400 };
     }
 
-    // Check if already answered
     const hasAnswered = session.answered_questions.some(
       q => q.screen_id === currentScreen.id
     );
@@ -405,7 +508,6 @@ class GameService {
       return { success: false, message: 'Already answered this question', statusCode: 400 };
     }
 
-    // Find answer
     const selectedOption = currentScreen.options?.find(o => o.text === answerId);
     if (!selectedOption) {
       return { success: false, message: 'Invalid answer', statusCode: 400 };
@@ -414,7 +516,6 @@ class GameService {
     const isCorrect = selectedOption.is_correct;
     const pointsEarned = isCorrect ? (currentScreen.reward?.points || 20) : 0;
 
-    // Update session
     const updatedSession = db.update('game_sessions', sessionId, {
       answered_questions: [
         ...session.answered_questions,
@@ -427,7 +528,7 @@ class GameService {
         }
       ],
       score: session.score + pointsEarned,
-      last_activity: new Date().toISOString()
+      last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
     });
 
     return {
@@ -496,16 +597,13 @@ class GameService {
    * Navigate to next screen in level
    */
   async navigateToNextScreen(sessionId, userId) {
-    const session = db.findOne('game_sessions', {
-      id: parseInt(sessionId),
-      user_id: userId,
-      status: 'in_progress'
-    });
+    // Sử dụng getActiveSession thay vì findOne trực tiếp
+    const session = await this.getActiveSession(null, userId)
 
-    if (!session) {
+    if (!session || session.id !== parseInt(sessionId)) {
       return {
         success: false,
-        message: 'Session not found or already completed',
+        message: 'Session not found or expired',
         statusCode: 404
       };
     }
@@ -555,7 +653,7 @@ class GameService {
       current_screen_id: nextScreen.id,
       current_screen_index: nextScreenIndex,
       completed_screens: [...session.completed_screens, currentScreen.id],
-      last_activity: new Date().toISOString()
+      last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
     });
 
     return {
@@ -656,6 +754,8 @@ class GameService {
   }
 
   async completeLevel(levelId, userId, { score, timeSpent } = {}) {
+
+
     const session = db.findOne('game_sessions', {
       level_id: levelId,
       user_id: userId,
@@ -729,33 +829,44 @@ class GameService {
       newCharacters.push(rewards.character);
     }
 
-    db.update('game_progress', progress.id, {
-      completed_levels: newCompleted,
-      total_sen_petals: newPetals,
-      total_points: progress.total_points + finalScore,
-      coins: newCoins,
-      collected_characters: newCharacters
-    });
+    const sessionBackup = { ...session };
+    const progressBackup = { ...progress };
 
-    return {
-      success: true,
-      message: 'Level completed successfully!',
-      data: {
-        passed: true,
-        score: finalScore,
-        firstTimeCompletion: true,
-        rewards: {
-          petals: rewards.petals || 1,
-          coins: rewards.coins || 50,
-          character: rewards.character || null
-        },
-        new_totals: {
-          petals: newPetals,
-          points: progress.total_points + finalScore,
-          coins: newCoins
+
+    try {
+      db.update('game_sessions', session.id, { status: 'completed' });
+      db.update('game_progress', progress.id, {
+        completed_levels: newCompleted,
+        total_sen_petals: newPetals,
+        total_points: progress.total_points + finalScore,
+        coins: newCoins,
+        collected_characters: newCharacters
+      });
+
+      return {
+        success: true,
+        message: 'Level completed successfully!',
+        data: {
+          passed: true,
+          score: finalScore,
+          rewards: {
+            petals: rewards.petals || 1,
+            coins: rewards.coins || 50,
+            character: rewards.character || null
+          },
+          new_totals: {
+            petals: newPetals,
+            points: progress.total_points + finalScore,
+            coins: newCoins
+          }
         }
-      }
-    };
+      };
+    } catch (error) {
+      // Rollback
+      db.update('game_sessions', session.id, sessionBackup);
+      db.update('game_progress', progress.id, progressBackup);
+      throw error;
+    }
   }
 
   calculateTimeBonus(timeSpent, timeLimit) {
@@ -816,7 +927,7 @@ class GameService {
     const progress = await this.getProgress(userId);
     const lastCollection = progress.data.last_museum_collection || progress.data.created_at;
 
-    // Tính thu nhập tích lũy
+    // Tính thu nhập tích lũy (read-only, không modify DB)
     const incomeInfo = this.calculatePendingIncome(progress.data, lastCollection);
 
     return {
@@ -824,10 +935,14 @@ class GameService {
       data: {
         is_open: progress.data.museum_open,
         income_per_hour: incomeInfo.rate,
-        total_income_generated: progress.data.museum_income, // Tổng lịch sử
-        pending_income: incomeInfo.pending, // Tiền đang chờ nhận
+        total_income_generated: progress.data.museum_income || 0,
+        pending_income: incomeInfo.pending,
+        hours_accumulated: incomeInfo.hours_accumulated,
+        capped: incomeInfo.capped || false,
         characters: progress.data.collected_characters,
         visitor_count: progress.data.collected_characters.length * 10,
+        can_collect: incomeInfo.pending > 0,
+        next_collection_in: this.getNextCollectionTime(incomeInfo.rate),
 
         // ✅ WARNING MESSAGE
         ...(incomeInfo.capped && {
@@ -894,39 +1009,139 @@ class GameService {
   }
 
   /**
-   * Thu hoạch tiền từ bảo tàng (NEW FEATURE)
+   * Thu hoạch tiền từ bảo tàng (WITH LOCK MECHANISM)
    */
   async collectMuseumIncome(userId) {
-    const progress = db.findOne('game_progress', { user_id: userId });
+    // === STEP 1: CHECK LOCK ===
+    const lockKey = `museum_collect_${userId}`;
 
-    if (!progress.museum_open) {
-      return { success: false, message: 'Museum is closed', statusCode: 400 };
+    // Nếu đang có request collect khác, reject ngay
+    if (this.activeLocks.has(lockKey)) {
+      return {
+        success: false,
+        message: 'Income collection already in progress. Please wait.',
+        statusCode: 429 // Too Many Requests
+      };
     }
 
-    const lastCollection = progress.last_museum_collection || progress.created_at;
-    const incomeInfo = this.calculatePendingIncome(progress, lastCollection);
+    // === STEP 2: ACQUIRE LOCK ===
+    this.activeLocks.add(lockKey);
+    console.log(`🔒 Lock acquired for user ${userId} museum collection`);
 
-    if (incomeInfo.pending <= 0) {
-      return { success: false, message: 'No income to collect yet', statusCode: 400 };
+    try {
+      // === STEP 3: BUSINESS LOGIC (TRONG TRY BLOCK) ===
+
+      const progress = db.findOne('game_progress', { user_id: userId });
+
+      if (!progress) {
+        return {
+          success: false,
+          message: 'User progress not found',
+          statusCode: 404
+        };
+      }
+
+      if (!progress.museum_open) {
+        return {
+          success: false,
+          message: 'Museum is closed',
+          statusCode: 400
+        };
+      }
+
+      const lastCollection = progress.last_museum_collection || progress.created_at;
+      const incomeInfo = this.calculatePendingIncome(progress, lastCollection);
+
+      if (incomeInfo.pending <= 0) {
+        return {
+          success: false,
+          message: 'No income to collect yet',
+          statusCode: 400
+        };
+      }
+
+      // === CRITICAL SECTION: UPDATE DB ===
+      const newCoins = (progress.coins || 0) + incomeInfo.pending;
+      const newTotalMuseumIncome = (progress.museum_income || 0) + incomeInfo.pending;
+
+      // Single atomic update để tránh partial updates
+      const updatedProgress = db.update('game_progress', progress.id, {
+        coins: newCoins,
+        museum_income: newTotalMuseumIncome,
+        last_museum_collection: new Date().toISOString()
+      });
+
+      console.log(`✅ User ${userId} collected ${incomeInfo.pending} coins from museum`);
+
+      return {
+        success: true,
+        message: `Collected ${incomeInfo.pending} coins from Museum!`,
+        data: {
+          collected: incomeInfo.pending,
+          total_coins: newCoins,
+          total_museum_income: newTotalMuseumIncome,
+          next_collection_in: this.getNextCollectionTime(incomeInfo.rate)
+        }
+      };
+
+    } catch (error) {
+      // === STEP 4: ERROR HANDLING ===
+      console.error(`❌ Museum collection error for user ${userId}:`, error);
+
+      return {
+        success: false,
+        message: 'Failed to collect income. Please try again.',
+        statusCode: 500
+      };
+
+    } finally {
+      // === STEP 5: RELEASE LOCK (ALWAYS) ===
+      this.activeLocks.delete(lockKey);
+      console.log(`🔓 Lock released for user ${userId} museum collection`);
+    }
+  }
+
+  /**
+   * Helper: Tính thời gian có thể collect tiếp theo
+   */
+  getNextCollectionTime(ratePerHour) {
+    if (ratePerHour === 0) return 'Museum has no income';
+
+    const minutesToNextCoin = Math.ceil(60 / ratePerHour);
+    return `${minutesToNextCoin} minutes`;
+  }
+
+  /**
+   * Tính toán thu nhập đang chờ (GIỮ NGUYÊN NHƯNG CẢI THIỆN)
+   */
+  calculatePendingIncome(progressData, lastCollectionTime) {
+    if (!progressData.museum_open || progressData.collected_characters.length === 0) {
+      return { rate: 0, pending: 0 };
     }
 
-    // Update DB
-    const newCoins = (progress.coins || 0) + incomeInfo.pending;
-    const newTotalMuseumIncome = (progress.museum_income || 0) + incomeInfo.pending;
+    const ratePerHour = progressData.collected_characters.length * 5; // 5 coins/character/hour
+    const now = new Date();
+    const last = new Date(lastCollectionTime);
+    const diffHours = Math.abs(now - last) / 36e5;
 
-    db.update('game_progress', progress.id, {
-      coins: newCoins,
-      museum_income: newTotalMuseumIncome,
-      last_museum_collection: new Date().toISOString()
-    });
+    // Giới hạn max 24h để bắt user login thường xuyên
+    const cappedHours = Math.min(diffHours, 24);
+
+    // === FIX ECONOMY: ADD MAX PENDING CAP ===
+    const MAX_PENDING_INCOME = 5000; // Hard cap để tránh abuse
+    const rawPending = Math.floor(ratePerHour * cappedHours);
+    const pending = Math.min(rawPending, MAX_PENDING_INCOME);
+
+    // Log warning nếu hit cap
+    if (rawPending > MAX_PENDING_INCOME) {
+      console.log(`⚠️ User ${progressData.user_id} hit max pending income cap (${rawPending} -> ${MAX_PENDING_INCOME})`);
+    }
 
     return {
-      success: true,
-      message: `Collected ${incomeInfo.pending} coins from Museum!`,
-      data: {
-        collected: incomeInfo.pending,
-        total_coins: newCoins
-      }
+      rate: ratePerHour,
+      pending: pending,
+      hours_accumulated: cappedHours.toFixed(1),
+      capped: rawPending > MAX_PENDING_INCOME
     };
   }
 
