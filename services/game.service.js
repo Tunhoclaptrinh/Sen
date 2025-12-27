@@ -443,6 +443,55 @@ class GameService {
     };
   }
 
+  async submitTimelineOrder(sessionId, userId, eventOrder) {
+    const session = db.findOne('game_sessions', {
+      id: parseInt(sessionId),
+      user_id: userId,
+      status: 'in_progress'
+    });
+
+    if (!session) {
+      return { success: false, message: 'Session not found', statusCode: 404 };
+    }
+
+    const level = db.findById('game_levels', session.level_id);
+    const currentScreen = level.screens[session.current_screen_index];
+
+    if (currentScreen.type !== 'TIMELINE') {
+      return {
+        success: false,
+        message: 'Current screen is not a timeline',
+        statusCode: 400
+      };
+    }
+
+    // Save order
+    db.update('game_sessions', sessionId, {
+      timeline_order: eventOrder,
+      last_activity: new Date().toISOString()
+    });
+
+    // Validate immediately
+    const validation = this.validateScreenCompletion(currentScreen, {
+      ...session,
+      timeline_order: eventOrder
+    });
+
+    if (!validation.success) {
+      return {
+        success: false,
+        message: validation.message,
+        data: { isCorrect: false }
+      };
+    }
+
+    return {
+      success: true,
+      message: 'Timeline order is correct!',
+      data: { isCorrect: true }
+    };
+  }
+
   /**
    * Navigate to next screen in level
    */
@@ -571,14 +620,35 @@ class GameService {
         break;
 
       case 'TIMELINE':
-        const hasOrdered = session.timeline_order && session.timeline_order.length > 0;
-        if (!hasOrdered) {
+        const userOrder = session.timeline_order;
+
+        if (!userOrder || userOrder.length === 0) {
           return {
             success: false,
             message: 'Must arrange timeline events first',
             statusCode: 400
           };
         }
+
+        // ✅ VALIDATE CORRECT ORDER
+        const correctOrder = screen.events
+          .sort((a, b) => a.year - b.year)
+          .map(e => e.id);
+
+        const isCorrect = JSON.stringify(userOrder) === JSON.stringify(correctOrder);
+
+        if (!isCorrect) {
+          return {
+            success: false,
+            message: 'Timeline order is incorrect. Please try again.',
+            statusCode: 400,
+            data: {
+              userOrder,
+              correctOrder // Show for debugging (remove in production)
+            }
+          };
+        }
+
         break;
     }
 
@@ -597,7 +667,32 @@ class GameService {
     }
 
     const level = db.findById('game_levels', levelId);
+    const progress = db.findOne('game_progress', { user_id: userId });
 
+    // ✅ CHECK IF ALREADY COMPLETED
+    const alreadyCompleted = progress.completed_levels.includes(levelId);
+
+    if (alreadyCompleted) {
+      // Update session as completed but NO rewards
+      db.update('game_sessions', session.id, {
+        status: 'completed',
+        completed_at: new Date().toISOString()
+      });
+
+      return {
+        success: true,
+        message: 'Level completed (no rewards for replay)',
+        data: {
+          passed: true,
+          score: score || session.score,
+          alreadyCompleted: true,
+          rewardsGiven: false,
+          note: 'You already completed this level. No additional rewards.'
+        }
+      };
+    }
+
+    // ✅ FIRST TIME COMPLETION - GIVE REWARDS
     const timeBonus = this.calculateTimeBonus(timeSpent || session.time_spent, level.time_limit);
     const hintPenalty = session.hints_used * 5;
     const finalScore = Math.max(0, (score || session.score) + timeBonus - hintPenalty);
@@ -623,17 +718,12 @@ class GameService {
       };
     }
 
-    // Update progress
-    const progress = db.findOne('game_progress', { user_id: userId });
-    const newCompleted = progress.completed_levels.includes(levelId)
-      ? progress.completed_levels
-      : [...progress.completed_levels, levelId];
-
+    // ✅ GIVE REWARDS (First time only)
     const rewards = level.rewards || {};
     const newPetals = progress.total_sen_petals + (rewards.petals || 1);
     const newCoins = progress.coins + (rewards.coins || 50);
+    const newCompleted = [...progress.completed_levels, levelId];
 
-    // Thêm character vào collection nếu có
     let newCharacters = [...progress.collected_characters];
     if (rewards.character && !newCharacters.includes(rewards.character)) {
       newCharacters.push(rewards.character);
@@ -653,6 +743,7 @@ class GameService {
       data: {
         passed: true,
         score: finalScore,
+        firstTimeCompletion: true,
         rewards: {
           petals: rewards.petals || 1,
           coins: rewards.coins || 50,
@@ -736,7 +827,12 @@ class GameService {
         total_income_generated: progress.data.museum_income, // Tổng lịch sử
         pending_income: incomeInfo.pending, // Tiền đang chờ nhận
         characters: progress.data.collected_characters,
-        visitor_count: progress.data.collected_characters.length * 10
+        visitor_count: progress.data.collected_characters.length * 10,
+
+        // ✅ WARNING MESSAGE
+        ...(incomeInfo.capped && {
+          cap_notice: `Income capped at ${incomeInfo.pending} coins. Please collect regularly to maximize earnings!`
+        })
       }
     };
   }
@@ -746,20 +842,34 @@ class GameService {
    */
   calculatePendingIncome(progressData, lastCollectionTime) {
     if (!progressData.museum_open || progressData.collected_characters.length === 0) {
-      return { rate: 0, pending: 0 };
+      return { rate: 0, pending: 0, hours_accumulated: 0, capped: false };
     }
 
-    const ratePerHour = progressData.collected_characters.length * 5; // 5 coins mỗi nhân vật/giờ
+    const ratePerHour = progressData.collected_characters.length * 5; // 5 coins/character/hour
     const now = new Date();
     const last = new Date(lastCollectionTime);
     const diffHours = Math.abs(now - last) / 36e5;
 
-    // Giới hạn max 24h để bắt user login
+    // Cap hours to 24 (encourage daily login)
     const cappedHours = Math.min(diffHours, 24);
+
+    // ✅ ADD HARD CAP FOR PENDING INCOME
+    const MAX_PENDING_INCOME = 5000; // Hard economy cap
+    const rawPending = Math.floor(ratePerHour * cappedHours);
+    const pending = Math.min(rawPending, MAX_PENDING_INCOME);
+
+    // ✅ LOG WARNING IF HIT CAP
+    const hitCap = rawPending > MAX_PENDING_INCOME;
+    if (hitCap) {
+      console.log(`⚠️ User ${progressData.user_id} hit max pending income cap (${rawPending} → ${MAX_PENDING_INCOME})`);
+    }
 
     return {
       rate: ratePerHour,
-      pending: Math.floor(ratePerHour * cappedHours)
+      pending: pending,
+      hours_accumulated: cappedHours.toFixed(1),
+      capped: hitCap,
+      would_be_without_cap: hitCap ? rawPending : null // For transparency
     };
   }
 

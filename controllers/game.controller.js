@@ -237,6 +237,23 @@ class GameController {
     }
   };
 
+  submitTimelineOrder = async (req, res, next) => {
+    try {
+      const { sessionId } = req.params;
+      const { eventOrder } = req.body; // Array of event IDs
+
+      const result = await gameService.submitTimelineOrder(
+        sessionId,
+        req.user.id,
+        eventOrder
+      );
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // ==================== MUSEUM ====================
 
   getMuseum = async (req, res, next) => {

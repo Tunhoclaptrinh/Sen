@@ -30,6 +30,10 @@ router.post('/levels/:id/complete', requireGamePlay, gameController.completeLeve
 // ==================== SCREEN NAVIGATION (NEW) ====================
 router.post('/sessions/:id/next-screen', requireGamePlay, gameController.navigateToNextScreen);
 router.post('/sessions/:id/submit-answer', requireGamePlay, gameController.submitAnswer);
+router.post('/sessions/:sessionId/submit-timeline',
+  requireGamePlay,
+  gameController.submitTimelineOrder
+);
 
 // ==================== MUSEUM ====================
 router.get('/museum', requireGamePlay, gameController.getMuseum);
