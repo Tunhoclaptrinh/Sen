@@ -132,15 +132,13 @@ class BaseService {
         continue;
       }
 
-      // Range validation
+      // Range/Length validation
       if (rule.min !== undefined && Number(value) < rule.min) {
         errors[field] = `${field} must be >= ${rule.min}`;
       }
       if (rule.max !== undefined && Number(value) > rule.max) {
         errors[field] = `${field} must be <= ${rule.max}`;
       }
-
-      // Length validation
       if (rule.minLength && value.length < rule.minLength) {
         errors[field] = `${field} must be at least ${rule.minLength} characters`;
       }
@@ -155,7 +153,7 @@ class BaseService {
 
       // Unique validation
       if (rule.unique) {
-        const existing = await db.findOne(this.collection, { [field]: value });
+        const existing = db.findOne(this.collection, { [field]: value });
         if (existing) {
           errors[field] = `${field} '${value}' already exists`;
         }
@@ -163,7 +161,7 @@ class BaseService {
 
       // Foreign key validation
       if (rule.foreignKey) {
-        const relatedEntity = await db.findById(rule.foreignKey, value);
+        const relatedEntity = db.findById(rule.foreignKey, value);
         if (!relatedEntity) {
           errors[field] = `${field} references non-existent ${rule.foreignKey} (ID: ${value})`;
         }
@@ -185,6 +183,66 @@ class BaseService {
     return Object.keys(errors).length === 0
       ? { success: true }
       : { success: false, errors };
+  }
+
+  validateType(field, value, rule) {
+    switch (rule.type) {
+      case 'string':
+        return typeof value !== 'string' ? `${field} must be a string` : null;
+      case 'number':
+        return isNaN(Number(value)) ? `${field} must be a number` : null;
+      case 'boolean':
+        return typeof value !== 'boolean' &&
+          !['true', 'false', '1', '0'].includes(String(value).toLowerCase())
+          ? `${field} must be true/false` : null;
+      case 'email':
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return !emailRegex.test(value) ? `${field} must be a valid email` : null;
+      case 'date':
+        return isNaN(new Date(value).getTime()) ? `${field} must be a valid date` : null;
+      case 'enum':
+        return !rule.enum.includes(value) ? `${field} must be one of: ${rule.enum.join(', ')}` : null;
+      case 'array':
+        return !Array.isArray(value) ? `${field} must be an array` : null;
+      default:
+        return null;
+    }
+  }
+
+  // ==================== TRANSFORM ====================
+
+  transformBySchema(data) {
+    if (!this.schema) return data;
+
+    const transformed = {};
+    for (const [field, rule] of Object.entries(this.schema)) {
+      if (field in data) {
+        transformed[field] = this.convertValue(field, data[field], rule);
+      }
+    }
+    return transformed;
+  }
+
+  convertValue(field, value, rule) {
+    if (value === undefined || value === null) {
+      return rule.default !== undefined ? rule.default : null;
+    }
+
+    switch (rule.type) {
+      case 'number':
+        return Number(value);
+      case 'boolean':
+        const boolStr = String(value).toLowerCase();
+        return ['true', '1', 'yes'].includes(boolStr);
+      case 'date':
+        return new Date(value).toISOString();
+      case 'email':
+        return String(value).toLowerCase();
+      case 'array':
+        return Array.isArray(value) ? value : [value];
+      default:
+        return value;
+    }
   }
 
   // ==================== CRUD METHODS ====================
@@ -526,9 +584,20 @@ class BaseService {
     };
   }
 
+  async transformImportData(data) {
+    if (!this.schema) return data;
+
+    const transformed = this.transformBySchema(data);
+    transformed.createdAt = new Date().toISOString();
+    transformed.updatedAt = new Date().toISOString();
+
+    return transformed;
+  }
+
   /**
-   * Prepare data for export
-   */
+  * Prepare data for export
+  */
+
   async prepareExportData(options = {}) {
     const result = await this.findAll(options);
     let data = result.data;
@@ -626,7 +695,7 @@ class BaseService {
    * Hook after create
    */
   async afterCreate(item) {
-    // Do nothing by default
+    // Hook after create
   }
 
   /**
@@ -647,7 +716,7 @@ class BaseService {
    * Hook after delete
    */
   async afterDelete(id) {
-    // Do nothing by default
+    // Hook after delete
   }
 
   // ==================== HELPERS ====================
