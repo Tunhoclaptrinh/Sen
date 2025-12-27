@@ -1,8 +1,34 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 requests
+  message: 'Too many login attempts, please try again later'
+});
+
 
 const app = express();
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  }
+}));
+
 
 // Middleware
 app.use(cors());
@@ -23,6 +49,9 @@ app.use(logQuery);
 // Mount all routes
 app.use('/api', require('./routes'));
 app.use('/api/admin', require('./routes/admin'));
+
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
 
 // API Documentation
 app.get('/api', (req, res) => {
