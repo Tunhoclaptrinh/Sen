@@ -37,7 +37,8 @@ class MongoAdapter {
         user: { ref: 'users', localField: 'user_id', foreignField: '_id', justOne: true }
       },
       collections: {
-        user: { ref: 'users', localField: 'user_id', foreignField: '_id', justOne: true }
+        user: { ref: 'users', localField: 'user_id', foreignField: '_id', justOne: true },
+        artifacts: { ref: 'artifacts', localField: 'artifact_ids', foreignField: '_id' }
       }
     };
 
@@ -62,20 +63,29 @@ class MongoAdapter {
 
   loadSchemasAsModels() {
     const schemasDir = path.join(__dirname, '../schemas');
+
+    // Kiểm tra folder tồn tại
+    if (!fs.existsSync(schemasDir)) {
+      console.error('❌ Schemas directory not found:', schemasDir);
+      return;
+    }
+
     const files = fs.readdirSync(schemasDir);
 
-    // Schema mapping cho SEN project
+    // Schema mapping đầy đủ hơn
     const modelMapping = {
       'user.schema.js': 'users',
       'heritage_site.schema.js': 'heritage_sites',
       'artifact.schema.js': 'artifacts',
       'cultural_category.schema.js': 'cultural_categories',
+      'category.schema.js': 'categories', // ✅ THÊM
       'exhibition.schema.js': 'exhibitions',
       'timeline.schema.js': 'timelines',
       'collection.schema.js': 'collections',
       'favorite.schema.js': 'favorites',
       'review.schema.js': 'reviews',
       'notification.schema.js': 'notifications',
+      'address.schema.js': 'addresses', // ✅ THÊM
       'game_chapter.schema.js': 'game_chapters',
       'game_level.schema.js': 'game_levels',
       'game_character.schema.js': 'game_characters',
@@ -87,75 +97,104 @@ class MongoAdapter {
     files.forEach(file => {
       if (file === 'index.js') return;
 
-      // Use mapping or fallback to simple 's' suffix
-      const entityName = modelMapping[file] || file.replace('.schema.js', 's');
+      const entityName = modelMapping[file];
 
-      const schemaDef = require(path.join(schemasDir, file));
-
-      const mongooseFields = {};
-
-      for (const [key, val] of Object.entries(schemaDef)) {
-        if (key === 'custom') continue;
-
-        let type = String;
-        if (val.type === 'number') type = Number;
-        if (val.type === 'boolean') type = Boolean;
-        if (val.type === 'date') type = Date;
-        if (val.type === 'array') type = Array;
-
-        if (val.foreignKey) type = Number;
-
-        mongooseFields[key] = {
-          type: type,
-          required: val.required || false,
-          default: val.default,
-          unique: val.unique || false
-        };
-
-        // Add enum constraint
-        if (val.enum) mongooseFields[key].enum = val.enum;
+      // Skip nếu không có mapping
+      if (!entityName) {
+        console.warn(`⚠️  No mapping found for schema: ${file}`);
+        return;
       }
 
-      // Keep ID as Number for frontend compatibility
-      mongooseFields._id = { type: Number };
+      // Try-catch để tránh crash
+      try {
+        const schemaDef = require(path.join(schemasDir, file));
 
-      if (!mongoose.models[entityName]) {
-        const schema = new mongoose.Schema(mongooseFields, {
-          timestamps: true,
-          toJSON: { virtuals: true },
-          toObject: { virtuals: true }
-        });
-
-        // Virtual field: _id -> id
-        schema.virtual('id').get(function () {
-          return this._id;
-        });
-
-        // Setup Virtuals for populate
-        const rels = this.relations[entityName];
-        if (rels) {
-          for (const [field, config] of Object.entries(rels)) {
-            // Only add virtual if it doesn't conflict with real field
-            if (!mongooseFields[field]) {
-              schema.virtual(field, {
-                ref: config.ref,
-                localField: config.localField,
-                foreignField: config.foreignField,
-                justOne: config.justOne || false
-              });
-            }
-          }
+        // Validate schema definition
+        if (!schemaDef || typeof schemaDef !== 'object') {
+          console.warn(`⚠️  Invalid schema definition for ${file}`);
+          return;
         }
 
-        this.models[entityName] = mongoose.model(entityName, schema);
-      } else {
-        this.models[entityName] = mongoose.models[entityName];
+        const mongooseFields = {};
+
+        for (const [key, val] of Object.entries(schemaDef)) {
+          if (key === 'custom') continue;
+
+          let type = String;
+          if (val.type === 'number') type = Number;
+          if (val.type === 'boolean') type = Boolean;
+          if (val.type === 'date') type = Date;
+          if (val.type === 'array') type = Array;
+          if (val.type === 'object') type = mongoose.Schema.Types.Mixed; // ✅ FIX
+
+          if (val.foreignKey) type = Number;
+
+          mongooseFields[key] = {
+            type: type,
+            required: val.required || false,
+            default: val.default,
+            unique: val.unique || false
+          };
+
+          // Enum constraint
+          if (val.enum) mongooseFields[key].enum = val.enum;
+
+          // Min/Max validation
+          if (val.min !== undefined) mongooseFields[key].min = val.min;
+          if (val.max !== undefined) mongooseFields[key].max = val.max;
+          if (val.minLength) mongooseFields[key].minlength = val.minLength;
+          if (val.maxLength) mongooseFields[key].maxlength = val.maxLength;
+        }
+
+        // ID as Number for compatibility
+        mongooseFields._id = { type: Number };
+
+        if (!mongoose.models[entityName]) {
+          const schema = new mongoose.Schema(mongooseFields, {
+            timestamps: true,
+            toJSON: { virtuals: true },
+            toObject: { virtuals: true }
+          });
+
+          // Virtual: _id -> id
+          schema.virtual('id').get(function () {
+            return this._id;
+          });
+
+          // Setup Virtuals for populate
+          const rels = this.relations[entityName];
+          if (rels) {
+            for (const [field, config] of Object.entries(rels)) {
+              if (!mongooseFields[field]) {
+                schema.virtual(field, {
+                  ref: config.ref,
+                  localField: config.localField,
+                  foreignField: config.foreignField,
+                  justOne: config.justOne || false
+                });
+              }
+            }
+          }
+
+          this.models[entityName] = mongoose.model(entityName, schema);
+          console.log(`✅ Model created: ${entityName}`);
+        } else {
+          this.models[entityName] = mongoose.models[entityName];
+        }
+      } catch (error) {
+        console.error(`❌ Error loading schema ${file}:`, error.message);
       }
     });
+
+    console.log(`📦 Total models loaded: ${Object.keys(this.models).length}`);
   }
 
   getModel(collection) {
-    return this.models[collection];
+    const model = this.models[collection];
+    if (!model) {
+      console.warn(`⚠️  Model not found: ${collection}`);
+    }
+    return model;
   }
 
   // ==================== FIND ALL ADVANCED ====================
@@ -167,21 +206,31 @@ class MongoAdapter {
 
     const query = {};
 
+    // Full-text search ở ngoài filter
+    if (options.q) {
+      query['$or'] = [
+        { name: { $regex: options.q, $options: 'i' } },
+        { title: { $regex: options.q, $options: 'i' } },
+        { description: { $regex: options.q, $options: 'i' } },
+        { comment: { $regex: options.q, $options: 'i' } }
+      ];
+    }
+
     // Build query filters
     if (options.filter) {
       for (const [key, val] of Object.entries(options.filter)) {
-        if (key === 'q') {
-          // Full-text search
-          query['$or'] = [
-            { name: { $regex: val, $options: 'i' } },
-            { description: { $regex: val, $options: 'i' } }
-          ];
-        } else if (key.endsWith('_gte')) {
+        if (key.endsWith('_gte')) {
           const field = key.replace('_gte', '');
           query[field] = { ...query[field], $gte: Number(val) };
         } else if (key.endsWith('_lte')) {
           const field = key.replace('_lte', '');
           query[field] = { ...query[field], $lte: Number(val) };
+        } else if (key.endsWith('_gt')) { // ✅ THÊM
+          const field = key.replace('_gt', '');
+          query[field] = { ...query[field], $gt: Number(val) };
+        } else if (key.endsWith('_lt')) { // ✅ THÊM
+          const field = key.replace('_lt', '');
+          query[field] = { ...query[field], $lt: Number(val) };
         } else if (key.endsWith('_ne')) {
           const field = key.replace('_ne', '');
           query[field] = { $ne: val };
@@ -190,7 +239,7 @@ class MongoAdapter {
           query[field] = { $regex: val, $options: 'i' };
         } else if (key.endsWith('_in')) {
           const field = key.replace('_in', '');
-          const values = typeof val === 'string' ? val.split(',') : val;
+          const values = Array.isArray(val) ? val : val.split(',');
           query[field] = { $in: values };
         } else {
           query[key] = val;
@@ -220,16 +269,14 @@ class MongoAdapter {
       queryBuilder = queryBuilder.sort({ createdAt: -1 });
     }
 
-    // Populate relations
+    // Populate with error handling
     if (options.embed) {
       const embedFields = options.embed.split(',');
       embedFields.forEach(field => {
-        if (field !== 'items') {
-          try {
-            queryBuilder = queryBuilder.populate(field);
-          } catch (e) {
-            console.log(`Skip populate ${field}:`, e.message);
-          }
+        try {
+          queryBuilder = queryBuilder.populate(field);
+        } catch (e) {
+          console.warn(`⚠️  Cannot populate ${field}:`, e.message);
         }
       });
     }
@@ -240,7 +287,7 @@ class MongoAdapter {
         try {
           queryBuilder = queryBuilder.populate(field);
         } catch (e) {
-          console.log(`Skip populate ${field}:`, e.message);
+          console.warn(`⚠️  Cannot populate ${field}:`, e.message);
         }
       });
     }
@@ -269,58 +316,69 @@ class MongoAdapter {
   // ==================== CRUD METHODS ====================
   async findAll(collection) {
     const Model = this.getModel(collection);
+    if (!Model) return [];
+
     const items = await Model.find().lean();
     return items.map(item => ({ ...item, id: item._id }));
   }
 
   async findById(collection, id) {
     const Model = this.getModel(collection);
+    if (!Model) return null;
+
     try {
       const item = await Model.findOne({ _id: parseInt(id) }).lean();
       if (!item) return null;
       return { ...item, id: item._id };
     } catch (e) {
+      console.error(`Error findById ${collection}:`, e.message);
       return null;
     }
   }
 
   async findOne(collection, query) {
     const Model = this.getModel(collection);
+    if (!Model) return null;
+
     try {
       const item = await Model.findOne(query).lean();
       if (!item) return null;
       return { ...item, id: item._id };
     } catch (e) {
+      console.error(`Error findOne ${collection}:`, e.message);
       return null;
     }
   }
 
   async findMany(collection, query) {
     const Model = this.getModel(collection);
+    if (!Model) return [];
+
     try {
       const items = await Model.find(query).lean();
-      // Map _id -> id 
       return items.map(item => ({ ...item, id: item._id }));
     } catch (e) {
+      console.error(`Error findMany ${collection}:`, e.message);
       return [];
     }
   }
 
   async create(collection, data) {
     const Model = this.getModel(collection);
+    if (!Model) {
+      throw new Error(`Model not found: ${collection}`);
+    }
 
-    // Auto-generate ID if not provided
+    // Auto-generate ID
     if (!data._id && !data.id) {
-      data._id = Date.now() + Math.floor(Math.random() * 1000);
+      data._id = await this.getNextId(collection);
     } else if (data.id && !data._id) {
-      // Nếu có id thì dùng id làm _id
       data._id = data.id;
     }
 
     try {
       const created = await Model.create(data);
       const obj = created.toObject();
-      // Map _id -> id
       return { ...obj, id: obj._id };
     } catch (error) {
       console.error(`Error creating ${collection}:`, error);
@@ -330,6 +388,8 @@ class MongoAdapter {
 
   async update(collection, id, data) {
     const Model = this.getModel(collection);
+    if (!Model) return null;
+
     try {
       const updated = await Model.findOneAndUpdate(
         { _id: parseInt(id) },
@@ -341,8 +401,6 @@ class MongoAdapter {
       ).lean();
 
       if (!updated) return null;
-
-      // Map _id -> id
       return { ...updated, id: updated._id };
     } catch (error) {
       console.error(`Error updating ${collection}:`, error);
@@ -352,6 +410,8 @@ class MongoAdapter {
 
   async delete(collection, id) {
     const Model = this.getModel(collection);
+    if (!Model) return false;
+
     try {
       const deleted = await Model.findOneAndDelete({ _id: parseInt(id) });
       return deleted ? true : false;
@@ -363,6 +423,8 @@ class MongoAdapter {
 
   async getNextId(collection) {
     const Model = this.getModel(collection);
+    if (!Model) return Date.now();
+
     try {
       const lastItem = await Model.findOne().sort({ _id: -1 }).lean();
       return lastItem ? lastItem._id + 1 : 1;
@@ -371,92 +433,32 @@ class MongoAdapter {
     }
   }
 
-  // ==================== APPLY RELATIONS ====================
-  async applyRelations(items, collection, options) {
-    if (!items || items.length === 0) return items;
-
+  // getSlice method (missing in original)
+  async getSlice(collection, start, end) {
     const Model = this.getModel(collection);
-    let populatedItems = [...items];
+    if (!Model) return { data: [], total: 0 };
 
-    if (options.embed) {
-      const fields = options.embed.split(',');
-      for (const field of fields) {
-        // Skip nếu là field thật trong schema (như items trong orders)
-        if (collection === 'orders' && field === 'items') continue;
+    try {
+      const items = await Model.find()
+        .skip(start)
+        .limit(end - start)
+        .lean();
 
-        try {
-          populatedItems = await Model.populate(populatedItems, { path: field });
-        } catch (e) {
-          console.log('Populate error ignored:', e.message);
-        }
-      }
+      const total = await Model.countDocuments();
+
+      return {
+        data: items.map(item => ({ ...item, id: item._id })),
+        total
+      };
+    } catch (error) {
+      console.error(`Error getSlice ${collection}:`, error);
+      return { data: [], total: 0 };
     }
-
-    if (options.expand) {
-      const fields = options.expand.split(',');
-      for (const field of fields) {
-        try {
-          populatedItems = await Model.populate(populatedItems, { path: field });
-        } catch (e) {
-          console.log('Populate error ignored:', e.message);
-        }
-      }
-    }
-
-    return populatedItems;
   }
 
-  // ==================== HELPER METHODS ====================
-
-  applyFilters(items, filters) {
-    return items.filter(item => {
-      return Object.keys(filters).every(key => {
-        if (key.endsWith('_gte')) {
-          const field = key.replace('_gte', '');
-          return item[field] >= filters[key];
-        }
-        if (key.endsWith('_lte')) {
-          const field = key.replace('_lte', '');
-          return item[field] <= filters[key];
-        }
-        if (key.endsWith('_ne')) {
-          const field = key.replace('_ne', '');
-          return item[field] !== filters[key];
-        }
-        if (key.endsWith('_like')) {
-          const field = key.replace('_like', '');
-          const regex = new RegExp(filters[key], 'i');
-          return regex.test(item[field]);
-        }
-        return item[key] == filters[key];
-      });
-    });
-  }
-
-  // Apply pagination
-  applyPagination(items, page = 1, limit = 10) {
-    const total = items.length;
-    const currentPage = Math.max(1, parseInt(page));
-    const itemsPerPage = Math.max(1, parseInt(limit));
-    const totalPages = Math.ceil(total / itemsPerPage);
-
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-
-    return {
-      data: items.slice(startIndex, endIndex),
-      page: currentPage,
-      limit: itemsPerPage,
-      total,
-      totalPages,
-      hasNext: currentPage < totalPages,
-      hasPrev: currentPage > 1
-    };
-  }
-
-  // Save data (for compatibility - not used in MongoDB)
+  // Save data (no-op for MongoDB)
   saveData() {
-    return true; // No-op for MongoDB
+    return true;
   }
 }
 
