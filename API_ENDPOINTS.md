@@ -306,7 +306,6 @@ Content-Type: application/json
 {
   "name": "Nguyễn Văn B",
   "phone": "0987654321",
-  "address": "456 New Street",
   "avatar": "https://example.com/avatar.jpg"
 }
 ```
@@ -328,9 +327,14 @@ Authorization: Bearer <token>
 {
   "success": true,
   "data": {
-    "recentGames": [...],
-    "achievements": [...],
-    "favorites": [...]
+    "user": {...},
+    "stats": {
+      "totalOrders": 0,
+      "completedOrders": 0,
+      "totalReviews": 2,
+      "avgRating": 5
+    },
+    "recentReviews": [...]
   }
 }
 ```
@@ -345,6 +349,24 @@ Authorization: Bearer <admin-token>
 ```
 
 **Response:** User statistics
+
+```json
+{
+  "success": true,
+  "data": {
+    "total": 5,
+    "active": 5,
+    "inactive": 0,
+    "byRole": {
+      "customer": 3,
+      "admin": 1,
+      "researcher": 1
+    },
+    "withReviews": 2,
+    "recentSignups": 0
+  }
+}
+```
 
 ---
 
@@ -366,7 +388,23 @@ DELETE /api/users/:id/permanent
 Authorization: Bearer <admin-token>
 ```
 
-**Response:** Permanently deletes user
+**Response:** Permanently deletes user and all related data
+
+```json
+{
+  "success": true,
+  "message": "User and all related data permanently deleted",
+  "deleted": {
+    "user": 1,
+    "orders": 0,
+    "cart": 0,
+    "favorites": 2,
+    "reviews": 1,
+    "addresses": 0,
+    "notifications": 0
+  }
+}
+```
 
 ---
 
@@ -437,11 +475,9 @@ GET /api/heritage-sites
       "type": "monument",
       "cultural_period": "Triều Lý",
       "region": "Hà Nội",
-      "location": {
-        "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
-        "latitude": 21.0341,
-        "longitude": 105.8372
-      },
+      "latitude": 21.0341,
+      "longitude": 105.8372,
+      "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
       "images": [...],
       "rating": 4.7,
       "total_reviews": 892,
@@ -964,13 +1000,10 @@ Authorization: Bearer <token>
 ```json
 {
   "success": true,
+  "message": "Daily reward claimed",
   "data": {
-    "can_claim": true,
-    "streak_days": 5,
-    "reward": {
-      "coins": 50,
-      "petals": 1
-    }
+    "coins": 50,
+    "petals": 1
   }
 }
 ```
@@ -1041,10 +1074,539 @@ Authorization: Bearer <token>
         "is_locked": false,
         "player_best_score": 950,
         "rewards": {
+          "coins": 100,
+          "petals": 1,
+          "character": "teu"
+        }
+      }
+    ],
+    "is_unlocked": true
+  }
+}
+```
+
+---
+
+#### Unlock Chapter
+
+```http
+POST /api/game/chapters/:id/unlock
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Chapter unlocked successfully",
+  "data": {
+    "chapter_id": 2,
+    "chapter_name": "Sen Vàng - Giao Thoa"
+  }
+}
+```
+
+---
+
+### 3.3 Levels (Màn Chơi)
+
+#### Get Levels by Chapter
+
+```http
+GET /api/game/levels/:chapterId
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Khám Phá Đinh Bộ Lĩnh",
+      "type": "story",
+      "difficulty": "easy",
+      "order": 1,
+      "thumbnail": "...",
+      "is_completed": true,
+      "is_locked": false,
+      "rewards": {
+        "petals": 1,
+        "coins": 50
+      }
+    }
+  ]
+}
+```
+
+---
+
+#### Get Level Detail
+
+```http
+GET /api/game/levels/:id/detail
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "Khám Phá Đinh Bộ Lĩnh",
+    "description": "...",
+    "type": "mixed",
+    "difficulty": "easy",
+    "is_completed": false,
+    "best_score": null,
+    "play_count": 0,
+    "rewards": {
+      "petals": 1,
+      "coins": 50,
+      "character": "teu"
+    },
+    "time_limit": 600,
+    "passing_score": 70
+  }
+}
+```
+
+---
+
+#### Start Level
+
+```http
+POST /api/game/levels/:id/start
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Level started",
+  "data": {
+    "session_id": 123,
+    "level": {
+      "id": 1,
+      "name": "Khám Phá Đinh Bộ Lĩnh",
+      "description": "...",
+      "total_screens": 5,
+      "ai_character": {
+        "id": 1,
+        "name": "Chú Tễu",
+        "avatar": "...",
+        "persona": "..."
+      }
+    },
+    "current_screen": {
+      "id": "screen_01",
+      "type": "DIALOGUE",
+      "index": 0,
+      "is_first": true,
+      "is_last": false,
+      "background_image": "...",
+      "content": [
+        {
+          "speaker": "AI",
+          "text": "Chào bạn!",
+          "avatar": "..."
+        }
+      ],
+      "skip_allowed": true
+    }
+  }
+}
+```
+
+---
+
+#### Navigate to Next Screen
+
+```http
+POST /api/game/sessions/:id/next-screen
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Navigated to next screen",
+  "data": {
+    "session_id": 123,
+    "current_screen": {
+      "id": "screen_02",
+      "type": "QUIZ",
+      "index": 1,
+      "question": "Câu hỏi về di sản?",
+      "options": [
+        {
+          "text": "Đáp án A",
+          "is_correct": false
+        },
+        {
+          "text": "Đáp án B",
+          "is_correct": true
+        }
+      ],
+      "time_limit": 60
+    },
+    "progress": {
+      "completed_screens": 1,
+      "total_screens": 5,
+      "percentage": 20
+    }
+  }
+}
+```
+
+---
+
+#### Submit Answer (for QUIZ screens)
+
+```http
+POST /api/game/sessions/:id/submit-answer
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+
+```json
+{
+  "answerId": "Đáp án B"
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Correct answer!",
+  "data": {
+    "is_correct": true,
+    "points_earned": 20,
+    "total_score": 120,
+    "explanation": "Giải thích...",
+    "correct_answer": null
+  }
+}
+```
+
+---
+
+#### Submit Timeline Order (for TIMELINE screens)
+
+```http
+POST /api/game/sessions/:sessionId/submit-timeline
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+
+```json
+{
+  "eventOrder": ["evt1", "evt2", "evt3"]
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Timeline order is correct!",
+  "data": {
+    "isCorrect": true
+  }
+}
+```
+
+---
+
+#### Collect Clue (for HIDDEN_OBJECT screens)
+
+```http
+POST /api/game/levels/:id/collect-clue
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+
+```json
+{
+  "clueId": "item1"
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Item collected",
+  "data": {
+    "item": {
+      "id": "item1",
+      "name": "Cái quạt",
+      "fact_popup": "Đây là cái quạt mo"
+    },
+    "points_earned": 10,
+    "total_score": 130,
+    "progress": {
+      "collected": 2,
+      "required": 3,
+      "all_collected": false
+    }
+  }
+}
+```
+
+---
+
+#### Complete Level
+
+```http
+POST /api/game/levels/:id/complete
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+
+```json
+{
+  "score": 950,
+  "timeSpent": 300
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Level completed successfully!",
+  "data": {
+    "passed": true,
+    "score": 950,
+    "rewards": {
+      "petals": 2,
+      "coins": 100,
+      "character": "teu"
+    },
+    "new_totals": {
+      "petals": 14,
+      "points": 2200,
+      "coins": 600
+    }
+  }
+}
+```
+
+---
+
+### 3.4 Museum
+
+#### Get Museum Collection
+
+```http
+GET /api/game/museum
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "data": {
+    "is_open": true,
+    "income_per_hour": 25,
+    "total_income_generated": 1200,
+    "pending_income": 50,
+    "hours_accumulated": 2,
+    "capped": false,
+    "characters": ["teu", "thach_sanh"],
+    "visitor_count": 20,
+    "can_collect": true,
+    "next_collection_in": "2 minutes"
+  }
+}
+```
+
+---
+
+#### Toggle Museum Status
+
+```http
+POST /api/game/museum/toggle
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+
+```json
+{
+  "isOpen": true
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Museum opened",
+  "data": {
+    "is_open": true,
+    "income_per_hour": 25
+  }
+}
+```
+
+---
+
+#### Collect Museum Income
+
+```http
+POST /api/game/museum/collect
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Collected 50 coins from Museum!",
+  "data": {
+    "collected": 50,
+    "total_coins": 650,
+    "total_museum_income": 1250,
+    "next_collection_in": "2 minutes"
+  }
+}
+```
+
+---
+
+### 3.5 Badges & Achievements
+
+#### Get User Badges
+
+```http
+GET /api/game/badges
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Người khám phá",
+      "description": "Hoàn thành 5 level",
+      "icon": "🔍",
+      "is_unlocked": true
+    }
+  ]
+}
+```
+
+---
+
+#### Get User Achievements
+
+```http
+GET /api/game/achievements
+Authorization: Bearer <token>
+```
+
+**Response:** `200 OK`
+
+---
+
+### 3.6 Scan to Play
+
+#### Scan Object
+
+```http
+POST /api/game/scan
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body:**
+
+```json
+{
+  "code": "QR_CODE_VALUE",
+  "latitude": 21.0285,
+  "longitude": 105.8542
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Scan successful!",
+  "data": {
+    "artifact": {
+      "id": 1,
+      "name": "Trống đồng Ngọc Lũ",
+      "description": "Trống đồng thời Đông Sơn...",
+      "image": "https://example.com/artifact.jpg"
+    },
+    "rewards": {
       "coins": 100,
       "petals": 1,
-      "character": "teu"
-    }
+      "character": "teu_unlocked"
+    },
+    "new_totals": {
+      "coins": 1100,
+      "petals": 6
+    },
+    "is_new_discovery": true
+  }
+}
+```
+
+**Error Response (Invalid Code):** `404 Not Found`
+
+```json
+{
+  "success": false,
+  "message": "Invalid scan code"
+}
+```
+
+**Error Response (Too Far):** `400 Bad Request`
+
+```json
+{
+  "success": false,
+  "message": "You are too far from the location",
+  "data": {
+    "required_distance": 0.5,
+    "current_distance": 2.3
   }
 }
 ```
@@ -2735,717 +3297,9 @@ DELETE /api/admin/assets/:id
 Authorization: Bearer <admin-token>
 ```
 
-**Response:** `200
-"petals": 1,
-"coins": 50
-}
-}
-],
-"is_unlocked": true
-}
-}
-
-````
-
----
-
-#### Unlock Chapter
-```http
-POST /api/game/chapters/:id/unlock
-Authorization: Bearer <token>
-````
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Chapter unlocked successfully",
-  "data": {
-    "chapter_id": 2,
-    "chapter_name": "Sen Vàng - Giao Thoa"
-  }
-}
-```
-
----
-
-### 3.3 Levels (Màn Chơi)
-
-#### Get Levels by Chapter
-
-```http
-GET /api/game/levels/:chapterId
-Authorization: Bearer <token>
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "id": 1,
-      "name": "Khám Phá Đinh Bộ Lĩnh",
-      "type": "story",
-      "difficulty": "easy",
-      "order": 1,
-      "thumbnail": "...",
-      "is_completed": true,
-      "is_locked": false,
-      "rewards": {
-        "petals": 1,
-        "coins": 50
-      }
-    }
-  ]
-}
-```
-
----
-
-#### Get Level Detail
-
-```http
-GET /api/game/levels/:id/detail
-Authorization: Bearer <token>
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "data": {
-    "id": 1,
-    "name": "Khám Phá Đinh Bộ Lĩnh",
-    "description": "...",
-    "type": "mixed",
-    "difficulty": "easy",
-    "is_completed": false,
-    "best_score": null,
-    "play_count": 0,
-    "rewards": {
-      "petals": 1,
-      "coins": 50,
-      "character": "teu"
-    },
-    "time_limit": 600,
-    "passing_score": 70
-  }
-}
-```
-
----
-
-#### Start Level
-
-```http
-POST /api/game/levels/:id/start
-Authorization: Bearer <token>
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Level started",
-  "data": {
-    "session_id": 123,
-    "level": {
-      "id": 1,
-      "name": "Khám Phá Đinh Bộ Lĩnh",
-      "description": "...",
-      "total_screens": 5,
-      "ai_character": {
-        "id": 1,
-        "name": "Chú Tễu",
-        "avatar": "...",
-        "persona": "..."
-      }
-    },
-    "current_screen": {
-      "id": "screen_01",
-      "type": "DIALOGUE",
-      "index": 0,
-      "is_first": true,
-      "is_last": false,
-      "background_image": "...",
-      "content": [
-        {
-          "speaker": "AI",
-          "text": "Chào bạn!",
-          "avatar": "..."
-        }
-      ],
-      "skip_allowed": true
-    }
-  }
-}
-```
-
----
-
-#### Navigate to Next Screen
-
-```http
-POST /api/game/sessions/:id/next-screen
-Authorization: Bearer <token>
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Navigated to next screen",
-  "data": {
-    "session_id": 123,
-    "current_screen": {
-      "id": "screen_02",
-      "type": "QUIZ",
-      "index": 1,
-      "question": "Câu hỏi về di sản?",
-      "options": [
-        {
-          "text": "Đáp án A",
-          "is_correct": false
-        },
-        {
-          "text": "Đáp án B",
-          "is_correct": true
-        }
-      ],
-      "time_limit": 60
-    },
-    "progress": {
-      "completed_screens": 1,
-      "total_screens": 5,
-      "percentage": 20
-    }
-  }
-}
-```
-
----
-
-#### Submit Answer (for QUIZ screens)
-
-```http
-POST /api/game/sessions/:id/submit-answer
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "answerId": "Đáp án B"
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Correct answer!",
-  "data": {
-    "is_correct": true,
-    "points_earned": 20,
-    "total_score": 120,
-    "explanation": "Giải thích...",
-    "correct_answer": null
-  }
-}
-```
-
----
-
-#### Submit Timeline Order (for TIMELINE screens)
-
-```http
-POST /api/game/sessions/:sessionId/submit-timeline
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "eventOrder": ["evt1", "evt2", "evt3"]
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Timeline order is correct!",
-  "data": {
-    "isCorrect": true
-  }
-}
-```
-
----
-
-#### Collect Clue (for HIDDEN_OBJECT screens)
-
-```http
-POST /api/game/levels/:id/collect-clue
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "clueId": "item1"
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Item collected",
-  "data": {
-    "item": {
-      "id": "item1",
-      "name": "Cái quạt",
-      "fact_popup": "Đây là cái quạt mo"
-    },
-    "points_earned": 10,
-    "total_score": 130,
-    "progress": {
-      "collected": 2,
-      "required": 3,
-      "all_collected": false
-    }
-  }
-}
-```
-
----
-
-#### Complete Level
-
-```http
-POST /api/game/levels/:id/complete
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "score": 950,
-  "timeSpent": 300
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Level completed successfully!",
-  "data": {
-    "passed": true,
-    "score": 950,
-    "rewards": {
-      "petals": 2,
-      "coins": 100,
-      "character": "teu"
-    },
-    "new_totals": {
-      "petals": 14,
-      "points": 2200,
-      "coins": 600
-    }
-  }
-}
-```
-
----
-
-### 3.4 Museum
-
-#### Get Museum Collection
-
-```http
-GET /api/game/museum
-Authorization: Bearer <token>
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "data": {
-    "is_open": true,
-    "income_per_hour": 25,
-    "total_income_generated": 1200,
-    "pending_income": 50,
-    "hours_accumulated": 2,
-    "capped": false,
-    "characters": ["teu", "thach_sanh"],
-    "visitor_count": 20,
-    "can_collect": true,
-    "next_collection_in": "2 minutes"
-  }
-}
-```
-
----
-
-#### Toggle Museum Status
-
-```http
-POST /api/game/museum/toggle
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "isOpen": true
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Museum opened",
-  "data": {
-    "is_open": true,
-    "income_per_hour": 25
-  }
-}
-```
-
----
-
-#### Collect Museum Income
-
-```http
-POST /api/game/museum/collect
-Authorization: Bearer <token>
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Collected 50 coins from Museum!",
-  "data": {
-    "collected": 50,
-    "total_coins": 650,
-    "total_museum_income": 1250,
-    "next_collection_in": "2 minutes"
-  }
-}
-```
-
----
-
-### 3.5 Badges & Achievements
-
-#### Get User Badges
-
-```http
-GET /api/game/badges
-Authorization: Bearer <token>
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "id": 1,
-      "name": "Người khám phá",
-      "description": "Hoàn thành 5 level",
-      "icon": "🔍",
-      "is_unlocked": true
-    }
-  ]
-}
-```
-
----
-
-#### Get User Achievements
-
-```http
-GET /api/game/achievements
-Authorization: Bearer <token>
-```
-
 **Response:** `200 OK`
 
 ---
-
-### 3.6 Scan to Play
-
-#### Scan Object
-
-```http
-POST /api/game/scan
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "code": "QR_CODE_VALUE",
-  "latitude": 21.0285,
-  "longitude": 105.8542
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Object found!",
-  "data": {
-    "artifact": {
-      "id": 1,
-      "name": "Trống đồng Ngọc Lũ"
-    },
-    "rewards": {
-      "senCoins": 20,
-      "experience": 50
-    },
-    "unlocked": true
-  }
-}
-```
-
----
-
-### 3.6 Scan to Play
-
-#### Scan Object (QR Code)
-
-```http
-POST /api/game/scan
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "code": "QR_ARTIFACT_001",
-  "latitude": 21.0285,
-  "longitude": 105.8542
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Scan successful!",
-  "data": {
-    "artifact": {
-      "id": 1,
-      "name": "Trống đồng Ngọc Lũ",
-      "description": "Trống đồng thời Đông Sơn...",
-      "image": "https://example.com/artifact.jpg"
-    },
-    "rewards": {
-      "coins": 100,
-      "petals": 1,
-      "character": "teu_unlocked"
-    },
-    "new_totals": {
-      "coins": 1100,
-      "petals": 6
-    },
-    "is_new_discovery": true
-  }
-}
-```
-
-**Error Response (Invalid Code):** `404 Not Found`
-
-```json
-{
-  "success": false,
-  "message": "Invalid scan code"
-}
-```
-
-**Error Response (Too Far):** `400 Bad Request`
-
-```json
-{
-  "success": false,
-  "message": "You are too far from the location",
-  "data": {
-    "required_distance": 0.5,
-    "current_distance": 2.3
-  }
-}
-```
-
----
-
-### 3.7 Shop & Inventory
-
-#### Purchase Item
-
-```http
-POST /api/game/shop/purchase
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "itemId": 1,
-  "quantity": 1
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Purchase successful",
-  "data": {
-    "item": {
-      "id": 1,
-      "name": "Gợi ý thông minh",
-      "type": "hint",
-      "description": "Nhận gợi ý cho câu đố khó"
-    },
-    "quantity": 1,
-    "total_cost": 50,
-    "remaining_coins": 950
-  }
-}
-```
-
-**Error Response (Not Enough Coins):** `400 Bad Request`
-
-```json
-{
-  "success": false,
-  "message": "Not enough coins",
-  "data": {
-    "required": 50,
-    "available": 30
-  }
-}
-```
-
----
-
-#### Get User Inventory
-
-```http
-GET /api/game/inventory
-Authorization: Bearer <token>
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "data": {
-    "items": [
-      {
-        "item_id": 1,
-        "name": "Gợi ý thông minh",
-        "type": "hint",
-        "icon": "💡",
-        "quantity": 5,
-        "is_consumable": true,
-        "acquired_at": "2024-11-15T10:00:00Z"
-      },
-      {
-        "item_id": 2,
-        "name": "Tăng tốc thời gian",
-        "type": "boost",
-        "icon": "⚡",
-        "quantity": 2,
-        "effect": "Giảm 30% thời gian hoàn thành level",
-        "is_consumable": true
-      }
-    ]
-  }
-}
-```
-
----
-
-#### Use Item
-
-```http
-POST /api/game/inventory/use
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "itemId": 1,
-  "targetId": 5
-}
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "success": true,
-  "message": "Item used successfully",
-  "data": {
-    "item": {
-      "name": "Gợi ý thông minh",
-      "type": "hint"
-    },
-    "effect": "Applied successfully",
-    "remaining_quantity": 4
-  }
-}
-```
-
----
-
-**Response:** `200 OK`
 
 ## 9. Notifications
 
@@ -3575,6 +3429,8 @@ All POST/PUT requests are validated using express-validator with defined schemas
 3. **Timestamps:** All resources have `createdAt` and `updatedAt`
 4. **Pagination:** Default page size is 20, max is 100
 5. **Response Time:** Aim for <200ms for standard queries
+6. **Session Timeout:** Game sessions auto-expire after 24 hours of inactivity
+7. **Museum Income:** Capped at 24 hours accumulation with max 5000 coins limit
 
 ---
 
@@ -3664,7 +3520,7 @@ For issues or questions:
 
 ---
 
-**Version:** 2.0.0  
-**Last Updated:** December 3, 2025  
+**Version:** 2.1.0  
+**Last Updated:** December 28, 2025  
 **Status:** Production Ready  
 **Maintained by:** Sen Development Team
