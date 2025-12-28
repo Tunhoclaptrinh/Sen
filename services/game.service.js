@@ -357,6 +357,27 @@ class GameService {
  * Bắt đầu chơi level
  */
   async startLevel(levelId, userId) {
+
+    // MISSING: Check for existing expired sessions
+    const existingSessions = db.findMany('game_sessions', {
+      level_id: levelId,
+      user_id: userId,
+      status: 'in_progress'
+    });
+
+    // CRITICAL: Expire old sessions before creating new
+    existingSessions.forEach(session => {
+      const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+      const now = Date.now();
+      if (now - lastActivity > 24 * 60 * 60 * 1000) {
+        db.update('game_sessions', session.id, {
+          status: 'expired',
+          expired_at: new Date().toISOString(),
+          expired_reason: 'Auto-expired before new session'
+        });
+      }
+    });
+
     const level = db.findById('game_levels', levelId);
     if (!level) {
       return { success: false, message: 'Level not found', statusCode: 404 };
@@ -742,7 +763,8 @@ class GameService {
             statusCode: 400,
             data: {
               userOrder,
-              correctOrder // Show for debugging (remove in production)
+              correctOrder, // Show for debugging (remove in production)
+              hint: 'Check the years of each event carefully'
             }
           };
         }

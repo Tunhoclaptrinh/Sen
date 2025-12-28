@@ -110,7 +110,38 @@ module.exports = {
           coins: 20
         }
       }
-    ]
+    ],
+    custom: (value) => {
+      if (!Array.isArray(value)) return 'screens must be an array';
+
+      const errors = [];
+      const screenIds = new Set();
+
+      value.forEach((screen, idx) => {
+        // Check required fields
+        if (!screen.id) errors.push(`Screen ${idx}: Missing id`);
+        if (!screen.type) errors.push(`Screen ${idx}: Missing type`);
+
+        // Check duplicate IDs
+        if (screen.id && screenIds.has(screen.id)) {
+          errors.push(`Screen ${idx}: Duplicate id '${screen.id}'`);
+        }
+        screenIds.add(screen.id);
+
+        // Type-specific validation
+        if (screen.type === 'QUIZ' && !screen.options) {
+          errors.push(`Screen ${idx}: QUIZ requires options`);
+        }
+        if (screen.type === 'HIDDEN_OBJECT' && !screen.items) {
+          errors.push(`Screen ${idx}: HIDDEN_OBJECT requires items`);
+        }
+        if (screen.type === 'TIMELINE' && !screen.events) {
+          errors.push(`Screen ${idx}: TIMELINE requires events`);
+        }
+      });
+
+      return errors.length > 0 ? errors.join('; ') : null;
+    }
   },
 
   // === COMPLETION & REWARDS ===

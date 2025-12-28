@@ -237,10 +237,27 @@ class GameController {
     }
   };
 
-  submitTimelineOrder = async (req, res, next) => {
+  async submitTimelineOrder(req, res, next) {
     try {
       const { sessionId } = req.params;
       const { eventOrder } = req.body; // Array of event IDs
+
+      // MISSING VALIDATION:
+      if (!eventOrder || !Array.isArray(eventOrder) || eventOrder.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'eventOrder must be a non-empty array'
+        });
+      }
+
+      // MISSING: Check session ownership
+      const session = db.findById('game_sessions', sessionId);
+      if (session.user_id !== req.user.id) {
+        return res.status(403).json({
+          success: false,
+          message: 'Not your session'
+        });
+      }
 
       const result = await gameService.submitTimelineOrder(
         sessionId,

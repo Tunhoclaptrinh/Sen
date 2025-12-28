@@ -541,7 +541,35 @@ const seedData = {
   ],
 
   "game_levels": [
-    // Levels được giữ nguyên như trong db.json hiện tại
+    {
+      "id": 1,
+      "chapter_id": 1,
+      "name": "Dòng thời gian lịch sử",
+      "type": "timeline",
+      "difficulty": "easy",
+      "order": 1,
+      "screens": [
+        {
+          "id": "screen1",
+          "type": "DIALOGUE",
+          "content": [
+            { "speaker": "AI", "text": "Hãy sắp xếp các sự kiện theo đúng thứ tự!" }
+          ],
+          "next_screen_id": "screen2"
+        },
+        {
+          "id": "screen2",
+          "type": "TIMELINE",
+          "events": [
+            { "id": "evt1", "name": "1802", "content": "Nguyễn Ánh lên ngôi", "year": 1802 },
+            { "id": "evt2", "name": "1858", "content": "Pháp tấn công Đà Nẵng", "year": 1858 },
+            { "id": "evt3", "name": "1945", "content": "Cách mạng Tháng Tám", "year": 1945 }
+          ]
+        }
+      ],
+      "rewards": { "petals": 1, "coins": 50 },
+      "passing_score": 70
+    }
   ],
 
   "game_progress": [],
