@@ -1,7 +1,7 @@
 {
-  "name": "funfood-backend",
-  "version": "2.0.0",
-  "description": "FunFood Backend API",
+  "name": "sen-backend",
+  "version": "1.0.0",
+  "description": "SEN - Cultural Heritage Game Backend API",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,6 +10,16 @@
     "query": "node tools/run-query.js",
     "fix-sequences": "node tools/fix-sequences.js"
   },
+  "keywords": [
+    "cultural-heritage",
+    "game",
+    "education",
+    "vietnam",
+    "history",
+    "api"
+  ],
+  "author": "SEN Team",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

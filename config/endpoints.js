@@ -1,5 +1,5 @@
 /**
- * FunFood API Endpoints Configuration
+ * SEN API Endpoints Configuration
  * Auto-generated reference for all API endpoints
  * Base URL: http://localhost:3000/api
  */
@@ -23,129 +23,149 @@ const auth = {
 const users = {
   list: '/users',
   getById: (id) => `/users/${id}`,
-  getActivity: (id) => `/users/${id}/activity`,
-  getStats: '/users/stats/summary',
   updateProfile: '/users/profile',
-  update: (id) => `/users/${id}`,
-  toggleStatus: (id) => `/users/${id}/status`,
-  delete: (id) => `/users/${id}`,
-  deletePermanent: (id) => `/users/${id}/permanent`,
-
-  // Import/Export
-  importUsers: '/users/import',
-  exportUsers: '/users/export',
-  getTemplate: '/users/template',
-  getSchema: '/users/schema'
+  getStats: '/users/stats/summary'
 };
 
 /**
- * Category Endpoints
+ * Heritage Sites Endpoints
+ */
+const heritageSites = {
+  list: '/heritage-sites',
+  search: '/heritage-sites/search',
+  nearby: '/heritage-sites/nearby',
+  getById: (id) => `/heritage-sites/${id}`,
+  getArtifacts: (id) => `/heritage-sites/${id}/artifacts`,
+  getTimeline: (id) => `/heritage-sites/${id}/timeline`,
+  create: '/heritage-sites',
+  update: (id) => `/heritage-sites/${id}`,
+  delete: (id) => `/heritage-sites/${id}`
+};
+
+/**
+ * Artifacts Endpoints
+ */
+const artifacts = {
+  list: '/artifacts',
+  search: '/artifacts/search',
+  getById: (id) => `/artifacts/${id}`,
+  getRelated: (id) => `/artifacts/${id}/related`,
+  create: '/artifacts',
+  update: (id) => `/artifacts/${id}`,
+  delete: (id) => `/artifacts/${id}`
+};
+
+/**
+ * Cultural Categories Endpoints
  */
 const categories = {
   list: '/categories',
-  search: '/categories/search',
   getById: (id) => `/categories/${id}`,
   create: '/categories',
   update: (id) => `/categories/${id}`,
-  delete: (id) => `/categories/${id}`,
-
-  // Import/Export
-  importCategories: '/categories/import',
-  exportCategories: '/categories/export',
-  getTemplate: '/categories/template',
-  getSchema: '/categories/schema'
+  delete: (id) => `/categories/${id}`
 };
 
 /**
- * Restaurant Endpoints
+ * Game Endpoints
  */
-const restaurants = {
-  list: '/restaurants',
-  search: '/restaurants/search',
-  nearby: '/restaurants/nearby',
-  getById: (id) => `/restaurants/${id}`,
-  getMenu: (id) => `/restaurants/${id}/products`,
-  create: '/restaurants',
-  update: (id) => `/restaurants/${id}`,
-  delete: (id) => `/restaurants/${id}`,
+const game = {
+  // Progress
+  getProgress: '/game/progress',
 
-  // Import/Export
-  importRestaurants: '/restaurants/import',
-  exportRestaurants: '/restaurants/export',
-  getTemplate: '/restaurants/template',
-  getSchema: '/restaurants/schema'
+  // Chapters (Sen Flower Layers)
+  getChapters: '/game/chapters',
+  getChapterDetail: (id) => `/game/chapters/${id}`,
+  unlockChapter: (id) => `/game/chapters/${id}/unlock`,
+
+  // Levels
+  getLevels: (chapterId) => `/game/levels/${chapterId}`,
+  getLevelDetail: (id) => `/game/levels/${id}/detail`,
+  startLevel: (id) => `/game/levels/${id}/start`,
+  collectClue: (id) => `/game/levels/${id}/collect-clue`,
+  completeLevel: (id) => `/game/levels/${id}/complete`,
+
+  // Screen Navigation
+  nextScreen: (sessionId) => `/game/sessions/${sessionId}/next-screen`,
+  submitAnswer: (sessionId) => `/game/sessions/${sessionId}/submit-answer`,
+  submitTimeline: (sessionId) => `/game/sessions/${sessionId}/submit-timeline`,
+
+  // Museum
+  getMuseum: '/game/museum',
+  toggleMuseum: '/game/museum/toggle',
+  collectIncome: '/game/museum/collect',
+
+  // Badges & Achievements
+  getBadges: '/game/badges',
+  getAchievements: '/game/achievements',
+
+  // Scan
+  scanObject: '/game/scan',
+
+  // Leaderboard
+  getLeaderboard: '/game/leaderboard',
+  getDailyReward: '/game/daily-reward',
+
+  // Shop & Inventory
+  purchaseItem: '/game/shop/purchase',
+  getInventory: '/game/inventory',
+  useItem: '/game/inventory/use'
 };
 
 /**
- * Product Endpoints
+ * AI Endpoints
  */
-const products = {
-  list: '/products',
-  search: '/products/search',
-  discounted: '/products/discounted',
-  getById: (id) => `/products/${id}`,
-  create: '/products',
-  update: (id) => `/products/${id}`,
-  bulkUpdateAvailability: '/products/bulk/availability',
-  delete: (id) => `/products/${id}`,
-
-  // Import/Export
-  importProducts: '/products/import',
-  exportProducts: '/products/export',
-  getTemplate: '/products/template',
-  getSchema: '/products/schema'
+const ai = {
+  chat: '/ai/chat',
+  getHistory: '/ai/history',
+  askHint: '/ai/ask-hint',
+  explain: '/ai/explain',
+  generateQuiz: '/ai/quiz',
+  clearHistory: '/ai/history'
 };
 
 /**
- * Cart Endpoints
+ * Learning Endpoints
  */
-const cart = {
-  get: '/cart',
-  add: '/cart',
-  sync: '/cart/sync',
-  update: (id) => `/cart/${id}`,
-  remove: (id) => `/cart/${id}`,
-  clearByRestaurant: (restaurantId) => `/cart/restaurant/${restaurantId}`,
-  clear: '/cart'
+const learning = {
+  list: '/learning',
+  getById: (id) => `/learning/${id}`,
+  getLearningPath: '/learning/path',
+  complete: (id) => `/learning/${id}/complete`,
+  create: '/learning',
+  update: (id) => `/learning/${id}`,
+  delete: (id) => `/learning/${id}`
 };
 
 /**
- * Order Endpoints
+ * Quest Endpoints
  */
-const orders = {
-  // Customer
-  list: '/orders',
-  getById: (id) => `/orders/${id}`,
-  create: '/orders',
-  cancel: (id) => `/orders/${id}`,
-  reorder: (id) => `/orders/${id}/reorder`,
-  rate: (id) => `/orders/${id}/rate`,
-  getStats: '/orders/stats/summary',
-
-  // Admin
-  listAll: '/orders/all',
-  adminStats: '/orders/admin/stats',
-  adminUpdateStatus: (id) => `/orders/admin/${id}/status`,
-  adminDelete: (id) => `/orders/admin/${id}/permanent`,
-
-  // Manager
-  restaurantOrders: '/orders/manager/restaurant',
-  managerUpdateStatus: (id) => `/orders/manager/${id}/status`,
-  managerStats: '/orders/manager/stats',
-
-  // Shipper
-  availableOrders: '/orders/shipper/available',
-  acceptOrder: (id) => `/orders/shipper/${id}/accept`,
-  myDeliveries: '/orders/shipper/deliveries',
-  updateDeliveryStatus: (id) => `/orders/shipper/${id}/status`,
-  shipperStats: '/orders/shipper/stats',
-
-  // Shared
-  updateStatus: (id) => `/orders/${id}/status`
+const quests = {
+  list: '/quests',
+  getAvailable: '/quests/available',
+  getLeaderboard: '/quests/leaderboard',
+  getById: (id) => `/quests/${id}`,
+  complete: (id) => `/quests/${id}/complete`,
+  create: '/quests',
+  update: (id) => `/quests/${id}`,
+  delete: (id) => `/quests/${id}`
 };
 
 /**
- * Favorite Endpoints
+ * Collections Endpoints
+ */
+const collections = {
+  list: '/collections',
+  getById: (id) => `/collections/${id}`,
+  create: '/collections',
+  update: (id) => `/collections/${id}`,
+  delete: (id) => `/collections/${id}`,
+  addArtifact: (id, artifactId) => `/collections/${id}/artifacts/${artifactId}`,
+  removeArtifact: (id, artifactId) => `/collections/${id}/artifacts/${artifactId}`
+};
+
+/**
+ * Favorites Endpoints
  */
 const favorites = {
   list: '/favorites',
@@ -162,116 +182,85 @@ const favorites = {
 };
 
 /**
- * Review Endpoints
+ * Reviews Endpoints
  */
 const reviews = {
-  // Public
-  getRestaurantReviews: (restaurantId) => `/reviews/restaurant/${restaurantId}`,
-  getProductReviews: (productId) => `/reviews/product/${productId}`,
+  list: '/reviews',
   getByType: (type) => `/reviews/type/${type}`,
-
-  // Protected
   create: '/reviews',
-  getMyReviews: '/reviews/user/me',
-  getStats: '/reviews/user/stats',
-  check: (type, targetId) => `/reviews/check/${type}/${targetId}`,
   update: (id) => `/reviews/${id}`,
-  delete: (id) => `/reviews/${id}`,
-
-  // Admin
-  listAll: '/reviews'
+  delete: (id) => `/reviews/${id}`
 };
 
 /**
- * Promotion Endpoints
+ * Exhibitions Endpoints
  */
-const promotions = {
-  list: '/promotions',
-  active: '/promotions/active',
-  getByCode: (code) => `/promotions/code/${code}`,
-  validate: '/promotions/validate',
-  create: '/promotions',
-  update: (id) => `/promotions/${id}`,
-  toggle: (id) => `/promotions/${id}/toggle`,
-  delete: (id) => `/promotions/${id}`,
-
-  // Import/Export
-  importPromotions: '/promotions/import',
-  exportPromotions: '/promotions/export',
-  getTemplate: '/promotions/template',
-  getSchema: '/promotions/schema'
+const exhibitions = {
+  list: '/exhibitions',
+  getActive: '/exhibitions/active',
+  getById: (id) => `/exhibitions/${id}`,
+  create: '/exhibitions',
+  update: (id) => `/exhibitions/${id}`,
+  delete: (id) => `/exhibitions/${id}`
 };
 
 /**
- * Address Endpoints
+ * Upload Endpoints
  */
-const addresses = {
-  list: '/addresses',
-  getDefault: '/addresses/default',
-  getById: (id) => `/addresses/${id}`,
-  create: '/addresses',
-  update: (id) => `/addresses/${id}`,
-  setDefault: (id) => `/addresses/${id}/default`,
-  delete: (id) => `/addresses/${id}`,
-  clearNonDefault: '/addresses'
+const upload = {
+  uploadAvatar: '/upload/avatar',
+  deleteFile: '/upload/file',
+  getFileInfo: '/upload/file/info',
+  getStats: '/upload/stats',
+  cleanup: '/upload/cleanup'
 };
 
 /**
- * Notification Endpoints
+ * Admin CMS Endpoints
  */
-const notifications = {
-  list: '/notifications',
-  markAsRead: (id) => `/notifications/${id}/read`,
-  markAllAsRead: '/notifications/read-all',
-  delete: (id) => `/notifications/${id}`,
-  clearAll: '/notifications'
-};
+const admin = {
+  // Levels Management
+  levels: {
+    list: '/admin/levels',
+    getById: (id) => `/admin/levels/${id}`,
+    preview: (id) => `/admin/levels/${id}/preview`,
+    templates: '/admin/levels/templates',
+    validate: '/admin/levels/validate',
+    create: '/admin/levels',
+    update: (id) => `/admin/levels/${id}`,
+    delete: (id) => `/admin/levels/${id}`,
+    clone: (id) => `/admin/levels/${id}/clone`,
+    bulkImport: '/admin/levels/bulk/import',
+    reorder: (chapterId) => `/admin/levels/chapters/${chapterId}/reorder`,
+    stats: '/admin/levels/stats'
+  },
 
-/**
- * Payment Endpoints
- */
-const payment = {
-  create: (orderId) => `/payment/${orderId}/create`,
-  getStatus: (orderId) => `/payment/${orderId}/status`,
-  refund: (orderId) => `/payment/${orderId}/refund`,
-  listAll: '/payment',
-  momoCallback: '/payment/momo/callback',
-  zaloPayCallback: '/payment/zalopay/callback'
-};
+  // Chapters Management
+  chapters: {
+    list: '/admin/chapters',
+    getById: (id) => `/admin/chapters/${id}`,
+    create: '/admin/chapters',
+    update: (id) => `/admin/chapters/${id}`,
+    delete: (id) => `/admin/chapters/${id}`
+  },
 
-/**
- * Manager Endpoints
- */
-const manager = {
-  getRestaurant: '/manager/restaurant',
-  getProducts: '/manager/products',
-  createProduct: '/manager/products',
-  updateProduct: (id) => `/manager/products/${id}`,
-  toggleProductAvailability: (id) => `/manager/products/${id}/availability`,
-  getOrders: '/manager/orders',
-  getOrderDetail: (id) => `/manager/orders/${id}`,
-  updateOrderStatus: (id) => `/manager/orders/${id}/status`,
-  getStats: '/manager/stats'
-};
+  // Characters Management
+  characters: {
+    list: '/admin/characters',
+    getById: (id) => `/admin/characters/${id}`,
+    create: '/admin/characters',
+    update: (id) => `/admin/characters/${id}`,
+    delete: (id) => `/admin/characters/${id}`
+  },
 
-/**
- * Shipper Endpoints
- */
-const shipper = {
-  availableOrders: '/shipper/orders/available',
-  acceptOrder: (id) => `/shipper/orders/${id}/accept`,
-  myDeliveries: '/shipper/orders/my-deliveries',
-  updateOrderStatus: (id) => `/shipper/orders/${id}/status`,
-  getHistory: '/shipper/orders/history',
-  getStats: '/shipper/stats'
-};
-
-/**
- * Health & Status Endpoints
- */
-const health = {
-  health: '/health',
-  apiDocs: '/api'
+  // Assets Management (Scan Objects)
+  assets: {
+    list: '/admin/assets',
+    getById: (id) => `/admin/assets/${id}`,
+    create: '/admin/assets',
+    update: (id) => `/admin/assets/${id}`,
+    delete: (id) => `/admin/assets/${id}`
+  }
 };
 
 /**
@@ -343,7 +332,7 @@ const responseFormats = {
       success: false,
       message: 'Validation failed',
       errors: [
-        { field: 'email', message: 'Invalid email' }
+        { field: 'field_name', message: 'Error message' }
       ]
     }
   }
@@ -392,28 +381,22 @@ const headers = {
  */
 const byRole = {
   public: [
+    heritageSites.list,
+    artifacts.list,
     categories.list,
-    restaurants.list,
-    restaurants.nearby,
-    products.list,
-    promotions.list,
-    reviews.getRestaurantReviews
+    exhibitions.list
   ],
   customer: [
     ...Object.values(auth),
-    ...Object.values(cart),
+    ...Object.values(game),
+    ...Object.values(collections),
     ...Object.values(favorites),
-    ...Object.values(reviews),
-    ...Object.values(addresses),
-    ...Object.values(notifications),
-    orders.list,
-    orders.create
+    ...Object.values(reviews)
   ],
-  manager: [
-    ...Object.values(manager)
-  ],
-  shipper: [
-    ...Object.values(shipper)
+  researcher: [
+    heritageSites.create,
+    artifacts.create,
+    exhibitions.create
   ],
   admin: [
     // All endpoints
@@ -426,30 +409,29 @@ const byRole = {
 const examples = {
   pagination: '?_page=1&_limit=10',
   sorting: '?_sort=rating&_order=desc',
-  filtering: '?categoryId=1&price_gte=50000&price_lte=100000',
-  search: '?q=pizza',
-  combined: '?q=pizza&price_lte=100000&_page=1&_limit=10',
-  relationships: '?_embed=products,reviews&_expand=category'
+  filtering: '?categoryId=1&year_gte=1000&year_lte=2000',
+  search: '?q=hoang+thanh',
+  combined: '?q=chua&_page=1&_limit=10&_sort=year',
+  nearby: '?latitude=21.0285&longitude=105.8542&radius=5'
 };
 
 module.exports = {
   BASE_URL,
   auth,
   users,
+  heritageSites,
+  artifacts,
   categories,
-  restaurants,
-  products,
-  cart,
-  orders,
+  game,
+  ai,
+  learning,
+  quests,
+  collections,
   favorites,
   reviews,
-  promotions,
-  addresses,
-  notifications,
-  payment,
-  manager,
-  shipper,
-  health,
+  exhibitions,
+  upload,
+  admin,
   queryParams,
   responseFormats,
   methods,

@@ -1,25 +1,33 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-// Generate JWT token
+/**
+ * Generate JWT token
+ */
 exports.generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE
+    expiresIn: process.env.JWT_EXPIRE || '30d'
   });
 };
 
-// Hash password
+/**
+ * Hash password
+ */
 exports.hashPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(password, salt);
 };
 
-// Compare password
+/**
+ * Compare password with hashed password
+ */
 exports.comparePassword = async (password, hashedPassword) => {
   return await bcrypt.compare(password, hashedPassword);
 };
 
-// Remove password from user object
+/**
+ * Remove password from user object
+ */
 exports.sanitizeUser = (user) => {
   const { password, ...userWithoutPassword } = user;
   return userWithoutPassword;
@@ -28,7 +36,11 @@ exports.sanitizeUser = (user) => {
 /**
  * Calculate distance between two GPS coordinates
  * Using Haversine formula
- * @returns distance in kilometers
+ * @param {number} lat1 - Latitude of point 1
+ * @param {number} lon1 - Longitude of point 1
+ * @param {number} lat2 - Latitude of point 2
+ * @param {number} lon2 - Longitude of point 2
+ * @returns {number} Distance in kilometers
  */
 exports.calculateDistance = (lat1, lon1, lat2, lon2) => {
   const R = 6371; // Earth radius in km
@@ -43,26 +55,9 @@ exports.calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 /**
- * Calculate delivery fee based on distance
- * @param {number} distance - Distance in km
- * @returns {number} - Delivery fee in VND
- */
-exports.calculateDeliveryFee = (distance) => {
-  const baseFee = 15000;  // Base fee for <= 2km
-  const perKm = 5000;     // Per km for 2-5km
-  const extraPerKm = 7000; // Per km for > 5km
-
-  if (distance <= 2) {
-    return baseFee;
-  } else if (distance <= 5) {
-    return baseFee + Math.ceil(distance - 2) * perKm;
-  } else {
-    return baseFee + 3 * perKm + Math.ceil(distance - 5) * extraPerKm;
-  }
-};
-
-/**
  * Format distance for display
+ * @param {number} distance - Distance in kilometers
+ * @returns {string} Formatted distance
  */
 exports.formatDistance = (distance) => {
   if (distance < 1) {

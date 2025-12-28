@@ -1770,7 +1770,7 @@
       "id": 1,
       "user_id": 3,
       "level_id": "4",
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "screen4",
       "current_screen_index": 3,
       "collected_items": [],
@@ -1787,13 +1787,15 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2025-12-03T07:49:01.618Z",
-      "last_activity": "2025-12-03T08:04:45.868Z"
+      "last_activity": "2025-12-03T08:04:45.868Z",
+      "expired_at": "2025-12-27T18:34:56.138Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 2,
       "user_id": 3,
       "level_id": "4",
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
@@ -1806,13 +1808,15 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2025-12-03T07:51:06.697Z",
-      "last_activity": "2025-12-03T07:51:06.697Z"
+      "last_activity": "2025-12-03T07:51:06.697Z",
+      "expired_at": "2025-12-27T18:34:56.138Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 3,
       "user_id": 3,
       "level_id": "4",
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
@@ -1825,13 +1829,15 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2025-12-03T07:53:16.789Z",
-      "last_activity": "2025-12-03T07:53:16.789Z"
+      "last_activity": "2025-12-03T07:53:16.789Z",
+      "expired_at": "2025-12-27T18:34:56.139Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 4,
       "user_id": 3,
       "level_id": "6",
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "screen4",
       "current_screen_index": 3,
       "collected_items": [],
@@ -1848,13 +1854,15 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2025-12-03T08:07:19.601Z",
-      "last_activity": "2025-12-03T08:13:23.217Z"
+      "last_activity": "2025-12-03T08:13:23.217Z",
+      "expired_at": "2025-12-27T18:34:56.156Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 5,
       "user_id": 3,
       "level_id": "6",
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
@@ -1867,13 +1875,15 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2025-12-03T08:14:15.232Z",
-      "last_activity": "2025-12-03T08:14:15.232Z"
+      "last_activity": "2025-12-03T08:14:15.232Z",
+      "expired_at": "2025-12-27T18:34:56.174Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 6,
       "user_id": 3,
       "level_id": "6",
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
@@ -1886,13 +1896,15 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2025-12-03T08:15:25.529Z",
-      "last_activity": "2025-12-03T08:15:25.529Z"
+      "last_activity": "2025-12-03T08:15:25.529Z",
+      "expired_at": "2025-12-27T18:34:56.184Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 7,
       "user_id": 3,
       "level_id": "6",
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
@@ -1905,13 +1917,15 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2025-12-03T08:19:25.067Z",
-      "last_activity": "2025-12-03T08:19:25.067Z"
+      "last_activity": "2025-12-03T08:19:25.067Z",
+      "expired_at": "2025-12-27T18:34:56.204Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 8,
       "user_id": 3,
       "level_id": "6",
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
       "collected_items": [],
@@ -1934,7 +1948,9 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2025-12-03T08:23:43.548Z",
-      "last_activity": "2025-12-03T08:25:35.044Z"
+      "last_activity": "2025-12-03T08:25:35.044Z",
+      "expired_at": "2025-12-27T18:34:56.226Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     }
   ]
 }
