@@ -551,5 +551,4 @@ Nếu có vấn đề:
 
 **Made with ❤️ for SEN - Kiến tạo trải nghiệm lịch sử, văn hoá bằng công nghệ**
 
-Version: 1.0.0  
-Last Updated: 2024-11-30
+Version: 1.0.0 npm r
