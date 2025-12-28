@@ -2,8 +2,7 @@
   "info": {
     "name": "SEN API Collection",
     "_postman_id": "sen-api-v2",
-    "description": "Postman collection for testing the SEN API (Version 2.0.0). Base URL: http://localhost:3000/api\n\n- Use the 'Authentication/Login' request to get a token.\n- The token is automatically set as a collection variable 'token' in the test script.\n- Pre-request script automatically adds 'Authorization: Bearer {{token}}' to requests that need it (except auth/register and auth/login).\n- For admin endpoints, login with admin credentials (not provided in docs; assume you have an admin user).\n- Sample bodies are included where available in docs.\n- Adjust query params, bodies, and IDs as needed for your local setup.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "description": "✅ SEN API v2.1.0 - Cultural Heritage Game Backend\n\n**Quick Start:**\n1. Login to get token (auto-saved)\n2. All authenticated requests use token automatically\n3. Use sample bodies provided\n\n**Test Accounts:**\n- Admin: admin@sen.com / 123456\n- Researcher: tuanpham@sen.com / 123456\n- Customer: huong.do@sen.com / 123456\n\n**Base URL:** http://localhost:3000/api\n\n**Last Updated:** December 28, 2025"
   },
   "variable": [
     {
@@ -81,7 +80,15 @@
                     "exec": [
                       "if (pm.response.code === 200) {",
                       "    const jsonData = pm.response.json();",
-                      "    pm.collectionVariables.set('token', jsonData.data.token);",
+                      "    if (jsonData.success && jsonData.data && jsonData.data.token) {",
+                      "        pm.collectionVariables.set('token', jsonData.data.token);",
+                      "        pm.environment.set('token', jsonData.data.token);",
+                      "        console.log('✅ Token saved successfully');",
+                      "        console.log('User:', jsonData.data.user.name);",
+                      "        console.log('Role:', jsonData.data.user.role);",
+                      "    }",
+                      "} else {",
+                      "    console.log('❌ Login failed');",
                       "}"
                     ]
                   }
@@ -1181,7 +1188,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"eventOrder\": [\"evt1\", \"evt2\", \"evt3\"]\n}"
+                  "raw": "{\n  \"eventOrder\": [\"evt1\", \"evt2\", \"evt3\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/sessions/:sessionId/submit-timeline",
@@ -1416,7 +1428,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"itemId\": 1,\n  \"targetId\": 5\n}"
+                  "raw": "{\n  \"itemId\": 1,\n  \"targetId\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/inventory/use",
@@ -1633,6 +1650,15 @@
               "request": {
                 "method": "POST",
                 "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"score\": 85\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/learning/:id/complete",
                   "host": ["{{baseUrl}}"],
@@ -1784,6 +1810,15 @@
               "request": {
                 "method": "POST",
                 "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"score\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/quests/:id/complete",
                   "host": ["{{baseUrl}}"],
@@ -2510,6 +2545,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"days\": 30\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{baseUrl}}/upload/cleanup",
               "host": ["{{baseUrl}}"],
@@ -2728,6 +2772,15 @@
               "request": {
                 "method": "POST",
                 "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newName\": \"Khám Phá Trống Đồng (Copy)\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/:id/clone",
                   "host": ["{{baseUrl}}"],
@@ -3206,19 +3259,6 @@
                   "value": "1"
                 }
               ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Clear All Notifications",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/notifications",
-              "host": ["{{baseUrl}}"],
-              "path": ["notifications"]
             }
           },
           "response": []
