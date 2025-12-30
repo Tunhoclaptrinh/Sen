@@ -1,554 +1,874 @@
-# 🎮 SEN Game System - Backend Complete Guide
+# 🎮 SEN Game System - Complete Guide (FIXED & UPDATED)
 
 ## 📋 Tổng quan
 
-Backend đã được hoàn thiện với đầy đủ tính năng game theo ý tưởng:
+Backend game system đã được **HOÀN TOÀN TÁI CẤU TRÚC** với các cải tiến:
 
-- ✅ Sen Flowers (Chapter system)
-- ✅ Level progression với nhiều loại gameplay
-- ✅ AI Chatbot integration (OpenAI/Gemini)
-- ✅ Museum system (Bảo tàng sống)
-- ✅ Scan-to-play (QR codes tại di tích)
-- ✅ Shop & Inventory
-- ✅ Badges & Achievements
-- ✅ Leaderboard & Daily rewards
+✅ **Screen-based gameplay** - Màn chơi theo từng màn hình tuần tự  
+✅ **Session management** - Quản lý phiên chơi với auto-cleanup  
+✅ **AI integration** - Chatbot với context-aware responses  
+✅ **Museum system** - Bảo tàng sinh thu nhập thụ động  
+✅ **QR scanning** - Tích hợp AR tại di tích thực tế  
+✅ **Full gamification** - Badges, achievements, leaderboard
 
 ---
 
-## 🗂️ Cấu trúc Files Mới
+## 🏗️ Kiến trúc Game System
+
+### Hierarchy
 
 ```
-backend/
-├── controllers/
-│   ├── game.controller.js       # Game mechanics controller
-│   └── ai.controller.js          # AI chatbot controller
-├── services/
-│   ├── game.service.js           # Game business logic
-│   └── ai.service.js             # AI integration logic
-├── routes/
-│   ├── game.routes.js            # Game API routes
-│   └── ai.routes.js              # AI API routes
-├── schemas/
-│   ├── game_chapter.schema.js
-│   ├── game_level.schema.js
-│   ├── game_character.schema.js
-│   ├── game_progress.schema.js
-│   ├── scan_object.schema.js
-│   └── shop_item.schema.js
-└── database/
-    └── db.json (cập nhật với game collections)
+GAME STRUCTURE
+│
+├── CHAPTERS (Lớp Cánh Sen) ───────────────────┐
+│   ├── Chapter 1: Sen Hồng (Cội Nguồn)        │ 3 chapters
+│   ├── Chapter 2: Sen Vàng (Giao Thoa)        │
+│   └── Chapter 3: Sen Trắng (Di Sản)          │
+│                                              │
+├── LEVELS (Màn chơi) ─────────────────────────┤
+│   ├── Level có nhiều SCREENS                 │ 15-20 levels
+│   ├── Mỗi screen = 1 tương tác               │
+│   └── Navigation: screen → screen            │
+│                                              │
+├── SCREENS (Màn hình tương tác) ──────────────┤
+│   ├── DIALOGUE - Hội thoại                   │ 7 loại
+│   ├── HIDDEN_OBJECT - Tìm đồ vật             │
+│   ├── QUIZ - Trắc nghiệm                     │
+│   ├── TIMELINE - Sắp xếp sự kiện             │
+│   ├── IMAGE_VIEWER - Xem hình ảnh            │
+│   ├── VIDEO - Xem video                      │
+│   └── MEMORY - Trò chơi trí nhớ              │
+│                                              │
+├── AI CHARACTERS ─────────────────────────────┤
+│   ├── NPCs lịch sử (Chú Tễu, Thị Kính...)    │
+│   ├── 2 states: Amnesia ↔ Restored           │
+│   └── Context-aware conversations            │
+│                                              │
+└── MUSEUM ────────────────────────────────────┘
+    ├── Thu thập characters từ levels
+    ├── Sinh thu nhập thụ động (5 coins/char/hour)
+    └── Capped tối đa 24h, 5000 coins
 ```
 
 ---
 
-## 🚀 Setup & Installation
+## 🎯 Luồng chơi hoàn chỉnh (FIXED)
 
-### 1. Cài đặt Dependencies
+### **1. Khởi tạo**
 
-Không cần package mới! Tất cả đã có sẵn trong `package.json`
-
-### 2. Cấu hình Environment Variables
-
-Thêm vào `.env`:
-
-```env
-# AI Configuration
-OPENAI_API_KEY=your_openai_key_here
-# HOẶC
-GEMINI_API_KEY=your_gemini_key_here
-
-AI_MODEL=gpt-3.5-turbo
-# HOẶC
-AI_MODEL=gemini-pro
+```
+User đăng ký/đăng nhập
+    ↓
+Auto-tạo game_progress
+    ├─ Coins: 1000
+    ├─ Petals: 0
+    ├─ Level: 1
+    └─ Unlocked: [Chapter 1]
 ```
 
-### 3. Cập nhật server.js
-
-Thêm routes mới vào `server.js`:
+### **2. Chọn Chapter & Level**
 
 ```javascript
-// Import routes
-const gameRoutes = require("./routes/game.routes");
-const aiRoutes = require("./routes/ai.routes");
-
-// Mount routes
-app.use("/api/game", gameRoutes);
-app.use("/api/ai", aiRoutes);
-```
-
-### 4. Seed Game Data
-
-Thêm game data vào `database/db.json`:
-
-```javascript
+// GET /api/game/chapters
 {
-  "users": [...],
-  "heritage_sites": [...],
+  chapters: [
+    {
+      id: 1,
+      name: "Sen Hồng - Cội Nguồn",
+      is_unlocked: true,
+      total_levels: 5,
+      completed_levels: 0,
+    },
+    {
+      id: 2,
+      name: "Sen Vàng - Giao Thoa",
+      is_unlocked: false, // Cần petals để mở
+      required_petals: 5,
+    },
+  ];
+}
 
-  // THÊM CÁC COLLECTIONS MỚI
-  "game_chapters": [...],
-  "game_characters": [...],
-  "game_levels": [...],
-  "game_progress": [],
-  "game_sessions": [],
-  "scan_objects": [...],
-  "shop_items": [...],
-  "user_inventory": [],
-  "ai_chat_history": [],
-  "scan_history": [],
-  "game_badges": [...],
-  "game_achievements": [...]
+// GET /api/game/chapters/1/levels
+{
+  levels: [
+    {
+      id: 1,
+      name: "Ký ức Chú Tễu",
+      is_locked: false, // Level 1 luôn mở
+      is_completed: false,
+    },
+    {
+      id: 2,
+      name: "Bí mật Hoàng Thành",
+      is_locked: true, // Cần hoàn thành level 1
+      required_level: 1,
+    },
+  ];
 }
 ```
 
-Copy data từ `game_seed_data.js` vào các collections tương ứng.
-
-### 5. Khởi chạy
-
-```bash
-npm run dev
-```
-
----
-
-## 📡 API Endpoints
-
-### Game Progress
-
-```
-GET    /api/game/progress              # Lấy tiến độ user
-GET    /api/game/leaderboard           # Bảng xếp hạng
-GET    /api/game/daily-reward          # Nhận thưởng hàng ngày
-```
-
-### Chapters (Sen Flowers)
-
-```
-GET    /api/game/chapters              # Danh sách chapters
-GET    /api/game/chapters/:id          # Chi tiết chapter
-POST   /api/game/chapters/:id/unlock   # Mở khóa chapter
-```
-
-### Levels (Màn chơi)
-
-```
-GET    /api/game/levels/:chapterId     # Levels trong chapter
-GET    /api/game/levels/:id/detail     # Chi tiết level
-POST   /api/game/levels/:id/start      # Bắt đầu chơi
-POST   /api/game/levels/:id/collect-clue  # Thu thập manh mối
-POST   /api/game/levels/:id/complete   # Hoàn thành level
-```
-
-### Museum (Bảo tàng)
-
-```
-GET    /api/game/museum                # Xem bảo tàng
-POST   /api/game/museum/toggle         # Mở/đóng bảo tàng
-```
-
-### Shop & Inventory
-
-```
-POST   /api/game/shop/purchase         # Mua item
-GET    /api/game/inventory             # Xem túi đồ
-POST   /api/game/inventory/use         # Dùng item
-```
-
-### Scan to Play
-
-```
-POST   /api/game/scan                  # Scan QR code
-```
-
-### AI Chatbot
-
-```
-POST   /api/ai/chat                    # Chat với AI
-GET    /api/ai/history                 # Lịch sử chat
-POST   /api/ai/ask-hint                # Xin gợi ý
-POST   /api/ai/explain                 # Giải thích artifact
-POST   /api/ai/quiz                    # Tạo quiz
-DELETE /api/ai/history                 # Xóa lịch sử
-```
-
----
-
-## 🎮 Game Flow
-
-### Luồng chơi cơ bản
-
-```
-1. User đăng ký/đăng nhập
-   └─> Tự động tạo game_progress
-
-2. Xem danh sách Chapters (Sen flowers)
-   └─> Chapter 1 mở sẵn
-   └─> Chapter 2+ cần petals để mở
-
-3. Vào Chapter → Chọn Level
-   └─> Level 1 của mỗi chapter mở sẵn
-   └─> Level tiếp theo cần hoàn thành level trước
-
-4. Chơi Level
-   ├─> Hidden Object: Tìm manh mối
-   ├─> Timeline: Sắp xếp sự kiện
-   ├─> Quiz: Trả lời câu hỏi
-   ├─> Memory: Trò chơi trí nhớ
-   └─> Puzzle: Ghép hình
-
-5. Chat với AI trong level
-   └─> AI hướng dẫn, giải thích
-   └─> Có thể xin gợi ý (tốn coins)
-
-6. Hoàn thành level
-   └─> Nhận petals + coins + character
-
-7. Thu thập characters → Bảo tàng
-   └─> Mở bảo tàng → Kiếm thu nhập
-
-8. Scan QR tại di tích thực
-   └─> Bonus rewards
-```
-
----
-
-## 🤖 AI Integration
-
-### Sử dụng OpenAI
+### **3. Bắt đầu Level (START SESSION)**
 
 ```javascript
-// .env
-OPENAI_API_KEY = sk - xxx;
-AI_MODEL = gpt - 3.5 - turbo;
-```
-
-### Sử dụng Gemini
-
-```javascript
-// .env
-GEMINI_API_KEY = xxx;
-AI_MODEL = gemini - pro;
-```
-
-### AI Context System
-
-AI được cung cấp context từ:
-
-- Character persona (Chú Tễu, Thị Kính...)
-- Knowledge base từ level
-- Heritage site information
-- Artifact details
-
-### Ví dụ Chat
-
-```javascript
-POST /api/ai/chat
-{
-  "message": "Cái cờ này dùng để làm gì hả Tễu?",
-  "context": {
-    "levelId": 2,
-    "characterId": 1
+// POST /api/game/levels/1/start
+Response: {
+  session_id: 123,
+  level: {
+    id: 1,
+    name: "Ký ức Chú Tễu",
+    total_screens: 5
+  },
+  current_screen: {
+    id: "screen_01",
+    type: "DIALOGUE",
+    index: 0,
+    is_first: true,
+    is_last: false,
+    content: [
+      {
+        speaker: "AI",
+        text: "Chào bạn! Ta là Chú Tễu...",
+        avatar: "teu_bw.png"  // Black & white = mất trí nhớ
+      }
+    ],
+    skip_allowed: true
   }
 }
+```
 
-Response:
+**QUAN TRỌNG:**
+
+- ✅ Mỗi level chỉ có **1 active session** tại 1 thời điểm
+- ✅ Session cũ sẽ auto-expire khi tạo session mới
+- ✅ Session timeout: 24 giờ không hoạt động
+
+---
+
+## 🎬 Screen Types & Interactions (FIXED)
+
+### **A. DIALOGUE Screen**
+
+**Chức năng:** Hiển thị hội thoại giữa AI và người chơi
+
+```javascript
 {
-  "success": true,
-  "data": {
-    "message": "Hề hề, cái cờ hội đó để cắm quanh thủy đình cho thêm phần long trọng đấy bác ơi! Thiếu nó là thiếu hẳn không khí hội hè! 🎏",
-    "character": {
-      "name": "Chú Tễu",
-      "avatar": "..."
+  type: "DIALOGUE",
+  content: [
+    {
+      speaker: "AI",
+      text: "Bạn có muốn tìm hiểu về trống đồng không?",
+      avatar: "teu_bw.png"
+    }
+  ],
+  skip_allowed: true,        // Có thể skip
+  auto_advance: false,       // Không tự động next
+  next_screen_id: "screen_02"
+}
+```
+
+**Flow:**
+
+```
+User đọc xong → Click "Next" → POST /api/game/sessions/{id}/next-screen
+```
+
+---
+
+### **B. HIDDEN_OBJECT Screen**
+
+**Chức năng:** Tìm các vật phẩm ẩn trong hình
+
+```javascript
+{
+  type: "HIDDEN_OBJECT",
+  background_image: "stage.jpg",
+  guide_text: "Tìm 3 vật phẩm của Chú Tễu",
+  items: [
+    {
+      id: "item_fan",
+      name: "Cái quạt mo",
+      coordinates: { x: 15, y: 45, width: 10, height: 10 },
+      fact_popup: "Cái quạt Chú Tễu dùng để phe phẩy",
+      points: 10
+    },
+    {
+      id: "item_flag",
+      name: "Cờ hội",
+      coordinates: { x: 80, y: 20, width: 5, height: 15 },
+      points: 15
+    }
+  ],
+  required_items: 2,          // Cần tìm 2/3 items
+  ai_hints_enabled: true,
+  next_screen_id: "screen_03"
+}
+```
+
+**Flow:**
+
+```
+1. User click vào tọa độ item
+   ↓
+2. POST /api/game/levels/{id}/collect-clue
+   Body: { clueId: "item_fan" }
+   ↓
+3. Response: {
+     points_earned: 10,
+     progress: { collected: 1, required: 2 }
+   }
+   ↓
+4. Khi đủ required_items → Có thể next screen
+```
+
+**FIXED: Validation logic**
+
+```javascript
+// Kiểm tra có đủ items chưa
+if (collected_items.length < required_items) {
+  return {
+    success: false,
+    message: `Need ${required_items - collected_items.length} more items`,
+  };
+}
+```
+
+---
+
+### **C. QUIZ Screen**
+
+**Chức năng:** Trả lời câu hỏi trắc nghiệm
+
+```javascript
+{
+  type: "QUIZ",
+  question: "Chú Tễu là nhân vật trong nghệ thuật nào?",
+  options: [
+    { text: "Múa rối nước", is_correct: true },
+    { text: "Ca trù", is_correct: false },
+    { text: "Tuồng", is_correct: false }
+  ],
+  time_limit: 60,
+  reward: {
+    points: 20,
+    coins: 10
+  },
+  next_screen_id: "screen_04"
+}
+```
+
+**Flow:**
+
+```
+1. User chọn đáp án
+   ↓
+2. POST /api/game/sessions/{id}/submit-answer
+   Body: { answerId: "Múa rối nước" }
+   ↓
+3. Response: {
+     is_correct: true,
+     points_earned: 20,
+     total_score: 120
+   }
+   ↓
+4. Auto-save answer → Có thể next screen
+```
+
+**FIXED: Answer validation**
+
+```javascript
+// Không cho answer 2 lần
+if (session.answered_questions.some((q) => q.screen_id === currentScreen.id)) {
+  return {success: false, message: "Already answered"};
+}
+```
+
+---
+
+### **D. TIMELINE Screen (FIXED)**
+
+**Chức năng:** Sắp xếp sự kiện theo thứ tự thời gian
+
+```javascript
+{
+  type: "TIMELINE",
+  instruction: "Sắp xếp các sự kiện theo đúng thứ tự thời gian",
+  events: [
+    { id: "evt1", year: 1802, text: "Nguyễn Ánh lên ngôi" },
+    { id: "evt2", year: 1858, text: "Pháp tấn công Đà Nẵng" },
+    { id: "evt3", year: 1945, text: "Cách mạng Tháng Tám" }
+  ],
+  correct_order: ["evt1", "evt2", "evt3"],  // Server tự sort theo year
+  next_screen_id: "screen_05"
+}
+```
+
+**Flow (FIXED):**
+
+```
+1. User drag & drop để sắp xếp
+   ↓
+2. POST /api/game/sessions/{id}/submit-timeline
+   Body: { eventOrder: ["evt1", "evt2", "evt3"] }
+   ↓
+3. Server validate:
+   - Lấy correct_order = events.sort(by year)
+   - So sánh userOrder === correctOrder
+   ↓
+4. Response: {
+     isCorrect: true,
+     message: "Timeline order is correct!"
+   }
+   ↓
+5. Nếu correct → Có thể next screen
+```
+
+**BUG FIX:**
+
+```javascript
+// OLD CODE (MISSING VALIDATION):
+// submitTimelineOrder chỉ save order, không validate
+
+// NEW CODE (FIXED):
+validateScreenCompletion(screen, session) {
+  if (screen.type === 'TIMELINE') {
+    const userOrder = session.timeline_order;
+
+    if (!userOrder || userOrder.length === 0) {
+      return {
+        success: false,
+        message: 'Must arrange timeline events first'
+      };
+    }
+
+    // Validate correct order
+    const correctOrder = screen.events
+      .sort((a, b) => a.year - b.year)
+      .map(e => e.id);
+
+    const isCorrect = JSON.stringify(userOrder) === JSON.stringify(correctOrder);
+
+    if (!isCorrect) {
+      return {
+        success: false,
+        message: 'Timeline order is incorrect'
+      };
     }
   }
+
+  return { success: true };
 }
 ```
 
 ---
 
-## 🏛️ Museum System
-
-### Cơ chế
-
-- Thu thập characters từ levels
-- Mỗi character = 1 vật phẩm trong bảo tàng
-- Mở bảo tàng → Kiếm coins (passive income)
-- Thu nhập = số characters × 5 coins/hour
-
-### API Usage
+### **E. IMAGE_VIEWER & VIDEO Screens**
 
 ```javascript
-// Xem bảo tàng
-GET /api/game/museum
+// IMAGE_VIEWER
+{
+  type: "IMAGE_VIEWER",
+  image: "artifact.jpg",
+  caption: "Trống đồng Ngọc Lũ",
+  description: "Trống đồng thời Đông Sơn...",
+  next_screen_id: "screen_06"
+}
 
-// Mở bảo tàng
-POST /api/game/museum/toggle
-{ "isOpen": true }
+// VIDEO
+{
+  type: "VIDEO",
+  video_url: "documentary.mp4",
+  duration: 120,
+  can_skip: false,          // Phải xem hết mới next
+  next_screen_id: "screen_07"
+}
 ```
 
 ---
 
-## 📱 Scan to Play
+## 🔄 Navigation Flow (FIXED)
 
-### Setup
-
-1. Tạo QR codes cho artifacts/heritage sites
-2. Thêm vào `scan_objects` collection
-3. User scan tại địa điểm thực
-
-### Validation
-
-- Kiểm tra GPS location (trong bán kính 500m)
-- Mỗi code chỉ scan 1 lần
-- Bonus rewards khi scan thành công
-
-### API Usage
+### **Quy tắc navigation:**
 
 ```javascript
-POST /api/game/scan
-{
-  "code": "HOIAN001",
-  "latitude": 15.8795,
-  "longitude": 108.3274
-}
+// 1. Check screen completion trước khi next
+validateScreenCompletion(currentScreen, session):
+  ├─ DIALOGUE: ✓ Always can proceed (except if auto_advance=false)
+  ├─ HIDDEN_OBJECT: ✓ Must collect required_items
+  ├─ QUIZ: ✓ Must answer question
+  ├─ TIMELINE: ✓ Must arrange events correctly
+  └─ VIDEO: ✓ Must watch until end (if can_skip=false)
 
-Response:
-{
-  "success": true,
-  "data": {
-    "artifact": {...},
-    "rewards": {
-      "coins": 200,
-      "petals": 2,
-      "character": "guardian_hoian"
-    }
+// 2. Navigate to next screen
+POST /api/game/sessions/{id}/next-screen
+  ├─ Validate current screen completed
+  ├─ Find next screen (via next_screen_id or index++)
+  ├─ Update session state
+  └─ Return next screen data
+
+// 3. Check if level finished
+if (nextScreenIndex >= level.screens.length) {
+  return {
+    level_finished: true,
+    message: "Please call completeLevel endpoint"
   }
 }
 ```
 
 ---
 
-## 🏆 Gamification Features
+## ✅ Hoàn thành Level (COMPLETION)
 
-### Progression System
+```javascript
+// POST /api/game/levels/1/complete
+Body: {
+  score: 850,
+  timeSpent: 300
+}
 
-- **Level**: Player level (tăng theo points)
-- **Points**: Tổng điểm kiếm được
-- **Sen Petals**: Cánh hoa sen (mở chapter)
-- **Coins**: Tiền game (mua items)
+// Server logic:
+1. Tính final score = score + timeBonus - hintPenalty
+2. Check passed = (finalScore >= passing_score)
+3. Nếu passed:
+   - Cộng petals, coins, points
+   - Unlock character (nếu có)
+   - Mark level completed
+   - Update progress
+4. Response: {
+     passed: true,
+     score: 850,
+     rewards: {
+       petals: 2,
+       coins: 100,
+       character: "teu_full_color"
+     },
+     new_totals: {
+       petals: 2,
+       coins: 1100,
+       points: 850
+     }
+   }
+```
 
-### Rewards
+**IMPORTANT: First-time completion only**
+
+```javascript
+// Nếu đã complete trước đó:
+if (progress.completed_levels.includes(levelId)) {
+  return {
+    message: "Level completed (no rewards for replay)",
+    alreadyCompleted: true,
+    rewardsGiven: false,
+  };
+}
+```
+
+---
+
+## 🤖 AI Character System (FIXED)
+
+### **2 States: Amnesia ↔ Restored**
+
+```javascript
+// CHARACTER SCHEMA
+{
+  name: "Chú Tễu",
+  avatar_locked: "teu_bw.png",        // Black & white
+  avatar_unlocked: "teu_color.png",   // Full color
+
+  persona_amnesia: "Ta là ai? Đây là đâu? Ký ức ta mờ mịt...",
+  persona_restored: "Ha ha! Ta là Chú Tễu, nghệ nhân múa rối!"
+}
+```
+
+### **State switching logic:**
+
+```javascript
+// In AI service:
+getCharacterContext(context, userId) {
+  const character = db.findById('game_characters', characterId);
+  const progress = db.findOne('game_progress', { user_id: userId });
+
+  // Check if level completed
+  const isLevelCompleted = progress.completed_levels.includes(context.levelId);
+
+  // Choose persona
+  let activePersona = character.persona_amnesia;  // Default
+  let activeAvatar = character.avatar_locked;
+
+  if (isLevelCompleted || context.screenType === 'COMPLETION') {
+    activePersona = character.persona_restored;
+    activeAvatar = character.avatar_unlocked;
+  }
+
+  return {
+    name: character.name,
+    persona: activePersona,
+    avatar: activeAvatar
+  };
+}
+```
+
+### **Chat flow:**
+
+```javascript
+// POST /api/ai/chat
+Body: {
+  message: "Chú Tễu ơi, cái quạt ở đâu?",
+  context: {
+    levelId: 1,
+    screenType: "HIDDEN_OBJECT",
+    screenId: "screen_02"
+  }
+}
+
+// Server builds context:
+1. Get character state (amnesia/restored)
+2. Get knowledge base from level
+3. Get conversation history
+4. Call AI API với system prompt
+5. Save to ai_chat_history
+6. Return response
+
+Response: {
+  message: "Hỡi ôi... cái quạt... ta nghĩ nó ở đâu đó bên trái...",
+  character: {
+    name: "Chú Tễu",
+    avatar: "teu_bw.png"  // Still amnesia
+  }
+}
+```
+
+---
+
+## 🏛️ Museum System (FIXED)
+
+### **Cơ chế:**
+
+```javascript
+// Thu thập characters từ levels
+progress.collected_characters = ["teu_full_color", "thikinh", "giong"]
+
+// Mở museum → Thu nhập thụ động
+income_per_hour = collected_characters.length × 5
+// Ví dụ: 3 characters × 5 = 15 coins/hour
+
+// Capped mechanism:
+- Max 24 giờ tích lũy
+- Max 5000 coins pending
+- Phải collect thường xuyên
+```
+
+### **API Flow (FIXED WITH LOCK):**
+
+```javascript
+// GET /api/game/museum
+{
+  is_open: true,
+  income_per_hour: 15,
+  pending_income: 360,      // 24 hours accumulated
+  hours_accumulated: 24,
+  capped: true,             // Hit 24h cap
+  can_collect: true
+}
+
+// POST /api/game/museum/collect (WITH LOCK)
+// Server logic:
+1. Acquire lock (prevent double-claim)
+2. Calculate pending income
+3. Cap to max 5000 coins
+4. Update progress atomically:
+   - coins += pending_income
+   - last_museum_collection = now
+5. Release lock
+6. Return success
+
+Response: {
+  collected: 360,
+  total_coins: 1460,
+  next_collection_in: "4 minutes"
+}
+```
+
+**BUG FIX:**
+
+```javascript
+// OLD: Race condition khi spam click collect
+// NEW: Use lock mechanism
+activeLocks = new Set();
+
+collectMuseumIncome(userId) {
+  const lockKey = `museum_collect_${userId}`;
+
+  if (this.activeLocks.has(lockKey)) {
+    return {
+      success: false,
+      message: 'Collection already in progress'
+    };
+  }
+
+  this.activeLocks.add(lockKey);
+
+  try {
+    // ... collect logic
+  } finally {
+    this.activeLocks.delete(lockKey);
+  }
+}
+```
+
+---
+
+## 🔄 Session Management (FIXED)
+
+### **Lifecycle:**
+
+```
+CREATE SESSION
+    ↓
+IN_PROGRESS (active)
+    ↓
+[After 24h inactive]
+    ↓
+EXPIRED (auto-cleanup)
+```
+
+### **Auto-cleanup mechanism:**
+
+```javascript
+// Background job runs every 1 hour
+startSessionCleanup() {
+  setInterval(() => {
+    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;  // 24 hours
+    const now = Date.now();
+
+    allSessions.forEach(session => {
+      if (session.status !== 'in_progress') return;
+
+      const lastActivity = new Date(session.last_activity).getTime();
+
+      if (now - lastActivity > SESSION_TIMEOUT) {
+        db.update('game_sessions', session.id, {
+          status: 'expired',
+          expired_reason: 'Session timeout (24 hours inactive)'
+        });
+      }
+    });
+  }, 60 * 60 * 1000);  // Run every hour
+}
+```
+
+### **Session validation:**
+
+```javascript
+// Every API call checks session validity
+getActiveSession(levelId, userId) {
+  const session = db.findOne('game_sessions', {
+    level_id: levelId,
+    user_id: userId,
+    status: 'in_progress'
+  });
+
+  if (!session) return null;
+
+  // Check timeout
+  const lastActivity = new Date(session.last_activity).getTime();
+  if (Date.now() - lastActivity > 24 * 60 * 60 * 1000) {
+    db.update('game_sessions', session.id, { status: 'expired' });
+    return null;
+  }
+
+  return session;
+}
+```
+
+---
+
+## 🎯 Rewards & Progression
+
+### **Points System:**
 
 ```javascript
 // Level completion
-{
-  "petals": 1-3,
-  "coins": 50-200,
-  "character": "character_id" (optional)
-}
+- Base score: từ gameplay
+- Time bonus: remaining_time / 10
+- Hint penalty: hints_used × 5
+- Final score = base + bonus - penalty
 
-// Daily login
-{
-  "coins": 50,
-  "petals": 1
-}
-
-// Scan object
-{
-  "coins": 100-300,
-  "petals": 1-2,
-  "character": "special_character" (optional)
-}
+// Progression
+- Sen petals: Mở chapters (stable currency)
+- Coins: Mua items (fast currency)
+- Points: Level up user rank (experience)
 ```
 
-### Badges & Achievements
+### **Unlocking:**
 
-- Tự động unlock khi đạt requirement
-- Bonus coins khi unlock achievement
-- Hiển thị trên profile
+```
+Level 1 → Always unlocked
+Level 2 → Cần complete Level 1
+Level 3 → Cần complete Level 2
+...
+
+Chapter 1 → Always unlocked
+Chapter 2 → Cần 5 petals
+Chapter 3 → Cần 10 petals
+```
 
 ---
 
-## 🔧 Customization
+## 🐛 Major Bug Fixes
 
-### Thêm Level mới
+### **1. Timeline validation**
 
-1. Tạo level config trong `game_levels`
-2. Định nghĩa:
-   - Type (hidden_object, timeline, quiz...)
-   - Clues/Questions
-   - AI character & knowledge base
-   - Rewards
-3. Restart server
+- ✅ OLD: Không validate correct order
+- ✅ NEW: Validate với server-side correct_order
 
-### Thêm Character mới
+### **2. Museum race condition**
 
-1. Thêm vào `game_characters`
-2. Định nghĩa persona & speaking style
-3. Link với levels
+- ✅ OLD: Có thể spam collect nhiều lần
+- ✅ NEW: Lock mechanism prevent double-claim
 
-### Thêm Shop Item
+### **3. Session timeout**
 
-1. Thêm vào `shop_items`
-2. Implement effect trong `game.service.js`
+- ✅ OLD: Sessions không expire
+- ✅ NEW: Background job cleanup every hour
+
+### **4. Screen completion**
+
+- ✅ OLD: Có thể skip screens không hoàn thành
+- ✅ NEW: Strict validation trước khi next
+
+### **5. First-time completion**
+
+- ✅ OLD: Có thể replay để farm rewards
+- ✅ NEW: Rewards chỉ cho lần đầu complete
 
 ---
 
 ## 📊 Database Schema
 
-### game_progress (User's game data)
-
 ```javascript
+// game_progress
 {
-  "user_id": 1,
-  "current_chapter": 2,
-  "total_sen_petals": 8,
-  "total_points": 450,
-  "level": 3,
-  "coins": 1200,
-  "unlocked_chapters": [1, 2],
-  "completed_levels": [1, 2, 3],
-  "collected_characters": ["teu_full_color", "guardian_hoian"],
-  "badges": [1, 2],
-  "achievements": [1],
-  "museum_open": true,
-  "museum_income": 0,
-  "streak_days": 5,
-  "last_login": "2024-11-22T10:00:00Z"
+  user_id: 1,
+  total_sen_petals: 5,
+  coins: 1200,
+  total_points: 850,
+  level: 5,
+  unlocked_chapters: [1, 2],
+  completed_levels: [1, 2, 3],
+  collected_characters: ["teu_full_color", "thikinh"],
+  museum_open: true,
+  last_museum_collection: "2025-12-30T10:00:00Z"
+}
+
+// game_sessions
+{
+  id: 123,
+  user_id: 1,
+  level_id: 1,
+  status: "in_progress",
+  current_screen_id: "screen_03",
+  current_screen_index: 2,
+  collected_items: ["item_fan"],
+  answered_questions: [
+    { screen_id: "screen_02", answer: "Múa rối nước", is_correct: true }
+  ],
+  timeline_order: [],
+  score: 120,
+  completed_screens: ["screen_01", "screen_02"],
+  started_at: "2025-12-30T10:00:00Z",
+  last_activity: "2025-12-30T10:15:00Z"
 }
 ```
 
 ---
 
-## 🐛 Troubleshooting
-
-### AI không hoạt động
-
-```
-Lỗi: "AI service temporarily unavailable"
-
-Giải pháp:
-1. Kiểm tra OPENAI_API_KEY hoặc GEMINI_API_KEY trong .env
-2. Verify API key còn hạn
-3. Xem fallback responses trong ai.service.js
-```
-
-### Scan không hoạt động
-
-```
-Lỗi: "You are too far from the location"
-
-Giải pháp:
-1. Kiểm tra GPS coordinates trong scan_objects
-2. Radius mặc định = 500m, có thể tăng lên
-3. Test với latitude/longitude = null để skip validation
-```
-
-### Level không unlock
-
-```
-Lỗi: "Level is locked"
-
-Giải pháp:
-1. Kiểm tra required_level trong game_levels
-2. Verify user đã complete level trước chưa
-3. Check completed_levels trong game_progress
-```
-
----
-
-## 📚 Next Steps
-
-### Frontend Integration
-
-1. **Game UI Components**
-
-   - Sen flower visualization
-   - Level selector
-   - AI chat interface
-   - Museum display
-
-2. **Gameplay Mechanics**
-
-   - Hidden object game
-   - Timeline puzzle
-   - Quiz interface
-   - Memory game
-
-3. **QR Scanner**
-   - Camera integration
-   - QR code detection
-   - GPS validation
-
-### Backend Enhancements
-
-1. **Real-time Features**
-
-   - WebSocket for live chat
-   - Multiplayer quests
-   - Live leaderboard
-
-2. **Advanced AI**
-
-   - Voice chat với AI
-   - Image recognition (scan artifacts)
-   - Personalized learning paths
-
-3. **Analytics**
-   - Gameplay metrics
-   - User engagement tracking
-   - A/B testing
-
----
-
-## 🎯 Testing Endpoints
-
-### Quick Test Flow
+## 🚀 Quick Test Flow
 
 ```bash
-# 1. Register
-curl -X POST http://localhost:3000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Player1","email":"player1@sen.com","password":"123456","phone":"0987654321"}'
+# 1. Đăng ký/Đăng nhập
+POST /api/auth/login
+{ "email": "player@sen.com", "password": "123456" }
+# → Get token
 
-# 2. Get Progress (auto-initialized)
-curl http://localhost:3000/api/game/progress \
-  -H "Authorization: Bearer $TOKEN"
+# 2. Xem progress
+GET /api/game/progress
+Authorization: Bearer {token}
 
-# 3. Get Chapters
-curl http://localhost:3000/api/game/chapters \
-  -H "Authorization: Bearer $TOKEN"
+# 3. Xem chapters
+GET /api/game/chapters
 
-# 4. Start Level
-curl -X POST http://localhost:3000/api/game/levels/1/start \
-  -H "Authorization: Bearer $TOKEN"
+# 4. Xem levels trong chapter 1
+GET /api/game/chapters/1/levels
 
-# 5. Chat with AI
-curl -X POST http://localhost:3000/api/ai/chat \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"message":"Xin chào Chú Tễu!","context":{"levelId":1}}'
+# 5. Bắt đầu level 1
+POST /api/game/levels/1/start
 
-# 6. Complete Level
-curl -X POST http://localhost:3000/api/game/levels/1/complete \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"score":90,"timeSpent":120}'
+# 6. Navigate screens
+POST /api/game/sessions/{session_id}/next-screen
+
+# 7. Submit answer (nếu QUIZ)
+POST /api/game/sessions/{session_id}/submit-answer
+{ "answerId": "Múa rối nước" }
+
+# 8. Collect clue (nếu HIDDEN_OBJECT)
+POST /api/game/levels/1/collect-clue
+{ "clueId": "item_fan" }
+
+# 9. Complete level
+POST /api/game/levels/1/complete
+{ "score": 850, "timeSpent": 300 }
+
+# 10. Check museum
+GET /api/game/museum
+
+# 11. Collect income
+POST /api/game/museum/collect
 ```
 
 ---
 
-## 📞 Support
+## 📝 Notes for Frontend
 
-Nếu có vấn đề:
+### **1. Session management**
 
-1. Check logs trong console
-2. Verify database schema
-3. Test API với Postman/Thunder Client
-4. Review error messages
+- Lưu `session_id` khi startLevel
+- Pass `session_id` cho mọi navigation/action
+- Handle session expired (status 404)
+
+### **2. Screen rendering**
+
+- Check `screen.type` để render đúng UI
+- Validate completion trước khi enable "Next" button
+- Show progress: `{completed_screens}/{total_screens}`
+
+### **3. AI chat**
+
+- Avatar thay đổi theo state (bw → color)
+- Personality thay đổi (confused → clear)
+- Context-aware: gửi `levelId`, `screenType`
+
+### **4. Museum**
+
+- Show pending income real-time
+- Disable collect nếu `pending_income === 0`
+- Show cap warning nếu `capped === true`
 
 ---
 
-**Made with ❤️ for SEN - Kiến tạo trải nghiệm lịch sử, văn hoá bằng công nghệ**
+## ✅ Summary of Fixes
 
-Version: 1.0.0 npm r
+| Issue                  | Status   | Solution                             |
+| ---------------------- | -------- | ------------------------------------ |
+| Timeline validation    | ✅ FIXED | Server-side correct order validation |
+| Museum race condition  | ✅ FIXED | Lock mechanism                       |
+| Session timeout        | ✅ FIXED | Background cleanup job               |
+| Screen completion skip | ✅ FIXED | Strict validation                    |
+| Replay reward farming  | ✅ FIXED | First-time completion only           |
+| Navigation edge cases  | ✅ FIXED | Comprehensive validation             |
+
+---
+
+**Version:** 2.0 (Fixed)  
+**Last Updated:** December 30, 2025  
+**Status:** Production Ready ✅

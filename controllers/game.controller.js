@@ -240,22 +240,13 @@ class GameController {
   async submitTimelineOrder(req, res, next) {
     try {
       const { sessionId } = req.params;
-      const { eventOrder } = req.body; // Array of event IDs
+      const { eventOrder } = req.body;
 
-      // MISSING VALIDATION:
+      // VALIDATION
       if (!eventOrder || !Array.isArray(eventOrder) || eventOrder.length === 0) {
         return res.status(400).json({
           success: false,
           message: 'eventOrder must be a non-empty array'
-        });
-      }
-
-      // MISSING: Check session ownership
-      const session = db.findById('game_sessions', sessionId);
-      if (session.user_id !== req.user.id) {
-        return res.status(403).json({
-          success: false,
-          message: 'Not your session'
         });
       }
 
@@ -265,11 +256,15 @@ class GameController {
         eventOrder
       );
 
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+
       res.json(result);
     } catch (error) {
       next(error);
     }
-  };
+  }
 
   // ==================== MUSEUM ====================
 

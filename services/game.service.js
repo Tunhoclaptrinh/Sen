@@ -573,12 +573,32 @@ class GameService {
     });
 
     if (!session) {
-      return { success: false, message: 'Session not found', statusCode: 404 };
+      return {
+        success: false,
+        message: 'Session not found or expired',
+        statusCode: 404
+      };
+    }
+
+    // CHECK SESSION TIMEOUT
+    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+    const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+    if (Date.now() - lastActivity > SESSION_TIMEOUT) {
+      db.update('game_sessions', session.id, {
+        status: 'expired',
+        expired_at: new Date().toISOString()
+      });
+      return {
+        success: false,
+        message: 'Session expired',
+        statusCode: 404
+      };
     }
 
     const level = db.findById('game_levels', session.level_id);
     const currentScreen = level.screens[session.current_screen_index];
 
+    // CHECK SCREEN TYPE
     if (currentScreen.type !== 'TIMELINE') {
       return {
         success: false,
@@ -587,41 +607,84 @@ class GameService {
       };
     }
 
-    // Save order
-    db.update('game_sessions', sessionId, {
+    // GET CORRECT ORDER
+    const correctOrder = currentScreen.events
+      .sort((a, b) => a.year - b.year)
+      .map(e => e.id);
+
+    // VALIDATE ARRAY LENGTH
+    if (eventOrder.length !== correctOrder.length) {
+      return {
+        success: false,
+        message: `Timeline must have exactly ${correctOrder.length} events`,
+        statusCode: 400,
+        data: { required: correctOrder.length, received: eventOrder.length }
+      };
+    }
+
+    // VALIDATE EVENT IDs
+    const validEventIds = new Set(correctOrder);
+    const hasInvalidIds = eventOrder.some(id => !validEventIds.has(id));
+
+    if (hasInvalidIds) {
+      return {
+        success: false,
+        message: 'Invalid event IDs in timeline order',
+        statusCode: 400
+      };
+    }
+
+    // CHECK CORRECT ORDER
+    const isCorrect = JSON.stringify(eventOrder) === JSON.stringify(correctOrder);
+
+    // SAVE ORDER (even if wrong for retry)
+    db.update('game_sessions', session.id, {
       timeline_order: eventOrder,
       last_activity: new Date().toISOString()
     });
 
-    // Validate immediately
-    const validation = this.validateScreenCompletion(currentScreen, {
-      ...session,
-      timeline_order: eventOrder
-    });
-
-    if (!validation.success) {
+    if (!isCorrect) {
       return {
         success: false,
-        message: validation.message,
-        data: { isCorrect: false }
+        message: 'Timeline order is incorrect. Please try again.',
+        statusCode: 400,
+        data: {
+          isCorrect: false,
+          hint: 'Check the years of each event carefully'
+          // ❌ DON'T reveal correctOrder in production
+        }
       };
     }
+
+    // ADD POINTS IF CORRECT
+    const pointsEarned = currentScreen.reward?.points || 20;
+    db.update('game_sessions', session.id, {
+      score: session.score + pointsEarned
+    });
 
     return {
       success: true,
       message: 'Timeline order is correct!',
-      data: { isCorrect: true }
+      data: {
+        isCorrect: true,
+        pointsEarned,
+        totalScore: session.score + pointsEarned
+      }
     };
   }
 
   /**
    * Navigate to next screen in level
    */
-  async navigateToNextScreen(sessionId, userId) {
-    // Sử dụng getActiveSession thay vì findOne trực tiếp
-    const session = await this.getActiveSession(null, userId)
 
-    if (!session || session.id !== parseInt(sessionId)) {
+  async navigateToNextScreen(sessionId, userId) {
+    const session = db.findOne('game_sessions', {
+      id: parseInt(sessionId),
+      user_id: userId,
+      status: 'in_progress'
+    });
+
+    if (!session) {
       return {
         success: false,
         message: 'Session not found or expired',
@@ -629,10 +692,25 @@ class GameService {
       };
     }
 
+    // CHECK SESSION TIMEOUT
+    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+    const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+    if (Date.now() - lastActivity > SESSION_TIMEOUT) {
+      db.update('game_sessions', session.id, {
+        status: 'expired',
+        expired_at: new Date().toISOString()
+      });
+      return {
+        success: false,
+        message: 'Session expired',
+        statusCode: 404
+      };
+    }
+
     const level = db.findById('game_levels', session.level_id);
     const currentScreen = level.screens[session.current_screen_index];
 
-    // Check if can proceed (completed current screen requirements)
+    // Validate screen completion - Check if can proceed (completed current screen requirements)
     const canProceed = this.validateScreenCompletion(currentScreen, session);
     if (!canProceed.success) {
       return canProceed;
@@ -653,7 +731,7 @@ class GameService {
       }
     }
 
-    // Check if finished
+    // Check if level finished
     if (nextScreenIndex >= level.screens.length) {
       // Auto complete level
       return {
@@ -670,11 +748,11 @@ class GameService {
     const nextScreen = level.screens[nextScreenIndex];
 
     // Update session
-    const updatedSession = db.update('game_sessions', sessionId, {
+    const updatedSession = db.update('game_sessions', session.id, {
       current_screen_id: nextScreen.id,
       current_screen_index: nextScreenIndex,
       completed_screens: [...session.completed_screens, currentScreen.id],
-      last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
+      last_activity: new Date().toISOString() // ⚡ UPDATE LAST ACTIVITY
     });
 
     return {
@@ -682,11 +760,18 @@ class GameService {
       message: 'Navigated to next screen',
       data: {
         session_id: session.id,
-        current_screen: this.enrichScreen(nextScreen, updatedSession, nextScreenIndex, level.screens.length),
+        current_screen: this.enrichScreen(
+          nextScreen,
+          updatedSession,
+          nextScreenIndex,
+          level.screens.length
+        ),
         progress: {
           completed_screens: updatedSession.completed_screens.length,
           total_screens: level.screens.length,
-          percentage: Math.round((updatedSession.completed_screens.length / level.screens.length) * 100)
+          percentage: Math.round(
+            (updatedSession.completed_screens.length / level.screens.length) * 100
+          )
         }
       }
     };
@@ -739,17 +824,21 @@ class GameService {
         break;
 
       case 'TIMELINE':
+
         const userOrder = session.timeline_order;
 
         if (!userOrder || userOrder.length === 0) {
           return {
             success: false,
-            message: 'Must arrange timeline events first',
-            statusCode: 400
+            message: 'Must submit timeline order first',
+            statusCode: 400,
+            data: {
+              hint: 'Use POST /sessions/:id/submit-timeline to arrange events'
+            }
           };
         }
 
-        // ✅ VALIDATE CORRECT ORDER
+        // CHECK IF ORDER IS CORRECT (already validated in submit)
         const correctOrder = screen.events
           .sort((a, b) => a.year - b.year)
           .map(e => e.id);
@@ -768,7 +857,11 @@ class GameService {
             }
           };
         }
+        break;
 
+      case 'VIDEO':
+      case 'IMAGE_VIEWER':
+        // ✅ These screens auto-complete when viewed
         break;
     }
 
