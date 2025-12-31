@@ -31,7 +31,11 @@ app.use(helmet({
 
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
+  credentials: process.env.CORS_CREDENTIALS === 'true' || false
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -45,13 +49,14 @@ app.use(formatResponse);
 app.use(validateQuery);
 app.use(logQuery);
 
+// Apply rate limiting BEFORE routes
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
+
 // Import Routes
 // Mount all routes
 app.use('/api', require('./routes'));
 app.use('/api/admin', require('./routes/admin'));
-
-app.use('/api/auth/login', authLimiter);
-app.use('/api/auth/register', authLimiter);
 
 // API Documentation
 app.get('/api', (req, res) => {

@@ -4,6 +4,7 @@
  */
 
 const db = require('../config/database');
+const { calculateDistance } = require('../utils/helpers');
 
 class GameService {
   constructor() {
@@ -1226,41 +1227,9 @@ class GameService {
     return `${minutesToNextCoin} minutes`;
   }
 
-  /**
-   * Tính toán thu nhập đang chờ (GIỮ NGUYÊN NHƯNG CẢI THIỆN)
-   */
-  calculatePendingIncome(progressData, lastCollectionTime) {
-    if (!progressData.museum_open || progressData.collected_characters.length === 0) {
-      return { rate: 0, pending: 0 };
-    }
-
-    const ratePerHour = progressData.collected_characters.length * 5; // 5 coins/character/hour
-    const now = new Date();
-    const last = new Date(lastCollectionTime);
-    const diffHours = Math.abs(now - last) / 36e5;
-
-    // Giới hạn max 24h để bắt user login thường xuyên
-    const cappedHours = Math.min(diffHours, 24);
-
-    // === FIX ECONOMY: ADD MAX PENDING CAP ===
-    const MAX_PENDING_INCOME = 5000; // Hard cap để tránh abuse
-    const rawPending = Math.floor(ratePerHour * cappedHours);
-    const pending = Math.min(rawPending, MAX_PENDING_INCOME);
-
-    // Log warning nếu hit cap
-    if (rawPending > MAX_PENDING_INCOME) {
-      console.log(`⚠️ User ${progressData.user_id} hit max pending income cap (${rawPending} -> ${MAX_PENDING_INCOME})`);
-    }
-
-    return {
-      rate: ratePerHour,
-      pending: pending,
-      hours_accumulated: cappedHours.toFixed(1),
-      capped: rawPending > MAX_PENDING_INCOME
-    };
-  }
 
   // ==================== SCAN ====================
+
 
 
   /**
@@ -1273,9 +1242,27 @@ class GameService {
       return { success: false, message: 'Invalid scan code', statusCode: 404 };
     }
 
+    // ✅ CHECK DUPLICATE SCAN - Prevent farming
+    const existingScan = db.findOne('scan_history', {
+      user_id: userId,
+      object_id: artifact.id
+    });
+
+    if (existingScan) {
+      return {
+        success: false,
+        message: 'You have already scanned this object',
+        statusCode: 400,
+        data: {
+          scanned_at: existingScan.scanned_at,
+          artifact: artifact
+        }
+      };
+    }
+
     // Kiểm tra vị trí nếu có
     if (artifact.latitude && location.latitude) {
-      const distance = this.calculateDistance(
+      const distance = calculateDistance(
         location.latitude,
         location.longitude,
         artifact.latitude,
@@ -1321,20 +1308,6 @@ class GameService {
     };
   }
 
-  /**
-   * Tính khoảng cách GPS
-   */
-  calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  }
 
   // ==================== BADGES & ACHIEVEMENTS ====================
 
@@ -1371,11 +1344,15 @@ class GameService {
  * Bảng xếp hạng
  */
   async getLeaderboard(type = 'global', limit = 20) {
-    const allProgress = db.findAll('game_progress')
-      .sort((a, b) => b.total_points - a.total_points)
-      .slice(0, limit);
+    // Optimized: Use findAllAdvanced directly with sort
+    const result = await db.findAllAdvanced('game_progress', {
+      sort: 'total_points',
+      order: 'desc',
+      limit: limit,
+      page: 1
+    });
 
-    const leaderboard = allProgress.map((prog, index) => {
+    const leaderboard = result.data.map((prog, index) => {
       const user = db.findById('users', prog.user_id);
       return {
         rank: index + 1,
@@ -1385,7 +1362,7 @@ class GameService {
         total_points: prog.total_points,
         level: prog.level,
         sen_petals: prog.total_sen_petals,
-        characters_count: prog.collected_characters.length
+        characters_count: prog.collected_characters?.length || 0
       };
     });
 
@@ -1437,39 +1414,72 @@ class GameService {
       return { success: false, message: 'Not enough coins', statusCode: 400 };
     }
 
-    // Trừ tiền
-    db.update('game_progress', progress.id, {
-      coins: progress.coins - totalCost
-    });
+    // ✅ TRANSACTION SAFETY: Backup state for rollback
+    const originalCoins = progress.coins;
+    let inventoryBackup = null;
 
-    let inventory = db.findOne('user_inventory', { user_id: userId });
-    if (!inventory) {
-      inventory = db.create('user_inventory', { user_id: userId, items: [] });
-    }
-
-    const existingItem = inventory.items.find(i => i.item_id === itemId);
-    if (existingItem) {
-      existingItem.quantity += quantity;
-    } else {
-      inventory.items.push({
-        item_id: itemId,
-        quantity: quantity,
-        acquired_at: new Date().toISOString()
+    try {
+      // Step 1: Deduct coins
+      db.update('game_progress', progress.id, {
+        coins: progress.coins - totalCost
       });
-    }
 
-    db.update('user_inventory', inventory.id, { items: inventory.items });
-
-    return {
-      success: true,
-      message: 'Purchase successful',
-      data: {
-        item,
-        quantity,
-        total_cost: totalCost,
-        remaining_coins: progress.coins - totalCost
+      // Step 2: Update inventory
+      let inventory = db.findOne('user_inventory', { user_id: userId });
+      if (!inventory) {
+        inventory = db.create('user_inventory', { user_id: userId, items: [] });
       }
-    };
+
+      // Backup inventory state
+      inventoryBackup = { ...inventory, items: [...inventory.items] };
+
+      const existingItem = inventory.items.find(i => i.item_id === itemId);
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        inventory.items.push({
+          item_id: itemId,
+          quantity: quantity,
+          acquired_at: new Date().toISOString()
+        });
+      }
+
+      db.update('user_inventory', inventory.id, { items: inventory.items });
+
+      // ✅ SUCCESS
+      return {
+        success: true,
+        message: 'Purchase successful',
+        data: {
+          item,
+          quantity,
+          total_cost: totalCost,
+          remaining_coins: progress.coins - totalCost
+        }
+      };
+
+    } catch (error) {
+      // ✅ ROLLBACK on error
+      console.error('❌ Purchase failed, rolling back:', error);
+
+      // Restore coins
+      db.update('game_progress', progress.id, {
+        coins: originalCoins
+      });
+
+      // Restore inventory if it was modified
+      if (inventoryBackup) {
+        db.update('user_inventory', inventoryBackup.id, {
+          items: inventoryBackup.items
+        });
+      }
+
+      return {
+        success: false,
+        message: 'Purchase failed. Your coins have been refunded.',
+        statusCode: 500
+      };
+    }
   }
 
   /**

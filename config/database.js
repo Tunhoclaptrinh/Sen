@@ -406,11 +406,11 @@ class JsonAdapter {
 let dbInstance;
 
 if (process.env.DB_CONNECTION === 'mongodb') {
-  dbInstance = require('./MongoAdapter');
+  dbInstance = require('../utils/MongoAdapter');
 } else if (process.env.DB_CONNECTION === 'mysql') {
-  dbInstance = require('./MySQLAdapter');
+  dbInstance = require('../utils/MySQLAdapter');
 } else if (process.env.DB_CONNECTION === 'postgresql') {
-  dbInstance = require('./PostgreSQLAdapter');
+  dbInstance = require('../utils/PostgreSQLAdapter');
 } else {
   // Default: JSON file
   dbInstance = new JsonAdapter();

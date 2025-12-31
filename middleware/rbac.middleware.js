@@ -25,7 +25,7 @@ const PERMISSIONS = {
   customer: {
     heritage_sites: ['read', 'list'],
     artifacts: ['read', 'list'],
-    game_play: ['play', 'submit_score', 'collect_reward'],
+    game_play: ['play', 'submit_score', 'collect_reward', 'earn_rewards', 'scan_qr'],
     user_data: ['read_own', 'update_own', 'delete_own'], // Collections, Favorites, Progress
     shop: ['purchase', 'use_item']
   }

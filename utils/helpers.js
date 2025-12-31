@@ -29,8 +29,11 @@ exports.comparePassword = async (password, hashedPassword) => {
  * Remove password from user object
  */
 exports.sanitizeUser = (user) => {
-  const { password, ...userWithoutPassword } = user;
-  return userWithoutPassword;
+  if (!user) return null;
+  // Convert to object if it's a Mongoose document
+  const userObj = user.toObject ? user.toObject() : user;
+  const { password, __v, _id, ...userWithoutSensitive } = userObj;
+  return userWithoutSensitive;
 };
 
 /**

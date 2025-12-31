@@ -90,6 +90,11 @@ class MongoAdapter {
       'game_level.schema.js': 'game_levels',
       'game_character.schema.js': 'game_characters',
       'game_progress.schema.js': 'game_progress',
+      'game_session.schema.js': 'game_sessions', // ✅ THÊM
+      'user_inventory.schema.js': 'user_inventory', // ✅ THÊM
+      'scan_history.schema.js': 'scan_history', // ✅ THÊM
+      'game_badge.schema.js': 'game_badges', // ✅ THÊM
+      'game_achievement.schema.js': 'game_achievements', // ✅ THÊM
       'scan_object.schema.js': 'scan_objects',
       'shop_item.schema.js': 'shop_items'
     };

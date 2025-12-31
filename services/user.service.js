@@ -60,8 +60,7 @@ class UserService extends BaseService {
 
   async getUserStats() {
     const users = db.findAll('users');
-    const orders = db.findAll('orders');
-    const reviews = db.findAll('reviews');
+    const progress = db.findAll('game_progress');
 
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
@@ -72,10 +71,13 @@ class UserService extends BaseService {
       inactive: users.filter(u => !u.isActive).length,
       byRole: {
         customer: users.filter(u => u.role === 'customer').length,
-        admin: users.filter(u => u.role === 'admin').length
+        admin: users.filter(u => u.role === 'admin').length,
+        researcher: users.filter(u => u.role === 'researcher').length
       },
-      withOrders: new Set(orders.map(o => o.userId)).size,
-      withReviews: new Set(reviews.map(r => r.userId)).size,
+      activePlayers: progress.filter(p => {
+        const lastLogin = new Date(p.last_login);
+        return lastLogin >= weekAgo;
+      }).length,
       recentSignups: users.filter(u => {
         const createdAt = new Date(u.createdAt);
         return createdAt >= weekAgo;
@@ -99,46 +101,29 @@ class UserService extends BaseService {
       };
     }
 
-    const orders = db.findMany('orders', { userId });
-    const reviews = db.findMany('reviews', { userId });
-    const favorites = db.findMany('favorites', { userId });
-
-    const totalSpent = orders
-      .filter(o => o.status === 'delivered')
-      .reduce((sum, o) => sum + o.total, 0);
-
-    const completedOrders = orders.filter(o => o.status === 'delivered');
-    const avgOrderValue = completedOrders.length > 0
-      ? totalSpent / completedOrders.length
-      : 0;
+    const progress = db.findOne('game_progress', { user_id: userId });
+    const sessions = db.findMany('game_sessions', { user_id: userId });
+    const scans = db.findMany('scan_history', { user_id: userId });
+    const favorites = db.findMany('favorites', { user_id: userId });
 
     const activity = {
       user: sanitizeUser(user),
-      stats: {
-        totalOrders: orders.length,
-        completedOrders: completedOrders.length,
-        cancelledOrders: orders.filter(o => o.status === 'cancelled').length,
-        totalSpent: Math.round(totalSpent),
-        avgOrderValue: Math.round(avgOrderValue),
-        totalReviews: reviews.length,
-        avgRating: reviews.length > 0
-          ? Math.round((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length) * 10) / 10
-          : 0,
-        totalFavorites: favorites.length
-      },
-      recentOrders: orders
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, 5)
-        .map(order => ({
-          id: order.id,
-          restaurantId: order.restaurantId,
-          total: order.total,
-          status: order.status,
-          createdAt: order.createdAt
-        })),
-      recentReviews: reviews
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, 5)
+      gameStats: progress ? {
+        level: progress.level,
+        coins: progress.coins,
+        petals: progress.total_sen_petals,
+        characters: progress.collected_characters?.length || 0,
+        badges: progress.badges?.length || 0,
+        streak: progress.streak_days,
+        lastLogin: progress.last_login
+      } : null,
+      recentSessions: sessions
+        .sort((a, b) => new Date(b.started_at) - new Date(a.started_at))
+        .slice(0, 5),
+      recentScans: scans
+        .sort((a, b) => new Date(b.scanned_at) - new Date(a.scanned_at))
+        .slice(0, 5),
+      totalFavorites: favorites.length
     };
 
     return {
@@ -183,53 +168,32 @@ class UserService extends BaseService {
 
     const deleted = {
       user: 1,
-      orders: 0,
-      cart: 0,
+      game_progress: 0,
+      game_sessions: 0,
+      user_inventory: 0,
+      scan_history: 0,
       favorites: 0,
-      reviews: 0,
-      addresses: 0,
+      collections: 0,
       notifications: 0
     };
 
+    // Helper to delete many
+    const deleteRelated = (collection, filter) => {
+      const items = db.findMany(collection, filter);
+      items.forEach(item => {
+        db.delete(collection, item.id);
+        if (deleted[collection] !== undefined) deleted[collection]++;
+      });
+    };
+
     // Delete all related data
-    const orders = db.findMany('orders', { userId });
-    orders.forEach(order => {
-      db.delete('orders', order.id);
-      deleted.orders++;
-    });
-
-    const cartItems = db.findMany('cart', { userId });
-    cartItems.forEach(item => {
-      db.delete('cart', item.id);
-      deleted.cart++;
-    });
-
-    const favorites = db.findMany('favorites', { userId });
-    favorites.forEach(fav => {
-      db.delete('favorites', fav.id);
-      deleted.favorites++;
-    });
-
-    const reviews = db.findMany('reviews', { userId });
-    reviews.forEach(review => {
-      const restaurantId = review.restaurantId;
-      db.delete('reviews', review.id);
-      deleted.reviews++;
-      // Update restaurant rating
-      this.updateRestaurantRating(restaurantId);
-    });
-
-    const addresses = db.findMany('addresses', { userId });
-    addresses.forEach(addr => {
-      db.delete('addresses', addr.id);
-      deleted.addresses++;
-    });
-
-    const notifications = db.findMany('notifications', { userId });
-    notifications.forEach(notif => {
-      db.delete('notifications', notif.id);
-      deleted.notifications++;
-    });
+    deleteRelated('game_progress', { user_id: userId });
+    deleteRelated('game_sessions', { user_id: userId });
+    deleteRelated('user_inventory', { user_id: userId });
+    deleteRelated('scan_history', { user_id: userId });
+    deleteRelated('favorites', { user_id: userId });
+    deleteRelated('collections', { user_id: userId });
+    deleteRelated('notifications', { user_id: userId });
 
     // Finally delete user
     db.delete('users', userId);
@@ -239,25 +203,6 @@ class UserService extends BaseService {
       message: 'User and all related data permanently deleted',
       deleted
     };
-  }
-
-  updateRestaurantRating(restaurantId) {
-    const allReviews = db.findMany('reviews', { restaurantId: parseInt(restaurantId) });
-
-    if (allReviews.length === 0) {
-      db.update('restaurants', restaurantId, {
-        rating: 0,
-        totalReviews: 0
-      });
-      return;
-    }
-
-    const avgRating = allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
-
-    db.update('restaurants', restaurantId, {
-      rating: Math.round(avgRating * 10) / 10,
-      totalReviews: allReviews.length
-    });
   }
 }
 

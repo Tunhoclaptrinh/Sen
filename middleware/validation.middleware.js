@@ -47,11 +47,15 @@ exports.validateSchema = (entity) => {
           }
           break;
         case 'boolean':
+          // ✅ Unified boolean validation - accept both boolean and string representations
           const boolStr = String(value).toLowerCase();
-          if (!['true', 'false', '1', '0', 'yes', 'no'].includes(boolStr)) typeError = `${field} must be true/false`;
+          if (!['true', 'false', '1', '0', 'yes', 'no'].includes(boolStr) && typeof value !== 'boolean') {
+            typeError = `${field} must be true/false`;
+          }
           break;
         case 'email':
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          // ✅ Improved email regex - more robust validation
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
           if (!emailRegex.test(value)) typeError = `${field} must be a valid email`;
           break;
         case 'date':
@@ -115,10 +119,15 @@ exports.validateFields = (entity, fields) => {
           if (isNaN(Number(value))) errors[field] = `${field} must be a number`;
           break;
         case 'boolean':
-          if (typeof value !== 'boolean') errors[field] = `${field} must be true/false`;
+          // ✅ Unified boolean validation - match validateSchema behavior
+          const boolStr = String(value).toLowerCase();
+          if (!['true', 'false', '1', '0', 'yes', 'no'].includes(boolStr) && typeof value !== 'boolean') {
+            errors[field] = `${field} must be true/false`;
+          }
           break;
         case 'email':
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          // ✅ Improved email regex - match validateSchema
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
           if (!emailRegex.test(value)) errors[field] = `${field} must be a valid email`;
           break;
       }
