@@ -7,7 +7,7 @@ class CategoryService extends BaseService {
   }
 
   async validateDelete(id) {
-    const artifacts = db.findMany('artifacts', { category_id: parseInt(id) });
+    const artifacts = await db.findMany('artifacts', { category_id: parseInt(id) });
 
     if (artifacts.length > 0) {
       return {

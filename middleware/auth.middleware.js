@@ -25,7 +25,7 @@ exports.protect = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Get user from database
-      const user = db.findById('users', decoded.id);
+      const user = await db.findById('users', decoded.id);
 
       if (!user) {
         return res.status(401).json({
