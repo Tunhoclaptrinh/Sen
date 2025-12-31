@@ -25,9 +25,11 @@ class UploadService {
     const dirs = [
       this.uploadDir,
       path.join(this.uploadDir, 'avatars'),
-      path.join(this.uploadDir, 'products'),
-      path.join(this.uploadDir, 'restaurants'),
       path.join(this.uploadDir, 'categories'),
+      path.join(this.uploadDir, 'heritage_sites'),
+      path.join(this.uploadDir, 'artifacts'),
+      path.join(this.uploadDir, 'exhibitions'),
+      path.join(this.uploadDir, 'game_assets'),
       path.join(this.uploadDir, 'temp')
     ];
 
@@ -190,87 +192,12 @@ class UploadService {
   }
 
   /**
-   * Upload product image
-   */
-  async uploadProductImage(file, productId) {
-    try {
-      const newPath = path.join(this.uploadDir, 'products', `product-${productId}-${Date.now()}.jpeg`);
-
-      // Process: resize to 800x600
-      const result = await this.processImage(file.path, {
-        width: 800,
-        height: 600,
-        quality: 80,
-        format: 'jpeg'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      fs.renameSync(result.filePath, newPath);
-
-      const url = `/uploads/products/${path.basename(newPath)}`;
-
-      return {
-        success: true,
-        url,
-        filename: path.basename(newPath),
-        path: newPath
-      };
-    } catch (error) {
-      if (fs.existsSync(file.path)) {
-        fs.unlinkSync(file.path);
-      }
-      throw error;
-    }
-  }
-
-  /**
-   * Upload restaurant image
-   */
-  async uploadRestaurantImage(file, restaurantId) {
-    try {
-      const newPath = path.join(this.uploadDir, 'restaurants', `restaurant-${restaurantId}-${Date.now()}.jpeg`);
-
-      // Process: resize to 1200x800
-      const result = await this.processImage(file.path, {
-        width: 1200,
-        height: 800,
-        quality: 85,
-        format: 'jpeg'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      fs.renameSync(result.filePath, newPath);
-
-      const url = `/uploads/restaurants/${path.basename(newPath)}`;
-
-      return {
-        success: true,
-        url,
-        filename: path.basename(newPath),
-        path: newPath
-      };
-    } catch (error) {
-      if (fs.existsSync(file.path)) {
-        fs.unlinkSync(file.path);
-      }
-      throw error;
-    }
-  }
-
-  /**
    * Upload category image
    */
   async uploadCategoryImage(file, categoryId) {
     try {
       const newPath = path.join(this.uploadDir, 'categories', `category-${categoryId}-${Date.now()}.jpeg`);
 
-      // Process: resize to 400x300
       const result = await this.processImage(file.path, {
         width: 400,
         height: 300,
@@ -296,6 +223,129 @@ class UploadService {
       if (fs.existsSync(file.path)) {
         fs.unlinkSync(file.path);
       }
+      throw error;
+    }
+  }
+
+  /**
+   * Upload Heritage Site Image
+   */
+  async uploadHeritageSiteImage(file, siteId) {
+    try {
+      const newPath = path.join(this.uploadDir, 'heritage_sites', `site-${siteId}-${Date.now()}.jpeg`);
+
+      const result = await this.processImage(file.path, {
+        width: 800,
+        height: 600,
+        quality: 85,
+        format: 'jpeg'
+      });
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      fs.renameSync(result.filePath, newPath);
+
+      return {
+        success: true,
+        url: `/uploads/heritage_sites/${path.basename(newPath)}`
+      };
+    } catch (error) {
+      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+      throw error;
+    }
+  }
+
+  /**
+   * Upload Artifact Image
+   */
+  async uploadArtifactImage(file, artifactId) {
+    try {
+      const newPath = path.join(this.uploadDir, 'artifacts', `artifact-${artifactId}-${Date.now()}.jpeg`);
+
+      const result = await this.processImage(file.path, {
+        width: 800,
+        height: 800,
+        fit: 'inside', // Keep aspect ratio
+        quality: 85,
+        format: 'jpeg'
+      });
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      fs.renameSync(result.filePath, newPath);
+
+      return {
+        success: true,
+        url: `/uploads/artifacts/${path.basename(newPath)}`
+      };
+    } catch (error) {
+      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+      throw error;
+    }
+  }
+
+  /**
+   * Upload Exhibition Image
+    */
+  async uploadExhibitionImage(file, exhibitionId) {
+    try {
+      const newPath = path.join(this.uploadDir, 'exhibitions', `exhibition-${exhibitionId}-${Date.now()}.jpeg`);
+
+      const result = await this.processImage(file.path, {
+        width: 1200,
+        height: 600,
+        quality: 85,
+        format: 'jpeg'
+      });
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      fs.renameSync(result.filePath, newPath);
+
+      return {
+        success: true,
+        url: `/uploads/exhibitions/${path.basename(newPath)}`
+      };
+    } catch (error) {
+      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+      throw error;
+    }
+  }
+
+  /**
+   * Upload Game Asset (Character, Badge, Level Thumbnail)
+   */
+  async uploadGameAsset(file, type, id) {
+    try {
+      const newPath = path.join(this.uploadDir, 'game_assets', `${type}-${id}-${Date.now()}.png`);
+
+      // Game assets usually PNG for transparency
+      const result = await this.processImage(file.path, {
+        width: 512,
+        height: 512,
+        fit: 'inside',
+        quality: 90,
+        format: 'png'
+      });
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      fs.renameSync(result.filePath, newPath);
+
+      return {
+        success: true,
+        url: `/uploads/game_assets/${path.basename(newPath)}`
+      };
+    } catch (error) {
+      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
       throw error;
     }
   }

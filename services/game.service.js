@@ -56,27 +56,31 @@ class GameService {
     console.log('🧹 Session cleanup job started (runs every hour)');
 
     // Run ngay lần đầu
-    this.cleanupExpiredSessions(SESSION_TIMEOUT);
+    this.cleanupExpiredSessions(SESSION_TIMEOUT).catch(err =>
+      console.error('❌ Initial session cleanup error:', err)
+    );
 
     // Sau đó chạy định kỳ
     setInterval(() => {
-      this.cleanupExpiredSessions(SESSION_TIMEOUT);
+      this.cleanupExpiredSessions(SESSION_TIMEOUT).catch(err =>
+        console.error('❌ Scheduled session cleanup error:', err)
+      );
     }, CLEANUP_INTERVAL);
   }
 
   /**
    * Cleanup các sessions đã expired
    */
-  cleanupExpiredSessions(timeout) {
+  async cleanupExpiredSessions(timeout) {
     try {
       const now = Date.now();
-      const allSessions = db.findAll('game_sessions');
+      const allSessions = await db.findAll('game_sessions');
 
       let expiredCount = 0;
 
-      allSessions.forEach(session => {
+      for (const session of allSessions) {
         // Chỉ cleanup sessions đang in_progress
-        if (session.status !== 'in_progress') return;
+        if (session.status !== 'in_progress') continue;
 
         const startTime = new Date(session.started_at).getTime();
         const lastActivity = session.last_activity
@@ -85,14 +89,14 @@ class GameService {
 
         // Check theo last_activity (quan trọng hơn started_at)
         if (now - lastActivity > timeout) {
-          db.update('game_sessions', session.id, {
+          await db.update('game_sessions', session.id, {
             status: 'expired',
             expired_at: new Date().toISOString(),
             expired_reason: 'Session timeout (24 hours inactive)'
           });
           expiredCount++;
         }
-      });
+      }
 
       if (expiredCount > 0) {
         console.log(`🧹 Cleaned up ${expiredCount} expired sessions`);
@@ -106,7 +110,7 @@ class GameService {
    * Get active session với timeout check
    */
   async getActiveSession(levelId, userId) {
-    const session = db.findOne('game_sessions', {
+    const session = await db.findOne('game_sessions', {
       level_id: levelId,
       user_id: userId,
       status: 'in_progress'
@@ -121,7 +125,7 @@ class GameService {
 
     if (now - lastActivity > SESSION_TIMEOUT) {
       // Auto-expire
-      db.update('game_sessions', session.id, {
+      await db.update('game_sessions', session.id, {
         status: 'expired',
         expired_at: new Date().toISOString(),
         expired_reason: 'Session timeout'
@@ -140,21 +144,26 @@ class GameService {
  * Lấy tiến độ game của user
  */
   async getProgress(userId) {
-    let progress = db.findOne('game_progress', { user_id: userId });
+    let progress = await db.findOne('game_progress', { user_id: userId });
     if (!progress) {
       progress = await this.initializeProgress(userId);
     }
 
-    // Tính toán thống kê
-    const totalChapters = db.findAll('game_chapters').length;
-    const totalLevels = db.findAll('game_levels').length;
+    // Tính toán thống kê - using countDocuments via findMany/findAll if direct count not available
+    // Optimization: In MongoAdapter, findAll returns expected array but efficiently countDocuments is better.
+    // However, keeping consistent with db interface
+    const allChapters = await db.findAll('game_chapters');
+    const totalChapters = allChapters.length;
+
+    const allLevels = await db.findAll('game_levels');
+    const totalLevels = allLevels.length;
 
     return {
       success: true,
       data: {
         ...progress,
         stats: {
-          completion_rate: Math.round((progress.completed_levels.length / totalLevels) * 100),
+          completion_rate: totalLevels > 0 ? Math.round((progress.completed_levels.length / totalLevels) * 100) : 0,
           chapters_unlocked: progress.unlocked_chapters.length,
           total_chapters: totalChapters,
           characters_collected: progress.collected_characters.length,
@@ -169,13 +178,17 @@ class GameService {
   /**
  * Lấy danh sách chapters (cánh hoa sen)
  */
+  /**
+   * Lấy danh sách chapters (cánh hoa sen)
+   */
   async getChapters(userId) {
     const progress = await this.getProgress(userId);
-    const chapters = db.findAll('game_chapters').sort((a, b) => a.order - b.order);
+    const chaptersData = await db.findAll('game_chapters');
+    const chapters = chaptersData.sort((a, b) => a.order - b.order);
 
-    const enriched = chapters.map(chapter => {
+    const enriched = await Promise.all(chapters.map(async (chapter) => {
       const isUnlocked = progress.data.unlocked_chapters.includes(chapter.id);
-      const levels = db.findMany('game_levels', { chapter_id: chapter.id });
+      const levels = await db.findMany('game_levels', { chapter_id: chapter.id });
       const completedCount = levels.filter(l =>
         progress.data.completed_levels.includes(l.id)
       ).length;
@@ -190,13 +203,13 @@ class GameService {
           : 0,
         can_unlock: this.canUnlockChapter(chapter, progress.data)
       };
-    });
+    }));
 
     return { success: true, data: enriched };
   }
 
   /**
-   * Kiểm tra có thể mở khóa chapter không
+   * Kiểm tra có thể mở khóa chapter không (Sync logic, no DB calls)
    */
   canUnlockChapter(chapter, progress) {
     if (chapter.required_petals === 0) return true;
@@ -207,21 +220,22 @@ class GameService {
    * Chi tiết một chapter
    */
   async getChapterDetail(chapterId, userId) {
-    const chapter = db.findById('game_chapters', chapterId);
+    const chapter = await db.findById('game_chapters', chapterId);
     if (!chapter) {
       return { success: false, message: 'Chapter not found', statusCode: 404 };
     }
 
     const progress = await this.getProgress(userId);
-    const levels = db.findMany('game_levels', { chapter_id: parseInt(chapterId) })
-      .sort((a, b) => a.order - b.order);
+    const levels = await db.findMany('game_levels', { chapter_id: parseInt(chapterId) });
+    // Sort levels
+    levels.sort((a, b) => a.order - b.order);
 
-    const enrichedLevels = levels.map(level => ({
+    const enrichedLevels = await Promise.all(levels.map(async (level) => ({
       ...level,
       is_completed: progress.data.completed_levels.includes(level.id),
       is_locked: !this.canPlayLevel(level, progress.data),
-      player_best_score: this.getBestScore(level.id, userId)
-    }));
+      player_best_score: await this.getBestScore(level.id, userId)
+    })));
 
     return {
       success: true,
@@ -237,12 +251,12 @@ class GameService {
    * Mở khóa chapter
    */
   async unlockChapter(chapterId, userId) {
-    const chapter = db.findById('game_chapters', chapterId);
+    const chapter = await db.findById('game_chapters', chapterId);
     if (!chapter) {
       return { success: false, message: 'Chapter not found', statusCode: 404 };
     }
 
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
 
     if (progress.unlocked_chapters.includes(parseInt(chapterId))) {
       return { success: false, message: 'Chapter already unlocked', statusCode: 400 };
@@ -257,7 +271,7 @@ class GameService {
     }
 
     // Mở khóa chapter
-    db.update('game_progress', progress.id, {
+    await db.update('game_progress', progress.id, {
       unlocked_chapters: [...progress.unlocked_chapters, parseInt(chapterId)],
       current_chapter: parseInt(chapterId)
     });
@@ -276,8 +290,9 @@ class GameService {
  */
   async getLevels(chapterId, userId) {
     const progress = await this.getProgress(userId);
-    const levels = db.findMany('game_levels', { chapter_id: parseInt(chapterId) })
-      .sort((a, b) => a.order - b.order);
+    const levels = await db.findMany('game_levels', { chapter_id: parseInt(chapterId) });
+    // Sort levels
+    levels.sort((a, b) => a.order - b.order);
 
     const enriched = levels.map(level => ({
       id: level.id,
@@ -311,8 +326,8 @@ class GameService {
   /**
    * Lấy best score của level
    */
-  getBestScore(levelId, userId) {
-    const sessions = db.findMany('game_sessions', {
+  async getBestScore(levelId, userId) {
+    const sessions = await db.findMany('game_sessions', {
       level_id: levelId,
       user_id: userId,
       status: 'completed'
@@ -327,7 +342,7 @@ class GameService {
    * Chi tiết level (màn chơi)
    */
   async getLevelDetail(levelId, userId) {
-    const level = db.findById('game_levels', levelId);
+    const level = await db.findById('game_levels', levelId);
     if (!level) {
       return { success: false, message: 'Level not found', statusCode: 404 };
     }
@@ -338,16 +353,18 @@ class GameService {
       return { success: false, message: 'Level is locked', statusCode: 403 };
     }
 
+    const playCountData = await db.findMany('game_sessions', {
+      level_id: level.id,
+      user_id: userId
+    });
+
     return {
       success: true,
       data: {
         ...level,
         is_completed: progress.data.completed_levels.includes(level.id),
-        best_score: this.getBestScore(level.id, userId),
-        play_count: db.findMany('game_sessions', {
-          level_id: level.id,
-          user_id: userId
-        }).length
+        best_score: await this.getBestScore(level.id, userId),
+        play_count: playCountData.length
       }
     };
   }
@@ -360,31 +377,31 @@ class GameService {
   async startLevel(levelId, userId) {
 
     // MISSING: Check for existing expired sessions
-    const existingSessions = db.findMany('game_sessions', {
+    const existingSessions = await db.findMany('game_sessions', {
       level_id: levelId,
       user_id: userId,
       status: 'in_progress'
     });
 
     // CRITICAL: Expire old sessions before creating new
-    existingSessions.forEach(session => {
+    for (const session of existingSessions) {
       const lastActivity = new Date(session.last_activity || session.started_at).getTime();
       const now = Date.now();
       if (now - lastActivity > 24 * 60 * 60 * 1000) {
-        db.update('game_sessions', session.id, {
+        await db.update('game_sessions', session.id, {
           status: 'expired',
           expired_at: new Date().toISOString(),
           expired_reason: 'Auto-expired before new session'
         });
       }
-    });
+    }
 
-    const level = db.findById('game_levels', levelId);
+    const level = await db.findById('game_levels', levelId);
     if (!level) {
       return { success: false, message: 'Level not found', statusCode: 404 };
     }
 
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
     if (!this.canPlayLevel(level, progress)) {
       return { success: false, message: 'Level is locked', statusCode: 403 };
     }
@@ -399,7 +416,7 @@ class GameService {
       return validation;
     }
 
-    const session = db.create('game_sessions', {
+    const session = await db.create('game_sessions', {
       user_id: userId,
       level_id: levelId,
       status: 'in_progress',
@@ -420,6 +437,12 @@ class GameService {
 
     const firstScreen = this.enrichScreen(level.screens[0], session, 0, level.screens.length);
 
+    // Fetch AI character if exists
+    let aiCharacter = null;
+    if (level.ai_character_id) {
+      aiCharacter = await db.findById('game_characters', level.ai_character_id);
+    }
+
     return {
       success: true,
       message: 'Level started',
@@ -430,9 +453,7 @@ class GameService {
           name: level.name,
           description: level.description,
           total_screens: level.screens.length,
-          ai_character: level.ai_character_id
-            ? db.findById('game_characters', level.ai_character_id)
-            : null
+          ai_character: aiCharacter
         },
         current_screen: firstScreen
       }
@@ -449,7 +470,7 @@ class GameService {
       return { success: false, message: 'No active session or session expired', statusCode: 404 };
     }
 
-    const level = db.findById('game_levels', levelId);
+    const level = await db.findById('game_levels', levelId);
     const currentScreen = level.screens[session.current_screen_index];
 
     if (currentScreen.type !== 'HIDDEN_OBJECT') {
@@ -465,7 +486,7 @@ class GameService {
       return { success: false, message: 'Item already collected', statusCode: 400 };
     }
 
-    const updatedSession = db.update('game_sessions', session.id, {
+    const updatedSession = await db.update('game_sessions', session.id, {
       collected_items: [...session.collected_items, clueId],
       score: session.score + (item.points || 10),
       last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
@@ -494,7 +515,7 @@ class GameService {
    * Submit answer for QUIZ screen
    */
   async submitAnswer(sessionId, userId, answerId) {
-    const session = db.findOne('game_sessions', {
+    const session = await db.findOne('game_sessions', {
       id: parseInt(sessionId),
       user_id: userId,
       status: 'in_progress'
@@ -508,14 +529,14 @@ class GameService {
     const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
     const lastActivity = new Date(session.last_activity || session.started_at).getTime();
     if (Date.now() - lastActivity > SESSION_TIMEOUT) {
-      db.update('game_sessions', session.id, {
+      await db.update('game_sessions', session.id, {
         status: 'expired',
         expired_at: new Date().toISOString()
       });
       return { success: false, message: 'Session expired', statusCode: 404 };
     }
 
-    const level = db.findById('game_levels', session.level_id);
+    const level = await db.findById('game_levels', session.level_id);
     const currentScreen = level.screens[session.current_screen_index];
 
     if (currentScreen.type !== 'QUIZ') {
@@ -538,7 +559,7 @@ class GameService {
     const isCorrect = selectedOption.is_correct;
     const pointsEarned = isCorrect ? (currentScreen.reward?.points || 20) : 0;
 
-    const updatedSession = db.update('game_sessions', sessionId, {
+    const updatedSession = await db.update('game_sessions', sessionId, {
       answered_questions: [
         ...session.answered_questions,
         {
@@ -567,7 +588,7 @@ class GameService {
   }
 
   async submitTimelineOrder(sessionId, userId, eventOrder) {
-    const session = db.findOne('game_sessions', {
+    const session = await db.findOne('game_sessions', {
       id: parseInt(sessionId),
       user_id: userId,
       status: 'in_progress'
@@ -585,7 +606,7 @@ class GameService {
     const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
     const lastActivity = new Date(session.last_activity || session.started_at).getTime();
     if (Date.now() - lastActivity > SESSION_TIMEOUT) {
-      db.update('game_sessions', session.id, {
+      await db.update('game_sessions', session.id, {
         status: 'expired',
         expired_at: new Date().toISOString()
       });
@@ -596,7 +617,7 @@ class GameService {
       };
     }
 
-    const level = db.findById('game_levels', session.level_id);
+    const level = await db.findById('game_levels', session.level_id);
     const currentScreen = level.screens[session.current_screen_index];
 
     // CHECK SCREEN TYPE
@@ -639,7 +660,7 @@ class GameService {
     const isCorrect = JSON.stringify(eventOrder) === JSON.stringify(correctOrder);
 
     // SAVE ORDER (even if wrong for retry)
-    db.update('game_sessions', session.id, {
+    await db.update('game_sessions', session.id, {
       timeline_order: eventOrder,
       last_activity: new Date().toISOString()
     });
@@ -659,7 +680,7 @@ class GameService {
 
     // ADD POINTS IF CORRECT
     const pointsEarned = currentScreen.reward?.points || 20;
-    db.update('game_sessions', session.id, {
+    await db.update('game_sessions', session.id, {
       score: session.score + pointsEarned
     });
 
@@ -679,7 +700,7 @@ class GameService {
    */
 
   async navigateToNextScreen(sessionId, userId) {
-    const session = db.findOne('game_sessions', {
+    const session = await db.findOne('game_sessions', {
       id: parseInt(sessionId),
       user_id: userId,
       status: 'in_progress'
@@ -697,7 +718,7 @@ class GameService {
     const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
     const lastActivity = new Date(session.last_activity || session.started_at).getTime();
     if (Date.now() - lastActivity > SESSION_TIMEOUT) {
-      db.update('game_sessions', session.id, {
+      await db.update('game_sessions', session.id, {
         status: 'expired',
         expired_at: new Date().toISOString()
       });
@@ -708,7 +729,7 @@ class GameService {
       };
     }
 
-    const level = db.findById('game_levels', session.level_id);
+    const level = await db.findById('game_levels', session.level_id);
     const currentScreen = level.screens[session.current_screen_index];
 
     // Validate screen completion - Check if can proceed (completed current screen requirements)
@@ -749,7 +770,7 @@ class GameService {
     const nextScreen = level.screens[nextScreenIndex];
 
     // Update session
-    const updatedSession = db.update('game_sessions', session.id, {
+    const updatedSession = await db.update('game_sessions', session.id, {
       current_screen_id: nextScreen.id,
       current_screen_index: nextScreenIndex,
       completed_screens: [...session.completed_screens, currentScreen.id],

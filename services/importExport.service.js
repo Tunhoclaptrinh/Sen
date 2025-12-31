@@ -19,9 +19,15 @@ class ImportExportService {
     const serviceMap = {
       'users': require('../services/user.service'),
       'categories': require('../services/category.service'),
-      'restaurants': require('../services/restaurant.service'),
-      'products': require('../services/product.service'),
-      'promotions': require('../services/promotion.service')
+      'heritage_sites': require('../services/heritage_site.service'),
+      'artifacts': require('../services/artifact.service'),
+      'exhibitions': require('../services/exhibition.service'),
+      'timelines': require('../services/timeline.service'),
+      'collections': require('../services/collection.service'),
+      'reviews': require('../services/review.service'),
+      'favorites': require('../services/favorite.service'),
+      'game_levels': require('../services/level_cms.service'), // Use CMS service for import/export
+      'game_chapters': require('../services/chapter_cms.service') // Use CMS service
     };
 
     const service = serviceMap[entityName];

@@ -10,21 +10,7 @@ router.post('/avatar',
   uploadController.uploadAvatar
 );
 
-// Product image (Admin & Manager)
-router.post('/product/:productId',
-  protect,
-  authorize('admin', 'manager'),
-  uploadController.getUploadMiddleware('product'),
-  uploadController.uploadProductImage
-);
 
-// Restaurant image (Admin only)
-router.post('/restaurant/:restaurantId',
-  protect,
-  authorize('admin'),
-  uploadController.getUploadMiddleware('restaurant'),
-  uploadController.uploadRestaurantImage
-);
 
 // Category image (Admin only)
 router.post('/category/:categoryId',
@@ -32,6 +18,38 @@ router.post('/category/:categoryId',
   authorize('admin'),
   uploadController.getUploadMiddleware('category'),
   uploadController.uploadCategoryImage
+);
+
+// Heritage Site image (Admin/Researcher)
+router.post('/heritage-site/:id',
+  protect,
+  authorize('admin', 'researcher'),
+  uploadController.getUploadMiddleware('heritage_sites'),
+  uploadController.uploadHeritageSiteImage
+);
+
+// Artifact image (Admin/Researcher)
+router.post('/artifact/:id',
+  protect,
+  authorize('admin', 'researcher'),
+  uploadController.getUploadMiddleware('artifacts'),
+  uploadController.uploadArtifactImage
+);
+
+// Exhibition image (Admin)
+router.post('/exhibition/:id',
+  protect,
+  authorize('admin'),
+  uploadController.getUploadMiddleware('exhibitions'),
+  uploadController.uploadExhibitionImage
+);
+
+// Game Asset (Admin) - type: character, badge, level_thumb
+router.post('/game/:type/:id',
+  protect,
+  authorize('admin'),
+  uploadController.getUploadMiddleware('game_assets'),
+  uploadController.uploadGameAsset
 );
 
 // Delete file (Admin only)

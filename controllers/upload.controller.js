@@ -66,134 +66,9 @@ class UploadController {
     }
   };
 
-  /**
-   * Upload product image
-   * POST /api/upload/product/:productId
-   */
-  uploadProductImage = async (req, res, next) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({
-          success: false,
-          message: 'No file uploaded'
-        });
-      }
 
-      const { productId } = req.params;
 
-      // Check product exists
-      const product = db.findById('products', productId);
-      if (!product) {
-        return res.status(404).json({
-          success: false,
-          message: 'Product not found'
-        });
-      }
 
-      // Manager check: must own the product's restaurant
-      if (req.user.role === 'manager') {
-        const restaurant = db.findOne('restaurants', {
-          managerId: req.user.id,
-          id: product.restaurantId
-        });
-
-        if (!restaurant) {
-          return res.status(403).json({
-            success: false,
-            message: 'Not authorized to update this product'
-          });
-        }
-      }
-
-      const result = await uploadService.uploadProductImage(req.file, productId);
-
-      if (!result.success) {
-        return res.status(400).json({
-          success: false,
-          message: result.error
-        });
-      }
-
-      // Update product image in database
-      const updatedProduct = db.update('products', productId, {
-        image: result.url,
-        updatedAt: new Date().toISOString()
-      });
-
-      res.json({
-        success: true,
-        message: 'Product image uploaded successfully',
-        data: {
-          url: result.url,
-          filename: result.filename,
-          product: {
-            id: updatedProduct.id,
-            name: updatedProduct.name,
-            image: updatedProduct.image
-          }
-        }
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  /**
-   * Upload restaurant image
-   * POST /api/upload/restaurant/:restaurantId
-   */
-  uploadRestaurantImage = async (req, res, next) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({
-          success: false,
-          message: 'No file uploaded'
-        });
-      }
-
-      const { restaurantId } = req.params;
-
-      // Check restaurant exists
-      const restaurant = db.findById('restaurants', restaurantId);
-      if (!restaurant) {
-        return res.status(404).json({
-          success: false,
-          message: 'Restaurant not found'
-        });
-      }
-
-      const result = await uploadService.uploadRestaurantImage(req.file, restaurantId);
-
-      if (!result.success) {
-        return res.status(400).json({
-          success: false,
-          message: result.error
-        });
-      }
-
-      // Update restaurant image in database
-      const updatedRestaurant = db.update('restaurants', restaurantId, {
-        image: result.url,
-        updatedAt: new Date().toISOString()
-      });
-
-      res.json({
-        success: true,
-        message: 'Restaurant image uploaded successfully',
-        data: {
-          url: result.url,
-          filename: result.filename,
-          restaurant: {
-            id: updatedRestaurant.id,
-            name: updatedRestaurant.name,
-            image: updatedRestaurant.image
-          }
-        }
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
 
   /**
    * Upload category image
@@ -246,6 +121,91 @@ class UploadController {
             image: updatedCategory.image
           }
         }
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Upload heritage site image
+   */
+  uploadHeritageSiteImage = async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: 'Please upload a file' });
+      }
+
+      const result = await uploadService.uploadHeritageSiteImage(req.file, req.params.id);
+
+      // Optional: Update database record
+      // const db = require('../config/database');
+      // db.update('heritage_sites', req.params.id, { image: result.url });
+
+      res.status(200).json({
+        success: true,
+        data: result
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Upload artifact image
+   */
+  uploadArtifactImage = async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: 'Please upload a file' });
+      }
+
+      const result = await uploadService.uploadArtifactImage(req.file, req.params.id);
+
+      res.status(200).json({
+        success: true,
+        data: result
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Upload exhibition image
+   */
+  uploadExhibitionImage = async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: 'Please upload a file' });
+      }
+
+      const result = await uploadService.uploadExhibitionImage(req.file, req.params.id);
+
+      res.status(200).json({
+        success: true,
+        data: result
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Upload game asset
+   */
+  uploadGameAsset = async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: 'Please upload a file' });
+      }
+
+      const { type, id } = req.params;
+      const result = await uploadService.uploadGameAsset(req.file, type, id);
+
+      res.status(200).json({
+        success: true,
+        data: result
       });
     } catch (error) {
       next(error);
