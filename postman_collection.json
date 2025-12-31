@@ -2088,7 +2088,12 @@
                   "raw": "{{baseUrl}}/favorites/trending/:type",
                   "host": ["{{baseUrl}}"],
                   "path": ["favorites", "trending", ":type"],
-                  "variable": [{"key": "type", "value": "artifact"}]
+                  "variable": [
+                    {
+                      "key": "type",
+                      "value": "artifact"
+                    }
+                  ]
                 }
               }
             },
@@ -2101,7 +2106,12 @@
                   "raw": "{{baseUrl}}/favorites/:type",
                   "host": ["{{baseUrl}}"],
                   "path": ["favorites", ":type"],
-                  "variable": [{"key": "type", "value": "artifact"}]
+                  "variable": [
+                    {
+                      "key": "type",
+                      "value": "artifact"
+                    }
+                  ]
                 }
               }
             },
@@ -2114,7 +2124,12 @@
                   "raw": "{{baseUrl}}/favorites/:type/ids",
                   "host": ["{{baseUrl}}"],
                   "path": ["favorites", ":type", "ids"],
-                  "variable": [{"key": "type", "value": "artifact"}]
+                  "variable": [
+                    {
+                      "key": "type",
+                      "value": "artifact"
+                    }
+                  ]
                 }
               }
             },
@@ -2128,8 +2143,14 @@
                   "host": ["{{baseUrl}}"],
                   "path": ["favorites", ":type", ":id", "check"],
                   "variable": [
-                    {"key": "type", "value": "artifact"},
-                    {"key": "id", "value": "1"}
+                    {
+                      "key": "type",
+                      "value": "artifact"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
                   ]
                 }
               }
@@ -2144,8 +2165,14 @@
                   "host": ["{{baseUrl}}"],
                   "path": ["favorites", ":type", ":id", "toggle"],
                   "variable": [
-                    {"key": "type", "value": "artifact"},
-                    {"key": "id", "value": "1"}
+                    {
+                      "key": "type",
+                      "value": "artifact"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
                   ]
                 }
               }
@@ -2160,8 +2187,14 @@
                   "host": ["{{baseUrl}}"],
                   "path": ["favorites", ":type", ":id"],
                   "variable": [
-                    {"key": "type", "value": "artifact"},
-                    {"key": "id", "value": "1"}
+                    {
+                      "key": "type",
+                      "value": "artifact"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
                   ]
                 }
               }
@@ -2176,8 +2209,14 @@
                   "host": ["{{baseUrl}}"],
                   "path": ["favorites", ":type", ":id"],
                   "variable": [
-                    {"key": "type", "value": "artifact"},
-                    {"key": "id", "value": "1"}
+                    {
+                      "key": "type",
+                      "value": "artifact"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
                   ]
                 }
               }
@@ -2191,7 +2230,12 @@
                   "raw": "{{baseUrl}}/favorites/:type",
                   "host": ["{{baseUrl}}"],
                   "path": ["favorites", ":type"],
-                  "variable": [{"key": "type", "value": "artifact"}]
+                  "variable": [
+                    {
+                      "key": "type",
+                      "value": "artifact"
+                    }
+                  ]
                 }
               }
             }
@@ -2389,10 +2433,15 @@
           "response": []
         },
         {
-          "name": "Upload Product Image (Admin/Manager)",
+          "name": "Upload Category Image (Admin Only)",
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
               {
                 "key": "Content-Type",
                 "value": "multipart/form-data"
@@ -2409,12 +2458,48 @@
               ]
             },
             "url": {
-              "raw": "{{baseUrl}}/upload/product/:productId",
+              "raw": "{{baseUrl}}/upload/category/:categoryId",
               "host": ["{{baseUrl}}"],
-              "path": ["upload", "product", ":productId"],
+              "path": ["upload", "category", ":categoryId"],
               "variable": [
                 {
-                  "key": "productId",
+                  "key": "categoryId",
+                  "value": "1",
+                  "description": "ID of category"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Heritage Site Image (Admin/Researcher)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/upload/heritage-site/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "heritage-site", ":id"],
+              "variable": [
+                {
+                  "key": "id",
                   "value": "1"
                 }
               ]
@@ -2423,13 +2508,14 @@
           "response": []
         },
         {
-          "name": "Upload Restaurant Image (Admin Only)",
+          "name": "Upload Artifact Image (Admin/Researcher)",
           "request": {
             "method": "POST",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "multipart/form-data"
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
               }
             ],
             "body": {
@@ -2443,12 +2529,86 @@
               ]
             },
             "url": {
-              "raw": "{{baseUrl}}/upload/restaurant/:restaurantId",
+              "raw": "{{baseUrl}}/upload/artifact/:id",
               "host": ["{{baseUrl}}"],
-              "path": ["upload", "restaurant", ":restaurantId"],
+              "path": ["upload", "artifact", ":id"],
               "variable": [
                 {
-                  "key": "restaurantId",
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Exhibition Image (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/upload/exhibition/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "exhibition", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Game Asset (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/upload/game/:type/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "game", ":type", ":id"],
+              "variable": [
+                {
+                  "key": "type",
+                  "value": "character"
+                },
+                {
+                  "key": "id",
                   "value": "1"
                 }
               ]

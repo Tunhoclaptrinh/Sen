@@ -2645,6 +2645,81 @@ Content-Type: multipart/form-data
 
 ---
 
+#### Upload Category Image (Admin Only)
+
+```http
+POST /api/upload/category/:categoryId
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+```
+
+**Body:** Form data with `file` field
+
+**Response:** `200 OK`
+
+---
+
+#### Upload Heritage Site Image (Admin/Researcher)
+
+```http
+POST /api/upload/heritage-site/:id
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+```
+
+**Body:** Form data with `file` field
+
+**Response:** `200 OK`
+
+---
+
+#### Upload Artifact Image (Admin/Researcher)
+
+```http
+POST /api/upload/artifact/:id
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+```
+
+**Body:** Form data with `file` field
+
+**Response:** `200 OK`
+
+---
+
+#### Upload Exhibition Image (Admin)
+
+```http
+POST /api/upload/exhibition/:id
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+```
+
+**Body:** Form data with `file` field
+
+**Response:** `200 OK`
+
+---
+
+#### Upload Game Asset (Admin)
+
+```http
+POST /api/upload/game/:type/:id
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+```
+
+**Path Parameters:**
+
+- `type`: `character`, `badge`, `level_thumb`, etc.
+- `id`: ID of the asset
+
+**Body:** Form data with `file` field
+
+**Response:** `200 OK`
+
+---
+
 #### Delete File (Admin Only)
 
 ```http
