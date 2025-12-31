@@ -43,7 +43,7 @@ class UploadController {
       }
 
       // Update user avatar in database
-      const updatedUser = db.update('users', req.user.id, {
+      const updatedUser = await db.update('users', req.user.id, {
         avatar: result.url,
         updatedAt: new Date().toISOString()
       });
@@ -86,7 +86,7 @@ class UploadController {
       const { categoryId } = req.params;
 
       // Check category exists
-      const category = db.findById('categories', categoryId);
+      const category = await db.findById('categories', categoryId);
       if (!category) {
         return res.status(404).json({
           success: false,
@@ -104,7 +104,7 @@ class UploadController {
       }
 
       // Update category image in database
-      const updatedCategory = db.update('categories', categoryId, {
+      const updatedCategory = await db.update('categories', categoryId, {
         image: result.url,
         updatedAt: new Date().toISOString()
       });

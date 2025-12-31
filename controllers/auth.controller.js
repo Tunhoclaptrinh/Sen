@@ -15,7 +15,7 @@ exports.register = async (req, res, next) => {
     const { email, password, name, phone, address } = req.body;
 
     // Check if user exists
-    const existingUser = db.findOne('users', { email });
+    const existingUser = await db.findOne('users', { email });
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -27,7 +27,7 @@ exports.register = async (req, res, next) => {
     const hashedPassword = await hashPassword(password);
 
     // Create user
-    const user = db.create('users', {
+    const user = await db.create('users', {
       email,
       password: hashedPassword,
       name,
@@ -69,7 +69,7 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
 
     // Find user
-    const user = db.findOne('users', { email });
+    const user = await db.findOne('users', { email });
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -95,12 +95,12 @@ exports.login = async (req, res, next) => {
     }
 
     // Update last login
-    db.update('users', user.id, {
+    await db.update('users', user.id, {
       lastLogin: new Date().toISOString()
     });
 
     // Load latest user from DB
-    const updatedUser = db.findById('users', user.id);
+    const updatedUser = await db.findById('users', user.id);
 
     // Generate token
     const token = generateToken(updatedUser.id);
@@ -191,7 +191,7 @@ exports.changePassword = async (req, res, next) => {
     const hashedPassword = await hashPassword(newPassword);
 
     // Update password
-    db.update('users', user.id, {
+    await db.update('users', user.id, {
       password: hashedPassword
     });
 

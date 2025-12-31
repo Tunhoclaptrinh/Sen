@@ -21,10 +21,10 @@ class GameService {
    * Khởi tạo game progress cho user mới
    */
   async initializeProgress(userId) {
-    const existing = db.findOne('game_progress', { user_id: userId });
+    const existing = await db.findOne('game_progress', { user_id: userId });
     if (existing) return existing;
 
-    return db.create('game_progress', {
+    return await db.create('game_progress', {
       user_id: userId,
       current_chapter: 1,
       total_sen_petals: 0,
@@ -893,7 +893,7 @@ class GameService {
   async completeLevel(levelId, userId, { score, timeSpent } = {}) {
 
 
-    const session = db.findOne('game_sessions', {
+    const session = await db.findOne('game_sessions', {
       level_id: levelId,
       user_id: userId,
       status: 'in_progress'
@@ -903,15 +903,15 @@ class GameService {
       return { success: false, message: 'No active session', statusCode: 404 };
     }
 
-    const level = db.findById('game_levels', levelId);
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const level = await db.findById('game_levels', levelId);
+    const progress = await db.findOne('game_progress', { user_id: userId });
 
     // ✅ CHECK IF ALREADY COMPLETED
     const alreadyCompleted = progress.completed_levels.includes(levelId);
 
     if (alreadyCompleted) {
       // Update session as completed but NO rewards
-      db.update('game_sessions', session.id, {
+      await db.update('game_sessions', session.id, {
         status: 'completed',
         completed_at: new Date().toISOString()
       });
@@ -936,7 +936,7 @@ class GameService {
     const passed = finalScore >= (level.passing_score || 70);
 
     // Cập nhật session
-    db.update('game_sessions', session.id, {
+    await db.update('game_sessions', session.id, {
       status: 'completed',
       score: finalScore,
       completed_at: new Date().toISOString()
@@ -971,8 +971,8 @@ class GameService {
 
 
     try {
-      db.update('game_sessions', session.id, { status: 'completed' });
-      db.update('game_progress', progress.id, {
+      await db.update('game_sessions', session.id, { status: 'completed' });
+      await db.update('game_progress', progress.id, {
         completed_levels: newCompleted,
         total_sen_petals: newPetals,
         total_points: progress.total_points + finalScore,
@@ -1000,8 +1000,8 @@ class GameService {
       };
     } catch (error) {
       // Rollback
-      db.update('game_sessions', session.id, sessionBackup);
-      db.update('game_progress', progress.id, progressBackup);
+      await db.update('game_sessions', session.id, sessionBackup);
+      await db.update('game_progress', progress.id, progressBackup);
       throw error;
     }
   }
@@ -1129,9 +1129,9 @@ class GameService {
    * Mở/đóng bảo tàng
    */
   async toggleMuseum(userId, isOpen) {
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
 
-    db.update('game_progress', progress.id, {
+    await db.update('game_progress', progress.id, {
       museum_open: isOpen
     });
 
@@ -1168,7 +1168,7 @@ class GameService {
     try {
       // === STEP 3: BUSINESS LOGIC (TRONG TRY BLOCK) ===
 
-      const progress = db.findOne('game_progress', { user_id: userId });
+      const progress = await db.findOne('game_progress', { user_id: userId });
 
       if (!progress) {
         return {
@@ -1202,7 +1202,7 @@ class GameService {
       const newTotalMuseumIncome = (progress.museum_income || 0) + incomeInfo.pending;
 
       // Single atomic update để tránh partial updates
-      const updatedProgress = db.update('game_progress', progress.id, {
+      const updatedProgress = await db.update('game_progress', progress.id, {
         coins: newCoins,
         museum_income: newTotalMuseumIncome,
         last_museum_collection: new Date().toISOString()
@@ -1257,14 +1257,14 @@ class GameService {
    * Scan object tại di tích
    */
   async scanObject(userId, code, location) {
-    const artifact = db.findOne('scan_objects', { code: code.toUpperCase() });
+    const artifact = await db.findOne('scan_objects', { code: code.toUpperCase() });
 
     if (!artifact) {
       return { success: false, message: 'Invalid scan code', statusCode: 404 };
     }
 
     // ✅ CHECK DUPLICATE SCAN - Prevent farming
-    const existingScan = db.findOne('scan_history', {
+    const existingScan = await db.findOne('scan_history', {
       user_id: userId,
       object_id: artifact.id
     });
@@ -1295,7 +1295,7 @@ class GameService {
       }
     }
 
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
 
     const reward = {
       coins: artifact.reward_coins || 100,
@@ -1308,14 +1308,14 @@ class GameService {
       newCharacters.push(reward.character);
     }
 
-    db.update('game_progress', progress.id, {
+    await db.update('game_progress', progress.id, {
       coins: progress.coins + reward.coins,
       total_sen_petals: progress.total_sen_petals + reward.petals,
       collected_characters: newCharacters
     });
 
     // Lưu scan history
-    db.create('scan_history', {
+    await db.create('scan_history', {
       user_id: userId,
       object_id: artifact.id,
       location: location,
@@ -1337,7 +1337,7 @@ class GameService {
    */
   async getBadges(userId) {
     const progress = await this.getProgress(userId);
-    const allBadges = db.findAll('game_badges');
+    const allBadges = await db.findAll('game_badges');
 
     const enriched = allBadges.map(badge => ({
       ...badge,
@@ -1349,7 +1349,7 @@ class GameService {
 
   async getAchievements(userId) {
     const progress = await this.getProgress(userId);
-    const allAchievements = db.findAll('game_achievements');
+    const allAchievements = await db.findAll('game_achievements');
 
     const enriched = allAchievements.map(achievement => ({
       ...achievement,
@@ -1373,8 +1373,8 @@ class GameService {
       page: 1
     });
 
-    const leaderboard = result.data.map((prog, index) => {
-      const user = db.findById('users', prog.user_id);
+    const leaderboard = await Promise.all(result.data.map(async (prog, index) => {
+      const user = await db.findById('users', prog.user_id);
       return {
         rank: index + 1,
         user_id: prog.user_id,
@@ -1385,7 +1385,7 @@ class GameService {
         sen_petals: prog.total_sen_petals,
         characters_count: prog.collected_characters?.length || 0
       };
-    });
+    }));
 
     return { success: true, data: leaderboard };
   }
@@ -1394,7 +1394,7 @@ class GameService {
    * Phần thưởng hàng ngày
    */
   async getDailyReward(userId) {
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
     const today = new Date().toISOString().split('T')[0];
     const lastLogin = new Date(progress.last_login).toISOString().split('T')[0];
 
@@ -1404,7 +1404,7 @@ class GameService {
 
     const reward = { coins: 50, petals: 1 };
 
-    db.update('game_progress', progress.id, {
+    await db.update('game_progress', progress.id, {
       coins: progress.coins + reward.coins,
       total_sen_petals: progress.total_sen_petals + reward.petals,
       last_login: new Date().toISOString()
@@ -1423,12 +1423,12 @@ class GameService {
    * Mua item trong shop
    */
   async purchaseItem(userId, itemId, quantity) {
-    const item = db.findById('shop_items', itemId);
+    const item = await db.findById('shop_items', itemId);
     if (!item) {
       return { success: false, message: 'Item not found', statusCode: 404 };
     }
 
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
     const totalCost = item.price * quantity;
 
     if (progress.coins < totalCost) {
@@ -1441,14 +1441,14 @@ class GameService {
 
     try {
       // Step 1: Deduct coins
-      db.update('game_progress', progress.id, {
+      await db.update('game_progress', progress.id, {
         coins: progress.coins - totalCost
       });
 
       // Step 2: Update inventory
-      let inventory = db.findOne('user_inventory', { user_id: userId });
+      let inventory = await db.findOne('user_inventory', { user_id: userId });
       if (!inventory) {
-        inventory = db.create('user_inventory', { user_id: userId, items: [] });
+        inventory = await db.create('user_inventory', { user_id: userId, items: [] });
       }
 
       // Backup inventory state
@@ -1465,7 +1465,7 @@ class GameService {
         });
       }
 
-      db.update('user_inventory', inventory.id, { items: inventory.items });
+      await db.update('user_inventory', inventory.id, { items: inventory.items });
 
       // ✅ SUCCESS
       return {
@@ -1484,13 +1484,13 @@ class GameService {
       console.error('❌ Purchase failed, rolling back:', error);
 
       // Restore coins
-      db.update('game_progress', progress.id, {
+      await db.update('game_progress', progress.id, {
         coins: originalCoins
       });
 
       // Restore inventory if it was modified
       if (inventoryBackup) {
-        db.update('user_inventory', inventoryBackup.id, {
+        await db.update('user_inventory', inventoryBackup.id, {
           items: inventoryBackup.items
         });
       }
@@ -1507,16 +1507,16 @@ class GameService {
    * Lấy inventory
    */
   async getInventory(userId) {
-    const inventory = db.findOne('user_inventory', { user_id: userId });
+    const inventory = await db.findOne('user_inventory', { user_id: userId });
 
     if (!inventory) {
       return { success: true, data: { items: [] } };
     }
 
-    const enriched = inventory.items.map(item => {
-      const itemData = db.findById('shop_items', item.item_id);
+    const enriched = await Promise.all(inventory.items.map(async (item) => {
+      const itemData = await db.findById('shop_items', item.item_id);
       return { ...item, ...itemData };
-    });
+    }));
 
     return { success: true, data: { items: enriched } };
   }
@@ -1525,7 +1525,7 @@ class GameService {
    * Sử dụng item
    */
   async useItem(userId, itemId, targetId) {
-    const inventory = db.findOne('user_inventory', { user_id: userId });
+    const inventory = await db.findOne('user_inventory', { user_id: userId });
 
     if (!inventory) {
       return { success: false, message: 'No inventory found', statusCode: 404 };
@@ -1536,10 +1536,10 @@ class GameService {
       return { success: false, message: 'Item not found or quantity is 0', statusCode: 400 };
     }
 
-    const itemData = db.findById('shop_items', itemId);
+    const itemData = await db.findById('shop_items', itemId);
 
     item.quantity -= 1;
-    db.update('user_inventory', inventory.id, { items: inventory.items });
+    await db.update('user_inventory', inventory.id, { items: inventory.items });
 
     return {
       success: true,

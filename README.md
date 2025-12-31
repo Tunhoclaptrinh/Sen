@@ -380,7 +380,7 @@ sen-backend/
 │   ├── notification.controller.js      # Notifications
 │   ├── upload.controller.js            # File uploads
 │   ├── timeline.controller.js          # Timeline events
-│   ├── address.controller.js           # Address management
+
 │   ├── cultural_category.controller.js # Cultural categories
 │   ├── importExport.controller.js      # Import/Export
 │   ├── level_cms.controller.js         # Level CMS (Admin)
@@ -435,8 +435,6 @@ sen-backend/
 │   ├── notification.service.js         # Notifications logic
 │   ├── upload.service.js               # File upload logic
 │   ├── timeline.service.js             # Timeline logic
-│   ├── address.service.js              # Address logic
-│   ├── promotion.service.js            # Promotions logic
 │   ├── importExport.service.js         # Import/Export logic
 │   ├── level_cms.service.js            # Level CMS logic
 │   ├── chapter_cms.service.js          # Chapter CMS logic
@@ -456,7 +454,6 @@ sen-backend/
 │   ├── review.schema.js                # Review schema
 │   ├── timeline.schema.js              # Timeline schema
 │   ├── notification.schema.js          # Notification schema
-│   ├── address.schema.js               # Address schema
 │   ├── scan_object.schema.js           # Scan object schema
 │   ├── shop_item.schema.js             # Shop item schema
 │   ├── game_chapter.schema.js          # Chapter schema

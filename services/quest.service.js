@@ -7,8 +7,8 @@ class QuestService extends BaseService {
   }
 
   async getAvailableQuests(userId) {
-    const quests = db.findAll('game_quests').filter(q => q.is_active);
-    const userProgress = db.findOne('user_progress', { user_id: userId });
+    const quests = (await db.findAll('game_quests')).filter(q => q.is_active);
+    const userProgress = await db.findOne('user_progress', { user_id: userId });
     const completedQuestIds = userProgress?.completed_quests?.map(q => q.quest_id) || [];
 
     const available = quests.filter(q => !completedQuestIds.includes(q.id))
@@ -23,14 +23,14 @@ class QuestService extends BaseService {
   }
 
   async completeQuest(questId, userId, score) {
-    const quest = db.findById('game_quests', questId);
+    const quest = await db.findById('game_quests', questId);
     if (!quest) {
       return { success: false, message: 'Quest not found', statusCode: 404 };
     }
 
-    let userProgress = db.findOne('user_progress', { user_id: userId });
+    let userProgress = await db.findOne('user_progress', { user_id: userId });
     if (!userProgress) {
-      userProgress = db.create('user_progress', {
+      userProgress = await db.create('user_progress', {
         user_id: userId,
         completed_modules: [],
         completed_quests: [],
@@ -56,7 +56,7 @@ class QuestService extends BaseService {
     const newPoints = (userProgress.total_points || 0) + quest.points;
     const newLevel = Math.floor(newPoints / 500) + 1;
 
-    const updated = db.update('user_progress', userProgress.id, {
+    const updated = await db.update('user_progress', userProgress.id, {
       completed_quests: [...(userProgress.completed_quests || []), completedQuest],
       total_points: newPoints,
       level: newLevel,
@@ -76,14 +76,13 @@ class QuestService extends BaseService {
       }
     };
   }
-
   async getLeaderboard(limit = 10) {
-    const allProgress = db.findAll('user_progress')
+    const allProgress = (await db.findAll('user_progress'))
       .sort((a, b) => (b.total_points || 0) - (a.total_points || 0))
       .slice(0, limit);
 
-    const leaderboard = allProgress.map((progress, index) => {
-      const user = db.findById('users', progress.user_id);
+    const leaderboard = await Promise.all(allProgress.map(async (progress, index) => {
+      const user = await db.findById('users', progress.user_id);
       return {
         rank: index + 1,
         user_name: user?.name || 'Unknown',
@@ -93,7 +92,7 @@ class QuestService extends BaseService {
         badges_count: progress.badges?.length || 0,
         completed_quests: progress.completed_quests?.length || 0
       };
-    });
+    }));
 
     return {
       success: true,

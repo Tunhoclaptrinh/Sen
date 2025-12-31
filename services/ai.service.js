@@ -50,7 +50,7 @@ class AIService {
       const aiResponse = await this.callAI(systemPrompt, history, message);
 
       // Lưu vào database
-      const chatRecord = db.create('ai_chat_history', {
+      const chatRecord = await db.create('ai_chat_history', {
         user_id: userId,
         level_id: context.levelId || null,
         character_id: context.characterId || null,
@@ -87,17 +87,17 @@ class AIService {
 
     // Nếu đang trong game session, lấy character của level đó
     if (!characterId && context.levelId) {
-      const level = db.findById('game_levels', context.levelId);
+      const level = await db.findById('game_levels', context.levelId);
       if (level) characterId = level.ai_character_id;
     }
 
     if (!characterId) return null; // Fallback default character
 
-    const character = db.findById('game_characters', characterId);
+    const character = await db.findById('game_characters', characterId);
 
     // KIỂM TRA TRẠNG THÁI TIẾN ĐỘ CỦA USER VỚI LEVEL NÀY
     // Để quyết định dùng persona nào (Mất trí nhớ hay Đã hồi phục)
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
     const isLevelCompleted = progress?.completed_levels?.includes(context.levelId);
 
     // Logic chọn Persona
@@ -126,16 +126,16 @@ class AIService {
 
     // Lấy kiến thức từ level
     if (context.levelId) {
-      const level = db.findById('game_levels', context.levelId);
+      const level = await db.findById('game_levels', context.levelId);
       if (level && level.knowledge_base) {
         knowledge += level.knowledge_base + "\n\n";
       }
 
       // Lấy thông tin artifacts trong level
       if (level.artifact_ids && level.artifact_ids.length > 0) {
-        const artifacts = level.artifact_ids.map(id =>
+        const artifacts = (await Promise.all(level.artifact_ids.map(id =>
           db.findById('artifacts', id)
-        ).filter(Boolean);
+        ))).filter(Boolean);
 
         artifacts.forEach(artifact => {
           knowledge += `Artifact: ${artifact.name}\n`;
@@ -147,7 +147,7 @@ class AIService {
 
     // Lấy kiến thức từ heritage site
     if (context.heritageSiteId) {
-      const site = db.findById('heritage_sites', context.heritageSiteId);
+      const site = await db.findById('heritage_sites', context.heritageSiteId);
       if (site) {
         knowledge += `Heritage Site: ${site.name}\n`;
         knowledge += `Description: ${site.description}\n`;
@@ -184,7 +184,7 @@ QUY TẮC:
     const query = { user_id: userId };
     if (levelId) query.level_id = levelId;
 
-    const history = db.findMany('ai_chat_history', query)
+    const history = (await db.findMany('ai_chat_history', query))
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .slice(0, limit)
       .reverse();
@@ -257,7 +257,7 @@ QUY TẮC:
    * Cung cấp gợi ý
    */
   async provideHint(userId, levelId, clueId) {
-    const level = db.findById('game_levels', levelId);
+    const level = await db.findById('game_levels', levelId);
     if (!level) {
       return {
         success: false,
@@ -267,7 +267,7 @@ QUY TẮC:
     }
 
     // Kiểm tra coins
-    const progress = db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
     const hintCost = 10;
 
     if (progress.coins < hintCost) {
@@ -279,7 +279,7 @@ QUY TẮC:
     }
 
     // Trừ coins
-    db.update('game_progress', progress.id, {
+    await db.update('game_progress', progress.id, {
       coins: progress.coins - hintCost
     });
 
@@ -310,9 +310,9 @@ QUY TẮC:
     let item;
 
     if (type === 'artifact') {
-      item = db.findById('artifacts', id);
+      item = await db.findById('artifacts', id);
     } else if (type === 'heritage_site') {
-      item = db.findById('heritage_sites', id);
+      item = await db.findById('heritage_sites', id);
     }
 
     if (!item) {
@@ -363,7 +363,7 @@ Trả lời bằng giọng điệu ${character.speaking_style}.`;
    */
   async generateQuiz(topicId, difficulty) {
     // Implementation for generating quiz questions
-    const topic = db.findById('game_levels', topicId);
+    const topic = await db.findById('game_levels', topicId);
 
     if (!topic) {
       return {
@@ -399,7 +399,7 @@ Trả lời bằng giọng điệu ${character.speaking_style}.`;
     const query = { user_id: userId };
     if (levelId) query.level_id = levelId;
 
-    const history = db.findMany('ai_chat_history', query)
+    const history = (await db.findMany('ai_chat_history', query))
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .slice(0, limit);
 
@@ -413,11 +413,11 @@ Trả lời bằng giọng điệu ${character.speaking_style}.`;
    * Xóa lịch sử
    */
   async clearHistory(userId) {
-    const history = db.findMany('ai_chat_history', { user_id: userId });
+    const history = await db.findMany('ai_chat_history', { user_id: userId });
 
-    history.forEach(h => {
-      db.delete('ai_chat_history', h.id);
-    });
+    for (const h of history) {
+      await db.delete('ai_chat_history', h.id);
+    }
 
     return {
       success: true,

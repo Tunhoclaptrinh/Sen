@@ -15,7 +15,7 @@ class ReviewService extends BaseService {
       };
     }
 
-    const result = db.findAllAdvanced('reviews', {
+    const result = await db.findAllAdvanced('reviews', {
       ...options,
       filter: {
         ...options.filter,

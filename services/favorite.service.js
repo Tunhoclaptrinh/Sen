@@ -7,7 +7,7 @@ class FavoriteService extends BaseService {
   }
 
   async getFavorites(userId, options = {}) {
-    const result = db.findAllAdvanced('favorites', {
+    const result = await db.findAllAdvanced('favorites', {
       ...options,
       filter: {
         ...options.filter,
@@ -15,21 +15,21 @@ class FavoriteService extends BaseService {
       }
     });
 
-    const enriched = result.data.map(fav => {
+    const enriched = (await Promise.all(result.data.map(async (fav) => {
       let item = null;
       if (fav.type === 'heritage_site') {
-        item = db.findById('heritage_sites', fav.reference_id);
+        item = await db.findById('heritage_sites', fav.reference_id);
       } else if (fav.type === 'artifact') {
-        item = db.findById('artifacts', fav.reference_id);
+        item = await db.findById('artifacts', fav.reference_id);
       } else if (fav.type === 'exhibition') {
-        item = db.findById('exhibitions', fav.reference_id);
+        item = await db.findById('exhibitions', fav.reference_id);
       }
 
       return {
         ...fav,
         item: item || null
       };
-    }).filter(f => f.item !== null);
+    }))).filter(f => f.item !== null);
 
     return {
       success: true,
@@ -47,7 +47,7 @@ class FavoriteService extends BaseService {
       };
     }
 
-    const existing = db.findOne('favorites', {
+    const existing = await db.findOne('favorites', {
       user_id: userId,
       type,
       reference_id: parseInt(referenceId)
@@ -61,7 +61,7 @@ class FavoriteService extends BaseService {
       };
     }
 
-    const favorite = db.create('favorites', {
+    const favorite = await db.create('favorites', {
       user_id: userId,
       type,
       reference_id: parseInt(referenceId),
@@ -76,7 +76,7 @@ class FavoriteService extends BaseService {
   }
 
   async removeFavorite(userId, type, referenceId) {
-    const favorite = db.findOne('favorites', {
+    const favorite = await db.findOne('favorites', {
       user_id: userId,
       type,
       reference_id: parseInt(referenceId)
@@ -90,7 +90,7 @@ class FavoriteService extends BaseService {
       };
     }
 
-    db.delete('favorites', favorite.id);
+    await db.delete('favorites', favorite.id);
 
     return {
       success: true,
@@ -101,7 +101,7 @@ class FavoriteService extends BaseService {
   // --- NEW METHODS ---
 
   async checkFavorite(userId, type, referenceId) {
-    const favorite = db.findOne('favorites', {
+    const favorite = await db.findOne('favorites', {
       user_id: userId,
       type,
       reference_id: parseInt(referenceId)
@@ -140,13 +140,13 @@ class FavoriteService extends BaseService {
     const query = { user_id: userId };
     if (type) query.type = type;
 
-    const favorites = db.findMany('favorites', query);
+    const favorites = await db.findMany('favorites', query);
 
     let count = 0;
-    favorites.forEach(fav => {
-      db.delete('favorites', fav.id);
+    for (const fav of favorites) {
+      await db.delete('favorites', fav.id);
       count++;
-    });
+    }
 
     return {
       success: true,
@@ -156,7 +156,7 @@ class FavoriteService extends BaseService {
   }
 
   async getFavoriteStats(userId) {
-    const favorites = db.findMany('favorites', { user_id: userId });
+    const favorites = await db.findMany('favorites', { user_id: userId });
 
     const stats = {
       total: favorites.length,

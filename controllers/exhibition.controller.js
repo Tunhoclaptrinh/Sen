@@ -3,7 +3,7 @@ const db = require('../config/database');
 class ExhibitionController {
   getAll = async (req, res, next) => {
     try {
-      const result = db.findAllAdvanced('exhibitions', req.parsedQuery);
+      const result = await db.findAllAdvanced('exhibitions', req.parsedQuery);
       res.json({
         success: true,
         count: result.data.length,
@@ -17,7 +17,7 @@ class ExhibitionController {
 
   getById = async (req, res, next) => {
     try {
-      const exhibition = db.findById('exhibitions', req.params.id);
+      const exhibition = await db.findById('exhibitions', req.params.id);
       if (!exhibition) {
         return res.status(404).json({
           success: false,
@@ -36,7 +36,8 @@ class ExhibitionController {
   getActive = async (req, res, next) => {
     try {
       const now = new Date();
-      const active = db.findAll('exhibitions').filter(e =>
+      const allExhibitions = await db.findAll('exhibitions');
+      const active = allExhibitions.filter(e =>
         e.is_active &&
         new Date(e.start_date) <= now &&
         new Date(e.end_date) >= now
@@ -54,7 +55,7 @@ class ExhibitionController {
 
   create = async (req, res, next) => {
     try {
-      const exhibition = db.create('exhibitions', {
+      const exhibition = await db.create('exhibitions', {
         ...req.body,
         visitor_count: 0,
         createdAt: new Date().toISOString()
@@ -71,7 +72,7 @@ class ExhibitionController {
 
   update = async (req, res, next) => {
     try {
-      const exhibition = db.findById('exhibitions', req.params.id);
+      const exhibition = await db.findById('exhibitions', req.params.id);
       if (!exhibition) {
         return res.status(404).json({
           success: false,
@@ -79,7 +80,7 @@ class ExhibitionController {
         });
       }
 
-      const updated = db.update('exhibitions', req.params.id, req.body);
+      const updated = await db.update('exhibitions', req.params.id, req.body);
       res.json({
         success: true,
         message: 'Exhibition updated',
@@ -92,7 +93,7 @@ class ExhibitionController {
 
   delete = async (req, res, next) => {
     try {
-      const exhibition = db.findById('exhibitions', req.params.id);
+      const exhibition = await db.findById('exhibitions', req.params.id);
       if (!exhibition) {
         return res.status(404).json({
           success: false,
@@ -100,7 +101,7 @@ class ExhibitionController {
         });
       }
 
-      db.delete('exhibitions', req.params.id);
+      await db.delete('exhibitions', req.params.id);
       res.json({
         success: true,
         message: 'Exhibition deleted'

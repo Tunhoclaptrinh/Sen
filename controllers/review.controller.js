@@ -11,7 +11,7 @@ class ReviewController {
         });
       }
 
-      const reviews = db.findMany('reviews', { type: type });
+      const reviews = await db.findMany('reviews', { type: type });
       res.json({
         success: true,
         count: reviews.length,
@@ -24,7 +24,7 @@ class ReviewController {
 
   create = async (req, res, next) => {
     try {
-      const review = db.create('reviews', {
+      const review = await db.create('reviews', {
         ...req.body,
         user_id: req.user.id,
         createdAt: new Date().toISOString()
@@ -42,7 +42,7 @@ class ReviewController {
 
   update = async (req, res, next) => {
     try {
-      const review = db.findById('reviews', req.params.id);
+      const review = await db.findById('reviews', req.params.id);
       if (!review) {
         return res.status(404).json({
           success: false,
@@ -57,7 +57,7 @@ class ReviewController {
         });
       }
 
-      const updated = db.update('reviews', req.params.id, {
+      const updated = await db.update('reviews', req.params.id, {
         ...req.body,
         updatedAt: new Date().toISOString()
       });
@@ -74,7 +74,7 @@ class ReviewController {
 
   delete = async (req, res, next) => {
     try {
-      const review = db.findById('reviews', req.params.id);
+      const review = await db.findById('reviews', req.params.id);
       if (!review) {
         return res.status(404).json({
           success: false,
@@ -89,7 +89,7 @@ class ReviewController {
         });
       }
 
-      db.delete('reviews', req.params.id);
+      await db.delete('reviews', req.params.id);
       res.json({
         success: true,
         message: 'Review deleted'
@@ -101,7 +101,7 @@ class ReviewController {
 
   getAll = async (req, res, next) => {
     try {
-      const result = db.findAllAdvanced('reviews', req.parsedQuery);
+      const result = await db.findAllAdvanced('reviews', req.parsedQuery);
       res.json({
         success: true,
         count: result.data.length,
@@ -115,7 +115,7 @@ class ReviewController {
 
   getById = async (req, res, next) => {
     try {
-      const review = db.findById('reviews', req.params.id);
+      const review = await db.findById('reviews', req.params.id);
       if (!review) {
         return res.status(404).json({
           success: false,
@@ -141,7 +141,7 @@ class ReviewController {
         });
       }
 
-      const result = db.findAllAdvanced('reviews', {
+      const result = await db.findAllAdvanced('reviews', {
         q: q,
         ...req.parsedQuery
       });

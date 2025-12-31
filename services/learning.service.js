@@ -7,14 +7,14 @@ class LearningService extends BaseService {
   }
 
   async completeModule(moduleId, userId, score) {
-    const module = db.findById('learning_modules', moduleId);
+    const module = await db.findById('learning_modules', moduleId);
     if (!module) {
       return { success: false, message: 'Module not found', statusCode: 404 };
     }
 
-    let userProgress = db.findOne('user_progress', { user_id: userId });
+    let userProgress = await db.findOne('user_progress', { user_id: userId });
     if (!userProgress) {
-      userProgress = db.create('user_progress', {
+      userProgress = await db.create('user_progress', {
         user_id: userId,
         completed_modules: [],
         completed_quests: [],
@@ -38,7 +38,7 @@ class LearningService extends BaseService {
 
     const points = score >= (module.passing_score || 70) ? 50 : 0;
 
-    const updated = db.update('user_progress', userProgress.id, {
+    const updated = await db.update('user_progress', userProgress.id, {
       completed_modules: [...(userProgress.completed_modules || []), completedModule],
       total_points: (userProgress.total_points || 0) + points
     });
@@ -56,8 +56,8 @@ class LearningService extends BaseService {
   }
 
   async getLearningPath(userId) {
-    const userProgress = db.findOne('user_progress', { user_id: userId });
-    const allModules = db.findAll('learning_modules')
+    const userProgress = await db.findOne('user_progress', { user_id: userId });
+    const allModules = (await db.findAll('learning_modules'))
       .sort((a, b) => a.order - b.order);
 
     const completedModuleIds = userProgress?.completed_modules?.map(m => m.module_id) || [];

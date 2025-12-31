@@ -8,7 +8,7 @@ class HeritageSiteService extends BaseService {
   }
 
   async findNearby(lat, lon, radius = 5, options = {}) {
-    const allSites = db.findAll('heritage_sites');
+    const allSites = await db.findAll('heritage_sites');
 
     const nearby = allSites
       .filter(site => site.latitude && site.longitude)
@@ -27,7 +27,7 @@ class HeritageSiteService extends BaseService {
   }
 
   async getArtifacts(siteId) {
-    const artifacts = db.findMany('artifacts', { heritage_site_id: parseInt(siteId) });
+    const artifacts = await db.findMany('artifacts', { heritage_site_id: parseInt(siteId) });
     return {
       success: true,
       data: artifacts,
@@ -36,7 +36,7 @@ class HeritageSiteService extends BaseService {
   }
 
   async getTimeline(siteId) {
-    const timelines = db.findMany('timelines', { heritage_site_id: parseInt(siteId) })
+    const timelines = (await db.findMany('timelines', { heritage_site_id: parseInt(siteId) }))
       .sort((a, b) => a.year - b.year);
     return {
       success: true,

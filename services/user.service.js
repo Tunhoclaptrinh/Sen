@@ -59,8 +59,8 @@ class UserService extends BaseService {
   }
 
   async getUserStats() {
-    const users = db.findAll('users');
-    const progress = db.findAll('game_progress');
+    const users = await db.findAll('users');
+    const progress = await db.findAll('game_progress');
 
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
@@ -91,7 +91,7 @@ class UserService extends BaseService {
   }
 
   async getUserActivity(userId) {
-    const user = db.findById('users', userId);
+    const user = await db.findById('users', userId);
 
     if (!user) {
       return {
@@ -101,10 +101,10 @@ class UserService extends BaseService {
       };
     }
 
-    const progress = db.findOne('game_progress', { user_id: userId });
-    const sessions = db.findMany('game_sessions', { user_id: userId });
-    const scans = db.findMany('scan_history', { user_id: userId });
-    const favorites = db.findMany('favorites', { user_id: userId });
+    const progress = await db.findOne('game_progress', { user_id: userId });
+    const sessions = await db.findMany('game_sessions', { user_id: userId });
+    const scans = await db.findMany('scan_history', { user_id: userId });
+    const favorites = await db.findMany('favorites', { user_id: userId });
 
     const activity = {
       user: sanitizeUser(user),
@@ -133,7 +133,7 @@ class UserService extends BaseService {
   }
 
   async toggleUserStatus(userId) {
-    const user = db.findById('users', userId);
+    const user = await db.findById('users', userId);
 
     if (!user) {
       return {
@@ -143,7 +143,7 @@ class UserService extends BaseService {
       };
     }
 
-    const updated = db.update('users', userId, {
+    const updated = await db.update('users', userId, {
       isActive: !user.isActive,
       updatedAt: new Date().toISOString()
     });
@@ -156,7 +156,7 @@ class UserService extends BaseService {
   }
 
   async permanentDeleteUser(userId) {
-    const user = db.findById('users', userId);
+    const user = await db.findById('users', userId);
 
     if (!user) {
       return {
@@ -178,25 +178,25 @@ class UserService extends BaseService {
     };
 
     // Helper to delete many
-    const deleteRelated = (collection, filter) => {
-      const items = db.findMany(collection, filter);
-      items.forEach(item => {
-        db.delete(collection, item.id);
+    const deleteRelated = async (collection, filter) => {
+      const items = await db.findMany(collection, filter);
+      for (const item of items) {
+        await db.delete(collection, item.id);
         if (deleted[collection] !== undefined) deleted[collection]++;
-      });
+      }
     };
 
     // Delete all related data
-    deleteRelated('game_progress', { user_id: userId });
-    deleteRelated('game_sessions', { user_id: userId });
-    deleteRelated('user_inventory', { user_id: userId });
-    deleteRelated('scan_history', { user_id: userId });
-    deleteRelated('favorites', { user_id: userId });
-    deleteRelated('collections', { user_id: userId });
-    deleteRelated('notifications', { user_id: userId });
+    await deleteRelated('game_progress', { user_id: userId });
+    await deleteRelated('game_sessions', { user_id: userId });
+    await deleteRelated('user_inventory', { user_id: userId });
+    await deleteRelated('scan_history', { user_id: userId });
+    await deleteRelated('favorites', { user_id: userId });
+    await deleteRelated('collections', { user_id: userId });
+    await deleteRelated('notifications', { user_id: userId });
 
     // Finally delete user
-    db.delete('users', userId);
+    await db.delete('users', userId);
 
     return {
       success: true,

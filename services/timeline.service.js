@@ -7,7 +7,7 @@ class TimelineService extends BaseService {
   }
 
   async findByHeritageSite(siteId, options = {}) {
-    const result = db.findAllAdvanced('timelines', {
+    const result = await db.findAllAdvanced('timelines', {
       ...options,
       filter: {
         ...options.filter,

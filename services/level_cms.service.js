@@ -282,7 +282,7 @@ class LevelManagementService extends BaseService {
    * Clone level (tạo bản sao để chỉnh sửa)
    */
   async cloneLevel(levelId, newName) {
-    const level = db.findById('game_levels', levelId);
+    const level = await db.findById('game_levels', levelId);
     if (!level) {
       return {
         success: false,
@@ -308,7 +308,7 @@ class LevelManagementService extends BaseService {
    * Preview level (không tính progress)
    */
   async previewLevel(levelId) {
-    const level = db.findById('game_levels', levelId);
+    const level = await db.findById('game_levels', levelId);
     if (!level) {
       return {
         success: false,
@@ -430,12 +430,13 @@ class LevelManagementService extends BaseService {
    * Reorder levels in chapter
    */
   async reorderLevels(chapterId, levelIdsInOrder) {
-    levelIdsInOrder.forEach((levelId, index) => {
-      db.update('game_levels', levelId, {
+    for (let index = 0; index < levelIdsInOrder.length; index++) {
+      const levelId = levelIdsInOrder[index];
+      await db.update('game_levels', levelId, {
         order: index + 1,
         updated_at: new Date().toISOString()
       });
-    });
+    }
 
     return {
       success: true,

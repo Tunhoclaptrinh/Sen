@@ -7,7 +7,7 @@ class NotificationService extends BaseService {
   }
 
   async getNotifications(userId, options = {}) {
-    const result = db.findAllAdvanced('notifications', {
+    const result = await db.findAllAdvanced('notifications', {
       ...options,
       filter: {
         ...options.filter,
@@ -28,7 +28,7 @@ class NotificationService extends BaseService {
   }
 
   async markAsRead(notificationId, userId) {
-    const notification = db.findById('notifications', notificationId);
+    const notification = await db.findById('notifications', notificationId);
 
     if (!notification || notification.user_id !== userId) {
       return {
@@ -38,7 +38,7 @@ class NotificationService extends BaseService {
       };
     }
 
-    const updated = db.update('notifications', notificationId, {
+    const updated = await db.update('notifications', notificationId, {
       is_read: true
     });
 

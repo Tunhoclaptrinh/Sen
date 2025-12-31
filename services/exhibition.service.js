@@ -8,7 +8,7 @@ class ExhibitionService extends BaseService {
 
   async getActiveExhibitions(options = {}) {
     const now = new Date();
-    const allExhibitions = db.findAll('exhibitions');
+    const allExhibitions = await db.findAll('exhibitions');
 
     const activeExhibitions = allExhibitions.filter(ex => {
       const start = new Date(ex.start_date);

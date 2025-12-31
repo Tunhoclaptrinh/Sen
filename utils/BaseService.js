@@ -153,7 +153,7 @@ class BaseService {
 
       // Unique validation
       if (rule.unique) {
-        const existing = db.findOne(this.collection, { [field]: value });
+        const existing = await db.findOne(this.collection, { [field]: value });
         if (existing) {
           errors[field] = `${field} '${value}' already exists`;
         }
@@ -161,7 +161,7 @@ class BaseService {
 
       // Foreign key validation
       if (rule.foreignKey) {
-        const relatedEntity = db.findById(rule.foreignKey, value);
+        const relatedEntity = await db.findById(rule.foreignKey, value);
         if (!relatedEntity) {
           errors[field] = `${field} references non-existent ${rule.foreignKey} (ID: ${value})`;
         }
@@ -368,7 +368,7 @@ class BaseService {
       // Transform data
       const transformedData = await this.beforeUpdate(id, data);
 
-      const updated = db.update(this.collection, id, transformedData);
+      const updated = await db.update(this.collection, id, transformedData);
 
       // Hook after update
       await this.afterUpdate(updated);

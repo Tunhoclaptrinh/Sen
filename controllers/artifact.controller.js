@@ -3,7 +3,7 @@ const db = require('../config/database');
 class ArtifactController {
   getAll = async (req, res, next) => {
     try {
-      const result = db.findAllAdvanced('artifacts', req.parsedQuery);
+      const result = await db.findAllAdvanced('artifacts', req.parsedQuery);
       res.json({
         success: true,
         count: result.data.length,
@@ -17,7 +17,7 @@ class ArtifactController {
 
   getById = async (req, res, next) => {
     try {
-      const artifact = db.findById('artifacts', req.params.id);
+      const artifact = await db.findById('artifacts', req.params.id);
       if (!artifact) {
         return res.status(404).json({
           success: false,
@@ -43,7 +43,7 @@ class ArtifactController {
         });
       }
 
-      const result = db.findAllAdvanced('artifacts', {
+      const result = await db.findAllAdvanced('artifacts', {
         q: q,
         ...req.parsedQuery
       });
@@ -61,7 +61,7 @@ class ArtifactController {
 
   getRelated = async (req, res, next) => {
     try {
-      const artifact = db.findById('artifacts', req.params.id);
+      const artifact = await db.findById('artifacts', req.params.id);
       if (!artifact) {
         return res.status(404).json({
           success: false,
@@ -69,7 +69,8 @@ class ArtifactController {
         });
       }
 
-      const related = db.findAll('artifacts')
+      const allArtifacts = await db.findAll('artifacts');
+      const related = allArtifacts
         .filter(a =>
           a.id !== parseInt(req.params.id) &&
           (a.heritage_site_id === artifact.heritage_site_id ||
@@ -89,7 +90,7 @@ class ArtifactController {
 
   create = async (req, res, next) => {
     try {
-      const artifact = db.create('artifacts', {
+      const artifact = await db.create('artifacts', {
         ...req.body,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
@@ -106,7 +107,7 @@ class ArtifactController {
 
   update = async (req, res, next) => {
     try {
-      const artifact = db.findById('artifacts', req.params.id);
+      const artifact = await db.findById('artifacts', req.params.id);
       if (!artifact) {
         return res.status(404).json({
           success: false,
@@ -114,7 +115,7 @@ class ArtifactController {
         });
       }
 
-      const updated = db.update('artifacts', req.params.id, {
+      const updated = await db.update('artifacts', req.params.id, {
         ...req.body,
         updatedAt: new Date().toISOString()
       });
@@ -131,7 +132,7 @@ class ArtifactController {
 
   delete = async (req, res, next) => {
     try {
-      const artifact = db.findById('artifacts', req.params.id);
+      const artifact = await db.findById('artifacts', req.params.id);
       if (!artifact) {
         return res.status(404).json({
           success: false,
@@ -139,7 +140,7 @@ class ArtifactController {
         });
       }
 
-      db.delete('artifacts', req.params.id);
+      await db.delete('artifacts', req.params.id);
       res.json({
         success: true,
         message: 'Artifact deleted'

@@ -7,7 +7,7 @@ class ArtifactService extends BaseService {
   }
 
   async getByType(type) {
-    const artifacts = db.findMany('artifacts', { artifact_type: type });
+    const artifacts = await db.findMany('artifacts', { artifact_type: type });
     return {
       success: true,
       data: artifacts
@@ -15,12 +15,13 @@ class ArtifactService extends BaseService {
   }
 
   async getRelated(artifactId) {
-    const artifact = db.findById('artifacts', artifactId);
+    const artifact = await db.findById('artifacts', artifactId);
     if (!artifact) {
       return { success: false, message: 'Artifact not found', statusCode: 404 };
     }
 
-    const related = db.findAll('artifacts')
+    const allArtifacts = await db.findAll('artifacts');
+    const related = allArtifacts
       .filter(a =>
         a.id !== artifactId &&
         (a.heritage_site_id === artifact.heritage_site_id ||

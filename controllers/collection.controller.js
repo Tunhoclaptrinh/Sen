@@ -3,7 +3,7 @@ const db = require('../config/database');
 class CollectionController {
   getAll = async (req, res, next) => {
     try {
-      const collections = db.findMany('collections', { user_id: req.user.id });
+      const collections = await db.findMany('collections', { user_id: req.user.id });
       res.json({
         success: true,
         count: collections.length,
@@ -16,7 +16,7 @@ class CollectionController {
 
   getById = async (req, res, next) => {
     try {
-      const collection = db.findById('collections', req.params.id);
+      const collection = await db.findById('collections', req.params.id);
       if (!collection) {
         return res.status(404).json({
           success: false,
@@ -42,7 +42,7 @@ class CollectionController {
 
   create = async (req, res, next) => {
     try {
-      const collection = db.create('collections', {
+      const collection = await db.create('collections', {
         ...req.body,
         user_id: req.user.id,
         artifact_ids: req.body.artifact_ids || [],
@@ -64,7 +64,7 @@ class CollectionController {
 
   update = async (req, res, next) => {
     try {
-      const collection = db.findById('collections', req.params.id);
+      const collection = await db.findById('collections', req.params.id);
       if (!collection) {
         return res.status(404).json({
           success: false,
@@ -79,7 +79,7 @@ class CollectionController {
         });
       }
 
-      const updated = db.update('collections', req.params.id, {
+      const updated = await db.update('collections', req.params.id, {
         ...req.body,
         updatedAt: new Date().toISOString()
       });
@@ -96,7 +96,7 @@ class CollectionController {
 
   delete = async (req, res, next) => {
     try {
-      const collection = db.findById('collections', req.params.id);
+      const collection = await db.findById('collections', req.params.id);
       if (!collection) {
         return res.status(404).json({
           success: false,
@@ -111,7 +111,7 @@ class CollectionController {
         });
       }
 
-      db.delete('collections', req.params.id);
+      await db.delete('collections', req.params.id);
       res.json({
         success: true,
         message: 'Collection deleted'
@@ -123,7 +123,7 @@ class CollectionController {
 
   addArtifact = async (req, res, next) => {
     try {
-      const collection = db.findById('collections', req.params.id);
+      const collection = await db.findById('collections', req.params.id);
       if (!collection) {
         return res.status(404).json({
           success: false,
@@ -145,7 +145,7 @@ class CollectionController {
         });
       }
 
-      const updated = db.update('collections', req.params.id, {
+      const updated = await db.update('collections', req.params.id, {
         artifact_ids: [...collection.artifact_ids, parseInt(req.params.artifactId)],
         total_items: (collection.artifact_ids.length || 0) + 1
       });
@@ -162,7 +162,7 @@ class CollectionController {
 
   removeArtifact = async (req, res, next) => {
     try {
-      const collection = db.findById('collections', req.params.id);
+      const collection = await db.findById('collections', req.params.id);
       if (!collection) {
         return res.status(404).json({
           success: false,
@@ -177,7 +177,7 @@ class CollectionController {
         });
       }
 
-      const updated = db.update('collections', req.params.id, {
+      const updated = await db.update('collections', req.params.id, {
         artifact_ids: collection.artifact_ids.filter(id => id !== parseInt(req.params.artifactId)),
         total_items: (collection.artifact_ids.length || 1) - 1
       });
