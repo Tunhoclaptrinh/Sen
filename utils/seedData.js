@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 
 const DB_FILE = path.join(__dirname, '../database/db.json');
 
@@ -528,9 +529,9 @@ const seedData = {
       "description": "Nhân vật rối nước vui tính, thông minh",
       "persona": "Bạn là Chú Tễu, một nhân vật rối nước vui tính từ múa rối Bắc Bộ.",
       "speaking_style": "Vui vẻ, hài hước, sử dụng từ ngữ dân dã",
-      "avatar": "https://example.com/teu-colored.png",
-      "avatar_locked": "https://example.com/teu-bw.png",
-      "avatar_unlocked": "https://example.com/teu-colored.png",
+      "avatar": "https://ui-avatars.com/api/?name=Teu&background=D35400&color=fff",
+      "avatar_locked": "https://ui-avatars.com/api/?name=Teu&background=333&color=888",
+      "avatar_unlocked": "https://ui-avatars.com/api/?name=Teu&background=D35400&color=fff",
       "persona_amnesia": "Chú...chú là ai nhỉ? Chú không nhớ rõ lắm...",
       "persona_restored": "Ha ha! Chú nhớ ra rồi! Chú là Chú Tễu, người dẫn chuyện trong múa rối nước!",
       "rarity": "rare",
@@ -572,12 +573,132 @@ const seedData = {
     }
   ],
 
-  "game_progress": [],
+  // ========== EXPANDED DATA ==========
+
+  "game_badges": [
+    {
+      "id": 1,
+      "name": "Nhà Thám Hiểm",
+      "description": "Ghé thăm 5 di tích lịch sử khác nhau",
+      "icon": "🧭",
+      "condition": "visit_5_sites",
+      "type": "exploration"
+    },
+    {
+      "id": 2,
+      "name": "Học Giả Uyên Bác",
+      "description": "Hoàn thành Chương 1 đạt điểm tối đa",
+      "icon": "📜",
+      "condition": "perfect_chapter_1",
+      "type": "knowledge"
+    },
+    {
+      "id": 3,
+      "name": "Nhà Sưu Tầm",
+      "description": "Sở hữu 10 cổ vật trong bộ sưu tập",
+      "icon": "🏺",
+      "condition": "collect_10_artifacts",
+      "type": "collection"
+    }
+  ],
+
+  "game_achievements": [
+    {
+      "id": 1,
+      "name": "Bước Chân Đầu Tiên",
+      "description": "Đăng nhập lần đầu vào SEN",
+      "points": 10,
+      "target": 1,
+      "type": "first_login",
+      "icon": "👣"
+    },
+    {
+      "id": 2,
+      "name": "Triệu Phú Xu",
+      "description": "Tích lũy 1000 xu",
+      "points": 50,
+      "target": 1000,
+      "type": "accumulate_coins",
+      "icon": "💰"
+    }
+  ],
+
+  "scan_objects": [
+    {
+      "id": 1,
+      "code": "SCAN_ARTIFACT_1",
+      "name": "QR Tranh Phố Cổ",
+      "object_id": 1,
+      "object_type": "artifact",
+      "reward_coins": 100,
+      "reward_petals": 1,
+      "latitude": 15.8801,
+      "longitude": 108.3288
+    },
+    {
+      "id": 2,
+      "code": "SCAN_ARTIFACT_3",
+      "name": "QR Trống Đồng",
+      "object_id": 3,
+      "object_type": "artifact",
+      "reward_coins": 150,
+      "reward_petals": 2,
+      "latitude": 10.1333,
+      "longitude": 104.7667
+    }
+  ],
+
+  "shop_items": [
+    {
+      "id": 1,
+      "name": "Gợi ý",
+      "description": "Hiện đáp án đúng cho 1 câu hỏi",
+      "type": "consumable",
+      "cost": 100,
+      "effect": "reveal_hint",
+      "icon": "💡"
+    },
+    {
+      "id": 2,
+      "name": "Vé x2 Xu",
+      "description": "Nhân đôi xu nhận được trong 1 màn chơi",
+      "type": "buff",
+      "cost": 200,
+      "effect": "double_coins",
+      "icon": "🎫"
+    },
+    {
+      "id": 3,
+      "name": "Khung Avatar Vàng",
+      "description": "Khung avatar sang trọng",
+      "type": "cosmetic",
+      "cost": 500,
+      "effect": "avatar_frame_gold",
+      "icon": "🖼️"
+    }
+  ],
+
+  "game_progress": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "level": 5,
+      "current_chapter": 1,
+      "total_sen_petals": 3,
+      "coins": 250,
+      "unlocked_chapters": [1],
+      "completed_levels": [1],
+      "collected_characters": [1],
+      "badges": [1],
+      "achievements": [1],
+      "streak_days": 2,
+      "last_login": "2024-05-20T10:00:00Z",
+      "museum_open": true,
+      "museum_income": 10
+    }
+  ],
+
   "game_sessions": [],
-  "scan_objects": [],
-  "shop_items": [],
-  "game_badges": [],
-  "game_achievements": [],
   "learning_modules": [],
   "game_quests": [],
   "user_inventory": [],
@@ -605,11 +726,53 @@ function seedJSON() {
 }
 
 async function seedMongoDB() {
-  // MongoDB seeding logic (giữ nguyên)
+  try {
+    // 1. Connect to MongoDB
+    console.log('🔌 Connecting to MongoDB...');
+    await mongoose.connect(process.env.DATABASE_URL);
+    console.log('✅ Connected.');
+
+    // 2. Clear & Seed each collection
+    for (const [collectionName, items] of Object.entries(seedData)) {
+      if (items.length === 0) continue;
+
+      // Access collection directly
+      const collection = mongoose.connection.collection(collectionName);
+
+      // Drop if exists (optional, or just deleteMany)
+      try {
+        // We use deleteMany instead of drop to keep indexes if any
+        await collection.deleteMany({});
+      } catch (e) { }
+
+      // Transform items to have _id matches id if needed, or just insert
+      // MongoDB allows custom _id. To preserve relations (user_id: 1), we MUST use _id: 1
+      const itemsWithId = items.map(item => {
+        // If item has 'id', use it as '_id' to preserve relations
+        if (item.id) {
+          return { _id: item.id, ...item };
+        }
+        return item;
+      });
+
+      await collection.insertMany(itemsWithId);
+      console.log(`🌱 Seeded ${items.length} items into '${collectionName}'`);
+    }
+
+    // 3. Create Indexes (Optional but good)
+    // await mongoose.connection.collection('users').createIndex({ email: 1 }, { unique: true });
+
+    return true;
+
+  } catch (error) {
+    console.error('❌ MongoDB Seeding Error:', error);
+    return false;
+  }
 }
 
 async function seedSQL() {
-  // SQL seeding logic (giữ nguyên)
+  console.log('⚠️ SQL Seeding not implemented yet.');
+  return false;
 }
 
 async function seedDatabase() {
@@ -625,7 +788,6 @@ async function seedDatabase() {
 
     switch (dbType.toLowerCase()) {
       case 'json':
-        // FIX: Gọi hàm seedJSON thay vì gọi đệ quy seedDatabase
         success = seedJSON();
         break;
 
@@ -642,22 +804,21 @@ async function seedDatabase() {
 
       default:
         console.error(`❌ Unknown database type: ${dbType}`);
-        console.log('   Supported types: json, mongodb, mysql, postgresql');
         process.exit(1);
     }
 
     if (success) {
       console.log('\n📊 Seeded data summary:');
       console.log(`   - Users: ${seedData.users.length}`);
-      console.log(`   - Categories: ${seedData.categories.length}`);
-      console.log(`   - Restaurants: ${seedData.restaurants.length}`);
-      console.log(`   - Products: ${seedData.products.length}`);
+      console.log(`   - Heritage Sites: ${seedData.heritage_sites.length}`);
+      console.log(`   - Artifacts: ${seedData.artifacts.length}`);
+      console.log(`   - Game Levels: ${seedData.game_levels.length}`);
+      console.log(`   - Shop Items: ${seedData.shop_items.length}`);
 
       console.log('\n🔑 Test accounts (Password: 123456):');
-      console.log(`   Admin:    admin@funfood.com`);
-      console.log(`   Customer: user@funfood.com`);
-      console.log(`   Shipper:  shipper@funfood.com`);
-      console.log(`   Manager:  manager.chay@funfood.com`);
+      console.log(`   Admin:      admin@sen.com`);
+      console.log(`   Researcher: tuanpham@sen.com`);
+      console.log(`   Customer:   huong.do@sen.com`);
 
       console.log('\n✨ Seeding completed successfully!\n');
     }
@@ -671,7 +832,6 @@ async function seedDatabase() {
 // ==================== CLI EXECUTION ====================
 
 if (require.main === module) {
-  // Load environment variables
   require('dotenv').config();
 
   seedDatabase().catch(error => {
