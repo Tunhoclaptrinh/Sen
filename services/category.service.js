@@ -22,6 +22,31 @@ class CategoryService extends BaseService {
 
     return { success: true };
   }
+
+  /**
+   * Lấy tất cả vật phẩm/di sản thuộc category này
+   */
+  async getItemsByCategory(categoryId, queryOptions = {}) {
+    // Hiện tại chủ yếu là artifacts có category_id
+    // Có thể mở rộng thêm cho heritage_sites nếu sau này bổ sung schema
+
+    const options = {
+      ...queryOptions,
+      filter: {
+        ...(queryOptions.filter || {}),
+        category_id: parseInt(categoryId)
+      }
+    };
+
+    const result = await db.findAllAdvanced('artifacts', options);
+
+    return {
+      success: true,
+      count: result.data.length,
+      data: result.data,
+      pagination: result.pagination
+    };
+  }
 }
 
 module.exports = new CategoryService();

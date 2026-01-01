@@ -8,6 +8,7 @@ const { validateSchema } = require('../middleware/validation.middleware');
 // Public
 router.get('/', categoryController.getAll);
 router.get('/:id', categoryController.getById);
+router.get('/:id/items', categoryController.getItems);
 
 // Protected (Admin & Researcher có thể tạo category mới nếu cần)
 router.post('/',
