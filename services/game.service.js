@@ -1394,10 +1394,18 @@ class GameService {
    * Phần thưởng hàng ngày
    */
   async getDailyReward(userId) {
-    const progress = await db.findOne('game_progress', { user_id: userId });
+    let progress = await db.findOne('game_progress', { user_id: userId });
+
+    // Fix: Auto-initialize if not exists
+    if (!progress) {
+      progress = await this.initializeProgress(userId);
+    }
+
     const today = new Date().toISOString().split('T')[0];
     const lastLogin = new Date(progress.last_login).toISOString().split('T')[0];
 
+    // Note: If newly initialized, last_login is 'today', so this correct logic will return "already claimed"
+    // which effectively prevents claiming on the very first day (Registration Day).
     if (today === lastLogin) {
       return { success: false, message: 'Daily reward already claimed', statusCode: 400 };
     }
