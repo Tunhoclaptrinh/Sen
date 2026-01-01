@@ -406,7 +406,7 @@ const seedData = {
       "heritage_site_id": 1,
       "theme": "Lịch sử & Văn hóa Hội An",
       "start_date": "2024-01-01T00:00:00Z",
-      "end_date": "2024-12-31T23:59:59Z",
+      "end_date": "2026-12-31T23:59:59Z",
       "curator": "ThS. Trần Văn An",
       "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
       "artifact_ids": [1, 2],
@@ -419,7 +419,7 @@ const seedData = {
       "heritage_site_id": 4,
       "theme": "Khảo cổ học",
       "start_date": "2024-03-01T00:00:00Z",
-      "end_date": "2024-08-31T23:59:59Z",
+      "end_date": "2026-08-31T23:59:59Z",
       "curator": "GS. Lê Văn Minh",
       "image": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=600",
       "artifact_ids": [3],
@@ -487,6 +487,18 @@ const seedData = {
       "total_items": 4,
       "is_public": true,
       "created_at": "2024-11-01T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "name": "Cổ vật thời Lý",
+      "description": "Bộ sưu tập các cổ vật đặc sắc thời Lý",
+      "artifact_ids": [3],
+      "heritage_site_ids": [2, 5],
+      "exhibition_ids": [],
+      "total_items": 3,
+      "is_public": true,
+      "created_at": "2024-01-01T00:00:00Z"
     }
   ],
 
@@ -626,23 +638,45 @@ const seedData = {
   "scan_objects": [
     {
       "id": 1,
-      "code": "SCAN_ARTIFACT_1",
-      "name": "QR Tranh Phố Cổ",
+      "code": "HOIAN001",
+      "name": "Chùa Cầu Hội An",
+      "object_id": 1,
+      "object_type": "heritage_site",
+      "reward_coins": 200,
+      "reward_petals": 2,
+      "latitude": 15.8795,
+      "longitude": 108.3274
+    },
+    {
+      "id": 2,
+      "code": "ARTIFACT001",
+      "name": "Bức tranh Hội An",
       "object_id": 1,
       "object_type": "artifact",
-      "reward_coins": 100,
+      "reward_coins": 150,
       "reward_petals": 1,
       "latitude": 15.8801,
       "longitude": 108.3288
     },
     {
-      "id": 2,
-      "code": "SCAN_ARTIFACT_3",
-      "name": "QR Trống Đồng",
-      "object_id": 3,
-      "object_type": "artifact",
-      "reward_coins": 150,
+      "id": 3,
+      "code": "HANOI001",
+      "name": "Hoàng Thành Thăng Long",
+      "object_id": 2,
+      "object_type": "heritage_site",
+      "reward_coins": 180,
       "reward_petals": 2,
+      "latitude": 21.0341,
+      "longitude": 105.8372
+    },
+    {
+      "id": 4,
+      "code": "OCEO001",
+      "name": "Khu khảo cổ Óc Eo",
+      "object_id": 4,
+      "object_type": "heritage_site",
+      "reward_coins": 250,
+      "reward_petals": 3,
       "latitude": 10.1333,
       "longitude": 104.7667
     }

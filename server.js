@@ -31,6 +31,7 @@ app.use(helmet({
 
 
 // Middleware
+const path = require('path');
 const corsOptions = {
   origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
   credentials: process.env.CORS_CREDENTIALS === 'true' || false
@@ -38,6 +39,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve Static Files (Uploads)
+app.use('/uploads', express.static(path.join(__dirname, 'database/uploads')));
 
 // Logging
 app.use(require('./middleware/logger.middleware'));

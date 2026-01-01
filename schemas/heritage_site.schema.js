@@ -10,24 +10,25 @@ module.exports = {
   description: {
     type: 'string',
     required: true,
-    minLength: 20,
+    minLength: 10,
     maxLength: 5000,
     description: 'Mô tả chi tiết về di sản'
   },
   type: {
     type: 'enum',
     enum: ['monument', 'temple', 'museum', 'archaeological_site', 'historic_building', 'natural_heritage', 'intangible_heritage'],
-    required: true,
+    required: false,
+    default: 'monument',
     description: 'Loại di sản'
   },
   cultural_period: {
     type: 'string',
-    required: true,
+    required: false,
     description: 'Thời kỳ văn hóa (VD: Triều Nguyễn, Thời Lý, ...)'
   },
   region: {
     type: 'string',
-    required: true,
+    required: false,
     description: 'Vùng miền (Bắc, Trung, Nam)'
   },
   latitude: {

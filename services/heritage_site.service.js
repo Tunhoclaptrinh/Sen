@@ -7,6 +7,42 @@ class HeritageSiteService extends BaseService {
     super('heritage_sites');
   }
 
+  /**
+   * Transform data before create
+   */
+  async beforeCreate(data) {
+    // Transform input data
+    if (data.location) {
+      if (data.location.address) data.address = data.location.address;
+      if (data.location.latitude) data.latitude = data.location.latitude;
+      if (data.location.longitude) data.longitude = data.location.longitude;
+    }
+
+    if (data.period && !data.cultural_period) {
+      data.cultural_period = data.period;
+    }
+
+    return super.beforeCreate(data);
+  }
+
+  /**
+   * Transform data before update
+   */
+  async beforeUpdate(id, data) {
+    // Transform input data
+    if (data.location) {
+      if (data.location.address) data.address = data.location.address;
+      if (data.location.latitude) data.latitude = data.location.latitude;
+      if (data.location.longitude) data.longitude = data.location.longitude;
+    }
+
+    if (data.period && !data.cultural_period) {
+      data.cultural_period = data.period;
+    }
+
+    return super.beforeUpdate(id, data);
+  }
+
   async findNearby(lat, lon, radius = 5, options = {}) {
     const allSites = await db.findAll('heritage_sites');
 

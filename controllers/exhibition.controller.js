@@ -37,11 +37,7 @@ class ExhibitionController {
     try {
       const now = new Date();
       const allExhibitions = await db.findAll('exhibitions');
-      const active = allExhibitions.filter(e =>
-        e.is_active &&
-        new Date(e.start_date) <= now &&
-        new Date(e.end_date) >= now
-      );
+      const active = allExhibitions.filter(e => e.is_active);
 
       res.json({
         success: true,

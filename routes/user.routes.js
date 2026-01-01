@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/user.controller');
 const { protect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
+const { getSchemaDoc } = require('../middleware/validation.middleware');
 const importExportController = require('../controllers/importExport.controller');
 
 // === ADMIN ROUTES ===
@@ -48,7 +49,13 @@ router.get('/export', protect, checkPermission('users', 'import_export'), (req, 
 });
 
 // === PUBLIC/USER ROUTES ===
+router.get('/schema', (req, res, next) => {
+  req.params.entity = 'user';
+  getSchemaDoc(req, res);
+});
+
 // User xem profile chính mình hoặc Admin xem profile người khác
+router.get('/:id/activity', protect, userController.getUserActivity);
 router.get('/:id', protect, userController.getById);
 
 router.put('/profile',

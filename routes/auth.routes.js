@@ -27,6 +27,12 @@ router.post('/logout', protect, authController.logout);
 // Change password - custom validate
 router.put('/change-password',
   protect,
+  (req, res, next) => {
+    if (req.body.newPassword) {
+      req.body.password = req.body.newPassword;
+    }
+    next();
+  },
   validateFields('user', ['password']),
   authController.changePassword
 );

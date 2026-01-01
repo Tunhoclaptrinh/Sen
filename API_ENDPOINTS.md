@@ -281,7 +281,7 @@ Authorization: Bearer <admin-token>
 
 ---
 
-#### Get User by ID
+#### Get User by ID (Admin Only)
 
 ```http
 GET /api/users/:id
@@ -314,7 +314,7 @@ Content-Type: application/json
 
 ---
 
-#### Get User Activity
+#### Get User Activity (Protected)
 
 ```http
 GET /api/users/:id/activity
@@ -596,14 +596,15 @@ Content-Type: application/json
 
 ```json
 {
-  "name": "Site Name",
-  "description": "Description",
-  "type": "monument",
-  "cultural_period": "Triều Lý",
-  "region": "Hà Nội",
-  "address": "Address",
-  "latitude": 21.0285,
-  "longitude": 105.8542,
+  "name": "Hoàng thành Thăng Long",
+  "description": "Một trong những di tích lịch sử quan trọng bậc nhất của Việt Nam.",
+  "location": {
+    "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
+    "latitude": 21.0345,
+    "longitude": 105.8421
+  },
+  "period": "Thời Lý - Trần - Lê",
+  "type": "historic_building",
   "year_established": 1010
 }
 ```
