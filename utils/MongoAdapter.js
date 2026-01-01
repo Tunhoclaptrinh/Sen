@@ -5,40 +5,42 @@ const path = require('path');
 class MongoAdapter {
   constructor() {
     this.models = {};
+    // Relationships definition
+    // foreignField MUST BE 'id' (the numeric public ID), not '_id' (internal ObjectId)
     this.relations = {
       heritage_sites: {
-        artifacts: { ref: 'artifacts', localField: '_id', foreignField: 'heritage_site_id' },
-        reviews: { ref: 'reviews', localField: '_id', foreignField: 'heritage_site_id' },
-        timelines: { ref: 'timelines', localField: '_id', foreignField: 'heritage_site_id' },
-        exhibitions: { ref: 'exhibitions', localField: '_id', foreignField: 'heritage_site_id' }
+        artifacts: { ref: 'artifacts', localField: 'id', foreignField: 'heritage_site_id' },
+        reviews: { ref: 'reviews', localField: 'id', foreignField: 'heritage_site_id' },
+        timelines: { ref: 'timelines', localField: 'id', foreignField: 'heritage_site_id' },
+        exhibitions: { ref: 'exhibitions', localField: 'id', foreignField: 'heritage_site_id' }
       },
       users: {
-        collections: { ref: 'collections', localField: '_id', foreignField: 'user_id' },
-        reviews: { ref: 'reviews', localField: '_id', foreignField: 'user_id' },
-        favorites: { ref: 'favorites', localField: '_id', foreignField: 'user_id' },
-        game_progress: { ref: 'game_progress', localField: '_id', foreignField: 'user_id' },
-        notifications: { ref: 'notifications', localField: '_id', foreignField: 'user_id' }
+        collections: { ref: 'collections', localField: 'id', foreignField: 'user_id' },
+        reviews: { ref: 'reviews', localField: 'id', foreignField: 'user_id' },
+        favorites: { ref: 'favorites', localField: 'id', foreignField: 'user_id' },
+        game_progress: { ref: 'game_progress', localField: 'id', foreignField: 'user_id' },
+        notifications: { ref: 'notifications', localField: 'id', foreignField: 'user_id' }
       },
       artifacts: {
-        heritage_site: { ref: 'heritage_sites', localField: 'heritage_site_id', foreignField: '_id', justOne: true },
-        category: { ref: 'cultural_categories', localField: 'category_id', foreignField: '_id', justOne: true }
+        heritage_site: { ref: 'heritage_sites', localField: 'heritage_site_id', foreignField: 'id', justOne: true },
+        category: { ref: 'cultural_categories', localField: 'category_id', foreignField: 'id', justOne: true }
       },
       game_chapters: {
-        levels: { ref: 'game_levels', localField: '_id', foreignField: 'chapter_id' }
+        levels: { ref: 'game_levels', localField: 'id', foreignField: 'chapter_id' }
       },
       game_levels: {
-        chapter: { ref: 'game_chapters', localField: 'chapter_id', foreignField: '_id', justOne: true },
-        sessions: { ref: 'game_sessions', localField: '_id', foreignField: 'level_id' },
-        artifacts: { ref: 'artifacts', localField: 'artifact_ids', foreignField: '_id' },
-        heritage_site: { ref: 'heritage_sites', localField: 'heritage_site_id', foreignField: '_id', justOne: true }
+        chapter: { ref: 'game_chapters', localField: 'chapter_id', foreignField: 'id', justOne: true },
+        sessions: { ref: 'game_sessions', localField: 'id', foreignField: 'level_id' },
+        artifacts: { ref: 'artifacts', localField: 'artifact_ids', foreignField: 'id' },
+        heritage_site: { ref: 'heritage_sites', localField: 'heritage_site_id', foreignField: 'id', justOne: true }
       },
       game_sessions: {
-        level: { ref: 'game_levels', localField: 'level_id', foreignField: '_id', justOne: true },
-        user: { ref: 'users', localField: 'user_id', foreignField: '_id', justOne: true }
+        level: { ref: 'game_levels', localField: 'level_id', foreignField: 'id', justOne: true },
+        user: { ref: 'users', localField: 'user_id', foreignField: 'id', justOne: true }
       },
       collections: {
-        user: { ref: 'users', localField: 'user_id', foreignField: '_id', justOne: true },
-        artifacts: { ref: 'artifacts', localField: 'artifact_ids', foreignField: '_id' }
+        user: { ref: 'users', localField: 'user_id', foreignField: 'id', justOne: true },
+        artifacts: { ref: 'artifacts', localField: 'artifact_ids', foreignField: 'id' }
       }
     };
 
@@ -50,7 +52,7 @@ class MongoAdapter {
     if (mongoose.connection.readyState === 0) {
       try {
         await mongoose.connect(process.env.DATABASE_URL);
-        console.log('🔌 MongoDB Adapter Connected');
+        console.log('🔌 MongoDB Adapter Connected (Dual-ID Mode)');
       } catch (error) {
         console.error('❌ MongoDB Connection Error:', error);
         throw error;
@@ -61,7 +63,6 @@ class MongoAdapter {
   loadSchemasAsModels() {
     const schemasDir = path.join(__dirname, '../schemas');
 
-    // Kiểm tra folder tồn tại
     if (!fs.existsSync(schemasDir)) {
       console.error('❌ Schemas directory not found:', schemasDir);
       return;
@@ -69,29 +70,28 @@ class MongoAdapter {
 
     const files = fs.readdirSync(schemasDir);
 
-    // Schema mapping đầy đủ hơn
     const modelMapping = {
       'user.schema.js': 'users',
       'heritage_site.schema.js': 'heritage_sites',
       'artifact.schema.js': 'artifacts',
       'cultural_category.schema.js': 'cultural_categories',
-      'category.schema.js': 'categories', // ✅ THÊM
+      'category.schema.js': 'categories',
       'exhibition.schema.js': 'exhibitions',
       'timeline.schema.js': 'timelines',
       'collection.schema.js': 'collections',
       'favorite.schema.js': 'favorites',
       'review.schema.js': 'reviews',
       'notification.schema.js': 'notifications',
-      'address.schema.js': 'addresses', // ✅ THÊM
+      'address.schema.js': 'addresses',
       'game_chapter.schema.js': 'game_chapters',
       'game_level.schema.js': 'game_levels',
       'game_character.schema.js': 'game_characters',
       'game_progress.schema.js': 'game_progress',
-      'game_session.schema.js': 'game_sessions', // ✅ THÊM
-      'user_inventory.schema.js': 'user_inventory', // ✅ THÊM
-      'scan_history.schema.js': 'scan_history', // ✅ THÊM
-      'game_badge.schema.js': 'game_badges', // ✅ THÊM
-      'game_achievement.schema.js': 'game_achievements', // ✅ THÊM
+      'game_session.schema.js': 'game_sessions',
+      'user_inventory.schema.js': 'user_inventory',
+      'scan_history.schema.js': 'scan_history',
+      'game_badge.schema.js': 'game_badges',
+      'game_achievement.schema.js': 'game_achievements',
       'scan_object.schema.js': 'scan_objects',
       'shop_item.schema.js': 'shop_items'
     };
@@ -101,23 +101,21 @@ class MongoAdapter {
 
       const entityName = modelMapping[file];
 
-      // Skip nếu không có mapping
       if (!entityName) {
-        console.warn(`⚠️  No mapping found for schema: ${file}`);
         return;
       }
 
-      // Try-catch để tránh crash
       try {
         const schemaDef = require(path.join(schemasDir, file));
 
-        // Validate schema definition
         if (!schemaDef || typeof schemaDef !== 'object') {
-          console.warn(`⚠️  Invalid schema definition for ${file}`);
           return;
         }
 
         const mongooseFields = {};
+
+        // Explicitly add 'id' field for compatibility
+        mongooseFields.id = { type: Number, unique: true, index: true };
 
         for (const [key, val] of Object.entries(schemaDef)) {
           if (key === 'custom') continue;
@@ -127,9 +125,9 @@ class MongoAdapter {
           if (val.type === 'boolean') type = Boolean;
           if (val.type === 'date') type = Date;
           if (val.type === 'array') type = Array;
-          if (val.type === 'object') type = mongoose.Schema.Types.Mixed; // ✅ FIX
+          if (val.type === 'object') type = mongoose.Schema.Types.Mixed; // Store objects as Mixed
 
-          if (val.foreignKey) type = Number;
+          if (val.foreignKey) type = Number; // Foreign keys are numbers
 
           mongooseFields[key] = {
             type: type,
@@ -138,29 +136,26 @@ class MongoAdapter {
             unique: val.unique || false
           };
 
-          // Enum constraint
           if (val.enum) mongooseFields[key].enum = val.enum;
-
-          // Min/Max validation
           if (val.min !== undefined) mongooseFields[key].min = val.min;
           if (val.max !== undefined) mongooseFields[key].max = val.max;
           if (val.minLength) mongooseFields[key].minlength = val.minLength;
           if (val.maxLength) mongooseFields[key].maxlength = val.maxLength;
         }
 
-        // ID as Number for compatibility
-        mongooseFields._id = { type: Number };
-
         if (!mongoose.models[entityName]) {
           const schema = new mongoose.Schema(mongooseFields, {
             timestamps: true,
-            toJSON: { virtuals: true },
-            toObject: { virtuals: true }
-          });
-
-          // Virtual: _id -> id
-          schema.virtual('id').get(function () {
-            return this._id;
+            toJSON: {
+              virtuals: true,
+              versionKey: false,
+              transform: function (doc, ret) {
+                delete ret._id; // Hide internal ObjectId
+                delete ret.__v;
+              }
+            },
+            toObject: { virtuals: true },
+            id: false // Disable Mongoose's default virtual 'id' since we have a real one
           });
 
           // Setup Virtuals for populate
@@ -192,11 +187,7 @@ class MongoAdapter {
   }
 
   getModel(collection) {
-    const model = this.models[collection];
-    if (!model) {
-      console.warn(`⚠️  Model not found: ${collection}`);
-    }
-    return model;
+    return this.models[collection];
   }
 
   // ==================== FIND ALL ADVANCED ====================
@@ -208,7 +199,6 @@ class MongoAdapter {
 
     const query = {};
 
-    // Full-text search ở ngoài filter
     if (options.q) {
       query['$or'] = [
         { name: { $regex: options.q, $options: 'i' } },
@@ -218,7 +208,6 @@ class MongoAdapter {
       ];
     }
 
-    // Build query filters
     if (options.filter) {
       for (const [key, val] of Object.entries(options.filter)) {
         if (key.endsWith('_gte')) {
@@ -227,10 +216,10 @@ class MongoAdapter {
         } else if (key.endsWith('_lte')) {
           const field = key.replace('_lte', '');
           query[field] = { ...query[field], $lte: Number(val) };
-        } else if (key.endsWith('_gt')) { // ✅ THÊM
+        } else if (key.endsWith('_gt')) {
           const field = key.replace('_gt', '');
           query[field] = { ...query[field], $gt: Number(val) };
-        } else if (key.endsWith('_lt')) { // ✅ THÊM
+        } else if (key.endsWith('_lt')) {
           const field = key.replace('_lt', '');
           query[field] = { ...query[field], $lt: Number(val) };
         } else if (key.endsWith('_ne')) {
@@ -255,7 +244,6 @@ class MongoAdapter {
 
     let queryBuilder = Model.find(query);
 
-    // Sorting
     if (options.sort) {
       const sortFields = options.sort.split(',');
       const orders = options.order ? options.order.split(',') : [];
@@ -271,39 +259,25 @@ class MongoAdapter {
       queryBuilder = queryBuilder.sort({ createdAt: -1 });
     }
 
-    // Populate with error handling
-    if (options.embed) {
-      const embedFields = options.embed.split(',');
-      embedFields.forEach(field => {
-        try {
-          queryBuilder = queryBuilder.populate(field);
-        } catch (e) {
-          console.warn(`⚠️  Cannot populate ${field}:`, e.message);
-        }
-      });
-    }
+    // Populate
+    const populateFields = [];
+    if (options.embed) populateFields.push(...options.embed.split(','));
+    if (options.expand) populateFields.push(...options.expand.split(','));
 
-    if (options.expand) {
-      const expandFields = options.expand.split(',');
-      expandFields.forEach(field => {
-        try {
-          queryBuilder = queryBuilder.populate(field);
-        } catch (e) {
-          console.warn(`⚠️  Cannot populate ${field}:`, e.message);
-        }
-      });
-    }
+    populateFields.forEach(field => {
+      try {
+        queryBuilder = queryBuilder.populate(field);
+      } catch (e) {
+        console.warn(`⚠️ Cannot populate ${field}`);
+      }
+    });
 
-    // Execute query
-    const data = await queryBuilder.skip(skip).limit(limit).lean();
+    const data = await queryBuilder.skip(skip).limit(limit).exec(); // Use exec() to get Mongoose Documents
     const total = await Model.countDocuments(query);
-
-    // Map _id -> id
-    const mappedData = data.map(item => ({ ...item, id: item._id }));
 
     return {
       success: true,
-      data: mappedData,
+      data: data, // toJSON transform will auto-hide _id
       pagination: {
         page,
         limit,
@@ -316,152 +290,92 @@ class MongoAdapter {
   }
 
   // ==================== CRUD METHODS ====================
+  // Note: All query by public 'id' (Number), not '_id' (ObjectId)
+
   async findAll(collection) {
     const Model = this.getModel(collection);
     if (!Model) return [];
-
-    const items = await Model.find().lean();
-    return items.map(item => ({ ...item, id: item._id }));
+    return await Model.find();
   }
 
   async findById(collection, id) {
     const Model = this.getModel(collection);
     if (!Model) return null;
-
-    try {
-      const item = await Model.findOne({ _id: parseInt(id) }).lean();
-      if (!item) return null;
-      return { ...item, id: item._id };
-    } catch (e) {
-      console.error(`Error findById ${collection}:`, e.message);
-      return null;
-    }
+    return await Model.findOne({ id: parseInt(id) });
   }
 
   async findOne(collection, query) {
     const Model = this.getModel(collection);
     if (!Model) return null;
-
-    try {
-      const item = await Model.findOne(query).lean();
-      if (!item) return null;
-      return { ...item, id: item._id };
-    } catch (e) {
-      console.error(`Error findOne ${collection}:`, e.message);
-      return null;
-    }
+    return await Model.findOne(query);
   }
 
   async findMany(collection, query) {
     const Model = this.getModel(collection);
     if (!Model) return [];
-
-    try {
-      const items = await Model.find(query).lean();
-      return items.map(item => ({ ...item, id: item._id }));
-    } catch (e) {
-      console.error(`Error findMany ${collection}:`, e.message);
-      return [];
-    }
+    return await Model.find(query);
   }
 
   async create(collection, data) {
     const Model = this.getModel(collection);
-    if (!Model) {
-      throw new Error(`Model not found: ${collection}`);
+    if (!Model) throw new Error(`Model not found: ${collection}`);
+
+    // Auto-generate numeric ID if not present
+    if (!data.id) {
+      data.id = await this.getNextId(collection);
     }
 
-    // Auto-generate ID
-    if (!data._id && !data.id) {
-      data._id = await this.getNextId(collection);
-    } else if (data.id && !data._id) {
-      data._id = data.id;
-    }
+    // Safety: ensure no _id is passed, allowing Mongo to generate it
+    delete data._id;
 
-    try {
-      const created = await Model.create(data);
-      const obj = created.toObject();
-      return { ...obj, id: obj._id };
-    } catch (error) {
-      console.error(`Error creating ${collection}:`, error);
-      throw error;
-    }
+    const created = await Model.create(data);
+    return created;
   }
 
   async update(collection, id, data) {
     const Model = this.getModel(collection);
     if (!Model) return null;
 
-    try {
-      const updated = await Model.findOneAndUpdate(
-        { _id: parseInt(id) },
-        data,
-        {
-          new: true,
-          runValidators: true
-        }
-      ).lean();
-
-      if (!updated) return null;
-      return { ...updated, id: updated._id };
-    } catch (error) {
-      console.error(`Error updating ${collection}:`, error);
-      return null;
-    }
+    // FIND by 'id' and update
+    const updated = await Model.findOneAndUpdate(
+      { id: parseInt(id) },
+      data,
+      { new: true, runValidators: true }
+    );
+    return updated;
   }
 
   async delete(collection, id) {
     const Model = this.getModel(collection);
     if (!Model) return false;
 
-    try {
-      const deleted = await Model.findOneAndDelete({ _id: parseInt(id) });
-      return deleted ? true : false;
-    } catch (error) {
-      console.error(`Error deleting ${collection}:`, error);
-      return false;
-    }
+    // FIND by 'id' and delete
+    const deleted = await Model.findOneAndDelete({ id: parseInt(id) });
+    return !!deleted;
   }
 
   async getNextId(collection) {
     const Model = this.getModel(collection);
-    if (!Model) return Date.now();
+    if (!Model) return 1;
 
     try {
-      const lastItem = await Model.findOne().sort({ _id: -1 }).lean();
-      return lastItem ? lastItem._id + 1 : 1;
+      // Find max 'id'
+      const lastItem = await Model.findOne().sort({ id: -1 }).select('id').lean();
+      return lastItem ? lastItem.id + 1 : 1;
     } catch (error) {
-      return Date.now();
+      return 1;
     }
   }
 
-  // getSlice method (missing in original)
   async getSlice(collection, start, end) {
     const Model = this.getModel(collection);
     if (!Model) return { data: [], total: 0 };
-
-    try {
-      const items = await Model.find()
-        .skip(start)
-        .limit(end - start)
-        .lean();
-
-      const total = await Model.countDocuments();
-
-      return {
-        data: items.map(item => ({ ...item, id: item._id })),
-        total
-      };
-    } catch (error) {
-      console.error(`Error getSlice ${collection}:`, error);
-      return { data: [], total: 0 };
-    }
+    const items = await Model.find().skip(start).limit(end - start);
+    const total = await Model.countDocuments();
+    return { data: items, total };
   }
 
-  // Save data (no-op for MongoDB)
-  saveData() {
-    return true;
-  }
+  saveData() { return true; }
 }
 
 module.exports = new MongoAdapter();
