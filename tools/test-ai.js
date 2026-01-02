@@ -4,7 +4,7 @@
  */
 require("dotenv").config();
 const readline = require("readline");
-const aiService = require("./services/ai.service");
+const aiService = require("../services/ai.service");
 
 // Config
 const USER_ID = 1; // Test user
@@ -44,8 +44,7 @@ console.log(
 );
 
 console.log(
-  `${colors.gray}📌 API Key: ${
-    aiService.API_KEY ? "✅ Configured" : "❌ Not set (using fallback)"
+  `${colors.gray}📌 API Key: ${aiService.API_KEY ? "✅ Configured" : "❌ Not set (using fallback)"
   }${colors.reset}`
 );
 console.log(`${colors.gray}📌 Model: ${aiService.MODEL}${colors.reset}`);
@@ -143,13 +142,11 @@ function handleCommand(cmd) {
         `  Level ID: ${colors.cyan}${CONTEXT.levelId || "None"}${colors.reset}`
       );
       console.log(
-        `  Character ID: ${colors.cyan}${CONTEXT.characterId || "None"}${
-          colors.reset
+        `  Character ID: ${colors.cyan}${CONTEXT.characterId || "None"}${colors.reset
         }`
       );
       console.log(
-        `  Screen Type: ${colors.cyan}${CONTEXT.screenType || "None"}${
-          colors.reset
+        `  Screen Type: ${colors.cyan}${CONTEXT.screenType || "None"}${colors.reset
         }\n`
       );
       break;
