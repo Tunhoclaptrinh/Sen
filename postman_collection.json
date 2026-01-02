@@ -38,9 +38,7 @@
       "listen": "test",
       "script": {
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],
@@ -67,13 +65,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/auth/register",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "register"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "register"]
                 }
               },
               "response": []
@@ -116,13 +109,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/auth/login",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "login"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "login"]
                 }
               },
               "response": []
@@ -134,13 +122,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/auth/me",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "me"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "me"]
                 }
               },
               "response": []
@@ -152,13 +135,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/auth/logout",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "logout"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "logout"]
                 }
               },
               "response": []
@@ -179,13 +157,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/auth/change-password",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "change-password"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "change-password"]
                 }
               },
               "response": []
@@ -202,12 +175,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users?page=1&limit=20",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users"],
                   "query": [
                     {
                       "key": "page",
@@ -229,13 +198,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -262,13 +226,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/users/profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    "profile"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", "profile"]
                 }
               },
               "response": []
@@ -280,14 +239,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users/:id/activity",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    ":id",
-                    "activity"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", ":id", "activity"],
                   "variable": [
                     {
                       "key": "id",
@@ -305,14 +258,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users/stats/summary",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    "stats",
-                    "summary"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", "stats", "summary"]
                 }
               },
               "response": []
@@ -324,14 +271,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users/:id/status",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    ":id",
-                    "status"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", ":id", "status"],
                   "variable": [
                     {
                       "key": "id",
@@ -349,14 +290,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users/:id/permanent",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    ":id",
-                    "permanent"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", ":id", "permanent"],
                   "variable": [
                     {
                       "key": "id",
@@ -374,13 +309,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users/template",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    "template"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", "template"]
                 }
               },
               "response": []
@@ -392,13 +322,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users/schema",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    "schema"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", "schema"]
                 }
               },
               "response": []
@@ -425,13 +350,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/users/import",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    "import"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", "import"]
                 }
               },
               "response": []
@@ -443,13 +363,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/users/export",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    "export"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users", "export"]
                 }
               },
               "response": []
@@ -471,12 +386,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites?page=1&limit=20",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites"],
                   "query": [
                     {
                       "key": "page",
@@ -498,13 +409,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites/search?q=query",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites",
-                    "search"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites", "search"],
                   "query": [
                     {
                       "key": "q",
@@ -522,13 +428,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites/nearby?latitude=21.0285&longitude=105.8542&radius=10",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites",
-                    "nearby"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites", "nearby"],
                   "query": [
                     {
                       "key": "latitude",
@@ -554,13 +455,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -578,14 +474,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites/:id/artifacts",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites",
-                    ":id",
-                    "artifacts"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites", ":id", "artifacts"],
                   "variable": [
                     {
                       "key": "id",
@@ -603,14 +493,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites/:id/timeline",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites",
-                    ":id",
-                    "timeline"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites", ":id", "timeline"],
                   "variable": [
                     {
                       "key": "id",
@@ -637,12 +521,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites"]
                 }
               },
               "response": []
@@ -663,13 +543,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -687,13 +562,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/heritage-sites/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "heritage-sites",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["heritage-sites", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -716,12 +586,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/artifacts?page=1&limit=20",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "artifacts"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["artifacts"],
                   "query": [
                     {
                       "key": "page",
@@ -743,13 +609,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/artifacts/search?q=query",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "artifacts",
-                    "search"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["artifacts", "search"],
                   "query": [
                     {
                       "key": "q",
@@ -767,13 +628,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/artifacts/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "artifacts",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["artifacts", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -791,14 +647,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/artifacts/:id/related",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "artifacts",
-                    ":id",
-                    "related"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["artifacts", ":id", "related"],
                   "variable": [
                     {
                       "key": "id",
@@ -825,12 +675,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/artifacts",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "artifacts"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["artifacts"]
                 }
               },
               "response": []
@@ -851,13 +697,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/artifacts/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "artifacts",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["artifacts", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -875,13 +716,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/artifacts/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "artifacts",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["artifacts", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -904,12 +740,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/categories",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "categories"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["categories"]
                 }
               },
               "response": []
@@ -921,13 +753,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/categories/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "categories",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["categories", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -954,12 +781,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/categories",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "categories"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["categories"]
                 }
               },
               "response": []
@@ -980,13 +803,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/categories/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "categories",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["categories", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -1004,13 +822,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/categories/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "categories",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["categories", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -1033,12 +846,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/exhibitions",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "exhibitions"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["exhibitions"]
                 }
               },
               "response": []
@@ -1050,13 +859,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/exhibitions/active",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "exhibitions",
-                    "active"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["exhibitions", "active"]
                 }
               },
               "response": []
@@ -1068,13 +872,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/exhibitions/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "exhibitions",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["exhibitions", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -1101,12 +900,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/exhibitions",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "exhibitions"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["exhibitions"]
                 }
               },
               "response": []
@@ -1127,13 +922,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/exhibitions/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "exhibitions",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["exhibitions", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -1151,13 +941,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/exhibitions/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "exhibitions",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["exhibitions", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -1185,13 +970,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/progress",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "progress"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "progress"]
                 }
               },
               "response": []
@@ -1203,13 +983,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/leaderboard?type=global&limit=20",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "leaderboard"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "leaderboard"],
                   "query": [
                     {
                       "key": "type",
@@ -1231,13 +1006,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/daily-reward",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "daily-reward"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "daily-reward"]
                 }
               },
               "response": []
@@ -1254,13 +1024,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/chapters",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "chapters"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "chapters"]
                 }
               },
               "response": []
@@ -1272,14 +1037,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/chapters/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "chapters",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "chapters", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -1297,15 +1056,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/chapters/:id/unlock",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "chapters",
-                    ":id",
-                    "unlock"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "chapters", ":id", "unlock"],
                   "variable": [
                     {
                       "key": "id",
@@ -1328,14 +1080,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/levels/:chapterId",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "levels",
-                    ":chapterId"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "levels", ":chapterId"],
                   "variable": [
                     {
                       "key": "chapterId",
@@ -1353,15 +1099,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/levels/:id/detail",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "levels",
-                    ":id",
-                    "detail"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "levels", ":id", "detail"],
                   "variable": [
                     {
                       "key": "id",
@@ -1379,15 +1118,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/levels/:id/start",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "levels",
-                    ":id",
-                    "start"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "levels", ":id", "start"],
                   "variable": [
                     {
                       "key": "id",
@@ -1405,15 +1137,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/sessions/:id/next-screen",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "sessions",
-                    ":id",
-                    "next-screen"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "sessions", ":id", "next-screen"],
                   "variable": [
                     {
                       "key": "id",
@@ -1440,15 +1165,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/sessions/:id/submit-answer",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "sessions",
-                    ":id",
-                    "submit-answer"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "sessions", ":id", "submit-answer"],
                   "variable": [
                     {
                       "key": "id",
@@ -1480,15 +1198,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/sessions/:sessionId/submit-timeline",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "sessions",
-                    ":sessionId",
-                    "submit-timeline"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "sessions", ":sessionId", "submit-timeline"],
                   "variable": [
                     {
                       "key": "sessionId",
@@ -1500,7 +1211,7 @@
               "response": []
             },
             {
-              "name": "Collect Clue",
+              "name": "Collect Clue (for Hidden_Object screen)",
               "request": {
                 "method": "POST",
                 "header": [
@@ -1515,15 +1226,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/levels/:id/collect-clue",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "levels",
-                    ":id",
-                    "collect-clue"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "levels", ":id", "collect-clue"],
                   "variable": [
                     {
                       "key": "id",
@@ -1550,15 +1254,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/levels/:id/complete",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "levels",
-                    ":id",
-                    "complete"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "levels", ":id", "complete"],
                   "variable": [
                     {
                       "key": "id",
@@ -1581,13 +1278,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/museum",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "museum"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "museum"]
                 }
               },
               "response": []
@@ -1608,14 +1300,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/museum/toggle",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "museum",
-                    "toggle"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "museum", "toggle"]
                 }
               },
               "response": []
@@ -1627,14 +1313,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/museum/collect",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "museum",
-                    "collect"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "museum", "collect"]
                 }
               },
               "response": []
@@ -1651,13 +1331,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/badges",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "badges"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "badges"]
                 }
               },
               "response": []
@@ -1669,13 +1344,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/achievements",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "achievements"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "achievements"]
                 }
               },
               "response": []
@@ -1701,13 +1371,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/scan",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "scan"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "scan"]
                 }
               },
               "response": []
@@ -1733,14 +1398,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/shop/purchase",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "shop",
-                    "purchase"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "shop", "purchase"]
                 }
               },
               "response": []
@@ -1752,13 +1411,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/game/inventory",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "inventory"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "inventory"]
                 }
               },
               "response": []
@@ -1784,14 +1438,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/game/inventory/use",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "game",
-                    "inventory",
-                    "use"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["game", "inventory", "use"]
                 }
               },
               "response": []
@@ -1819,13 +1467,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/ai/chat",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ai",
-                "chat"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "chat"]
             }
           },
           "response": []
@@ -1837,13 +1480,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/ai/history?limit=20",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ai",
-                "history"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "history"],
               "query": [
                 {
                   "key": "limit",
@@ -1870,13 +1508,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/ai/ask-hint",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ai",
-                "ask-hint"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "ask-hint"]
             }
           },
           "response": []
@@ -1897,13 +1530,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/ai/explain",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ai",
-                "explain"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "explain"]
             }
           },
           "response": []
@@ -1924,13 +1552,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/ai/quiz",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ai",
-                "quiz"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "quiz"]
             }
           },
           "response": []
@@ -1942,13 +1565,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/ai/history",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ai",
-                "history"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "history"]
             }
           },
           "response": []
@@ -1968,12 +1586,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/learning",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "learning"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["learning"]
                 }
               },
               "response": []
@@ -1985,13 +1599,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/learning/path",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "learning",
-                    "path"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["learning", "path"]
                 }
               },
               "response": []
@@ -2003,13 +1612,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/learning/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "learning",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["learning", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2036,12 +1640,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/learning",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "learning"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["learning"]
                 }
               },
               "response": []
@@ -2062,14 +1662,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/learning/:id/complete",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "learning",
-                    ":id",
-                    "complete"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["learning", ":id", "complete"],
                   "variable": [
                     {
                       "key": "id",
@@ -2096,13 +1690,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/learning/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "learning",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["learning", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2120,13 +1709,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/learning/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "learning",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["learning", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2149,12 +1733,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/quests",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "quests"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["quests"]
                 }
               },
               "response": []
@@ -2166,13 +1746,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/quests/available",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "quests",
-                    "available"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["quests", "available"]
                 }
               },
               "response": []
@@ -2184,13 +1759,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/quests/leaderboard",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "quests",
-                    "leaderboard"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["quests", "leaderboard"]
                 }
               },
               "response": []
@@ -2202,13 +1772,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/quests/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "quests",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["quests", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2235,12 +1800,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/quests",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "quests"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["quests"]
                 }
               },
               "response": []
@@ -2261,14 +1822,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/quests/:id/complete",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "quests",
-                    ":id",
-                    "complete"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["quests", ":id", "complete"],
                   "variable": [
                     {
                       "key": "id",
@@ -2295,13 +1850,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/quests/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "quests",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["quests", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2319,13 +1869,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/quests/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "quests",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["quests", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2353,12 +1898,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/collections",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "collections"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["collections"]
                 }
               },
               "response": []
@@ -2370,13 +1911,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/collections/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "collections",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["collections", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2403,12 +1939,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/collections",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "collections"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["collections"]
                 }
               },
               "response": []
@@ -2429,13 +1961,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/collections/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "collections",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["collections", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2453,13 +1980,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/collections/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "collections",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["collections", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2477,15 +1999,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/collections/:id/artifacts/:artifactId",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "collections",
-                    ":id",
-                    "artifacts",
-                    ":artifactId"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["collections", ":id", "artifacts", ":artifactId"],
                   "variable": [
                     {
                       "key": "artifactId",
@@ -2507,15 +2022,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/collections/:id/artifacts/:artifactId",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "collections",
-                    ":id",
-                    "artifacts",
-                    ":artifactId"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["collections", ":id", "artifacts", ":artifactId"],
                   "variable": [
                     {
                       "key": "artifactId",
@@ -2542,12 +2050,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites"]
                 }
               }
             },
@@ -2558,14 +2062,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/stats/summary",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    "stats",
-                    "summary"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", "stats", "summary"]
                 }
               }
             },
@@ -2576,12 +2074,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites"]
                 }
               }
             },
@@ -2592,14 +2086,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/trending/:type",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    "trending",
-                    ":type"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", "trending", ":type"],
                   "variable": [
                     {
                       "key": "type",
@@ -2616,13 +2104,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/:type",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    ":type"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", ":type"],
                   "variable": [
                     {
                       "key": "type",
@@ -2639,14 +2122,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/:type/ids",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    ":type",
-                    "ids"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", ":type", "ids"],
                   "variable": [
                     {
                       "key": "type",
@@ -2663,15 +2140,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/:type/:id/check",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    ":type",
-                    ":id",
-                    "check"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", ":type", ":id", "check"],
                   "variable": [
                     {
                       "key": "type",
@@ -2692,15 +2162,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/:type/:id/toggle",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    ":type",
-                    ":id",
-                    "toggle"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", ":type", ":id", "toggle"],
                   "variable": [
                     {
                       "key": "type",
@@ -2721,14 +2184,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/:type/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    ":type",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", ":type", ":id"],
                   "variable": [
                     {
                       "key": "type",
@@ -2749,14 +2206,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/:type/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    ":type",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", ":type", ":id"],
                   "variable": [
                     {
                       "key": "type",
@@ -2777,13 +2228,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/favorites/:type",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "favorites",
-                    ":type"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", ":type"],
                   "variable": [
                     {
                       "key": "type",
@@ -2805,12 +2251,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/reviews?page=1&limit=20&sort=newest",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "reviews"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["reviews"],
                   "query": [
                     {
                       "key": "page",
@@ -2836,13 +2278,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/reviews/search?q=query",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "reviews",
-                    "search"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["reviews", "search"],
                   "query": [
                     {
                       "key": "q",
@@ -2860,14 +2297,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/reviews/type/:type",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "reviews",
-                    "type",
-                    ":type"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["reviews", "type", ":type"],
                   "variable": [
                     {
                       "key": "type",
@@ -2885,13 +2316,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/reviews/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "reviews",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["reviews", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2918,12 +2344,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/reviews",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "reviews"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["reviews"]
                 }
               },
               "response": []
@@ -2944,13 +2366,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/reviews/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "reviews",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["reviews", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -2968,13 +2385,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/reviews/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "reviews",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["reviews", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3014,13 +2426,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/upload/avatar",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "avatar"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "avatar"]
             }
           },
           "response": []
@@ -3052,14 +2459,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/upload/category/:categoryId",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "category",
-                ":categoryId"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "category", ":categoryId"],
               "variable": [
                 {
                   "key": "categoryId",
@@ -3094,14 +2495,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/upload/heritage-site/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "heritage-site",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "heritage-site", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -3135,14 +2530,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/upload/artifact/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "artifact",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "artifact", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -3176,14 +2565,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/upload/exhibition/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "exhibition",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "exhibition", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -3217,15 +2600,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/upload/game/:type/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "game",
-                ":type",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "game", ":type", ":id"],
               "variable": [
                 {
                   "key": "type",
@@ -3262,14 +2638,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/upload/category/:categoryId",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "category",
-                ":categoryId"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "category", ":categoryId"],
               "variable": [
                 {
                   "key": "categoryId",
@@ -3287,13 +2657,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/upload/file?path=file_path",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "file"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "file"],
               "query": [
                 {
                   "key": "path",
@@ -3311,14 +2676,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/upload/file/info?path=file_path",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "file",
-                "info"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "file", "info"],
               "query": [
                 {
                   "key": "path",
@@ -3336,13 +2695,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/upload/stats",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "stats"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "stats"]
             }
           },
           "response": []
@@ -3363,13 +2717,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/upload/cleanup",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "upload",
-                "cleanup"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "cleanup"]
             }
           },
           "response": []
@@ -3389,13 +2738,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels?page=1&limit=20",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels"],
                   "query": [
                     {
                       "key": "page",
@@ -3417,14 +2761,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/templates",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    "templates"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", "templates"]
                 }
               },
               "response": []
@@ -3436,14 +2774,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/stats",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    "stats"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", "stats"]
                 }
               },
               "response": []
@@ -3464,14 +2796,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/validate",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    "validate"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", "validate"]
                 }
               },
               "response": []
@@ -3483,14 +2809,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3508,15 +2828,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/:id/preview",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    ":id",
-                    "preview"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", ":id", "preview"],
                   "variable": [
                     {
                       "key": "id",
@@ -3534,15 +2847,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/:id/assets",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    ":id",
-                    "assets"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", ":id", "assets"],
                   "variable": [
                     {
                       "key": "id",
@@ -3569,13 +2875,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels"]
                 }
               },
               "response": []
@@ -3596,14 +2897,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3621,14 +2916,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3655,15 +2944,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/:id/clone",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    ":id",
-                    "clone"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", ":id", "clone"],
                   "variable": [
                     {
                       "key": "id",
@@ -3696,15 +2978,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/bulk/import",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "levels",
-                    "bulk",
-                    "import"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "levels", "bulk", "import"]
                 }
               },
               "response": []
@@ -3725,9 +3000,7 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/levels/chapters/:chapterId/reorder",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
+                  "host": ["{{baseUrl}}"],
                   "path": [
                     "admin",
                     "levels",
@@ -3757,13 +3030,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/chapters",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "chapters"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "chapters"]
                 }
               },
               "response": []
@@ -3775,14 +3043,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/chapters/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "chapters",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "chapters", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3809,13 +3071,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/chapters",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "chapters"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "chapters"]
                 }
               },
               "response": []
@@ -3836,14 +3093,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/chapters/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "chapters",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "chapters", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3861,14 +3112,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/chapters/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "chapters",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "chapters", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3891,13 +3136,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/characters",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "characters"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "characters"]
                 }
               },
               "response": []
@@ -3909,14 +3149,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/characters/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "characters",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "characters", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3943,13 +3177,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/characters",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "characters"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "characters"]
                 }
               },
               "response": []
@@ -3970,14 +3199,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/characters/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "characters",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "characters", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -3995,14 +3218,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/characters/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "characters",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "characters", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -4025,13 +3242,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/assets?page=1&limit=20",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "assets"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "assets"],
                   "query": [
                     {
                       "key": "page",
@@ -4053,14 +3265,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/assets/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "assets",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "assets", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -4087,13 +3293,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/assets",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "assets"
-                  ]
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "assets"]
                 }
               },
               "response": []
@@ -4114,14 +3315,8 @@
                 },
                 "url": {
                   "raw": "{{baseUrl}}/admin/assets/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "assets",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "assets", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -4139,14 +3334,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{baseUrl}}/admin/assets/:id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "admin",
-                    "assets",
-                    ":id"
-                  ],
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "assets", ":id"],
                   "variable": [
                     {
                       "key": "id",
@@ -4171,12 +3360,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/notifications",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "notifications"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications"]
             }
           },
           "response": []
@@ -4188,14 +3373,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/notifications/:id/read",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "notifications",
-                ":id",
-                "read"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", ":id", "read"],
               "variable": [
                 {
                   "key": "id",
@@ -4213,13 +3392,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/notifications/read-all",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "notifications",
-                "read-all"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "read-all"]
             }
           },
           "response": []
@@ -4231,12 +3405,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/notifications",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "notifications"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications"]
             }
           },
           "response": []
@@ -4248,13 +3418,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/notifications/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "notifications",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", ":id"],
               "variable": [
                 {
                   "key": "id",
