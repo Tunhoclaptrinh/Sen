@@ -9,6 +9,10 @@ const DB_FILE = path.join(__dirname, '../database/db.json');
 const hashedPassword = bcrypt.hashSync('123456', 10);
 
 // ==================== SEED DATA FOR SEN ====================
+// const seedData = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
+// console.log('📂 Loaded DATA from db.json');
+
+// const _legacy_seedData = {
 const seedData = {
   // ========== USERS ==========
   "users": [
