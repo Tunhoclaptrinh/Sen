@@ -3,11 +3,30 @@ const router = express.Router();
 const userController = require('../controllers/user.controller');
 const { protect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
-const { getSchemaDoc } = require('../middleware/validation.middleware');
+const { getSchemaDoc, validateSchema } = require('../middleware/validation.middleware');
 const importExportController = require('../controllers/importExport.controller');
 
 // === ADMIN ROUTES ===
 // Quản lý user, stats, status
+router.post('/',
+  protect,
+  checkPermission('users', 'create'),
+  validateSchema('user'),
+  userController.create
+);
+
+router.put('/:id',
+  protect,
+  checkPermission('users', 'update'),
+  userController.update
+);
+
+router.delete('/:id',
+  protect,
+  checkPermission('users', 'delete'),
+  userController.delete
+);
+
 router.get('/',
   protect,
   checkPermission('users', 'list'),

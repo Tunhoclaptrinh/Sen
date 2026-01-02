@@ -52,6 +52,78 @@ class UserController extends BaseController {
     }
   };
 
+  create = async (req, res, next) => {
+    try {
+      const result = await this.service.create(req.body);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message,
+          errors: result.errors
+        });
+      }
+
+      res.status(201).json({
+        success: true,
+        message: 'User created successfully',
+        data: sanitizeUser(result.data)
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  update = async (req, res, next) => {
+    try {
+      const result = await this.service.update(req.params.id, req.body);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message,
+          errors: result.errors
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'User updated successfully',
+        data: sanitizeUser(result.data)
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  delete = async (req, res, next) => {
+    try {
+      // Prevent deleting self
+      if (parseInt(req.params.id) === req.user.id) {
+        return res.status(400).json({
+          success: false,
+          message: 'Cannot delete your own account'
+        });
+      }
+
+      const result = await this.service.delete(req.params.id);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message
+        });
+      }
+
+      res.json({
+        success: true,
+        message: result.message
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   getUserStats = async (req, res, next) => {
     try {
       const result = await this.service.getUserStats();

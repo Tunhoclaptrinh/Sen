@@ -52,14 +52,60 @@
       "createdAt": "2024-05-12T14:30:00Z"
     },
     {
-      "id": 6,
-      "name": "Trần Thị Mai",
-      "email": "maitr@sen.com",
-      "password": "$2a$10$ljLMJFWpt4uYURYEkQdvGeBijln.p8.XQjHSP/iKWCesuPVaLhg/m",
-      "phone": "0907654321",
-      "role": "customer",
+      "id": 9,
+      "_id": 9,
+      "name": "Tuấn",
+      "email": "Tuannt16@gmail.com",
+      "password": "$2a$10$uFTijUuZiTGX9JRxscDq..hHg4SR5fZhOeM6LvmU5wf0nMb7nLwky",
+      "phone": "1945650883",
+      "role": "admin",
+      "avatar": "https://ui-avatars.com/api/?name=Tu%E1%BA%A5n&background=random",
       "isActive": true,
-      "createdAt": "2024-06-15T09:20:00Z"
+      "createdAt": 46023.66986671296,
+      "updatedAt": 46023.66986671296,
+      "__v": 0
+    },
+    {
+      "id": 8,
+      "_id": 8,
+      "name": "Tuấn",
+      "email": "Tuannt@gmail.com",
+      "password": "$2a$10$9nFCK3ND.DjMCv9rek3D7.eCgtjppbOe3V/EgCISBiKs2C0cmbf8a",
+      "phone": "1945650883",
+      "role": "admin",
+      "avatar": "https://ui-avatars.com/api/?name=Tu%E1%BA%A5n&background=random",
+      "isActive": true,
+      "createdAt": 46023.666799942126,
+      "updatedAt": 46023.666799942126,
+      "__v": 0
+    },
+    {
+      "id": 7,
+      "_id": 7,
+      "name": "Nguyễn Văn B",
+      "email": "user2@example.com",
+      "password": "$2a$10$bC64nziKradMjY3o2CjsseVMjRR5ID9q4GJa6XaykRJBrgxEZiIwq",
+      "phone": "0123456789",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Nguy%E1%BB%85n%20V%C4%83n%20B&background=random",
+      "isActive": true,
+      "createdAt": 46022.55708806713,
+      "updatedAt": 46022.55708806713,
+      "__v": 0
+    },
+    {
+      "id": 6,
+      "_id": 6,
+      "name": "Nguyễn Văn A",
+      "email": "user@example.com",
+      "password": "$2a$10$znChzYc0dQlM0YZAUFU/xuy99rCUYJ9pJuRdKeK8wqNEBdaYxxH36",
+      "phone": "0123456789",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Nguy%E1%BB%85n%20V%C4%83n%20A&background=random",
+      "isActive": false,
+      "createdAt": 46022.54436064815,
+      "updatedAt": "2026-01-02T20:01:13.805Z",
+      "__v": 0
     }
   ],
   "cultural_categories": [

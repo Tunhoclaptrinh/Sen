@@ -35,6 +35,15 @@ class UserService extends BaseService {
   }
 
   async beforeCreate(data) {
+    if (data.password) {
+      data.password = await hashPassword(data.password);
+    }
+
+    // Generate avatar if not provided
+    if (!data.avatar && data.name) {
+      data.avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name)}&background=random`;
+    }
+
     return {
       ...data,
       isActive: data.isActive !== undefined ? data.isActive : true,
@@ -49,8 +58,10 @@ class UserService extends BaseService {
       delete data.newPassword;
     }
 
-    // Don't allow updating password directly
-    delete data.password;
+    // Hash password if provided directly (for admin updates)
+    if (data.password) {
+      data.password = await hashPassword(data.password);
+    }
 
     return {
       ...data,
