@@ -19,11 +19,13 @@ class AIService {
    */
   async chat(userId, message, context = {}) {
 
-    // Sanitize user input
-    const cleanMessage = sanitizeHtml(message, {
-      allowedTags: [],
-      allowedAttributes: {}
-    });
+    // Sanitize user input - Simple validation
+    const cleanMessage = message
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .trim();
 
     // Length limit
     if (cleanMessage.length > 500) {
@@ -162,6 +164,14 @@ class AIService {
    * Build system prompt
    */
   buildSystemPrompt(character, knowledge) {
+    // Default character if null
+    if (!character) {
+      character = {
+        persona: 'Bạn là trợ lý AI thông minh về văn hóa Việt Nam.',
+        speaking_style: 'Thân thiện, dễ hiểu, hài hước'
+      };
+    }
+
     return `${character.persona}
 
 Phong cách nói chuyện: ${character.speaking_style}
