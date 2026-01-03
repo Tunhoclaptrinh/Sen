@@ -1,4 +1,5 @@
 const db = require('../config/database');
+const artifactService = require('../services/artifact.service');
 
 class ArtifactController {
   getAll = async (req, res, next) => {
@@ -145,6 +146,15 @@ class ArtifactController {
         success: true,
         message: 'Artifact deleted'
       });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getStats = async (req, res, next) => {
+    try {
+      const result = await artifactService.getStats();
+      res.json(result);
     } catch (error) {
       next(error);
     }

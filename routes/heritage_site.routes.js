@@ -8,6 +8,7 @@ const heritageSiteController = require('../controllers/heritage_site.controller'
 router.get('/', heritageSiteController.getAll);
 router.get('/search', heritageSiteController.search);
 router.get('/nearby', heritageSiteController.getNearby);
+router.get('/stats/summary', heritageSiteController.getStats);
 router.get('/:id', heritageSiteController.getById);
 router.get('/:id/artifacts', heritageSiteController.getArtifacts);
 router.get('/:id/timeline', heritageSiteController.getTimeline);

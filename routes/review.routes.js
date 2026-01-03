@@ -6,6 +6,7 @@ const reviewController = require('../controllers/review.controller');
 
 // Public
 router.get('/', reviewController.getAll);
+router.get('/stats/summary', reviewController.getStats);
 router.get('/type/:type', reviewController.getByType);
 
 // User Actions

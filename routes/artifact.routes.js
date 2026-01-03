@@ -5,6 +5,7 @@ const artifactController = require('../controllers/artifact.controller');
 
 router.get('/', artifactController.getAll);
 router.get('/search', artifactController.search);
+router.get('/stats/summary', artifactController.getStats);
 router.get('/:id', artifactController.getById);
 router.get('/:id/related', artifactController.getRelated);
 

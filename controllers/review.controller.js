@@ -1,4 +1,5 @@
 const db = require('../config/database');
+const reviewService = require('../services/review.service');
 
 class ReviewController {
   getByType = async (req, res, next) => {
@@ -152,6 +153,15 @@ class ReviewController {
         data: result.data,
         pagination: result.pagination
       });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getStats = async (req, res, next) => {
+    try {
+      const result = await reviewService.getStats();
+      res.json(result);
     } catch (error) {
       next(error);
     }

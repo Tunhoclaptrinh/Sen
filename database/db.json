@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2025-12-31T04:20:10.132Z"
+      "lastLogin": "2026-01-03T04:01:48.675Z"
     },
     {
       "id": 2,
@@ -306,7 +306,8 @@
       "condition": "excellent",
       "image": "https://images.unsplash.com/photo-1578321272176-b7899d21b5d5?w=600",
       "is_on_display": true,
-      "location_in_site": "Phòng tranh 1, Tầng 1"
+      "location_in_site": "Phòng tranh 1, Tầng 1",
+      "updatedAt": "2026-01-03T03:47:29.585Z"
     },
     {
       "id": 2,

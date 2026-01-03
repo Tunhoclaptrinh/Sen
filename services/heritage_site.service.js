@@ -79,6 +79,26 @@ class HeritageSiteService extends BaseService {
       data: timelines
     };
   }
+
+  async getStats() {
+    const allSites = await db.findAll('heritage_sites');
+
+    const stats = {
+      total: allSites.length,
+      unesco: allSites.filter(s => s.unesco_listed).length,
+      topRated: allSites.filter(s => s.rating >= 4).length,
+      region: {
+        north: allSites.filter(s => s.region === 'Bắc' || s.region === 'North').length,
+        center: allSites.filter(s => s.region === 'Trung' || s.region === 'Center').length,
+        south: allSites.filter(s => s.region === 'Nam' || s.region === 'South').length
+      }
+    };
+
+    return {
+      success: true,
+      data: stats
+    };
+  }
 }
 
 module.exports = new HeritageSiteService();
