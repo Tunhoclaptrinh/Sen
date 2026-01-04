@@ -23,6 +23,7 @@ router.use('/ai', require('./ai.routes'));
 router.use('/quests', require('./quest.routes'));
 
 router.use('/upload', require('./upload.routes'));
+router.use('/notifications', require('./notification.routes'));
 
 
 module.exports = router;

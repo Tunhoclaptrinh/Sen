@@ -12,9 +12,9 @@ class NotificationController extends BaseController {
 
       res.json({
         success: true,
-        count: result.data.length,
+        data: result.data,
         unreadCount: result.unreadCount,
-        data: result.data
+        pagination: result.pagination
       });
     } catch (error) {
       next(error);
@@ -29,6 +29,37 @@ class NotificationController extends BaseController {
         return res.status(result.statusCode || 400).json(result);
       }
 
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+
+  markAllAsRead = async (req, res, next) => {
+    try {
+      const result = await this.service.markAllAsRead(req.user.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  deleteNotification = async (req, res, next) => {
+    try {
+      const result = await this.service.delete(req.params.id);
+      if (!result) {
+        return res.status(404).json({ success: false, message: "Notification not found" });
+      }
+      res.json({ success: true, message: "Notification deleted" });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  clearAll = async (req, res, next) => {
+    try {
+      const result = await this.service.deleteAll(req.user.id);
       res.json(result);
     } catch (error) {
       next(error);
