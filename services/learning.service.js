@@ -36,11 +36,32 @@ class LearningService extends BaseService {
       time_spent: 0
     };
 
-    const points = score >= (module.passing_score || 70) ? 50 : 0;
+    const passingScore = module.quiz?.passing_score || 70;
+    const points = score >= passingScore ? 50 : 0;
+
+    // Level calculation: Every 200 points = 1 level
+    const newTotalPoints = (userProgress.total_points || 0) + points;
+    const newLevel = Math.floor(newTotalPoints / 200) + 1;
+
+    // Badge logic
+    let newBadges = [...(userProgress.badges || [])];
+    const completedCount = (userProgress.completed_modules || []).length + 1;
+
+    if (completedCount === 1 && !newBadges.includes('newbie')) {
+      newBadges.push('newbie'); // Badge: Người Mới Bắt Đầu
+    }
+    if (score === 100 && !newBadges.includes('perfect_score')) {
+      newBadges.push('perfect_score'); // Badge: Điểm Tuyệt Đối
+    }
+    if (newLevel > (userProgress.level || 1)) {
+      // Logic for level up badge could go here
+    }
 
     const updated = await db.update('user_progress', userProgress.id, {
       completed_modules: [...(userProgress.completed_modules || []), completedModule],
-      total_points: (userProgress.total_points || 0) + points
+      total_points: newTotalPoints,
+      level: newLevel,
+      badges: newBadges
     });
 
     return {
@@ -50,7 +71,7 @@ class LearningService extends BaseService {
         module_title: module.title,
         score: score,
         points_earned: points,
-        passed: score >= (module.passing_score || 70)
+        passed: score >= passingScore
       }
     };
   }
