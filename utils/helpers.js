@@ -3,9 +3,18 @@ const bcrypt = require('bcryptjs');
 
 /**
  * Generate JWT token
+ * @param {number} id - User ID
+ * @param {string} loginTime - ISO timestamp of login (for token invalidation)
  */
-exports.generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+exports.generateToken = (id, loginTime = null) => {
+  const payload = { id };
+  
+  // Include loginTime for token version checking
+  if (loginTime) {
+    payload.loginTime = loginTime;
+  }
+  
+  return jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE || '30d'
   });
 };
