@@ -8,7 +8,8 @@
     "seed": "node utils/seedData.js",
     "dev": "nodemon server.js",
     "query": "node tools/run-query.js",
-    "fix-sequences": "node tools/fix-sequences.js"
+    "fix-sequences": "node tools/fix-sequences.js",
+    "test-ai": "node tools/test-ai.js"
   },
   "keywords": [
     "cultural-heritage",

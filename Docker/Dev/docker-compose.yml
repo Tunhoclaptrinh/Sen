@@ -1,0 +1,108 @@
+# ============================================
+# SEN Backend - Docker Compose (Development)
+# Profiles: dev, seed, query, test-ai
+# ============================================
+
+services:
+  # ==========================================
+  # Development Server (default)
+  # ==========================================
+  sen-backend-dev:
+    profiles: ["dev", "default"]
+    build:
+      context: ../..
+      dockerfile: Docker/Dev/Dockerfile
+    container_name: sen-backend-dev
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=${JWT_SECRET:-dev_secret_key_for_development_only_32chars}
+      - JWT_EXPIRE=${JWT_EXPIRE:-7d}
+      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3001,http://localhost:5173,http://localhost}
+      - CORS_CREDENTIALS=true
+      - LOG_LEVEL=debug
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DB_CONNECTION=${DB_CONNECTION}
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../..:/app
+      - /app/node_modules
+    networks:
+      - sen-network-dev
+    command: npm run dev
+
+  # ==========================================
+  # Seed Database
+  # ==========================================
+  sen-backend-seed:
+    profiles: ["seed"]
+    build:
+      context: ../..
+      dockerfile: Docker/Dev/Dockerfile
+    container_name: sen-backend-seed
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=dev_secret_key_for_development_only_32chars
+      - JWT_EXPIRE=7d
+    volumes:
+      - ../..:/app
+      - /app/node_modules
+    networks:
+      - sen-network-dev
+    command: npm run seed
+
+  # ==========================================
+  # Query Tool
+  # ==========================================
+  sen-backend-query:
+    profiles: ["query"]
+    build:
+      context: ../..
+      dockerfile: Docker/Dev/Dockerfile
+    container_name: sen-backend-query
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=dev_secret_key_for_development_only_32chars
+      - JWT_EXPIRE=7d
+    volumes:
+      - ../..:/app
+      - /app/node_modules
+    networks:
+      - sen-network-dev
+    command: npm run query
+
+  # ==========================================
+  # Test AI
+  # ==========================================
+  sen-backend-test-ai:
+    profiles: ["test-ai"]
+    build:
+      context: ../..
+      dockerfile: Docker/Dev/Dockerfile
+    container_name: sen-backend-test-ai
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=${JWT_SECRET:-dev_secret_key_for_development_only_32chars}
+      - JWT_EXPIRE=${JWT_EXPIRE:-7d}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ../..:/app
+      - /app/node_modules
+    networks:
+      - sen-network-dev
+    command: npm run test-ai
+
+networks:
+  sen-network-dev:
+    name: sen-network-dev
+    driver: bridge
