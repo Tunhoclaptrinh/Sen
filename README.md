@@ -66,8 +66,8 @@
   - Thông tin chi tiết về di tích lịch sử
   - Timeline các sự kiện quan trọng
   - Đánh giá và bình luận
-  
 - **Artifacts & Collections**
+
   - Khám phá hiện vật lịch sử
   - Tạo bộ sưu tập cá nhân
   - Phân loại theo thời kỳ, khu vực
@@ -81,35 +81,41 @@
 ### 2. 🎮 Game System (Unified Architecture)
 
 - **Chapter System (Sen Flower Layers)**
+
   - 3 lớp cánh hoa sen tượng trưng cho 3 chương game
   - Chapter 1: Sen Hồng - Ký Ức Đầu Tiên (Cội Nguồn)
   - Chapter 2: Sen Vàng - Thời Hoàng Kim (Giao Thoa)
   - Chapter 3: Sen Trắng - Di Sản Bất Tử (Vươn Xa)
 
 - **Level System (Screen-based)**
+
   - Màn chơi với nhiều screens tuần tự
   - 6 loại screen: DIALOGUE, HIDDEN_OBJECT, QUIZ, TIMELINE, IMAGE_VIEWER, VIDEO
   - Navigation linh hoạt giữa các screens
   - Checkpoint và save progress
 
 - **AI Characters**
+
   - NPCs lịch sử Việt Nam (Chú Tễu, Thị Kính, Thánh Gióng...)
   - 2 trạng thái: Mất trí nhớ ↔ Hồi phục
   - Context-aware conversations
   - Personality-driven responses
 
 - **Rewards & Progression**
+
   - Cánh hoa sen (petals) để mở khóa chapters
   - Sen coins để mua items
   - Experience points và leveling
   - Unlock characters và museum items
 
 - **Museum System**
+
   - Bảo tàng cá nhân với artifacts thu thập
   - Thu nhập thụ động từ museum
   - Upgrade và mở rộng
 
 - **Badges & Achievements**
+
   - 50+ badges có thể đạt được
   - Achievement tracking
   - Milestone rewards
@@ -121,11 +127,13 @@
 ### 3. 🤖 AI Assistant System
 
 - **Context-Aware Chatbot**
+
   - Chat theo ngữ cảnh level đang chơi
   - Hiểu biết về artifacts và heritage sites
   - Cung cấp hints và giải thích
 
 - **AI Character Personas**
+
   - Mỗi character có personality riêng
   - Chuyển đổi persona theo progress
   - Duy trì conversation history
@@ -138,6 +146,7 @@
 ### 4. 🎓 Learning & Quests
 
 - **Learning Paths**
+
   - Structured learning modules
   - Progress tracking
   - Quizzes and assessments
@@ -151,12 +160,14 @@
 ### 5. 👥 User Management
 
 - **Authentication & Authorization**
+
   - JWT-based authentication
   - Role-based access control (Admin, Customer)
   - Secure password hashing (bcrypt)
   - Session management
 
 - **User Profiles**
+
   - Personal information
   - Avatar upload
   - Address management
@@ -171,6 +182,7 @@
 ### 6. 🎨 Admin CMS (Content Management System)
 
 - **Level CMS**
+
   - Visual level editor
   - Screen templates
   - Drag-and-drop screen ordering
@@ -179,12 +191,14 @@
   - Export to JSON/XLSX
 
 - **Chapter Management**
+
   - Create and edit chapters
   - Order and organize levels
   - Set unlock requirements
   - Reward configuration
 
 - **Character Management**
+
   - Create AI characters
   - Define personas (amnesia & restored)
   - Upload avatars
@@ -199,6 +213,7 @@
 ### 7. 📤 Import/Export
 
 - **Data Import**
+
   - XLSX spreadsheet import
   - JSON bulk import
   - Validation and error reporting
@@ -224,21 +239,21 @@
 
 ### Core Technologies
 
-| Category              | Technology                          | Version | Purpose                          |
-| --------------------- | ----------------------------------- | ------- | -------------------------------- |
-| **Runtime**           | Node.js                             | 18+     | Server runtime                   |
-| **Framework**         | Express.js                          | 4.18.2  | Web framework                    |
-| **Authentication**    | jsonwebtoken                        | 9.0.2   | JWT authentication               |
-| **Password Hashing**  | bcryptjs                            | 2.4.3   | Secure password storage          |
-| **Validation**        | express-validator                   | 7.0.1   | Request validation               |
-| **File Upload**       | multer                              | 2.0.2   | Multipart form data handling     |
-| **Image Processing**  | sharp                               | 0.34.5  | Image optimization               |
-| **Excel Import**      | xlsx                                | 0.18.5  | Excel file processing            |
-| **CSV Export**        | json2csv                            | 6.0.0   | CSV generation                   |
-| **UUID Generator**    | uuid                                | 9.0.1   | Unique ID generation             |
-| **Environment**       | dotenv                              | 16.3.1  | Environment variables            |
-| **CORS**              | cors                                | 2.8.5   | Cross-origin resource sharing    |
-| **Dev Tool**          | nodemon                             | 3.0.1   | Auto-restart development server  |
+| Category             | Technology        | Version | Purpose                         |
+| -------------------- | ----------------- | ------- | ------------------------------- |
+| **Runtime**          | Node.js           | 18+     | Server runtime                  |
+| **Framework**        | Express.js        | 4.18.2  | Web framework                   |
+| **Authentication**   | jsonwebtoken      | 9.0.2   | JWT authentication              |
+| **Password Hashing** | bcryptjs          | 2.4.3   | Secure password storage         |
+| **Validation**       | express-validator | 7.0.1   | Request validation              |
+| **File Upload**      | multer            | 2.0.2   | Multipart form data handling    |
+| **Image Processing** | sharp             | 0.34.5  | Image optimization              |
+| **Excel Import**     | xlsx              | 0.18.5  | Excel file processing           |
+| **CSV Export**       | json2csv          | 6.0.0   | CSV generation                  |
+| **UUID Generator**   | uuid              | 9.0.1   | Unique ID generation            |
+| **Environment**      | dotenv            | 16.3.1  | Environment variables           |
+| **CORS**             | cors              | 2.8.5   | Cross-origin resource sharing   |
+| **Dev Tool**         | nodemon           | 3.0.1   | Auto-restart development server |
 
 ### Database
 
@@ -287,20 +302,112 @@ Storage: 500MB
 
 ## 🚀 Cài Đặt & Chạy
 
-### Bước 1: Clone Repository
+### 🐳 Cách 1: Chạy Với Docker (Khuyến Nghị)
+
+Docker giúp bạn chạy backend **không cần cài đặt Node.js hay PostgreSQL**.
+
+#### Quick Start (Lần Đầu Chạy)
+
+**Cách 1: Sử dụng Menu Tương Tác (Dễ nhất)**
+
+```bash
+# Clone repository
+git clone https://github.com/Tunhoclaptrinh/Sen-Web.git
+cd Sen-Web/Backend
+
+# Chạy menu tương tác
+bash run.sh
+```
+
+Menu sẽ hiện ra:
+
+```
+==========================================
+     SEN Backend - Docker Runner
+==========================================
+
+  Select mode:
+
+  [1] Build Images   (First time / Rebuild only)
+  [2] Start Dev      (docker-compose up)
+  [3] Seed Database  (Create sample data)
+  [4] Query Tool     (Query database)
+  [5] Test AI        (Test AI chatbot)
+  [6] Start Prod     (docker-compose up -d)
+  [7] View Logs
+  [8] Stop All       (docker-compose down)
+  [9] Exit
+
+Select [1-9]:
+```
+
+**Lần đầu chạy:**
+
+1. Gõ `bash run.sh`
+2. Chọn **[1]** Build Images
+3. Chọn **[2]** Start Dev
+4. Backend chạy tại: `http://localhost:3000`
+
+#### Tất Cả Lệnh Docker
+
+```bash
+# === MENU TƯƠNG TÁC ===
+bash run.sh                # Hiện menu, chọn số [1-9]
+
+# === CHẠY TRỰC TIẾP ===
+bash run.sh build          # [1] Build Docker images
+bash run.sh dev            # [2] Start dev server (hot-reload)
+bash run.sh seed           # [3] Seed database
+bash run.sh query          # [4] Query tool
+bash run.sh test-ai        # [5] Test AI chatbot
+bash run.sh prod           # [6] Start production
+bash run.sh logs           # [7] View logs
+bash run.sh down           # [8] Stop containers
+
+# === TRỢ GIÚP ===
+bash run.sh help           # Xem hướng dẫn
+```
+
+#### Docker Compose Profiles
+
+- **dev**: Development server với hot-reload
+- **seed**: Seed database với dữ liệu mẫu
+- **query**: Query tool để test database
+- **test-ai**: Test AI chatbot functionality
+- **prod**: Production build
+
+#### Cấu Trúc Docker
+
+```
+Backend/
+├── Docker/
+│   ├── Dev/
+│   │   ├── docker-compose.yml    # Dev environment
+│   │   └── Dockerfile            # Dev image
+│   └── Production/
+│       ├── docker-compose.yml    # Prod environment
+│       └── Dockerfile            # Prod image
+└── run.sh                         # Docker runner script
+```
+
+---
+
+### 💻 Cách 2: Chạy Local (Không Dùng Docker)
+
+#### Bước 1: Clone Repository
 
 ```bash
 git clone https://github.com/Tunhoclaptrinh/Sen-Web.git
-cd Sen-Web/backend
+cd Sen-Web/Backend
 ```
 
-### Bước 2: Cài Đặt Dependencies
+#### Bước 2: Cài Đặt Dependencies
 
 ```bash
 npm install
 ```
 
-### Bước 3: Cấu Hình Environment
+#### Bước 3: Cấu Hình Environment
 
 ```bash
 # Copy file example
@@ -310,22 +417,46 @@ cp .env.example .env
 nano .env
 ```
 
-### Bước 4: Seed Database (Optional)
+**Cấu hình .env:**
+
+```env
+# ============================================
+# SEN Backend - Environment Variables
+# Copy this file to .env and fill in values
+# ============================================
+
+# Server
+PORT=3000
+NODE_ENV=development
+
+# Authentication (REQUIRED)
+JWT_SECRET=your_secret_key_at_least_32_characters_long
+JWT_EXPIRE=30d
+
+# AI Chatbot (REQUIRED for test-ai)
+OPENAI_API_KEY=sk-proj-your-openai-api-key
+
+# Database (uncomment when using MongoDB)
+# DB_CONNECTION=mongodb
+# DATABASE_URL=mongodb://user:password@host:port/database
+```
+
+#### Bước 4: Seed Database (Optional)
 
 ```bash
 # Tạo dữ liệu mẫu
 npm run seed
 ```
 
-### Bước 5: Chạy Server
+#### Bước 5: Chạy Server
 
-#### Development Mode
+**Development Mode:**
 
 ```bash
 npm run dev
 ```
 
-#### Production Mode
+**Production Mode:**
 
 ```bash
 npm start
@@ -333,7 +464,7 @@ npm start
 
 Server sẽ chạy tại: **`http://localhost:3000`**
 
-### Bước 6: Kiểm Tra Health Check
+#### Bước 6: Kiểm Tra Health Check
 
 ```bash
 # Sử dụng curl
@@ -351,6 +482,21 @@ Kết quả mong đợi:
   "message": "Sen API is running"
 }
 ```
+
+---
+
+### 🛠️ Scripts NPM
+
+| Command                 | Mô tả                                        |
+| ----------------------- | -------------------------------------------- |
+| `npm start`             | Chạy production server                       |
+| `npm run dev`           | Chạy development server (nodemon hot-reload) |
+| `npm run seed`          | Seed database với dữ liệu mẫu                |
+| `npm run query`         | Chạy query tool để test database             |
+| `npm run test-ai`       | Test AI chatbot functionality                |
+| `npm run fix-sequences` | Fix database sequences (PostgreSQL)          |
+
+---
 
 ---
 
@@ -508,8 +654,12 @@ Production: https://api.sen.vn/api
 {
   "success": true,
   "message": "Operation successful",
-  "data": { /* resource or array */ },
-  "pagination": { /* if applicable */ }
+  "data": {
+    /* resource or array */
+  },
+  "pagination": {
+    /* if applicable */
+  }
 }
 ```
 
@@ -561,12 +711,12 @@ Our API supports powerful query parameters for filtering, searching, sorting, an
 
 #### 🔍 Pagination
 
-| Parameter | Type     | Default | Description                    | Example                        |
-|-----------|----------|---------|--------------------------------|--------------------------------|
-| `_page`   | integer  | 1       | Page number (1-based)          | `?_page=2`                     |
-| `_limit`  | integer  | 10      | Items per page (max 100)       | `?_limit=20`                   |
-| `_start`  | integer  | 0       | Starting index (alternative)   | `?_start=20&_limit=10`         |
-| `_end`    | integer  | -       | Ending index (alternative)     | `?_start=0&_end=20`            |
+| Parameter | Type    | Default | Description                  | Example                |
+| --------- | ------- | ------- | ---------------------------- | ---------------------- |
+| `_page`   | integer | 1       | Page number (1-based)        | `?_page=2`             |
+| `_limit`  | integer | 10      | Items per page (max 100)     | `?_limit=20`           |
+| `_start`  | integer | 0       | Starting index (alternative) | `?_start=20&_limit=10` |
+| `_end`    | integer | -       | Ending index (alternative)   | `?_start=0&_end=20`    |
 
 **Examples:**
 
@@ -583,9 +733,9 @@ GET /api/artifacts?_limit=50
 
 #### 🔎 Full-Text Search
 
-| Parameter | Type   | Description                           | Example                    |
-|-----------|--------|---------------------------------------|----------------------------|
-| `q`       | string | Search across all text fields         | `?q=pottery`               |
+| Parameter | Type   | Description                   | Example      |
+| --------- | ------ | ----------------------------- | ------------ |
+| `q`       | string | Search across all text fields | `?q=pottery` |
 
 **Examples:**
 
@@ -613,15 +763,15 @@ GET /api/users?role=admin
 
 **Operators:**
 
-| Operator  | Description              | Example                              |
-|-----------|--------------------------|--------------------------------------|
-| `_gte`    | Greater than or equal    | `?rating_gte=4`                      |
-| `_lte`    | Less than or equal       | `?price_lte=1000`                    |
-| `_gt`     | Greater than             | `?views_gt=100`                      |
-| `_lt`     | Less than                | `?age_lt=30`                         |
-| `_ne`     | Not equal                | `?status_ne=deleted`                 |
-| `_like`   | Contains (case-insensitive) | `?name_like=ancient`              |
-| `_in`     | In array                 | `?category_in=pottery,sculpture`     |
+| Operator | Description                 | Example                          |
+| -------- | --------------------------- | -------------------------------- |
+| `_gte`   | Greater than or equal       | `?rating_gte=4`                  |
+| `_lte`   | Less than or equal          | `?price_lte=1000`                |
+| `_gt`    | Greater than                | `?views_gt=100`                  |
+| `_lt`    | Less than                   | `?age_lt=30`                     |
+| `_ne`    | Not equal                   | `?status_ne=deleted`             |
+| `_like`  | Contains (case-insensitive) | `?name_like=ancient`             |
+| `_in`    | In array                    | `?category_in=pottery,sculpture` |
 
 **Examples:**
 
@@ -647,10 +797,10 @@ GET /api/game/levels?difficulty_lt=5
 
 #### 📊 Sorting
 
-| Parameter | Type   | Description                      | Example                    |
-|-----------|--------|----------------------------------|----------------------------|
-| `_sort`   | string | Field name to sort by            | `?_sort=name`              |
-| `_order`  | string | Sort order: `asc` or `desc`      | `?_order=desc`             |
+| Parameter | Type   | Description                 | Example        |
+| --------- | ------ | --------------------------- | -------------- |
+| `_sort`   | string | Field name to sort by       | `?_sort=name`  |
+| `_order`  | string | Sort order: `asc` or `desc` | `?_order=desc` |
 
 **Examples:**
 
@@ -670,10 +820,10 @@ GET /api/artifacts?_sort=category,rating&_order=asc,desc
 
 #### 🔗 Relations (Embed/Expand)
 
-| Parameter | Type   | Description                           | Example                    |
-|-----------|--------|---------------------------------------|----------------------------|
-| `_embed`  | string | Include child resources               | `?_embed=artifacts`        |
-| `_expand` | string | Include parent resource               | `?_expand=heritage_site`   |
+| Parameter | Type   | Description             | Example                  |
+| --------- | ------ | ----------------------- | ------------------------ |
+| `_embed`  | string | Include child resources | `?_embed=artifacts`      |
+| `_expand` | string | Include parent resource | `?_expand=heritage_site` |
 
 **Examples:**
 
@@ -693,9 +843,9 @@ GET /api/artifacts?_expand=category&_embed=reviews
 
 #### 📌 Field Selection
 
-| Parameter | Type   | Description                      | Example                         |
-|-----------|--------|----------------------------------|---------------------------------|
-| `_fields` | string | Select specific fields only      | `?_fields=id,name,image`        |
+| Parameter | Type   | Description                 | Example                  |
+| --------- | ------ | --------------------------- | ------------------------ |
+| `_fields` | string | Select specific fields only | `?_fields=id,name,image` |
 
 **Examples:**
 
@@ -709,11 +859,11 @@ GET /api/heritage-sites?_fields=id,name,location,rating
 
 #### 🌍 Geolocation (Custom)
 
-| Parameter  | Type    | Description                  | Example                    |
-|------------|---------|------------------------------|----------------------------|
-| `lat`      | float   | Latitude                     | `?lat=15.8801`             |
-| `lon`      | float   | Longitude                    | `?lon=108.3380`            |
-| `radius`   | integer | Search radius in km          | `?radius=10`               |
+| Parameter | Type    | Description         | Example         |
+| --------- | ------- | ------------------- | --------------- |
+| `lat`     | float   | Latitude            | `?lat=15.8801`  |
+| `lon`     | float   | Longitude           | `?lon=108.3380` |
+| `radius`  | integer | Search radius in km | `?radius=10`    |
 
 **Examples:**
 
@@ -761,27 +911,27 @@ GET /api/reviews?rating_in=4,5&type=artifact&verified=true&_sort=created_at&_ord
 
 ### API Endpoints Overview
 
-| Module                 | Base Path                   | Description                    |
-| ---------------------- | --------------------------- | ------------------------------ |
-| **Authentication**     | `/api/auth`                 | User authentication            |
-| **Users**              | `/api/users`                | User management                |
-| **Heritage Sites**     | `/api/heritage-sites`       | Heritage sites & monuments     |
-| **Artifacts**          | `/api/artifacts`            | Cultural artifacts             |
-| **Categories**         | `/api/categories`           | Content categories             |
-| **Exhibitions**        | `/api/exhibitions`          | Exhibitions & events           |
-| **Collections**        | `/api/collections`          | Personal collections           |
-| **Favorites**          | `/api/favorites`            | Favorites (unified)            |
-| **Reviews**            | `/api/reviews`              | Reviews & ratings              |
-| **Game System**        | `/api/game`                 | Game mechanics (unified)       |
-| **AI Assistant**       | `/api/ai`                   | AI chatbot                     |
-| **Learning**           | `/api/learning`             | Learning modules               |
-| **Quests**             | `/api/quests`               | Quest system                   |
-| **Notifications**      | `/api/notifications`        | User notifications             |
-| **Upload**             | `/api/upload`               | File upload                    |
-| **Admin - Levels**     | `/api/admin/levels`         | Level CMS                      |
-| **Admin - Chapters**   | `/api/admin/chapters`       | Chapter CMS                    |
-| **Admin - Characters** | `/api/admin/characters`     | Character CMS                  |
-| **Admin - Assets**     | `/api/admin/assets`         | Asset management               |
+| Module                 | Base Path               | Description                |
+| ---------------------- | ----------------------- | -------------------------- |
+| **Authentication**     | `/api/auth`             | User authentication        |
+| **Users**              | `/api/users`            | User management            |
+| **Heritage Sites**     | `/api/heritage-sites`   | Heritage sites & monuments |
+| **Artifacts**          | `/api/artifacts`        | Cultural artifacts         |
+| **Categories**         | `/api/categories`       | Content categories         |
+| **Exhibitions**        | `/api/exhibitions`      | Exhibitions & events       |
+| **Collections**        | `/api/collections`      | Personal collections       |
+| **Favorites**          | `/api/favorites`        | Favorites (unified)        |
+| **Reviews**            | `/api/reviews`          | Reviews & ratings          |
+| **Game System**        | `/api/game`             | Game mechanics (unified)   |
+| **AI Assistant**       | `/api/ai`               | AI chatbot                 |
+| **Learning**           | `/api/learning`         | Learning modules           |
+| **Quests**             | `/api/quests`           | Quest system               |
+| **Notifications**      | `/api/notifications`    | User notifications         |
+| **Upload**             | `/api/upload`           | File upload                |
+| **Admin - Levels**     | `/api/admin/levels`     | Level CMS                  |
+| **Admin - Chapters**   | `/api/admin/chapters`   | Chapter CMS                |
+| **Admin - Characters** | `/api/admin/characters` | Character CMS              |
+| **Admin - Assets**     | `/api/admin/assets`     | Asset management           |
 
 ### Quick Examples
 
@@ -1033,15 +1183,15 @@ CHAPTERS (Sen Flower Layers)
 
 Each level contains multiple screens executed sequentially:
 
-| Screen Type       | Description                      | Interaction                   |
-| ----------------- | -------------------------------- | ----------------------------- |
-| `STORY`           | Narrative storytelling           | Read and continue             |
-| `DIALOGUE`        | Character conversation           | Chat with AI character        |
-| `HIDDEN_OBJECT`   | Find hidden items                | Tap/click to find items       |
-| `QUIZ`            | Multiple choice questions        | Select correct answer         |
-| `TIMELINE`        | Order historical events          | Drag and drop events          |
-| `IMAGE_VIEWER`    | View images/photos               | Swipe through gallery         |
-| `VIDEO`           | Watch video content              | Play video                    |
+| Screen Type     | Description               | Interaction             |
+| --------------- | ------------------------- | ----------------------- |
+| `STORY`         | Narrative storytelling    | Read and continue       |
+| `DIALOGUE`      | Character conversation    | Chat with AI character  |
+| `HIDDEN_OBJECT` | Find hidden items         | Tap/click to find items |
+| `QUIZ`          | Multiple choice questions | Select correct answer   |
+| `TIMELINE`      | Order historical events   | Drag and drop events    |
+| `IMAGE_VIEWER`  | View images/photos        | Swipe through gallery   |
+| `VIDEO`         | Watch video content       | Play video              |
 
 ### Game Flow Example
 
@@ -1053,7 +1203,7 @@ Each level contains multiple screens executed sequentially:
   "chapter_id": 1,
   "type": "mixed",
   "ai_character_id": 1,
-  
+
   "screens": [
     {
       "id": "screen_01",
@@ -1086,7 +1236,7 @@ Each level contains multiple screens executed sequentially:
       "next_screen_id": "screen_05"
     }
   ],
-  
+
   "rewards": {
     "petals": 2,
     "coins": 100,
@@ -1196,7 +1346,7 @@ Database Collections (db.json):
   // User Management
   users: [],
   addresses: [],
-  
+
   // Heritage & Culture
   heritage_sites: [],
   artifacts: [],
@@ -1204,13 +1354,13 @@ Database Collections (db.json):
   exhibitions: [],
   categories: [],
   cultural_categories: [],
-  
+
   // User Content
   collections: [],
   reviews: [],
   favorites: [],
   notifications: [],
-  
+
   // Game System
   game_chapters: [],
   game_levels: [],
@@ -1219,12 +1369,12 @@ Database Collections (db.json):
   game_sessions: [],
   scan_objects: [],
   shop_items: [],
-  
+
   // Learning
   learning_modules: [],
   game_quests: [],
   user_progress: [],
-  
+
   // Other
   promotions: [],
   ai_chat_history: []
@@ -1253,25 +1403,25 @@ game_levels (*) ───────> (1) game_chapters
 
 ```javascript
 // Basic CRUD
-db.findAll(collection)
-db.findById(collection, id)
-db.findOne(collection, query)
-db.findMany(collection, query)
-db.create(collection, data)
-db.update(collection, id, data)
-db.delete(collection, id)
+db.findAll(collection);
+db.findById(collection, id);
+db.findOne(collection, query);
+db.findMany(collection, query);
+db.create(collection, data);
+db.update(collection, id, data);
+db.delete(collection, id);
 
 // Advanced Queries
 db.findAllAdvanced(collection, {
-  filter: { category: 'pottery', rating_gte: 4 },
-  q: 'ancient',           // Full-text search
-  sort: 'rating',         // Sort field
-  order: 'desc',          // Sort order
-  page: 1,                // Page number
-  limit: 10,              // Items per page
-  embed: 'artifacts',     // Embed relations
-  expand: 'category'      // Expand relations
-})
+  filter: { category: "pottery", rating_gte: 4 },
+  q: "ancient", // Full-text search
+  sort: "rating", // Sort field
+  order: "desc", // Sort order
+  page: 1, // Page number
+  limit: 10, // Items per page
+  embed: "artifacts", // Embed relations
+  expand: "category", // Expand relations
+});
 ```
 
 ---
@@ -1306,30 +1456,30 @@ db.findAllAdvanced(collection, {
 ```javascript
 // User Roles
 const ROLES = {
-  ADMIN: 'admin',        // Full system access
-  CUSTOMER: 'customer'   // Limited access
+  ADMIN: "admin", // Full system access
+  CUSTOMER: "customer", // Limited access
 };
 
 // Permission Matrix
 const PERMISSIONS = {
   admin: {
-    users: ['create', 'read', 'update', 'delete'],
-    heritage_sites: ['create', 'read', 'update', 'delete'],
-    artifacts: ['create', 'read', 'update', 'delete'],
+    users: ["create", "read", "update", "delete"],
+    heritage_sites: ["create", "read", "update", "delete"],
+    artifacts: ["create", "read", "update", "delete"],
     game: {
-      levels: ['create', 'read', 'update', 'delete'],
-      chapters: ['create', 'read', 'update', 'delete'],
-      characters: ['create', 'read', 'update', 'delete']
-    }
+      levels: ["create", "read", "update", "delete"],
+      chapters: ["create", "read", "update", "delete"],
+      characters: ["create", "read", "update", "delete"],
+    },
   },
-  
+
   customer: {
-    heritage_sites: ['read'],
-    artifacts: ['read'],
-    collections: ['create', 'read', 'update', 'delete'], // Own only
-    reviews: ['create', 'read', 'update', 'delete'],     // Own only
-    game: ['play']
-  }
+    heritage_sites: ["read"],
+    artifacts: ["read"],
+    collections: ["create", "read", "update", "delete"], // Own only
+    reviews: ["create", "read", "update", "delete"], // Own only
+    game: ["play"],
+  },
 };
 ```
 
@@ -1337,25 +1487,28 @@ const PERMISSIONS = {
 
 ```javascript
 // Public route (no auth)
-router.get('/api/heritage-sites', heritageSiteController.getAll);
+router.get("/api/heritage-sites", heritageSiteController.getAll);
 
 // Protected route (auth required)
-router.get('/api/game/progress', 
-  protect,                        // Verify JWT
+router.get(
+  "/api/game/progress",
+  protect, // Verify JWT
   gameController.getProgress
 );
 
 // Admin only route
-router.post('/api/admin/levels', 
-  protect,                        // Verify JWT
-  authorize('admin'),             // Check role
+router.post(
+  "/api/admin/levels",
+  protect, // Verify JWT
+  authorize("admin"), // Check role
   levelController.create
 );
 
 // Ownership check
-router.delete('/api/collections/:id',
-  protect,                        // Verify JWT
-  checkOwnership('collections'),  // Verify ownership
+router.delete(
+  "/api/collections/:id",
+  protect, // Verify JWT
+  checkOwnership("collections"), // Verify ownership
   collectionController.delete
 );
 ```
@@ -1767,15 +1920,18 @@ const distance = calculateDistance(lat1, lon1, lat2, lon2);
 When reporting an issue, please include:
 
 1. **Environment:**
+
    - Node.js version
    - Operating system
    - npm version
 
 2. **Description:**
+
    - What happened?
    - What did you expect to happen?
 
 3. **Steps to Reproduce:**
+
    - Step-by-step instructions
 
 4. **Additional Context:**
