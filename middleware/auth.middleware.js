@@ -41,6 +41,19 @@ exports.protect = async (req, res, next) => {
         });
       }
 
+      // Token version check: Invalidate old tokens
+      if (decoded.loginTime && user.lastLogin) {
+        const tokenTime = new Date(decoded.loginTime).getTime();
+        const lastLoginTime = new Date(user.lastLogin).getTime();
+
+        if (tokenTime < lastLoginTime) {
+          return res.status(401).json({
+            success: false,
+            message: 'Token has been invalidated. Please login again.'
+          });
+        }
+      }
+
       // Add user to request
       req.user = user;
       next();

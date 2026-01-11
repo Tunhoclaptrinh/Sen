@@ -479,10 +479,7 @@
       "end_date": "2026-12-31T23:59:59Z",
       "curator": "ThS. Trần Văn An",
       "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
-      "artifact_ids": [
-        1,
-        2
-      ],
+      "artifact_ids": [1, 2],
       "is_active": true
     },
     {
@@ -495,9 +492,7 @@
       "end_date": "2026-08-31T23:59:59Z",
       "curator": "GS. Lê Văn Minh",
       "image": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=600",
-      "artifact_ids": [
-        3
-      ],
+      "artifact_ids": [3],
       "is_active": true
     }
   ],
@@ -651,11 +646,137 @@
   ],
   "game_levels": [
     {
+      "id": 99,
+      "chapter_id": 1,
+      "name": "[DEMO] Test All Screens",
+      "description": "Level demo để test tất cả các loại màn hình",
+      "type": "mixed",
+      "difficulty": "easy",
+      "order": 0,
+      "required_level": null,
+      "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+      "background_music": null,
+      "ai_character_id": 1,
+      "knowledge_base": "Level demo cho tất cả screen types",
+      "screens": [
+        {
+          "id": "demo_dialogue",
+          "name": "Dialogue Demo",
+          "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+          "type": "DIALOGUE",
+          "description": "Demo màn hình hội thoại",
+          "content": [
+            {
+              "speaker": "AI",
+              "text": "Xin chào! Mình là trợ lý Sen. Mình sẽ hướng dẫn bạn khám phá di sản văn hóa Việt Nam.",
+              "avatar": "",
+              "emotion": "happy"
+            },
+            {
+              "speaker": "NARRATOR",
+              "text": "Bạn bắt đầu hành trình khám phá những di sản văn hóa quý giá của dân tộc.",
+              "avatar": "",
+              "emotion": ""
+            },
+            {
+              "speaker": "AI",
+              "text": "Hãy cùng mình tìm hiểu về lịch sử phong phú của Việt Nam nhé!",
+              "avatar": "",
+              "emotion": "excited"
+            }
+          ]
+        },
+        {
+          "id": "demo_image",
+          "name": "Image Viewer Demo",
+          "background": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+          "type": "IMAGE_VIEWER",
+          "description": "Demo màn hình xem ảnh",
+          "content": {
+            "title": "Di sản Hội An",
+            "description": "Phố cổ Hội An là một trong những di sản văn hóa thế giới được UNESCO công nhận. Nơi đây lưu giữ nét kiến trúc cổ kính độc đáo của Việt Nam.",
+            "image_url": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800"
+          }
+        },
+        {
+          "id": "demo_video",
+          "name": "Video Demo",
+          "background": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+          "type": "VIDEO",
+          "description": "Demo màn hình video",
+          "content": {
+            "title": "Lịch sử Việt Nam",
+            "description": "Xem video để tìm hiểu về lịch sử hào hùng của dân tộc Việt Nam.",
+            "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+          }
+        },
+        {
+          "id": "demo_hidden",
+          "name": "Hidden Object Demo",
+          "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+          "type": "HIDDEN_OBJECT",
+          "description": "Demo màn hình tìm vật phẩm"
+        },
+        {
+          "id": "demo_quiz",
+          "name": "Quiz Demo",
+          "background": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800",
+          "type": "QUIZ",
+          "description": "Demo màn hình câu hỏi",
+          "question": "Việt Nam có bao nhiêu di sản thế giới được UNESCO công nhận?",
+          "options": ["5 di sản", "8 di sản", "10 di sản", "12 di sản"],
+          "correct_answer": 1,
+          "time_limit": 30,
+          "points": 20
+        },
+        {
+          "id": "demo_timeline",
+          "name": "Timeline Demo",
+          "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+          "type": "TIMELINE",
+          "description": "Demo màn hình dòng thời gian"
+        }
+      ],
+      "clues": [
+        {
+          "id": "item1",
+          "name": "Chiếc nón lá",
+          "content": "Nón lá là biểu tượng văn hóa truyền thống của Việt Nam, được làm từ lá cọ khô.",
+          "points": 10,
+          "hint": "Tìm chiếc nón truyền thống"
+        },
+        {
+          "id": "item2",
+          "name": "Áo dài",
+          "content": "Áo dài là trang phục truyền thống của phụ nữ Việt Nam, thanh lịch và duyên dáng.",
+          "points": 10,
+          "hint": "Tìm trang phục truyền thống"
+        },
+        {
+          "id": "evt1",
+          "name": "Năm 1802",
+          "content": "Nguyễn Ánh lên ngôi hoàng đế",
+          "points": 10,
+          "hint": "Đây là sự kiện đầu triều Nguyễn"
+        },
+        {
+          "id": "evt2",
+          "name": "Năm 1945",
+          "content": "Cách mạng Tháng Tám thành công",
+          "points": 10,
+          "hint": "Việt Nam giành độc lập"
+        }
+      ],
+      "artifact_ids": [],
+      "heritage_site_id": null,
+      "quizzes": []
+    },
+    {
       "id": 1,
       "chapter_id": 1,
       "name": "Dòng thời gian lịch sử",
       "description": "Sắp xếp các sự kiện lịch sử theo đúng thứ tự thời gian",
-      "type": "timeline",
+      "type": "TIMELINE",
       "difficulty": "easy",
       "order": 1,
       "required_level": null,
@@ -668,28 +789,28 @@
           "id": "screen1",
           "name": "Màn hình chính",
           "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
-          "type": "timeline",
+          "type": "TIMELINE",
           "description": "Sắp xếp các sự kiện theo thứ tự thời gian"
         },
         {
           "id": "screen2",
           "name": "Triều Nguyễn",
           "background": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
-          "type": "timeline",
+          "type": "TIMELINE",
           "description": "Khám phá giai đoạn đầu triều Nguyễn"
         },
         {
           "id": "screen3",
           "name": "Thời kỳ Pháp thuộc",
           "background": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
-          "type": "timeline",
+          "type": "TIMELINE",
           "description": "Giai đoạn Pháp xâm lược và thống trị"
         },
         {
           "id": "screen4",
           "name": "Độc lập dân tộc",
           "background": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800",
-          "type": "timeline",
+          "type": "TIMELINE",
           "description": "Con đường giành lại độc lập"
         }
       ],
@@ -736,12 +857,7 @@
         {
           "id": "quiz1",
           "question": "Triều Nguyễn được thành lập vào năm nào?",
-          "options": [
-            "1800",
-            "1802",
-            "1804",
-            "1806"
-          ],
+          "options": ["1800", "1802", "1804", "1806"],
           "correct_answer": 1,
           "points": 15,
           "hint": "Nguyễn Ánh lên ngôi hoàng đế"
@@ -749,12 +865,7 @@
         {
           "id": "quiz2",
           "question": "Pháp tấn công Đà Nẵng vào năm nào?",
-          "options": [
-            "1856",
-            "1858",
-            "1860",
-            "1862"
-          ],
+          "options": ["1856", "1858", "1860", "1862"],
           "correct_answer": 1,
           "points": 15,
           "hint": "Bắt đầu xâm lược Việt Nam"
@@ -762,12 +873,7 @@
         {
           "id": "quiz3",
           "question": "Cách mạng Tháng Tám thành công vào năm nào?",
-          "options": [
-            "1943",
-            "1944",
-            "1945",
-            "1946"
-          ],
+          "options": ["1943", "1944", "1945", "1946"],
           "correct_answer": 2,
           "points": 15,
           "hint": "Việt Nam giành độc lập"
@@ -789,7 +895,7 @@
       "chapter_id": 1,
       "name": "Ký ức chú Tễu",
       "description": "Giúp chú Tễu tìm lại ký ức qua các vật phẩm trong múa rối nước",
-      "type": "hidden_object",
+      "type": "HIDDEN_OBJECT",
       "difficulty": "medium",
       "order": 2,
       "required_level": 1,
@@ -802,29 +908,75 @@
           "id": "screen1",
           "name": "Sân khấu múa rối",
           "background": "https://example.com/bg/water-puppet-stage.jpg",
-          "type": "hidden_object",
-          "description": "Tìm các vật phẩm trong sân khấu múa rối nước"
+          "type": "HIDDEN_OBJECT",
+          "description": "Tìm các vật phẩm trong sân khấu múa rối nước",
+          "items": [
+            {
+              "id": "screen1_item1",
+              "name": "Cái quạt mo",
+              "content": "Cái quạt của chú Tễu dùng để phe phẩy, dẫn chuyện",
+              "coordinates": {
+                "x": 15,
+                "y": 45,
+                "width": 10,
+                "height": 10
+              },
+              "points": 15,
+              "hint": "Hãy tìm ở góc trái màn hình, gần con rối"
+            }
+          ]
         },
         {
           "id": "screen2",
           "name": "Phòng hậu trường",
           "background": "https://example.com/bg/backstage.jpg",
-          "type": "hidden_object",
-          "description": "Khám phá phòng chuẩn bị con rối"
+          "type": "HIDDEN_OBJECT",
+          "description": "Khám phá phòng chuẩn bị con rối",
+          "items": [
+            {
+              "id": "screen2_item1",
+              "name": "Cờ hội",
+              "content": "Cờ hội thường được cắm quanh thủy đình trong dịp lễ",
+              "coordinates": {
+                "x": 80,
+                "y": 20,
+                "width": 5,
+                "height": 15
+              },
+              "points": 15,
+              "hint": "Nhìn lên cao, nơi có gió"
+            }
+          ]
         },
         {
           "id": "screen3",
           "name": "Thủy đình",
           "background": "https://example.com/bg/water-pavilion.jpg",
-          "type": "hidden_object",
-          "description": "Tìm vật phẩm dưới nước"
+          "type": "HIDDEN_OBJECT",
+          "description": "Tìm vật phẩm dưới nước",
+          "items": [
+            {
+              "id": "screen3_item1",
+              "name": "Con trâu",
+              "content": "Trâu là biểu tượng của nông nghiệp Việt Nam",
+              "coordinates": {
+                "x": 50,
+                "y": 60,
+                "width": 15,
+                "height": 12
+              },
+              "points": 20,
+              "hint": "Ở giữa sân khấu, gần mặt nước"
+            }
+          ]
         },
         {
           "id": "screen4",
           "name": "Kho đạo cụ",
           "background": "https://example.com/bg/props-room.jpg",
-          "type": "hidden_object",
-          "description": "Tìm đạo cụ truyền thống"
+          "type": "HIDDEN_OBJECT",
+          "description": "Tìm đạo cụ truyền thống",
+          "items": []
         }
       ],
       "clues": [
@@ -868,20 +1020,13 @@
           "hint": "Ở giữa sân khấu, gần mặt nước"
         }
       ],
-      "artifact_ids": [
-        2
-      ],
+      "artifact_ids": [2],
       "heritage_site_id": 1,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Múa rối nước ra đời từ triều đại nào?",
-          "options": [
-            "Triều Lý",
-            "Triều Trần",
-            "Triều Lê",
-            "Triều Nguyễn"
-          ],
+          "options": ["Triều Lý", "Triều Trần", "Triều Lê", "Triều Nguyễn"],
           "correct_answer": 0,
           "points": 20,
           "hint": "Thế kỷ 11-12"
@@ -889,12 +1034,7 @@
         {
           "id": "quiz2",
           "question": "Múa rối nước biểu diễn trên đâu?",
-          "options": [
-            "Sân khấu",
-            "Mặt nước",
-            "Sân đất",
-            "Trong nhà"
-          ],
+          "options": ["Sân khấu", "Mặt nước", "Sân đất", "Trong nhà"],
           "correct_answer": 1,
           "points": 15,
           "hint": "Thủy đình"
@@ -902,12 +1042,7 @@
         {
           "id": "quiz3",
           "question": "Chú Tễu là nhân vật gì trong múa rối?",
-          "options": [
-            "Người kể chuyện",
-            "Nông dân",
-            "Quan lại",
-            "Vua chúa"
-          ],
+          "options": ["Người kể chuyện", "Nông dân", "Quan lại", "Vua chúa"],
           "correct_answer": 0,
           "points": 20,
           "hint": "Vai trò dẫn chuyện"
@@ -929,7 +1064,7 @@
       "chapter_id": 1,
       "name": "Bí ẩn Hoàng Thành",
       "description": "Khám phá những bí mật trong Hoàng Thành Thăng Long",
-      "type": "hidden_object",
+      "type": "HIDDEN_OBJECT",
       "difficulty": "medium",
       "order": 3,
       "required_level": 2,
@@ -942,28 +1077,28 @@
           "id": "screen1",
           "name": "Cung điện chính",
           "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
-          "type": "hidden_object",
+          "type": "HIDDEN_OBJECT",
           "description": "Khám phá bí mật trong cung điện Hoàng Thành"
         },
         {
           "id": "screen2",
           "name": "Thư viện hoàng gia",
           "background": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
-          "type": "hidden_object",
+          "type": "HIDDEN_OBJECT",
           "description": "Tìm sách cổ và bản đồ"
         },
         {
           "id": "screen3",
           "name": "Phòng ngự y",
           "background": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800",
-          "type": "hidden_object",
+          "type": "HIDDEN_OBJECT",
           "description": "Khám phá trang phục hoàng gia"
         },
         {
           "id": "screen4",
           "name": "Kho báu triều Lý",
           "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
-          "type": "hidden_object",
+          "type": "HIDDEN_OBJECT",
           "description": "Tìm các báu vật quý giá"
         }
       ],
@@ -1014,12 +1149,7 @@
         {
           "id": "quiz1",
           "question": "Hoàng Thành Thăng Long được xây dựng năm nào?",
-          "options": [
-            "1008",
-            "1010",
-            "1012",
-            "1015"
-          ],
+          "options": ["1008", "1010", "1012", "1015"],
           "correct_answer": 1,
           "points": 20,
           "hint": "Vua Lý Thái Tổ dời đô"
@@ -1027,12 +1157,7 @@
         {
           "id": "quiz2",
           "question": "Hoàng Thành là trung tâm quyền lực trong bao nhiêu thế kỷ?",
-          "options": [
-            "10 thế kỷ",
-            "12 thế kỷ",
-            "13 thế kỷ",
-            "15 thế kỷ"
-          ],
+          "options": ["10 thế kỷ", "12 thế kỷ", "13 thế kỷ", "15 thế kỷ"],
           "correct_answer": 2,
           "points": 20,
           "hint": "Hơn 1000 năm"
@@ -1040,12 +1165,7 @@
         {
           "id": "quiz3",
           "question": "UNESCO công nhận Hoàng Thành năm nào?",
-          "options": [
-            "2008",
-            "2009",
-            "2010",
-            "2011"
-          ],
+          "options": ["2008", "2009", "2010", "2011"],
           "correct_answer": 2,
           "points": 15,
           "hint": "1000 năm Thăng Long"
@@ -1067,7 +1187,7 @@
       "chapter_id": 2,
       "name": "Văn minh Óc Eo",
       "description": "Tìm hiểu về nền văn minh cổ đại Óc Eo",
-      "type": "hidden_object",
+      "type": "HIDDEN_OBJECT",
       "difficulty": "hard",
       "order": 1,
       "required_level": 3,
@@ -1080,28 +1200,28 @@
           "id": "screen1",
           "name": "Khu khảo cổ",
           "background": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=800",
-          "type": "hidden_object",
+          "type": "HIDDEN_OBJECT",
           "description": "Tìm kiếm hiện vật cổ đại tại Óc Eo"
         },
         {
           "id": "screen2",
           "name": "Đền thờ cổ",
           "background": "https://images.unsplash.com/photo-1548013146-72479768bada?w=800",
-          "type": "hidden_object",
+          "type": "HIDDEN_OBJECT",
           "description": "Khám phá di tích tôn giáo"
         },
         {
           "id": "screen3",
           "name": "Cảng Óc Eo",
           "background": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800",
-          "type": "hidden_object",
+          "type": "HIDDEN_OBJECT",
           "description": "Tìm hàng hóa thương mại cổ"
         },
         {
           "id": "screen4",
           "name": "Khu luyện kim",
           "background": "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800",
-          "type": "hidden_object",
+          "type": "HIDDEN_OBJECT",
           "description": "Khám phá công nghệ luyện kim cổ"
         }
       ],
@@ -1159,20 +1279,13 @@
           "hint": "Khu luyện kim"
         }
       ],
-      "artifact_ids": [
-        3
-      ],
+      "artifact_ids": [3],
       "heritage_site_id": 4,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Văn minh Óc Eo phát triển từ thế kỷ nào?",
-          "options": [
-            "Thế kỷ 1-5",
-            "Thế kỷ 1-7",
-            "Thế kỷ 3-9",
-            "Thế kỷ 5-10"
-          ],
+          "options": ["Thế kỷ 1-5", "Thế kỷ 1-7", "Thế kỷ 3-9", "Thế kỷ 5-10"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Thời kỳ rất cổ xưa"
@@ -1180,12 +1293,7 @@
         {
           "id": "quiz2",
           "question": "Óc Eo giao lưu với những quốc gia nào?",
-          "options": [
-            "Chỉ Trung Quốc",
-            "Ấn Độ và Trung Quốc",
-            "Ấn Độ, La Mã, Trung Quốc",
-            "Chỉ La Mã"
-          ],
+          "options": ["Chỉ Trung Quốc", "Ấn Độ và Trung Quốc", "Ấn Độ, La Mã, Trung Quốc", "Chỉ La Mã"],
           "correct_answer": 2,
           "points": 25,
           "hint": "Trung tâm thương mại quốc tế"
@@ -1193,12 +1301,7 @@
         {
           "id": "quiz3",
           "question": "Óc Eo là trung tâm gì?",
-          "options": [
-            "Trung tâm quân sự",
-            "Trung tâm thương mại",
-            "Trung tâm tôn giáo",
-            "Trung tâm học thuật"
-          ],
+          "options": ["Trung tâm quân sự", "Trung tâm thương mại", "Trung tâm tôn giáo", "Trung tâm học thuật"],
           "correct_answer": 1,
           "points": 20,
           "hint": "Cảng biển quan trọng"
@@ -1305,12 +1408,7 @@
         {
           "id": "quiz1",
           "question": "Thánh Gióng thuộc nhóm thánh nào?",
-          "options": [
-            "Tứ Bất Tử",
-            "Tam Thánh",
-            "Ngũ Thánh",
-            "Thập Đại Thánh"
-          ],
+          "options": ["Tứ Bất Tử", "Tam Thánh", "Ngũ Thánh", "Thập Đại Thánh"],
           "correct_answer": 0,
           "points": 30,
           "hint": "4 vị bất tử"
@@ -1318,12 +1416,7 @@
         {
           "id": "quiz2",
           "question": "Thánh Gióng mấy tuổi mới biết nói?",
-          "options": [
-            "1 tuổi",
-            "2 tuổi",
-            "3 tuổi",
-            "4 tuổi"
-          ],
+          "options": ["1 tuổi", "2 tuổi", "3 tuổi", "4 tuổi"],
           "correct_answer": 2,
           "points": 25,
           "hint": "Rất muộn so với trẻ bình thường"
@@ -1331,12 +1424,7 @@
         {
           "id": "quiz3",
           "question": "Thánh Gióng cưỡi gì đánh giặc?",
-          "options": [
-            "Ngựa thường",
-            "Ngựa sắt",
-            "Voi",
-            "Rồng"
-          ],
+          "options": ["Ngựa thường", "Ngựa sắt", "Voi", "Rồng"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Thần kỵ làm bằng kim loại"
@@ -1358,7 +1446,7 @@
       "chapter_id": 3,
       "name": "Văn Miếu - Quốc Tử Giám",
       "description": "Khám phá ngôi trường đại học đầu tiên của Việt Nam",
-      "type": "quiz",
+      "type": "QUIZ",
       "difficulty": "easy",
       "order": 1,
       "required_level": 5,
@@ -1485,12 +1573,7 @@
           "id": "quiz1",
           "name": "Câu hỏi 1",
           "content": "Văn Miếu được xây dựng năm nào?",
-          "options": [
-            "1010",
-            "1070",
-            "1076",
-            "1086"
-          ],
+          "options": ["1010", "1070", "1076", "1086"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Sau 60 năm Thăng Long thành lập"
@@ -1499,12 +1582,7 @@
           "id": "quiz2",
           "name": "Câu hỏi 2",
           "content": "Văn Miếu thờ ai?",
-          "options": [
-            "Chu Văn An",
-            "Lý Thánh Tông",
-            "Khổng Tử",
-            "Lê Thánh Tông"
-          ],
+          "options": ["Chu Văn An", "Lý Thánh Tông", "Khổng Tử", "Lê Thánh Tông"],
           "correct_answer": 2,
           "points": 20,
           "hint": "Vị thánh của nho giáo"
@@ -1513,31 +1591,19 @@
           "id": "quiz3",
           "name": "Câu hỏi 3",
           "content": "Có bao nhiêu bia tiến sĩ?",
-          "options": [
-            "72",
-            "82",
-            "92",
-            "102"
-          ],
+          "options": ["72", "82", "92", "102"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Con số này được UNESCO công nhận"
         }
       ],
-      "artifact_ids": [
-        4
-      ],
+      "artifact_ids": [4],
       "heritage_site_id": 6,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Văn Miếu được xây dựng năm nào?",
-          "options": [
-            "1010",
-            "1070",
-            "1076",
-            "1086"
-          ],
+          "options": ["1010", "1070", "1076", "1086"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Sau 60 năm Thăng Long thành lập"
@@ -1545,12 +1611,7 @@
         {
           "id": "quiz2",
           "question": "Văn Miếu thờ ai?",
-          "options": [
-            "Chu Văn An",
-            "Lý Thánh Tông",
-            "Khổng Tử",
-            "Lê Thánh Tông"
-          ],
+          "options": ["Chu Văn An", "Lý Thánh Tông", "Khổng Tử", "Lê Thánh Tông"],
           "correct_answer": 2,
           "points": 20,
           "hint": "Vị thánh của nho giáo"
@@ -1558,12 +1619,7 @@
         {
           "id": "quiz3",
           "question": "Có bao nhiêu bia tiến sĩ?",
-          "options": [
-            "72",
-            "82",
-            "92",
-            "102"
-          ],
+          "options": ["72", "82", "92", "102"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Con số này được UNESCO công nhận"
@@ -1571,12 +1627,7 @@
         {
           "id": "quiz4",
           "question": "Văn Miếu là trường đại học đầu tiên của Việt Nam?",
-          "options": [
-            "Đúng",
-            "Sai",
-            "Không rõ",
-            "Là trường cấp 2"
-          ],
+          "options": ["Đúng", "Sai", "Không rõ", "Là trường cấp 2"],
           "correct_answer": 0,
           "points": 20,
           "hint": "Quốc Tử Giám"
@@ -1602,13 +1653,8 @@
       "description": "Bộ sưu tập các cổ vật đặc sắc thời Lý",
       "visibility": "public",
       "total_items": 2,
-      "heritage_site_ids": [
-        2,
-        5
-      ],
-      "artifact_ids": [
-        3
-      ],
+      "heritage_site_ids": [2, 5],
+      "artifact_ids": [3],
       "exhibition_ids": [],
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-01-01T00:00:00Z"
@@ -1854,15 +1900,11 @@
       "id": 1,
       "user_id": 3,
       "current_chapter": 3,
-      "total_sen_petals": 0,
-      "total_points": 0,
+      "total_sen_petals": 5,
+      "total_points": 241,
       "level": 1,
       "coins": 1000,
-      "unlocked_chapters": [
-        1,
-        2,
-        3
-      ],
+      "unlocked_chapters": [1, 2, 3],
       "completed_levels": [],
       "collected_characters": [],
       "badges": [],
@@ -1887,11 +1929,7 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 1,
-      "completed_screens": [
-        "screen1",
-        "screen2",
-        "screen3"
-      ],
+      "completed_screens": ["screen1", "screen2", "screen3"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -1954,11 +1992,7 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 4,
-      "completed_screens": [
-        "screen1",
-        "screen2",
-        "screen3"
-      ],
+      "completed_screens": ["screen1", "screen2", "screen3"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2050,9 +2084,7 @@
       "timeline_order": [],
       "score": 25,
       "total_screens": 4,
-      "completed_screens": [
-        "screen1"
-      ],
+      "completed_screens": ["screen1"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2065,77 +2097,89 @@
       "id": 9,
       "user_id": 3,
       "level_id": "1",
-      "status": "completed",
+      "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
       "answered_questions": [],
       "timeline_order": [],
-      "score": 29,
+      "score": 0,
       "total_screens": 4,
       "completed_screens": [],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-04T11:13:07.001Z",
-      "last_activity": "2026-01-04T11:13:07.001Z",
-      "completed_at": "2026-01-04T11:23:11.021Z"
+      "started_at": "2026-01-06T13:51:03.109Z",
+      "last_activity": "2026-01-06T13:51:03.109Z",
+      "expired_at": "2026-01-07T16:52:42.222Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 10,
       "user_id": 3,
-      "level_id": "1",
+      "level_id": "4",
       "status": "expired",
-      "current_screen_id": "screen4",
-      "current_screen_index": 3,
-      "collected_items": [],
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
       "answered_questions": [],
       "timeline_order": [],
-      "score": 0,
+      "score": 100,
       "total_screens": 4,
-      "completed_screens": [
-        "screen1",
-        "screen2",
-        "screen3"
-      ],
+      "completed_screens": ["screen1", "screen2", "screen3"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-04T11:23:05.715Z",
-      "last_activity": "2026-01-04T11:23:10.584Z",
-      "expired_at": "2026-01-05T13:22:08.226Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T13:51:12.092Z",
+      "last_activity": "2026-01-06T14:39:47.042Z",
+      "expired_at": "2026-01-06T14:53:16.743Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 11,
       "user_id": 3,
-      "level_id": "1",
-      "status": "expired",
+      "level_id": "6",
+      "status": "completed",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
-      "answered_questions": [],
+      "answered_questions": [
+        {
+          "screen_id": "screen1",
+          "answer": "0",
+          "is_correct": false,
+          "points": 0,
+          "answered_at": "2026-01-06T13:51:20.126Z"
+        }
+      ],
       "timeline_order": [],
-      "score": 0,
+      "score": 70,
       "total_screens": 4,
       "completed_screens": [],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-04T11:25:10.828Z",
-      "last_activity": "2026-01-04T11:25:10.828Z",
-      "expired_at": "2026-01-05T13:22:08.228Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T13:51:17.763Z",
+      "last_activity": "2026-01-06T13:51:20.126Z",
+      "completed_at": "2026-01-06T13:57:13.091Z"
     },
     {
       "id": 12,
       "user_id": 3,
-      "level_id": "1",
+      "level_id": "6",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
-      "answered_questions": [],
+      "answered_questions": [
+        {
+          "screen_id": "screen1",
+          "answer": "0",
+          "is_correct": false,
+          "points": 0,
+          "answered_at": "2026-01-06T13:51:33.116Z"
+        }
+      ],
       "timeline_order": [],
       "score": 0,
       "total_screens": 4,
@@ -2143,9 +2187,9 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T10:08:52.444Z",
-      "last_activity": "2026-01-05T10:08:52.444Z",
-      "expired_at": "2026-01-09T14:58:51.059Z",
+      "started_at": "2026-01-06T13:51:29.894Z",
+      "last_activity": "2026-01-06T13:51:33.116Z",
+      "expired_at": "2026-01-07T16:52:42.224Z",
       "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
@@ -2153,131 +2197,111 @@
       "user_id": 3,
       "level_id": "6",
       "status": "expired",
-      "current_screen_id": "screen1",
-      "current_screen_index": 0,
+      "current_screen_id": "screen2",
+      "current_screen_index": 1,
       "collected_items": [],
-      "answered_questions": [],
+      "answered_questions": [
+        {
+          "screen_id": "screen1",
+          "answer": "1",
+          "is_correct": true,
+          "points": 25,
+          "answered_at": "2026-01-06T13:52:35.775Z"
+        }
+      ],
       "timeline_order": [],
-      "score": 0,
+      "score": 25,
       "total_screens": 4,
-      "completed_screens": [],
+      "completed_screens": ["screen1"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T10:08:58.405Z",
-      "last_activity": "2026-01-05T10:08:58.405Z",
-      "expired_at": "2026-01-09T14:58:51.061Z",
+      "started_at": "2026-01-06T13:52:19.417Z",
+      "last_activity": "2026-01-06T13:52:48.700Z",
+      "expired_at": "2026-01-07T16:52:42.225Z",
       "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 14,
       "user_id": 3,
-      "level_id": "4",
+      "level_id": "6",
       "status": "expired",
-      "current_screen_id": "screen2",
-      "current_screen_index": 1,
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
       "collected_items": [],
-      "answered_questions": [],
+      "answered_questions": [
+        {
+          "screen_id": "screen1",
+          "answer": "0",
+          "is_correct": false,
+          "points": 0,
+          "answered_at": "2026-01-06T13:56:20.510Z"
+        }
+      ],
       "timeline_order": [],
       "score": 0,
       "total_screens": 4,
-      "completed_screens": [
-        "screen1"
-      ],
+      "completed_screens": ["screen1"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T10:09:13.954Z",
-      "last_activity": "2026-01-05T10:09:14.987Z",
-      "expired_at": "2026-01-09T14:58:51.062Z",
+      "started_at": "2026-01-06T13:56:17.952Z",
+      "last_activity": "2026-01-06T13:56:20.510Z",
+      "expired_at": "2026-01-07T16:52:42.226Z",
       "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 15,
       "user_id": 3,
-      "level_id": "1",
+      "level_id": "6",
       "status": "expired",
-      "current_screen_id": "screen1",
-      "current_screen_index": 0,
+      "current_screen_id": "screen4",
+      "current_screen_index": 3,
       "collected_items": [],
-      "answered_questions": [],
+      "answered_questions": [
+        {
+          "screen_id": "screen1",
+          "answer": "1",
+          "is_correct": true,
+          "points": 25,
+          "answered_at": "2026-01-06T13:56:28.606Z"
+        },
+        {
+          "screen_id": "screen2",
+          "answer": "1",
+          "is_correct": false,
+          "points": 0,
+          "answered_at": "2026-01-06T13:56:31.851Z"
+        },
+        {
+          "screen_id": "screen3",
+          "answer": "2",
+          "is_correct": false,
+          "points": 0,
+          "answered_at": "2026-01-06T13:56:35.922Z"
+        },
+        {
+          "screen_id": "screen4",
+          "answer": "0",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-06T13:57:10.798Z"
+        }
+      ],
       "timeline_order": [],
-      "score": 0,
+      "score": 45,
       "total_screens": 4,
-      "completed_screens": [],
+      "completed_screens": ["screen1", "screen2", "screen3"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T14:22:07.426Z",
-      "last_activity": "2026-01-05T14:22:07.426Z",
-      "expired_at": "2026-01-09T14:58:51.080Z",
+      "started_at": "2026-01-06T13:56:26.805Z",
+      "last_activity": "2026-01-06T13:57:10.798Z",
+      "expired_at": "2026-01-07T16:52:42.228Z",
       "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 16,
-      "user_id": 3,
-      "level_id": "1",
-      "status": "expired",
-      "current_screen_id": "screen1",
-      "current_screen_index": 0,
-      "collected_items": [],
-      "answered_questions": [],
-      "timeline_order": [],
-      "score": 0,
-      "total_screens": 4,
-      "completed_screens": [],
-      "screen_states": {},
-      "time_spent": 0,
-      "hints_used": 0,
-      "started_at": "2026-01-05T14:24:31.010Z",
-      "last_activity": "2026-01-05T14:24:31.010Z",
-      "expired_at": "2026-01-09T14:58:51.092Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
-    },
-    {
-      "id": 17,
-      "user_id": 3,
-      "level_id": "1",
-      "status": "expired",
-      "current_screen_id": "screen1",
-      "current_screen_index": 0,
-      "collected_items": [],
-      "answered_questions": [],
-      "timeline_order": [],
-      "score": 0,
-      "total_screens": 4,
-      "completed_screens": [],
-      "screen_states": {},
-      "time_spent": 0,
-      "hints_used": 0,
-      "started_at": "2026-01-05T14:29:02.425Z",
-      "last_activity": "2026-01-05T14:29:02.425Z",
-      "expired_at": "2026-01-09T14:58:51.106Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
-    },
-    {
-      "id": 18,
-      "user_id": 3,
-      "level_id": "1",
-      "status": "expired",
-      "current_screen_id": "screen1",
-      "current_screen_index": 0,
-      "collected_items": [],
-      "answered_questions": [],
-      "timeline_order": [],
-      "score": 0,
-      "total_screens": 4,
-      "completed_screens": [],
-      "screen_states": {},
-      "time_spent": 0,
-      "hints_used": 0,
-      "started_at": "2026-01-05T14:29:35.490Z",
-      "last_activity": "2026-01-05T14:29:35.490Z",
-      "expired_at": "2026-01-09T14:58:51.117Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
-    },
-    {
-      "id": 19,
       "user_id": 3,
       "level_id": "6",
       "status": "expired",
@@ -2292,10 +2316,73 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T14:29:54.423Z",
-      "last_activity": "2026-01-05T14:29:54.423Z",
-      "expired_at": "2026-01-09T14:58:51.135Z",
+      "started_at": "2026-01-06T13:58:22.460Z",
+      "last_activity": "2026-01-06T13:58:22.460Z",
+      "expired_at": "2026-01-07T16:52:42.229Z",
       "expired_reason": "Session timeout (24 hours inactive)"
+    },
+    {
+      "id": 17,
+      "user_id": 3,
+      "level_id": "4",
+      "status": "expired",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-06T13:58:27.903Z",
+      "last_activity": "2026-01-06T13:58:27.903Z",
+      "expired_at": "2026-01-06T14:53:16.749Z",
+      "expired_reason": "New session started for this level"
+    },
+    {
+      "id": 18,
+      "user_id": 3,
+      "level_id": "4",
+      "status": "expired",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-06T14:00:14.797Z",
+      "last_activity": "2026-01-06T14:00:14.797Z",
+      "expired_at": "2026-01-06T14:53:16.752Z",
+      "expired_reason": "New session started for this level"
+    },
+    {
+      "id": 19,
+      "user_id": 3,
+      "level_id": "4",
+      "status": "expired",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-06T14:02:53.584Z",
+      "last_activity": "2026-01-06T14:02:53.584Z",
+      "expired_at": "2026-01-06T14:53:16.755Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 20,
@@ -2313,15 +2400,15 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T14:30:44.783Z",
-      "last_activity": "2026-01-05T14:30:44.783Z",
-      "expired_at": "2026-01-09T14:58:51.153Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T14:05:57.040Z",
+      "last_activity": "2026-01-06T14:05:57.040Z",
+      "expired_at": "2026-01-06T14:53:16.758Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 21,
       "user_id": 3,
-      "level_id": "1",
+      "level_id": "4",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
@@ -2334,15 +2421,15 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T14:30:56.058Z",
-      "last_activity": "2026-01-05T14:30:56.058Z",
-      "expired_at": "2026-01-09T14:58:51.169Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T14:08:07.907Z",
+      "last_activity": "2026-01-06T14:08:07.907Z",
+      "expired_at": "2026-01-06T14:53:16.761Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 22,
       "user_id": 3,
-      "level_id": "1",
+      "level_id": "4",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
@@ -2355,15 +2442,15 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T15:14:25.648Z",
-      "last_activity": "2026-01-05T15:14:25.648Z",
-      "expired_at": "2026-01-09T14:58:51.184Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T14:10:32.255Z",
+      "last_activity": "2026-01-06T14:10:32.255Z",
+      "expired_at": "2026-01-06T14:53:16.764Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 23,
       "user_id": 3,
-      "level_id": "6",
+      "level_id": "4",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
@@ -2376,15 +2463,15 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T15:14:49.623Z",
-      "last_activity": "2026-01-05T15:14:49.623Z",
-      "expired_at": "2026-01-09T14:58:51.199Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T14:12:02.281Z",
+      "last_activity": "2026-01-06T14:12:02.281Z",
+      "expired_at": "2026-01-06T14:53:16.768Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 24,
       "user_id": 3,
-      "level_id": "1",
+      "level_id": "4",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
@@ -2397,15 +2484,15 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T15:15:01.932Z",
-      "last_activity": "2026-01-05T15:15:01.932Z",
-      "expired_at": "2026-01-09T14:58:51.213Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T14:13:30.340Z",
+      "last_activity": "2026-01-06T14:13:30.340Z",
+      "expired_at": "2026-01-06T14:53:16.773Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 25,
       "user_id": 3,
-      "level_id": "1",
+      "level_id": "4",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
@@ -2418,15 +2505,15 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T15:15:25.403Z",
-      "last_activity": "2026-01-05T15:15:25.403Z",
-      "expired_at": "2026-01-09T14:58:51.225Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T14:17:02.273Z",
+      "last_activity": "2026-01-06T14:17:02.273Z",
+      "expired_at": "2026-01-06T14:53:16.778Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 26,
       "user_id": 3,
-      "level_id": "1",
+      "level_id": "4",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
@@ -2439,15 +2526,15 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T15:15:49.597Z",
-      "last_activity": "2026-01-05T15:15:49.597Z",
-      "expired_at": "2026-01-09T14:58:51.243Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T14:19:07.230Z",
+      "last_activity": "2026-01-06T14:19:07.230Z",
+      "expired_at": "2026-01-06T14:53:16.783Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 27,
       "user_id": 3,
-      "level_id": "6",
+      "level_id": "4",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
@@ -2460,15 +2547,15 @@
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
-      "started_at": "2026-01-05T15:16:35.299Z",
-      "last_activity": "2026-01-05T15:16:35.299Z",
-      "expired_at": "2026-01-09T14:58:51.258Z",
-      "expired_reason": "Session timeout (24 hours inactive)"
+      "started_at": "2026-01-06T14:19:26.210Z",
+      "last_activity": "2026-01-06T14:19:26.210Z",
+      "expired_at": "2026-01-06T14:53:16.787Z",
+      "expired_reason": "New session started for this level"
     },
     {
       "id": 28,
       "user_id": 3,
-      "level_id": "6",
+      "level_id": "4",
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
@@ -2485,30 +2572,6 @@
       "last_activity": "2026-01-05T15:16:44.476Z",
       "expired_at": "2026-01-09T14:58:51.271Z",
       "expired_reason": "Session timeout (24 hours inactive)"
-    },
-    {
-      "id": 29,
-      "user_id": 3,
-      "level_id": "1",
-      "status": "completed",
-      "current_screen_id": "screen4",
-      "current_screen_index": 3,
-      "collected_items": [],
-      "answered_questions": [],
-      "timeline_order": [],
-      "score": 29,
-      "total_screens": 4,
-      "completed_screens": [
-        "screen1",
-        "screen2",
-        "screen3"
-      ],
-      "screen_states": {},
-      "time_spent": 0,
-      "hints_used": 0,
-      "started_at": "2026-01-11T04:16:42.692Z",
-      "last_activity": "2026-01-11T04:16:44.468Z",
-      "completed_at": "2026-01-11T04:16:44.646Z"
     }
   ],
   "learning_modules": [
@@ -2529,12 +2592,7 @@
           {
             "id": 1,
             "question": "Trống đồng Đông Sơn thuộc nền văn hóa nào?",
-            "options": [
-              "Văn hóa Hòa Bình",
-              "Văn hóa Đông Sơn",
-              "Văn hóa Sa Huỳnh",
-              "Văn hóa Óc Eo"
-            ],
+            "options": ["Văn hóa Hòa Bình", "Văn hóa Đông Sơn", "Văn hóa Sa Huỳnh", "Văn hóa Óc Eo"],
             "correct_answer": 1,
             "explanation": "Trống đồng là hiện vật tiêu biểu nhất của văn hóa Đông Sơn."
           }
@@ -2558,23 +2616,13 @@
           {
             "id": 1,
             "question": "Cố đô Huế được UNESCO công nhận năm nào?",
-            "options": [
-              "1990",
-              "1993",
-              "1999",
-              "2003"
-            ],
+            "options": ["1990", "1993", "1999", "2003"],
             "correct_answer": 1
           },
           {
             "id": 2,
             "question": "Triều đại nào đã xây dựng Cố đô Huế?",
-            "options": [
-              "Triều Lý",
-              "Triều Trần",
-              "Triều Lê",
-              "Triều Nguyễn"
-            ],
+            "options": ["Triều Lý", "Triều Trần", "Triều Lê", "Triều Nguyễn"],
             "correct_answer": 3
           }
         ]
@@ -2597,34 +2645,19 @@
           {
             "id": 1,
             "question": "Văn Miếu - Quốc Tử Giám thờ ai?",
-            "options": [
-              "Khổng Tử",
-              "Lão Tử",
-              "Phật Thích Ca",
-              "Vua Hùng"
-            ],
+            "options": ["Khổng Tử", "Lão Tử", "Phật Thích Ca", "Vua Hùng"],
             "correct_answer": 0
           },
           {
             "id": 2,
             "question": "Di sản nào sau đây là Di sản Thiên nhiên Thế giới?",
-            "options": [
-              "Phố cổ Hội An",
-              "Vịnh Hạ Long",
-              "Thánh địa Mỹ Sơn",
-              "Hoàng thành Thăng Long"
-            ],
+            "options": ["Phố cổ Hội An", "Vịnh Hạ Long", "Thánh địa Mỹ Sơn", "Hoàng thành Thăng Long"],
             "correct_answer": 1
           },
           {
             "id": 3,
             "question": "Dân ca Quan họ thuộc vùng nào?",
-            "options": [
-              "Bắc Bộ",
-              "Trung Bộ",
-              "Nam Bộ",
-              "Tây Nguyên"
-            ],
+            "options": ["Bắc Bộ", "Trung Bộ", "Nam Bộ", "Tây Nguyên"],
             "correct_answer": 0
           }
         ]
@@ -2640,9 +2673,14 @@
       "level": 1
     },
     {
-      "id": 2,
+      "id": 58,
       "user_id": 3,
-      "completed_modules": [
+      "level_id": "6",
+      "status": "in_progress",
+      "current_screen_id": "screen2",
+      "current_screen_index": 1,
+      "collected_items": [],
+      "answered_questions": [
         {
           "module_id": "1",
           "completed_date": "2026-01-04T11:12:34.009Z",
@@ -2797,9 +2835,7 @@
       "completed_quests": [],
       "total_points": 400,
       "level": 3,
-      "badges": [
-        "perfect_score"
-      ],
+      "badges": ["perfect_score"],
       "achievements": [],
       "streak": 0,
       "total_learning_time": 0,

@@ -1,9 +1,13 @@
 {
+  "watch": ["*.js", "config/", "controllers/", "middleware/", "routes/", "schemas/", "services/", "utils/"],
   "ignore": [
     "database/*.json",
     "database/uploads/*",
     "uploads/*",
-    "*.log"
+    "*.log",
+    "node_modules/"
   ],
-  "ext": "js,json"
+  "ext": "js,json",
+  "legacyWatch": true,
+  "polling": true
 }

@@ -270,16 +270,24 @@ class GameService {
       };
     }
 
-    // Mở khóa chapter
+    // Deduct petals and unlock chapter
+    const newPetalsCount = progress.total_sen_petals - chapter.required_petals;
+
     await db.update('game_progress', progress.id, {
       unlocked_chapters: [...progress.unlocked_chapters, parseInt(chapterId)],
-      current_chapter: parseInt(chapterId)
+      current_chapter: parseInt(chapterId),
+      total_sen_petals: newPetalsCount
     });
 
     return {
       success: true,
       message: 'Chapter unlocked successfully',
-      data: { chapter_id: parseInt(chapterId), chapter_name: chapter.name }
+      data: { 
+        chapter_id: parseInt(chapterId), 
+        chapter_name: chapter.name,
+        petals_spent: chapter.required_petals,
+        petals_remaining: newPetalsCount
+      }
     };
   }
 
@@ -376,24 +384,19 @@ class GameService {
  */
   async startLevel(levelId, userId) {
 
-    // MISSING: Check for existing expired sessions
+    // Close ALL existing in_progress sessions for this level/user (not just expired ones)
     const existingSessions = await db.findMany('game_sessions', {
       level_id: levelId,
       user_id: userId,
       status: 'in_progress'
     });
 
-    // CRITICAL: Expire old sessions before creating new
     for (const session of existingSessions) {
-      const lastActivity = new Date(session.last_activity || session.started_at).getTime();
-      const now = Date.now();
-      if (now - lastActivity > 24 * 60 * 60 * 1000) {
-        await db.update('game_sessions', session.id, {
-          status: 'expired',
-          expired_at: new Date().toISOString(),
-          expired_reason: 'Auto-expired before new session'
-        });
-      }
+      await db.update('game_sessions', session.id, {
+        status: 'abandoned',
+        expired_at: new Date().toISOString(),
+        expired_reason: 'New session started'
+      });
     }
 
     const level = await db.findById('game_levels', levelId);
@@ -435,7 +438,7 @@ class GameService {
       last_activity: new Date().toISOString()
     });
 
-    const firstScreen = this.enrichScreen(level.screens[0], session, 0, level.screens.length);
+    const firstScreen = this.enrichScreen(level.screens[0], session, 0, level.screens.length, level);
 
     // Fetch AI character if exists
     let aiCharacter = null;
@@ -477,7 +480,12 @@ class GameService {
       return { success: false, message: 'Not a hidden object screen', statusCode: 400 };
     }
 
-    const item = currentScreen.items?.find(i => i.id === clueId);
+    // Find item in screen.items OR level.clues (support both data structures)
+    let item = currentScreen.items?.find(i => i.id === clueId);
+    if (!item && level.clues) {
+      item = level.clues.find(i => i.id === clueId);
+    }
+    
     if (!item) {
       return { success: false, message: 'Item not found', statusCode: 404 };
     }
@@ -492,14 +500,20 @@ class GameService {
       last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
     });
 
-    const requiredItems = currentScreen.required_items || currentScreen.items.length;
+    // Calculate required items from screen.items or level.clues
+    const allItems = currentScreen.items || level.clues || [];
+    const requiredItems = currentScreen.required_items || allItems.length;
     const allCollected = updatedSession.collected_items.length >= requiredItems;
 
     return {
       success: true,
       message: 'Item collected',
       data: {
-        item,
+        item: {
+          id: item.id,
+          name: item.name,
+          fact_popup: item.fact_popup || item.content || item.description || ''
+        },
         points_earned: item.points || 10,
         total_score: updatedSession.score,
         progress: {
@@ -733,7 +747,7 @@ class GameService {
     const currentScreen = level.screens[session.current_screen_index];
 
     // Validate screen completion - Check if can proceed (completed current screen requirements)
-    const canProceed = this.validateScreenCompletion(currentScreen, session);
+    const canProceed = this.validateScreenCompletion(currentScreen, session, level);
     if (!canProceed.success) {
       return canProceed;
     }
@@ -769,11 +783,12 @@ class GameService {
 
     const nextScreen = level.screens[nextScreenIndex];
 
-    // Update session
+    // Update session - reset collected_items for new screen
     const updatedSession = await db.update('game_sessions', session.id, {
       current_screen_id: nextScreen.id,
       current_screen_index: nextScreenIndex,
       completed_screens: [...session.completed_screens, currentScreen.id],
+      collected_items: [], // Reset for new screen
       last_activity: new Date().toISOString() // ⚡ UPDATE LAST ACTIVITY
     });
 
@@ -786,7 +801,8 @@ class GameService {
           nextScreen,
           updatedSession,
           nextScreenIndex,
-          level.screens.length
+          level.screens.length,
+          level
         ),
         progress: {
           completed_screens: updatedSession.completed_screens.length,
@@ -802,12 +818,13 @@ class GameService {
   /**
    * Validate if current screen is completed
    */
-  validateScreenCompletion(screen, session) {
+  validateScreenCompletion(screen, session, level = null) {
     switch (screen.type) {
       case 'HIDDEN_OBJECT':
-        const requiredItems = screen.required_items || screen.items?.length || 0;
+        const items = screen.items || level?.clues || [];
+        const requiredItems = screen.required_items || items.length || 0;
         const collectedCount = session.collected_items.filter(
-          item => screen.items?.some(i => i.id === item)
+          item => items.some(i => i.id === item)
         ).length;
 
         if (collectedCount < requiredItems) {
@@ -833,16 +850,7 @@ class GameService {
         break;
 
       case 'DIALOGUE':
-        if (!screen.skip_allowed && !screen.auto_advance) {
-          const screenState = session.screen_states?.[screen.id];
-          if (!screenState?.read) {
-            return {
-              success: false,
-              message: 'Must read the dialogue first',
-              statusCode: 400
-            };
-          }
-        }
+        // Auto-complete when viewed (no validation needed)
         break;
 
       case 'TIMELINE':
@@ -860,8 +868,17 @@ class GameService {
           };
         }
 
+        // Get events from screen.events or level.clues
+        const timelineEvents = screen.events || (level?.clues || []).map(clue => {
+          const yearMatch = clue.name?.match(/(\d{4})/);
+          return {
+            id: clue.id,
+            year: yearMatch ? parseInt(yearMatch[1]) : 0
+          };
+        });
+
         // CHECK IF ORDER IS CORRECT (already validated in submit)
-        const correctOrder = screen.events
+        const correctOrder = [...timelineEvents]
           .sort((a, b) => a.year - b.year)
           .map(e => e.id);
 
@@ -1047,8 +1064,8 @@ class GameService {
     return { success: true };
   }
 
-  enrichScreen(screen, session, index, totalScreens) {
-    return {
+  enrichScreen(screen, session, index, totalScreens, level = null) {
+    const enriched = {
       ...screen,
       index,
       is_first: index === 0,
@@ -1056,6 +1073,44 @@ class GameService {
       is_completed: session.completed_screens.includes(screen.id),
       state: session.screen_states?.[screen.id] || {}
     };
+
+    // For HIDDEN_OBJECT screens, merge level.clues into items if items is empty
+    if (screen.type === 'HIDDEN_OBJECT' && level) {
+      if (!enriched.items || enriched.items.length === 0) {
+        // Use level.clues as items
+        enriched.items = (level.clues || []).map(clue => ({
+          id: clue.id,
+          name: clue.name,
+          x: clue.coordinates?.x ?? 50,
+          y: clue.coordinates?.y ?? 50,
+          fact_popup: clue.content || clue.description || 'Thông tin thú vị!',
+          points: clue.points || 10
+        }));
+        enriched.required_items = enriched.items.length;
+      }
+    }
+
+    // For TIMELINE screens, merge level.clues into events if events is empty
+    if (screen.type === 'TIMELINE' && level) {
+      if (!enriched.events || enriched.events.length === 0) {
+        // Use level.clues as events, extract year from name (e.g., "Năm 1802")
+        enriched.events = (level.clues || []).map(clue => {
+          const yearMatch = clue.name?.match(/(\d{4})/);
+          return {
+            id: clue.id,
+            title: clue.content || clue.name,
+            year: yearMatch ? parseInt(yearMatch[1]) : 0,
+            description: clue.hint || ''
+          };
+        });
+        // correct_order is sorted by year
+        enriched.correct_order = [...enriched.events]
+          .sort((a, b) => a.year - b.year)
+          .map(e => e.id);
+      }
+    }
+
+    return enriched;
   }
 
   // ==================== MUSEUM ====================

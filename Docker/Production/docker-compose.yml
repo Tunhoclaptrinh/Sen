@@ -1,0 +1,54 @@
+# ============================================
+# SEN Backend - Docker Compose (Production)
+# ============================================
+
+services:
+  sen-backend:
+    build:
+      context: ../..
+      dockerfile: Docker/Production/Dockerfile
+    container_name: sen-backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - JWT_SECRET=${JWT_SECRET:-your_super_secret_key_min_32_characters}
+      - JWT_EXPIRE=${JWT_EXPIRE:-7d}
+      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost,http://localhost:80,http://localhost:3001}
+      - CORS_CREDENTIALS=true
+      - LOG_LEVEL=info
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DB_CONNECTION=${DB_CONNECTION}
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "3000:3000"
+    volumes:
+      - sen-database:/app/database
+      - sen-uploads:/app/database/uploads
+    networks:
+      - sen-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/api",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  sen-network:
+    name: sen-network
+    driver: bridge
+
+volumes:
+  sen-database:
+    name: sen-database
+  sen-uploads:
+    name: sen-uploads
