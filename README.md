@@ -1687,6 +1687,7 @@ DATABASE_URL=mongodb+srv://user:pass@cluster.mongodb.net/sen
 ### Files Used
 
 Railway tự động đọc:
+
 - `railway.json` → Config (Dockerfile path, healthcheck)
 - `Procfile` → Start command: `node server.js`
 - `Docker/Production/Dockerfile` → Build production image
@@ -1712,6 +1713,7 @@ curl -X POST https://sen-backend-xxx.railway.app/api/auth/register \
 ### Monitoring
 
 Railway Dashboard cung cấp:
+
 - CPU/Memory usage
 - API request logs
 - Error tracking

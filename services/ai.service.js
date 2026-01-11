@@ -4,7 +4,8 @@ const axios = require("axios");
 const db = require("../config/database");
 
 const DB_PATH = path.join(__dirname, "../database/db.json");
-const PYTHON_SERVICE_URL = process.env.PYTHON_SERVICE_URL || "http://localhost:8000/process_query";
+const PYTHON_SERVICE_URL =
+  process.env.PYTHON_SERVICE_URL || "http://localhost:8000/process_query";
 
 class AIService {
   constructor() {
@@ -70,20 +71,19 @@ class AIService {
    * CHAT CHÍNH: Kết nối NodeJS - db.json - FastAPI
    */
   async chat(userId, message, context = {}) {
-
     // Sanitize user input - Simple validation
     const cleanMessage = message
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#x27;')
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#x27;")
       .trim();
 
     if (!cleanMessage) return { success: false, message: "Nội dung trống" };
     if (cleanMessage.length > 500) {
       return {
         success: false,
-        message: 'Message quá dài (tối đa 500 ký tự)'
+        message: "Message quá dài (tối đa 500 ký tự)",
       };
     }
 
@@ -202,32 +202,32 @@ class AIService {
     const query = { user_id: userId };
     if (levelId) query.level_id = levelId;
     const rawHistory = await db.findMany("ai_chat_history", query);
-    
+
     // Convert to chat message format: [user, assistant, user, assistant, ...]
     const history = [];
-    rawHistory.slice(-limit).forEach(record => {
+    rawHistory.slice(-limit).forEach((record) => {
       // User message
       history.push({
         id: `${record.id}-user`,
         character_id: record.character_id,
         user_id: record.user_id,
-        role: 'user',
+        role: "user",
         content: record.message,
         timestamp: record.created_at,
-        context: record.context
+        context: record.context,
       });
       // Assistant response
       history.push({
         id: `${record.id}-assistant`,
         character_id: record.character_id,
         user_id: record.user_id,
-        role: 'assistant',
+        role: "assistant",
         content: record.response,
         timestamp: record.created_at,
-        context: record.context
+        context: record.context,
       });
     });
-    
+
     return { success: true, data: history };
   }
 
