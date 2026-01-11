@@ -270,16 +270,24 @@ class GameService {
       };
     }
 
-    // Mở khóa chapter
+    // Deduct petals and unlock chapter
+    const newPetalsCount = progress.total_sen_petals - chapter.required_petals;
+
     await db.update('game_progress', progress.id, {
       unlocked_chapters: [...progress.unlocked_chapters, parseInt(chapterId)],
-      current_chapter: parseInt(chapterId)
+      current_chapter: parseInt(chapterId),
+      total_sen_petals: newPetalsCount
     });
 
     return {
       success: true,
       message: 'Chapter unlocked successfully',
-      data: { chapter_id: parseInt(chapterId), chapter_name: chapter.name }
+      data: { 
+        chapter_id: parseInt(chapterId), 
+        chapter_name: chapter.name,
+        petals_spent: chapter.required_petals,
+        petals_remaining: newPetalsCount
+      }
     };
   }
 

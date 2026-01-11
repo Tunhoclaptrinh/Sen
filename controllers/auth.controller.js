@@ -14,8 +14,11 @@ exports.register = async (req, res, next) => {
 
     const { email, password, name, phone, address } = req.body;
 
+    // Normalize email to lowercase
+    const normalizedEmail = email.toLowerCase().trim();
+
     // Check if user exists
-    const existingUser = await db.findOne('users', { email });
+    const existingUser = await db.findOne('users', { email: normalizedEmail });
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -28,7 +31,7 @@ exports.register = async (req, res, next) => {
 
     // Create user
     const user = await db.create('users', {
-      email,
+      email: normalizedEmail,
       password: hashedPassword,
       name,
       phone,
@@ -36,19 +39,15 @@ exports.register = async (req, res, next) => {
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
       role: 'customer',
       isActive: true,
-      createdAt: new Date().toISOString(),
-      lastLogin: new Date().toISOString()
+      createdAt: new Date().toISOString()
     });
 
-    // Generate token
-    const token = generateToken(user.id);
-
+    // No token - user must login after registration
     res.status(201).json({
       success: true,
-      message: 'User registered successfully',
+      message: 'Registration successful. Please login to continue.',
       data: {
-        user: sanitizeUser(user),
-        token
+        user: sanitizeUser(user)
       }
     });
   } catch (error) {
