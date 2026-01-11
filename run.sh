@@ -29,6 +29,11 @@ show_menu() {
 start_docker() {
     local profile=$1
     
+    # Load .env into shell for docker-compose variable expansion
+    if [ -f .env ]; then
+        export $(cat .env | grep -v '^#' | xargs)
+    fi
+    
     echo ""
     echo "[Docker] Starting SEN Backend: $profile"
     echo ""
@@ -67,7 +72,7 @@ start_docker() {
             fi
             ;;
         down)
-            docker-compose -f $DOCKER_DEV down 2>/dev/null
+            docker-compose -f $DOCKER_DEV --profile dev down 2>/dev/null
             docker-compose -f $DOCKER_PROD down 2>/dev/null
             echo "[OK] All containers stopped"
             ;;
@@ -135,4 +140,10 @@ while true; do
             sleep 1
             ;;
     esac
+    
+    # Wait before showing menu again
+    if [ "$choice" != "9" ]; then
+        echo ""
+        read -p "Press Enter to continue..."
+    fi
 done
