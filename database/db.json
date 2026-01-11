@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-03T04:01:48.675Z"
+      "lastLogin": "2026-01-09T15:38:58.807Z"
     },
     {
       "id": 2,
@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-08T13:16:05.680Z"
+      "lastLogin": "2026-01-09T17:13:04.126Z"
     },
     {
       "id": 4,
@@ -165,7 +165,7 @@
       "address": "Thành phố Hội An, Quảng Nam",
       "year_established": 1624,
       "year_restored": 1999,
-      "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600",
+      "image": "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/10/6/1101769/Hoi-An-22.jpeg",
       "rating": 4.9,
       "total_reviews": 523,
       "visit_hours": "8:00 - 17:00",
@@ -184,7 +184,7 @@
       "longitude": 105.8372,
       "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
       "year_established": 1010,
-      "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600",
+      "image": "https://booking.muongthanh.com/upload_images/images/2024%20-%20Nh/H%C3%A0/thoi-diem-du-lich-hoang-thanh.jpg",
       "rating": 4.7,
       "total_reviews": 892,
       "visit_hours": "8:00 - 17:00",
@@ -203,7 +203,7 @@
       "longitude": 106.6955,
       "address": "65 Lý Tự Trọng, Q. 1, TP. Hồ Chí Minh",
       "year_established": 1956,
-      "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
+      "image": "https://hcmc-museum.edu.vn/wp-content/uploads/2021/12/11.jpg",
       "rating": 4.5,
       "total_reviews": 234,
       "visit_hours": "8:00 - 17:00",
@@ -223,7 +223,7 @@
       "address": "Xã Tân Trung, huyện Tịnh Biên, An Giang",
       "year_established": 150,
       "year_restored": 2000,
-      "image": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=600",
+      "image": "https://baotanglichsu.vn/DataFiles/2025/08/News/Tieng%20Viet/1.8.2025/Khu%20DT%20Oc%20Eo%20Ba%20The%20hoi%20tu%20nhung%20tieu%20chi%20tro%20thanh%20Di%20san%20the%20gioi/1.jpg",
       "rating": 4.3,
       "total_reviews": 145,
       "visit_hours": "8:00 - 16:30",
@@ -294,81 +294,89 @@
   "artifacts": [
     {
       "id": 1,
-      "name": "Bức tranh sơn dầu 'Phố cổ Hội An'",
-      "description": "Tranh sơn dầu thế kỷ 20 mô tả quang cảnh phố cổ Hội An",
+      "name": "Thiếu nữ bên hoa huệ",
+      "description": "Một tác phẩm sơn dầu nổi tiếng của họa sĩ Tô Ngọc Vân, vẽ năm 1943, miêu tả thiếu nữ mặc áo dài trắng bên bình hoa huệ. Đây là một trong những bức tranh tiêu biểu của mỹ thuật Việt Nam cận đại.",
       "heritage_site_id": 1,
       "category_id": 2,
       "artifact_type": "painting",
-      "year_created": 1985,
-      "creator": "Nguyễn Tường",
-      "material": "Sơn dầu trên vải",
-      "dimensions": "100 x 80 cm",
-      "weight": 5,
+      "year_created": 1943,
+      "creator": "Tô Ngọc Vân",
+      "material": "Sơn dầu trên toan",
+      "dimensions": "60 x 45 cm",
+      "weight": null,
       "condition": "excellent",
-      "image": "https://images.unsplash.com/photo-1578321272176-b7899d21b5d5?w=600",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/To_Ngoc_Van_thieu_nu_ben_hoa_hue.jpg",
       "is_on_display": true,
-      "location_in_site": "Phòng tranh 1, Tầng 1",
-      "updatedAt": "2026-01-03T03:47:29.585Z"
+      "location_in_site": "Bảo tàng Mỹ thuật Việt Nam",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     {
       "id": 2,
-      "name": "Bộ đồ gốm Thương Tín",
-      "description": "Bộ gốm sứ thương mại từ thế kỷ 15-16 thời kỳ Hội An",
-      "heritage_site_id": 1,
+      "name": "Ngọc Lũ drum (Trống đồng Ngọc Lũ)",
+      "description": "Trống đồng Ngọc Lũ là một trong những hiện vật điển hình nhất của văn hóa Đông Sơn, thuộc thời kỳ đồ đồng khoảng thế kỷ 3–2 trước Công Nguyên. Đây là điển hình cho nghệ thuật đúc đồng tinh xảo của người Đông Sơn, với các họa tiết trang trí tinh tế.",
+      "heritage_site_id": 4,
       "category_id": 4,
-      "artifact_type": "pottery",
-      "year_created": 1500,
-      "material": "Gốm sứ xanh",
-      "dimensions": "Cao 30cm",
+      "artifact_type": "bronze drum",
+      "year_created": -200,
+      "creator": "Người văn hóa Đông Sơn",
+      "material": "Đồng",
+      "dimensions": "cao khoảng 62 cm, đường kính mặt 89 cm",
       "condition": "good",
-      "image": "https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=600",
+      "image": "https://baotanglichsu.vn/DataFiles/2023/01/News/Tieng%20Anh/The%20Ngoc%20Lu%20drum/Trong%20Ngoc%20Lu%201.jpg",
       "is_on_display": true,
-      "location_in_site": "Phòng gốm, Tầng 2"
+      "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     {
       "id": 3,
-      "name": "Trống đồng Đông Sơn",
-      "description": "Trống đồng văn hóa Đông Sơn",
+      "name": "Đồ gốm Đông Sơn – Nồi gốm nấu xôi (Dong Tien pot)",
+      "description": "Một loại đồ gốm sớm từ văn hóa Đông Sơn, dùng để hấp/đun nấu thức ăn, thể hiện kỹ thuật gốm tinh xảo của cư dân Đông Sơn hơn 2000 năm trước.",
       "heritage_site_id": 4,
       "category_id": 4,
-      "artifact_type": "bronze",
+      "artifact_type": "pottery",
       "year_created": -500,
-      "material": "Đồng",
-      "dimensions": "Đường kính 63cm",
-      "condition": "good",
-      "image": "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600",
+      "creator": "Người văn hóa Đông Sơn",
+      "material": "Gốm nung",
+      "dimensions": "cao khoảng 40 cm",
+      "condition": "fair",
+      "image": "https://baotanglichsuquocgia.vn/DataFiles/asset/upload/data_hung_/thang_11_2018/do_dong_dong_son/2.jpg",
       "is_on_display": true,
-      "location_in_site": "Khu vực chính"
+      "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     {
       "id": 4,
-      "name": "Bia Tiến sĩ đá xanh",
-      "description": "Bia đá khắc tên các tiến sĩ khoa thi",
+      "name": "Nguyễn Dynasty Woodblocks",
+      "description": "Một bộ sưu tập các bản khắc gỗ in ấn triều Nguyễn, gồm hơn 34,000 bản khắc được dùng để in các văn bản lịch sử và văn hóa, được UNESCO đưa vào danh sách Ký ức Thế giới.",
       "heritage_site_id": 6,
       "category_id": 3,
-      "artifact_type": "stone",
-      "year_created": 1442,
-      "material": "Đá xanh",
-      "dimensions": "Cao 1.2m",
+      "artifact_type": "woodblock",
+      "year_created": 1800,
+      "creator": "Thợ khắc gỗ triều Nguyễn",
+      "material": "Gỗ",
+      "dimensions": null,
       "condition": "good",
-      "image": "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=600",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Woodblocks_of_the_Nguyen_Dynasty.jpg",
       "is_on_display": true,
-      "location_in_site": "Sân chính"
+      "location_in_site": "Bảo tàng Cổ vật Cung đình Huế",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     {
       "id": 5,
-      "name": "Áo dài truyền thống",
-      "description": "Áo dài lụa thêu tay thế kỷ 19",
+      "name": "Áo dài truyền thống Việt Nam",
+      "description": "Áo dài là trang phục truyền thống của người Việt Nam với lịch sử phát triển qua nhiều thế kỷ và nhiều biến thể như áo tứ thân, áo ngũ thân, áo dài cách tân sau này, thể hiện nét văn hóa và thẩm mỹ đặc trưng của quốc gia.",
       "heritage_site_id": 7,
       "category_id": 6,
       "artifact_type": "textile",
-      "year_created": 1850,
-      "material": "Lụa thêu",
-      "dimensions": "150 x 60 cm",
-      "condition": "fair",
-      "image": "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=600",
+      "year_created": 1970,
+      "creator": "Truyền thống dân gian",
+      "material": "Lụa",
+      "dimensions": "tùy theo kích cỡ",
+      "condition": "excellent",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/38/Ao_dai_%28Vietnam%29.jpg",
       "is_on_display": true,
-      "location_in_site": "Phòng trang phục"
+      "location_in_site": "Bảo tàng Phụ nữ Việt Nam",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     {
       "id": 6,
@@ -439,10 +447,7 @@
       "end_date": "2026-12-31T23:59:59Z",
       "curator": "ThS. Trần Văn An",
       "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
-      "artifact_ids": [
-        1,
-        2
-      ],
+      "artifact_ids": [1, 2],
       "is_active": true
     },
     {
@@ -455,9 +460,7 @@
       "end_date": "2026-08-31T23:59:59Z",
       "curator": "GS. Lê Văn Minh",
       "image": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=600",
-      "artifact_ids": [
-        3
-      ],
+      "artifact_ids": [3],
       "is_active": true
     }
   ],
@@ -827,12 +830,7 @@
         {
           "id": "quiz1",
           "question": "Triều Nguyễn được thành lập vào năm nào?",
-          "options": [
-            "1800",
-            "1802",
-            "1804",
-            "1806"
-          ],
+          "options": ["1800", "1802", "1804", "1806"],
           "correct_answer": 1,
           "points": 15,
           "hint": "Nguyễn Ánh lên ngôi hoàng đế"
@@ -840,12 +838,7 @@
         {
           "id": "quiz2",
           "question": "Pháp tấn công Đà Nẵng vào năm nào?",
-          "options": [
-            "1856",
-            "1858",
-            "1860",
-            "1862"
-          ],
+          "options": ["1856", "1858", "1860", "1862"],
           "correct_answer": 1,
           "points": 15,
           "hint": "Bắt đầu xâm lược Việt Nam"
@@ -853,12 +846,7 @@
         {
           "id": "quiz3",
           "question": "Cách mạng Tháng Tám thành công vào năm nào?",
-          "options": [
-            "1943",
-            "1944",
-            "1945",
-            "1946"
-          ],
+          "options": ["1943", "1944", "1945", "1946"],
           "correct_answer": 2,
           "points": 15,
           "hint": "Việt Nam giành độc lập"
@@ -1005,20 +993,13 @@
           "hint": "Ở giữa sân khấu, gần mặt nước"
         }
       ],
-      "artifact_ids": [
-        2
-      ],
+      "artifact_ids": [2],
       "heritage_site_id": 1,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Múa rối nước ra đời từ triều đại nào?",
-          "options": [
-            "Triều Lý",
-            "Triều Trần",
-            "Triều Lê",
-            "Triều Nguyễn"
-          ],
+          "options": ["Triều Lý", "Triều Trần", "Triều Lê", "Triều Nguyễn"],
           "correct_answer": 0,
           "points": 20,
           "hint": "Thế kỷ 11-12"
@@ -1026,12 +1007,7 @@
         {
           "id": "quiz2",
           "question": "Múa rối nước biểu diễn trên đâu?",
-          "options": [
-            "Sân khấu",
-            "Mặt nước",
-            "Sân đất",
-            "Trong nhà"
-          ],
+          "options": ["Sân khấu", "Mặt nước", "Sân đất", "Trong nhà"],
           "correct_answer": 1,
           "points": 15,
           "hint": "Thủy đình"
@@ -1039,12 +1015,7 @@
         {
           "id": "quiz3",
           "question": "Chú Tễu là nhân vật gì trong múa rối?",
-          "options": [
-            "Người kể chuyện",
-            "Nông dân",
-            "Quan lại",
-            "Vua chúa"
-          ],
+          "options": ["Người kể chuyện", "Nông dân", "Quan lại", "Vua chúa"],
           "correct_answer": 0,
           "points": 20,
           "hint": "Vai trò dẫn chuyện"
@@ -1151,12 +1122,7 @@
         {
           "id": "quiz1",
           "question": "Hoàng Thành Thăng Long được xây dựng năm nào?",
-          "options": [
-            "1008",
-            "1010",
-            "1012",
-            "1015"
-          ],
+          "options": ["1008", "1010", "1012", "1015"],
           "correct_answer": 1,
           "points": 20,
           "hint": "Vua Lý Thái Tổ dời đô"
@@ -1164,12 +1130,7 @@
         {
           "id": "quiz2",
           "question": "Hoàng Thành là trung tâm quyền lực trong bao nhiêu thế kỷ?",
-          "options": [
-            "10 thế kỷ",
-            "12 thế kỷ",
-            "13 thế kỷ",
-            "15 thế kỷ"
-          ],
+          "options": ["10 thế kỷ", "12 thế kỷ", "13 thế kỷ", "15 thế kỷ"],
           "correct_answer": 2,
           "points": 20,
           "hint": "Hơn 1000 năm"
@@ -1177,12 +1138,7 @@
         {
           "id": "quiz3",
           "question": "UNESCO công nhận Hoàng Thành năm nào?",
-          "options": [
-            "2008",
-            "2009",
-            "2010",
-            "2011"
-          ],
+          "options": ["2008", "2009", "2010", "2011"],
           "correct_answer": 2,
           "points": 15,
           "hint": "1000 năm Thăng Long"
@@ -1296,20 +1252,13 @@
           "hint": "Khu luyện kim"
         }
       ],
-      "artifact_ids": [
-        3
-      ],
+      "artifact_ids": [3],
       "heritage_site_id": 4,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Văn minh Óc Eo phát triển từ thế kỷ nào?",
-          "options": [
-            "Thế kỷ 1-5",
-            "Thế kỷ 1-7",
-            "Thế kỷ 3-9",
-            "Thế kỷ 5-10"
-          ],
+          "options": ["Thế kỷ 1-5", "Thế kỷ 1-7", "Thế kỷ 3-9", "Thế kỷ 5-10"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Thời kỳ rất cổ xưa"
@@ -1317,12 +1266,7 @@
         {
           "id": "quiz2",
           "question": "Óc Eo giao lưu với những quốc gia nào?",
-          "options": [
-            "Chỉ Trung Quốc",
-            "Ấn Độ và Trung Quốc",
-            "Ấn Độ, La Mã, Trung Quốc",
-            "Chỉ La Mã"
-          ],
+          "options": ["Chỉ Trung Quốc", "Ấn Độ và Trung Quốc", "Ấn Độ, La Mã, Trung Quốc", "Chỉ La Mã"],
           "correct_answer": 2,
           "points": 25,
           "hint": "Trung tâm thương mại quốc tế"
@@ -1330,12 +1274,7 @@
         {
           "id": "quiz3",
           "question": "Óc Eo là trung tâm gì?",
-          "options": [
-            "Trung tâm quân sự",
-            "Trung tâm thương mại",
-            "Trung tâm tôn giáo",
-            "Trung tâm học thuật"
-          ],
+          "options": ["Trung tâm quân sự", "Trung tâm thương mại", "Trung tâm tôn giáo", "Trung tâm học thuật"],
           "correct_answer": 1,
           "points": 20,
           "hint": "Cảng biển quan trọng"
@@ -1442,12 +1381,7 @@
         {
           "id": "quiz1",
           "question": "Thánh Gióng thuộc nhóm thánh nào?",
-          "options": [
-            "Tứ Bất Tử",
-            "Tam Thánh",
-            "Ngũ Thánh",
-            "Thập Đại Thánh"
-          ],
+          "options": ["Tứ Bất Tử", "Tam Thánh", "Ngũ Thánh", "Thập Đại Thánh"],
           "correct_answer": 0,
           "points": 30,
           "hint": "4 vị bất tử"
@@ -1455,12 +1389,7 @@
         {
           "id": "quiz2",
           "question": "Thánh Gióng mấy tuổi mới biết nói?",
-          "options": [
-            "1 tuổi",
-            "2 tuổi",
-            "3 tuổi",
-            "4 tuổi"
-          ],
+          "options": ["1 tuổi", "2 tuổi", "3 tuổi", "4 tuổi"],
           "correct_answer": 2,
           "points": 25,
           "hint": "Rất muộn so với trẻ bình thường"
@@ -1468,12 +1397,7 @@
         {
           "id": "quiz3",
           "question": "Thánh Gióng cưỡi gì đánh giặc?",
-          "options": [
-            "Ngựa thường",
-            "Ngựa sắt",
-            "Voi",
-            "Rồng"
-          ],
+          "options": ["Ngựa thường", "Ngựa sắt", "Voi", "Rồng"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Thần kỵ làm bằng kim loại"
@@ -1622,12 +1546,7 @@
           "id": "quiz1",
           "name": "Câu hỏi 1",
           "content": "Văn Miếu được xây dựng năm nào?",
-          "options": [
-            "1010",
-            "1070",
-            "1076",
-            "1086"
-          ],
+          "options": ["1010", "1070", "1076", "1086"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Sau 60 năm Thăng Long thành lập"
@@ -1636,12 +1555,7 @@
           "id": "quiz2",
           "name": "Câu hỏi 2",
           "content": "Văn Miếu thờ ai?",
-          "options": [
-            "Chu Văn An",
-            "Lý Thánh Tông",
-            "Khổng Tử",
-            "Lê Thánh Tông"
-          ],
+          "options": ["Chu Văn An", "Lý Thánh Tông", "Khổng Tử", "Lê Thánh Tông"],
           "correct_answer": 2,
           "points": 20,
           "hint": "Vị thánh của nho giáo"
@@ -1650,31 +1564,19 @@
           "id": "quiz3",
           "name": "Câu hỏi 3",
           "content": "Có bao nhiêu bia tiến sĩ?",
-          "options": [
-            "72",
-            "82",
-            "92",
-            "102"
-          ],
+          "options": ["72", "82", "92", "102"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Con số này được UNESCO công nhận"
         }
       ],
-      "artifact_ids": [
-        4
-      ],
+      "artifact_ids": [4],
       "heritage_site_id": 6,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Văn Miếu được xây dựng năm nào?",
-          "options": [
-            "1010",
-            "1070",
-            "1076",
-            "1086"
-          ],
+          "options": ["1010", "1070", "1076", "1086"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Sau 60 năm Thăng Long thành lập"
@@ -1682,12 +1584,7 @@
         {
           "id": "quiz2",
           "question": "Văn Miếu thờ ai?",
-          "options": [
-            "Chu Văn An",
-            "Lý Thánh Tông",
-            "Khổng Tử",
-            "Lê Thánh Tông"
-          ],
+          "options": ["Chu Văn An", "Lý Thánh Tông", "Khổng Tử", "Lê Thánh Tông"],
           "correct_answer": 2,
           "points": 20,
           "hint": "Vị thánh của nho giáo"
@@ -1695,12 +1592,7 @@
         {
           "id": "quiz3",
           "question": "Có bao nhiêu bia tiến sĩ?",
-          "options": [
-            "72",
-            "82",
-            "92",
-            "102"
-          ],
+          "options": ["72", "82", "92", "102"],
           "correct_answer": 1,
           "points": 25,
           "hint": "Con số này được UNESCO công nhận"
@@ -1708,12 +1600,7 @@
         {
           "id": "quiz4",
           "question": "Văn Miếu là trường đại học đầu tiên của Việt Nam?",
-          "options": [
-            "Đúng",
-            "Sai",
-            "Không rõ",
-            "Là trường cấp 2"
-          ],
+          "options": ["Đúng", "Sai", "Không rõ", "Là trường cấp 2"],
           "correct_answer": 0,
           "points": 20,
           "hint": "Quốc Tử Giám"
@@ -1739,13 +1626,8 @@
       "description": "Bộ sưu tập các cổ vật đặc sắc thời Lý",
       "visibility": "public",
       "total_items": 2,
-      "heritage_site_ids": [
-        2,
-        5
-      ],
-      "artifact_ids": [
-        3
-      ],
+      "heritage_site_ids": [2, 5],
+      "artifact_ids": [3],
       "exhibition_ids": [],
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-01-01T00:00:00Z"
@@ -2029,11 +1911,7 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 1,
-      "completed_screens": [
-        "screen1",
-        "screen2",
-        "screen3"
-      ],
+      "completed_screens": ["screen1", "screen2", "screen3"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2096,11 +1974,7 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 4,
-      "completed_screens": [
-        "screen1",
-        "screen2",
-        "screen3"
-      ],
+      "completed_screens": ["screen1", "screen2", "screen3"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2192,9 +2066,7 @@
       "timeline_order": [],
       "score": 25,
       "total_screens": 4,
-      "completed_screens": [
-        "screen1"
-      ],
+      "completed_screens": ["screen1"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
