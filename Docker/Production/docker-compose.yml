@@ -7,8 +7,9 @@ services:
     build:
       context: ../..
       dockerfile: Docker/Production/Dockerfile
+    image: production-sen-backend
     container_name: sen-backend
-    restart: unless-stopped
+    restart: always
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -17,9 +18,9 @@ services:
       - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost,http://localhost:80,http://localhost:3001}
       - CORS_CREDENTIALS=true
       - LOG_LEVEL=info
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DB_CONNECTION=${DB_CONNECTION}
       - DATABASE_URL=${DATABASE_URL}
+      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://sen-ai:8000/process_query}
     ports:
       - "3000:3000"
     volumes:
@@ -41,6 +42,22 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "com.sen.service=backend"
+      - "com.sen.environment=production"
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1G
+        reservations:
+          cpus: "1"
+          memory: 512M
 
 networks:
   sen-network:
