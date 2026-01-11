@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 /**
  * Generate JWT token
@@ -8,14 +8,16 @@ const bcrypt = require('bcryptjs');
  */
 exports.generateToken = (id, loginTime = null) => {
   const payload = { id };
-  
+
   // Include loginTime for token version checking
   if (loginTime) {
     payload.loginTime = loginTime;
   }
-  
+
+  // Trim to handle Windows line endings (CRLF) in .env files
+  const jwtExpire = (process.env.JWT_EXPIRE || "30d").trim();
   return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE || '30d'
+    expiresIn: jwtExpire,
   });
 };
 
@@ -56,12 +58,14 @@ exports.sanitizeUser = (user) => {
  */
 exports.calculateDistance = (lat1, lon1, lat2, lon2) => {
   const R = 6371; // Earth radius in km
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 };

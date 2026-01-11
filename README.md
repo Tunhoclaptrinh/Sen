@@ -1652,7 +1652,76 @@ pm2 startup
 
 ---
 
-## 🔧 Environment Variables
+## � Production Deployment (Railway)
+
+### Quick Deploy
+
+```bash
+cd Backend
+
+# 1. Login to Railway
+railway login
+
+# 2. Initialize project
+railway init
+
+# 3. Deploy
+railway up
+```
+
+### Environment Variables
+
+Thêm trong **Railway Dashboard → Variables**:
+
+```env
+NODE_ENV=production
+PORT=3000
+JWT_SECRET=your_32_character_secret_key_here
+JWT_EXPIRE=7d
+CORS_ORIGIN=https://sen-frontend-xxx.vercel.app
+OPENAI_API_KEY=sk-proj-your-production-key
+DB_CONNECTION=mongodb
+DATABASE_URL=mongodb+srv://user:pass@cluster.mongodb.net/sen
+```
+
+### Files Used
+
+Railway tự động đọc:
+- `railway.json` → Config (Dockerfile path, healthcheck)
+- `Procfile` → Start command: `node server.js`
+- `Docker/Production/Dockerfile` → Build production image
+
+### Verify Deployment
+
+```bash
+# Health check
+curl https://sen-backend-xxx.railway.app/api
+
+# Test auth
+curl -X POST https://sen-backend-xxx.railway.app/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username": "test", "email": "test@example.com", "password": "Test123!"}'
+```
+
+### Auto Deploy from GitHub
+
+1. Push code lên GitHub
+2. Railway Dashboard → Settings → Connect GitHub
+3. Mỗi lần push → Auto deploy
+
+### Monitoring
+
+Railway Dashboard cung cấp:
+- CPU/Memory usage
+- API request logs
+- Error tracking
+- Auto-restart on crash
+
+**Cost**: FREE $5/month credit (~500 hours runtime)
+
+---
+
+## �🔧 Environment Variables
 
 ### Required Variables
 
