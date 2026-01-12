@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-03T04:01:48.675Z"
+      "lastLogin": "2026-01-12T01:17:00.698Z"
     },
     {
       "id": 2,
@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-11T03:19:02.663Z"
+      "lastLogin": "2026-01-11T05:13:01.411Z"
     },
     {
       "id": 4,
@@ -4319,7 +4319,7 @@
       "id": 92,
       "user_id": 3,
       "level_id": "4",
-      "status": "in_progress",
+      "status": "abandoned",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
       "collected_items": [],
@@ -4332,7 +4332,9 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2026-01-11T03:30:19.731Z",
-      "last_activity": "2026-01-11T03:30:19.731Z"
+      "last_activity": "2026-01-11T03:30:19.731Z",
+      "expired_at": "2026-01-11T06:35:18.878Z",
+      "expired_reason": "New session started"
     },
     {
       "id": 93,
@@ -4483,7 +4485,7 @@
       "id": 100,
       "user_id": 3,
       "level_id": "99",
-      "status": "in_progress",
+      "status": "abandoned",
       "current_screen_id": "demo_dialogue",
       "current_screen_index": 0,
       "collected_items": [],
@@ -4496,7 +4498,152 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2026-01-11T04:07:38.258Z",
-      "last_activity": "2026-01-11T04:07:38.258Z"
+      "last_activity": "2026-01-11T04:07:38.258Z",
+      "expired_at": "2026-01-11T05:47:05.156Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 101,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "abandoned",
+      "current_screen_id": "demo_dialogue",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 6,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-11T05:47:05.177Z",
+      "last_activity": "2026-01-11T05:47:05.178Z",
+      "expired_at": "2026-01-11T06:33:44.978Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 102,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "abandoned",
+      "current_screen_id": "demo_dialogue",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 6,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-11T06:33:45.025Z",
+      "last_activity": "2026-01-11T06:33:45.025Z",
+      "expired_at": "2026-01-11T06:38:40.299Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 103,
+      "user_id": 3,
+      "level_id": "4",
+      "status": "abandoned",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-11T06:35:18.888Z",
+      "last_activity": "2026-01-11T06:35:18.888Z",
+      "expired_at": "2026-01-11T06:38:30.620Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 104,
+      "user_id": 3,
+      "level_id": "4",
+      "status": "in_progress",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-11T06:38:30.624Z",
+      "last_activity": "2026-01-11T06:38:30.624Z"
+    },
+    {
+      "id": 105,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "abandoned",
+      "current_screen_id": "demo_dialogue",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 6,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-11T06:38:40.306Z",
+      "last_activity": "2026-01-11T06:38:40.306Z",
+      "expired_at": "2026-01-11T07:08:26.231Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 106,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "abandoned",
+      "current_screen_id": "demo_dialogue",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 6,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-11T07:08:26.250Z",
+      "last_activity": "2026-01-11T07:08:26.250Z",
+      "expired_at": "2026-01-11T07:21:02.635Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 107,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "in_progress",
+      "current_screen_id": "demo_dialogue",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 6,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-11T07:21:02.644Z",
+      "last_activity": "2026-01-11T07:21:02.644Z"
     }
   ],
   "ai_chat_history": [
@@ -4653,6 +4800,62 @@
         "route": "uncertain"
       },
       "created_at": "2026-01-11T03:57:12.810Z"
+    },
+    {
+      "id": 12,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "Hoàng thành thăng long",
+      "response": "Hoàng thành Thăng Long có nhiều công trình nổi bật, trong đó có thể kể đến:\n\n1. **Đền Đồng Cổ** - được xây dựng năm 1028 trên bờ sông Tô Lịch.\n2. **Chùa Diên Hựu (Chùa Một Cột)** - xây dựng năm 1049, nằm ở phía tây Hoàng thành.\n3. **Tháp Báo Thiên** - được xây dựng năm 1057.\n4. **Văn Miếu** - xây dựng năm 1070, ban đầu là nơi học cho thái tử và sau đó phát triển thành Quốc Tử Giám vào năm 1076, nơi giáo dục con em Hoàng Gia và quan lại.\n\nNhững công trình này không chỉ mang giá trị kiến trúc mà còn thể hiện sự phát triển văn hóa, chính trị và kinh tế của kinh đô Thăng Long trong thời kỳ Lý-Trần.",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Hoàng thành Thăng Long có những công trình nổi bật nào?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-11T05:14:49.671Z"
+    },
+    {
+      "id": 13,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "xin chào",
+      "response": "Hoàng thành Thăng Long có nhiều công trình nổi bật, trong đó có:\n\n1. **Chùa Diên Hựu (Chùa Một Cột)** - Được xây dựng vào năm 1049, là một trong những biểu tượng văn hóa của Hà Nội.\n2. **Tháp Báo Thiên** - Xây dựng năm 1057, là một trong những công trình kiến trúc cổ xưa.\n3. **Văn Miếu** - Được xây dựng năm 1070, là nơi thờ Khổng Tử và cũng là trung tâm giáo dục của đất nước.\n4. **Quốc Tử Giám** - Phát triển từ nhà học cho thái tử vào năm 1076, là nơi giáo dục con em hoàng gia và quan lại.\n\nNgoài ra, khu vực này còn có nhiều công trình tôn giáo và kiến trúc khác, tạo nên một trung tâm chính trị, kinh tế và văn hóa lớn của cả nước trong thời kỳ Lý-Trần.",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Hoàng thành Thăng Long có những công trình nổi bật nào?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-11T07:26:30.551Z"
+    },
+    {
+      "id": 14,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "tìm hiểu về lá cá hà nội",
+      "response": "Xin lỗi, nhưng trong thông tin mà tôi có không đề cập đến lá cá Hà Nội. Nếu bạn cần tìm hiểu về một chủ đề khác liên quan đến Hà Nội hoặc các di tích lịch sử, tôi rất sẵn lòng giúp đỡ!",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Lá cá Hà Nội là gì và có những đặc điểm gì nổi bật?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-11T07:28:09.097Z"
+    },
+    {
+      "id": 15,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "ý của tôi là lá cờ Hà Nội",
+      "response": "Lá cờ đỏ sao vàng trên Cột cờ Hà Nội không chỉ là biểu tượng của đất nước Việt Nam độc lập, tự do, mà còn mang trong mình niềm tự hào và vinh quang của dân tộc. Từ khi ra đời của Nhà nước Việt Nam Dân chủ Cộng hòa, hình ảnh của lá cờ đã trở thành một phần không thể thiếu trong tâm thức người dân, thể hiện tinh thần đoàn kết và khát vọng tự do của cả dân tộc. Cờ đỏ sao vàng tung bay trên Cột cờ Hà Nội, giữa nền trời Thủ đô, là minh chứng cho lịch sử hào hùng và sự kiên cường của nhân dân Việt Nam trong suốt quá trình đấu tranh giành độc lập.",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Lá cờ Hà Nội có ý nghĩa và biểu tượng gì?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-11T07:28:20.877Z"
     }
   ]
 }
