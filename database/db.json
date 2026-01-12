@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-09T15:38:58.807Z"
+      "lastLogin": "2026-01-12T01:30:32.336Z"
     },
     {
       "id": 2,
@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-11T04:23:00.979Z"
+      "lastLogin": "2026-01-12T01:38:39.325Z"
     },
     {
       "id": 4,
@@ -479,7 +479,10 @@
       "end_date": "2026-12-31T23:59:59Z",
       "curator": "ThS. Trần Văn An",
       "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
-      "artifact_ids": [1, 2],
+      "artifact_ids": [
+        1,
+        2
+      ],
       "is_active": true
     },
     {
@@ -492,7 +495,9 @@
       "end_date": "2026-08-31T23:59:59Z",
       "curator": "GS. Lê Văn Minh",
       "image": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=600",
-      "artifact_ids": [3],
+      "artifact_ids": [
+        3
+      ],
       "is_active": true
     }
   ],
@@ -715,8 +720,563 @@
           "name": "Hidden Object Demo",
           "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
           "type": "HIDDEN_OBJECT",
-          "description": "Demo màn hình tìm vật phẩm"
+          "description": "Demo màn hình tìm đồ vật",
+          "content": {
+            "objects": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "chapter_id": 1,
+      "name": "Trận chiến Bạch Đằng 938",
+      "description": "Tái hiện trận thủy chiến lừng lẫy tiêu diệt quân Nam Hán.",
+      "type": "historical_battle",
+      "difficulty": "hard",
+      "background_image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Tran_Bach_Dang_938.jpg/1200px-Tran_Bach_Dang_938.jpg",
+      "ai_character_id": 3
+    },
+    {
+      "id": 102,
+      "chapter_id": 2,
+      "name": "Khám phá Hoàng Thành",
+      "description": "Giải mã các bí mật khảo cổ dưới lòng đất Thăng Long.",
+      "type": "puzzle",
+      "difficulty": "medium",
+      "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+      "ai_character_id": 1
+    }
+  ],
+  "history_articles": [
+    {
+      "id": 1,
+      "title": "Chiến thắng Điện Biên Phủ",
+      "shortDescription": "Chiến thắng lừng lẫy năm châu, chấn động địa cầu, kết thúc 9 năm kháng chiến chống Pháp.",
+      "content": "<p>Chiến dịch Điện Biên Phủ là đỉnh cao của cuộc tiến công chiến lược Đông - Xuân 1953 - 1954 của quân và dân Việt Nam. Chiến thắng này đã dẫn đến việc ký kết Hiệp định Genève chấm dứt chiến tranh, lập lại hòa bình ở Đông Dương.</p><h3>Bối cảnh lịch sử</h3><p>Năm 1953, thực dân Pháp đề ra Kế hoạch Navarre nhằm xoay chuyển cục diện chiến tranh. Điện Biên Phủ được xây dựng thành một tập đoàn cứ điểm mạnh nhất Đông Dương thời bấy giờ, được mệnh danh là 'pháo đài bất khả xâm phạm'.</p><h3>Diễn biến chính</h3><p>Chiến dịch diễn ra trong 56 ngày đêm, trải qua 3 đợt tấn công:</p><ul><li><strong>Đợt 1 (13/3 - 17/3/1954):</strong> Quân ta tiêu diệt phân khu Bắc, gồm cứ điểm Him Lam và Độc Lập.</li><li><strong>Đợt 2 (30/3 - 30/4/1954):</strong> Tấn công các cứ điểm phía Đông phân khu Trung tâm. Đây là đợt tấn công dài ngày và quyết liệt nhất.</li><li><strong>Đợt 3 (1/5 - 7/5/1954):</strong> Tổng công kích tiêu diệt toàn bộ tập đoàn cứ điểm.</li></ul><p>Chiều ngày 7/5/1954, lá cờ 'Quyết chiến Quyết thắng' của Quân đội Nhân dân Việt Nam tung bay trên nóc hầm tướng De Castries.</p>",
+      "image": "https://media.vov.vn/sites/default/files/styles/large/public/2023-05/images1139304_6810aa9d609525dimages941103_media_thumb1382169701.jpg",
+      "author": "Ban Biên Tập Lịch Sử",
+      "publishDate": "2024-05-07T00:00:00Z",
+      "is_active": true,
+      "views": 2540,
+      "related_heritage_ids": [
+        2
+      ],
+      "related_artifact_ids": [
+        2
+      ],
+      "related_level_ids": [
+        99
+      ],
+      "related_product_ids": [
+        1,
+        2
+      ],
+      "timeline_events": [
+        {
+          "year": "1953",
+          "title": "Kế hoạch Navarre",
+          "description": "Pháp đề ra kế hoạch Navarre, xây dựng Điện Biên Phủ thành tập đoàn cứ điểm mạnh."
         },
+        {
+          "year": "13/03/1954",
+          "title": "Mở màn chiến dịch",
+          "description": "Quân ta nổ súng tấn công cứ điểm Him Lam, mở màn chiến dịch Điện Biên Phủ."
+        },
+        {
+          "year": "30/03/1954",
+          "title": "Đợt tấn công thứ 2",
+          "description": "Mở đợt tấn công vào các cứ điểm phía Đông, diễn ra ác liệt tại đồi A1, C1."
+        },
+        {
+          "year": "07/05/1954",
+          "title": "Toàn thắng",
+          "description": "Tướng De Castries đầu hàng. Chiến dịch toàn thắng."
+        }
+      ],
+      "related_heritage": [
+        {
+          "id": 2,
+          "name": "Hoàng Thành Thăng Long",
+          "type": "monument",
+          "cultural_period": "Triều Lý",
+          "region": "Hà Nội",
+          "latitude": 21.0341,
+          "longitude": 105.8372,
+          "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
+          "year_established": 1010,
+          "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600",
+          "rating": 4.7,
+          "total_reviews": 892,
+          "visit_hours": "8:00 - 17:00",
+          "entrance_fee": 30000,
+          "is_active": true,
+          "unesco_listed": true,
+          "significance": "international",
+          "author": "Admin",
+          "publishDate": "2024-08-05T09:30:00Z",
+          "description": "<p>Hoàng thành Thăng Long là quần thể di tích lịch sử gắn bó mật thiết với sự phát triển của Thăng Long – Hà Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII – IX), khu di tích tiếp tục phát triển qua các triều đại Đinh – Tiền Lê (thế kỷ XI) và đạt đến đỉnh cao dưới thời Lý – Trần – Lê (thế kỷ XI – XVIII). Dưới triều Nguyễn (thế kỷ XIX – XX), mặc dù kinh đô được dời vào Phú Xuân (Huế), nhưng Hoàng thành Thăng Long vẫn giữ vai trò quan trọng.</p><p>Năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Thăng Long, ông đã quy hoạch kinh thành theo mô hình “tam trùng thành quách”, gồm ba vòng thành: Kinh thành (nơi cư dân sinh sống), Hoàng thành (khu vực dành cho quan lại làm việc) và Cấm thành (khu vực chỉ dành riêng cho hoàng gia). Từ thế kỷ XI đến XVIII, Hoàng thành Thăng Long luôn là trung tâm chính trị, hành chính của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đô vào Phú Xuân, Thăng Long bị hạ cấp thành Bắc Thành (thành Hà Nội). Dù vậy, điện Kính Thiên và Hậu Lâu trong Cấm thành vẫn được duy trì làm hành cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p><p>Sang thời kỳ Pháp thuộc, Hà Nội trở thành trung tâm hành chính của Liên bang Đông Dương, và Thành cổ Hà Nội được sử dụng làm Sở chỉ huy quân sự của Pháp. Lúc này, hầu hết các công trình cung điện, đền đài trong Hoàng thành đều bị phá hủy, chỉ còn Bắc Môn và Kỳ Đài được bảo tồn. Trên nền điện Kính Thiên và sân Long Trì, người Pháp xây dựng các công trình kiến trúc mới theo phong cách châu Âu. Đến năm 1954, sau khi Thủ đô được giải phóng, Thành Hà Nội trở thành Tổng hành dinh của Quân đội nhân dân Việt Nam và duy trì vai trò này đến năm 2004.</p><p>Ngày nay, Khu trung tâm Hoàng thành Thăng Long, gồm di tích khảo cổ học 18 Hoàng Diệu và Thành cổ Hà Nội, nằm trong khu vực trung tâm chính trị Ba Đình – nơi đặt trụ sở của các cơ quan lãnh đạo cao nhất của Đảng và Nhà nước. Đây không chỉ là một khu di tích lịch sử – văn hóa quan trọng mà còn là không gian kiến trúc mang giá trị đặc biệt, gắn liền chặc chẽ với quá trình phát triển của đất nước. Đây cũng là nơi tổ chức các sự kiện chính trị, văn hóa trọng đại của quốc gia.</p><h3>Vị thế và tầm vóc</h3><p>Trải qua 13 thế kỷ, Hoàng thành Thăng Long luôn giữ vị thế trung tâm chính trị và là một trong những di tích quan trọng nhất của Việt Nam. Ngày 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung tâm Hoàng thành Thăng Long – Hà Nội chính thức được UNESCO công nhận là Di sản văn hóa thế giới. Giá trị nổi bật của di sản này thể hiện qua chiều dài lịch sử liên tục suốt 13 thế kỷ, vai trò là trung tâm quyền lực trong nhiều thời kỳ và hệ thống di tích, di vật phong phú. Đây cũng là nơi lưu giữ những dấu ấn văn hóa quan trọng và chứng kiến nhiều sự kiện mang tầm vóc lớn lao trong lịch sử dân tộc.</p><img src='https://images.unsplash.com/photo-1555921015-5532091f6026?w=1000' alt='Hoang Thanh Thang Long' style='width:100%; border-radius: 8px; margin: 16px 0;' /><h3>Các di vật được khảo cổ, khai quật trong Hoàng Thành Thăng Long</h3><p>Các di vật được khai quật và hiện đang trưng bày ở Khu khảo cổ 18 Hoàng Diệu.</p><p>Thềm chia làm 3 lối lên xuống đều nhau, lối giữa ngăn cách với 2 lối bên bằng đôi rồng đá được xây dựng năm 1467 ( đời vua Lê Thánh Tông ). Rồng được tạo tác khá đẹp và trau chuốt, tạo khối kiểu tượng tròn có dáng mập, khỏe, đầu vươn cao phía chân thềm bậc, thân uốn khúc nhịp nhàng và chạy dài theo 9 bậc lên. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, râu và tóc kết thành đao bay về sau.</p><p>Tai rồng lớn kiểu tai trâu, sừng đơn vươn dài ra phía sau và áp sát thân rồng. Dọc sống lưng đục chạm hàng vây cá to, mập. Bên ngoài bậc thềm có 2 lan can hình rồng cách điệu dạng phù điêu ( gọi là vân hóa rồng ), mặt trong trang trí vân mây, bên ngoài thể hiện hoa cúc dây. Các hoa văn này được phủ kín mặt ngoài của thân rồng đá cách điệu.</p><p>Phía ngoài là hai đám mây hóa rồng. Đây là hai tảng đá nguyên khối dày 36 – 39 cm, phần đầu thấp dày hơn, có những đường cuốn cắt ngang cùng những đường gờ nổi nối tiếp nhau chạy hết chiều dài phiến đá 5,3 m, những đường gờ nổi không theo quy luật.</p><p>Mặt trong và ngoài của hai con rồng cách điệu này trang trí hoa văn, họa tiết khắc chìm vào đá. Phía ngoài, có hai đường thẳng chạy dọc theo thân rồng cách nhau 10 cm, chia đôi thành hai nửa trên dưới, bên trong là những bông hoa bốn cánh xếp liền nhau. Nửa trên là những cuộn mây, đao lửa ít theo quy luật rõ rang, nửa dưới là những hình ảnh mặt trời cách điệu, đao lửa, mây vờn. Phía mặt trong của phiến đá do có bậc thềm cao nên diện tích trạm khắc ít hơn, một đường thẳng bên trên là những cuộn mây nhỏ dẫn từ dưới thấp lên cao.</p><p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
+          "commentCount": 85
+        }
+      ],
+      "related_artifacts": [
+        {
+          "id": 2,
+          "name": "Ngọc Lũ drum (Trống đồng Ngọc Lũ)",
+          "description": "Trống đồng Ngọc Lũ là một trong những hiện vật điển hình nhất của văn hóa Đông Sơn, thuộc thời kỳ đồ đồng khoảng thế kỷ 3–2 trước Công Nguyên. Đây là điển hình cho nghệ thuật đúc đồng tinh xảo của người Đông Sơn, với các họa tiết trang trí tinh tế.",
+          "heritage_site_id": 4,
+          "category_id": 4,
+          "artifact_type": "bronze drum",
+          "year_created": -200,
+          "creator": "Người văn hóa Đông Sơn",
+          "material": "Đồng",
+          "dimensions": "cao khoảng 62 cm, đường kính mặt 89 cm",
+          "condition": "good",
+          "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600",
+          "is_on_display": true,
+          "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
+          "updatedAt": "2026-01-10T00:00:00.000Z",
+          "author": "Admin",
+          "publishDate": "2024-09-05T15:30:00Z",
+          "shortDescription": "Bảo vật quốc gia, biểu tượng rực rỡ nhất của nền văn hóa Đông Sơn.",
+          "commentCount": 34
+        }
+      ],
+      "related_levels": [
+        {
+          "id": 99,
+          "chapter_id": 1,
+          "name": "[DEMO] Test All Screens",
+          "description": "Level demo để test tất cả các loại màn hình",
+          "type": "mixed",
+          "difficulty": "easy",
+          "order": 0,
+          "required_level": null,
+          "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+          "background_music": null,
+          "ai_character_id": 1,
+          "knowledge_base": "Level demo cho tất cả screen types",
+          "screens": [
+            {
+              "id": "demo_dialogue",
+              "name": "Dialogue Demo",
+              "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+              "type": "DIALOGUE",
+              "description": "Demo màn hình hội thoại",
+              "content": [
+                {
+                  "speaker": "AI",
+                  "text": "Xin chào! Mình là trợ lý Sen. Mình sẽ hướng dẫn bạn khám phá di sản văn hóa Việt Nam.",
+                  "avatar": "",
+                  "emotion": "happy"
+                },
+                {
+                  "speaker": "NARRATOR",
+                  "text": "Bạn bắt đầu hành trình khám phá những di sản văn hóa quý giá của dân tộc.",
+                  "avatar": "",
+                  "emotion": ""
+                },
+                {
+                  "speaker": "AI",
+                  "text": "Hãy cùng mình tìm hiểu về lịch sử phong phú của Việt Nam nhé!",
+                  "avatar": "",
+                  "emotion": "excited"
+                }
+              ]
+            },
+            {
+              "id": "demo_image",
+              "name": "Image Viewer Demo",
+              "background": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+              "type": "IMAGE_VIEWER",
+              "description": "Demo màn hình xem ảnh",
+              "content": {
+                "title": "Di sản Hội An",
+                "description": "Phố cổ Hội An là một trong những di sản văn hóa thế giới được UNESCO công nhận. Nơi đây lưu giữ nét kiến trúc cổ kính độc đáo của Việt Nam.",
+                "image_url": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800"
+              }
+            },
+            {
+              "id": "demo_video",
+              "name": "Video Demo",
+              "background": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+              "type": "VIDEO",
+              "description": "Demo màn hình video",
+              "content": {
+                "title": "Lịch sử Việt Nam",
+                "description": "Xem video để tìm hiểu về lịch sử hào hùng của dân tộc Việt Nam.",
+                "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+              }
+            },
+            {
+              "id": "demo_hidden",
+              "name": "Hidden Object Demo",
+              "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+              "type": "HIDDEN_OBJECT",
+              "description": "Demo màn hình tìm đồ vật",
+              "content": {
+                "objects": []
+              }
+            }
+          ]
+        }
+      ],
+      "related_products": [
+        {
+          "id": 1,
+          "name": "Sách: Việt Nam Sử Lược",
+          "price": 180000,
+          "type": "book",
+          "image": "https://salt.tikicdn.com/cache/w1200/ts/product/23/67/68/73919242d992953284346028887e3871.jpg",
+          "url": "#"
+        },
+        {
+          "id": 2,
+          "name": "Mô hình xe tăng 390",
+          "price": 250000,
+          "type": "souvenir",
+          "image": "https://bizweb.dktcdn.net/100/356/472/products/1-11a364be-ae3a-4496-ae58-f9479361ad38.jpg",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Đại thắng mùa Xuân 1975",
+      "shortDescription": "Chiến dịch Hồ Chí Minh lịch sử, giải phóng hoàn toàn miền Nam, thống nhất đất nước.",
+      "content": "<p>Cuộc Tổng tiến công và nổi dậy mùa Xuân năm 1975 mà đỉnh cao là Chiến dịch Hồ Chí Minh lịch sử đã kết thúc thắng lợi cuộc kháng chiến chống Mỹ, cứu nước vĩ đại của dân tộc ta.</p><h3>Ý nghĩa lịch sử</h3><p>Thắng lợi này đã chấm dứt ách thống trị của chủ nghĩa thực dân, đế quốc trên đất nước ta, hoàn thành cuộc cách mạng dân tộc dân chủ nhân dân trong cả nước, mở ra kỷ nguyên mới - kỷ nguyên độc lập, tự do và đi lên chủ nghĩa xã hội.</p>",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Dinh_Doc_Lap_1975.jpg",
+      "author": "Nguyễn Văn Sử",
+      "publishDate": "2024-04-30T00:00:00Z",
+      "is_active": true,
+      "views": 3100,
+      "related_heritage_ids": [
+        3
+      ],
+      "related_artifact_ids": [
+        5
+      ],
+      "related_level_ids": [
+        99
+      ],
+      "related_product_ids": [
+        2,
+        4
+      ],
+      "timeline_events": [
+        {
+          "year": "04/03/1975",
+          "title": "Chiến dịch Tây Nguyên",
+          "description": "Mở màn cuộc Tổng tiến công và nổi dậy."
+        },
+        {
+          "year": "26/04/1975",
+          "title": "Chiến dịch Hồ Chí Minh",
+          "description": "Bắt đầu chiến dịch giải phóng Sài Gòn - Gia Định."
+        },
+        {
+          "year": "30/04/1975",
+          "title": "Thống nhất đất nước",
+          "description": "Xe tăng quân giải phóng húc đổ cổng Dinh Độc Lập. Miền Nam hoàn toàn giải phóng."
+        }
+      ],
+      "related_heritage": [
+        {
+          "id": 3,
+          "name": "Bảo tàng Thành phố Hồ Chí Minh",
+          "type": "museum",
+          "cultural_period": "Hiện đại",
+          "region": "TP. Hồ Chí Minh",
+          "latitude": 10.7929,
+          "longitude": 106.6955,
+          "address": "65 Lý Tự Trọng, Q. 1, TP. Hồ Chí Minh",
+          "year_established": 1956,
+          "image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600",
+          "rating": 4.5,
+          "total_reviews": 234,
+          "visit_hours": "8:00 - 17:00",
+          "entrance_fee": 50000,
+          "is_active": true,
+          "unesco_listed": false,
+          "significance": "national",
+          "author": "Admin",
+          "publishDate": "2024-08-10T14:45:00Z",
+          "shortDescription": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
+          "commentCount": 42
+        }
+      ],
+      "related_artifacts": [
+        {
+          "id": 5,
+          "name": "Áo dài truyền thống Việt Nam",
+          "description": "Áo dài là trang phục truyền thống của người Việt Nam với lịch sử phát triển qua nhiều thế kỷ và nhiều biến thể như áo tứ thân, áo ngũ thân, áo dài cách tân sau này, thể hiện nét văn hóa và thẩm mỹ đặc trưng của quốc gia.",
+          "heritage_site_id": 7,
+          "category_id": 6,
+          "artifact_type": "textile",
+          "year_created": 1970,
+          "creator": "Truyền thống dân gian",
+          "material": "Lụa",
+          "dimensions": "tùy theo kích cỡ",
+          "condition": "excellent",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/3/38/Ao_dai_%28Vietnam%29.jpg",
+          "is_on_display": true,
+          "location_in_site": "Bảo tàng Phụ nữ Việt Nam",
+          "updatedAt": "2026-01-10T00:00:00.000Z"
+        }
+      ],
+      "related_levels": [
+        {
+          "id": 99,
+          "chapter_id": 1,
+          "name": "[DEMO] Test All Screens",
+          "description": "Level demo để test tất cả các loại màn hình",
+          "type": "mixed",
+          "difficulty": "easy",
+          "order": 0,
+          "required_level": null,
+          "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+          "background_music": null,
+          "ai_character_id": 1,
+          "knowledge_base": "Level demo cho tất cả screen types",
+          "screens": [
+            {
+              "id": "demo_dialogue",
+              "name": "Dialogue Demo",
+              "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+              "type": "DIALOGUE",
+              "description": "Demo màn hình hội thoại",
+              "content": [
+                {
+                  "speaker": "AI",
+                  "text": "Xin chào! Mình là trợ lý Sen. Mình sẽ hướng dẫn bạn khám phá di sản văn hóa Việt Nam.",
+                  "avatar": "",
+                  "emotion": "happy"
+                },
+                {
+                  "speaker": "NARRATOR",
+                  "text": "Bạn bắt đầu hành trình khám phá những di sản văn hóa quý giá của dân tộc.",
+                  "avatar": "",
+                  "emotion": ""
+                },
+                {
+                  "speaker": "AI",
+                  "text": "Hãy cùng mình tìm hiểu về lịch sử phong phú của Việt Nam nhé!",
+                  "avatar": "",
+                  "emotion": "excited"
+                }
+              ]
+            },
+            {
+              "id": "demo_image",
+              "name": "Image Viewer Demo",
+              "background": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+              "type": "IMAGE_VIEWER",
+              "description": "Demo màn hình xem ảnh",
+              "content": {
+                "title": "Di sản Hội An",
+                "description": "Phố cổ Hội An là một trong những di sản văn hóa thế giới được UNESCO công nhận. Nơi đây lưu giữ nét kiến trúc cổ kính độc đáo của Việt Nam.",
+                "image_url": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800"
+              }
+            },
+            {
+              "id": "demo_video",
+              "name": "Video Demo",
+              "background": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+              "type": "VIDEO",
+              "description": "Demo màn hình video",
+              "content": {
+                "title": "Lịch sử Việt Nam",
+                "description": "Xem video để tìm hiểu về lịch sử hào hùng của dân tộc Việt Nam.",
+                "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+              }
+            },
+            {
+              "id": "demo_hidden",
+              "name": "Hidden Object Demo",
+              "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+              "type": "HIDDEN_OBJECT",
+              "description": "Demo màn hình tìm đồ vật",
+              "content": {
+                "objects": []
+              }
+            }
+          ]
+        }
+      ],
+      "related_products": [
+        {
+          "id": 2,
+          "name": "Mô hình xe tăng 390",
+          "price": 250000,
+          "type": "souvenir",
+          "image": "https://bizweb.dktcdn.net/100/356/472/products/1-11a364be-ae3a-4496-ae58-f9479361ad38.jpg",
+          "url": "#"
+        },
+        {
+          "id": 4,
+          "name": "Nón lá Huế (Nón bài thơ)",
+          "price": 80000,
+          "type": "souvenir",
+          "image": "https://cdn.tgdd.vn/Files/2021/07/07/1366224/non-bai-tho-xu-hue-la-gi-mua-o-dau-gia-bao-nhieu-202201171031346034.jpg",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Văn Miếu - Quốc Tử Giám: Trường Đại học đầu tiên",
+      "shortDescription": "Nơi hội tụ tinh hoa đạo học, biểu tượng của nền giáo dục khoa cử Việt Nam thời phong kiến.",
+      "content": "<p>Văn Miếu – Quốc Tử Giám là quần thể di tích đa dạng và phong phú hàng đầu của thành phố Hà Nội, nằm ở phía Nam kinh thành Thăng Long...</p><h3>Kiến trúc</h3><p>Quần thể kiến trúc Văn Miếu – Quốc Tử Giám bao gồm: hồ Văn, khu Văn Miếu – Quốc Tử Giám và vườn Giám, mà kiến trúc chủ thể là Văn Miếu - nơi thờ Khổng Tử và Quốc Tử Giám - trường đại học đầu tiên của Việt Nam.</p>",
+      "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+      "author": "Tiến sĩ Giấy",
+      "publishDate": "2024-02-03T00:00:00Z",
+      "is_active": true,
+      "views": 1850,
+      "related_heritage_ids": [
+        6,
+        2
+      ],
+      "related_artifact_ids": [
+        4
+      ],
+      "related_level_ids": [
+        102
+      ],
+      "related_product_ids": [
+        1,
+        3
+      ],
+      "timeline_events": [
+        {
+          "year": "1070",
+          "title": "Xây dựng Văn Miếu",
+          "description": "Vua Lý Thánh Tông cho xây dựng Văn Miếu để thờ các bậc tiên thánh, tiên hiền Nho giáo."
+        },
+        {
+          "year": "1076",
+          "title": "Lập Quốc Tử Giám",
+          "description": "Vua Lý Nhân Tông cho lập Quốc Tử Giám bên cạnh Văn Miếu."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Chiến thắng Bạch Đằng 938",
+      "shortDescription": "Trận thủy chiến lừng lẫy chấm dứt 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập.",
+      "content": "<p>Năm 938, Ngô Quyền lãnh đạo quân dân ta đánh bại quân Nam Hán trên sông Bạch Đằng. Đây là mốc son chói lọi trong lịch sử giữ nước, chấm dứt hơn 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập, tự chủ lâu dài cho dân tộc Việt Nam.</p><h3>Bối cảnh</h3><p>Kiều Công Tiễn giết Dương Đình Nghệ để đoạt chức Tiết độ sứ, sau đó cầu cứu nhà Nam Hán. Vua Nam Hán sai con là Lưu Hoằng Tháo mang quân sang xâm lược.</p><h3>Diễn biến</h3><p>Ngô Quyền cho đóng cọc gỗ đầu bịt sắt xuống lòng sông Bạch Đằng. Lợi dụng thủy triều lên xuống, ông dụ thuyền địch vào bãi cọc rồi phản công quyết liệt khiến quân Nam Hán đại bại.</p>",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Tran_Bach_Dang_938.jpg/1200px-Tran_Bach_Dang_938.jpg",
+      "author": "Sử Gia",
+      "publishDate": "2024-01-10T00:00:00Z",
+      "is_active": true,
+      "views": 5000,
+      "related_heritage_ids": [
+        2
+      ],
+      "related_artifact_ids": [],
+      "related_level_ids": [
+        101
+      ],
+      "related_product_ids": [
+        1
+      ],
+      "timeline_events": [
+        {
+          "year": "938",
+          "title": "Trận Đại Chiến",
+          "description": "Cọc gỗ cắm xuống lòng sông, quân Nam Hán đại bại."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Khởi nghĩa Hai Bà Trưng",
+      "shortDescription": "Cuộc khởi nghĩa đầu tiên chống lại ách đô hộ phương Bắc do hai nữ tướng lãnh đạo.",
+      "content": "<p>Năm 40, Hai Bà Trưng phất cờ khởi nghĩa tại Mê Linh nhằm đền nợ nước, trả thù nhà. Cuộc khởi nghĩa đã đánh đuổi được thái thú Tô Định, giành lại độc lập cho đất nước trong 3 năm.</p><h3>Lời thề Mê Linh</h3><p>'Một xin rửa sạch nước thù / Hai xin dựng lại nghiệp xưa họ Hùng / Ba kẻo oan ức lòng chồng / Bốn xin vẹn vẹn sở công lênh này'.</p>",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Hai_Ba_Trung.jpg/800px-Hai_Ba_Trung.jpg",
+      "author": "Nữ Sử",
+      "publishDate": "2024-03-08T00:00:00Z",
+      "is_active": true,
+      "views": 4200,
+      "related_heritage_ids": [],
+      "related_artifact_ids": [
+        5
+      ],
+      "related_level_ids": [],
+      "related_product_ids": [
+        3
+      ],
+      "timeline_events": [
+        {
+          "year": "40",
+          "title": "Phất cờ khởi nghĩa",
+          "description": "Hai Bà Trưng dựng cờ khởi nghĩa tại Hát Môn."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Văn hóa Đông Sơn",
+      "shortDescription": "Đỉnh cao của nền văn minh lúa nước và kỹ thuật đúc đồng thời dựng nước.",
+      "content": "<p>Văn hóa Đông Sơn là nền văn hóa khảo cổ học thời kỳ đồ đồng và đồ sắt sớm (khoảng 800 TCN - 200 SCN). Đây là thời kỳ rực rỡ nhất của thời đại kim khí ở Việt Nam với biểu tượng là Trống đồng Đông Sơn.</p><p>Người Đông Sơn đã biết thâm canh lúa nước, dùng sức kéo trâu bò, và đặc biệt là kỹ thuật luyện kim đúc đồng đạt trình độ rất cao.</p>",
+      "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+      "author": "Khảo Cổ Học",
+      "publishDate": "2024-06-01T00:00:00Z",
+      "is_active": true,
+      "views": 3300,
+      "related_heritage_ids": [
+        4
+      ],
+      "related_artifact_ids": [
+        2,
+        3
+      ],
+      "related_level_ids": [],
+      "related_product_ids": [
+        1
+      ],
+      "timeline_events": []
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Sách: Việt Nam Sử Lược",
+      "price": 180000,
+      "type": "book",
+      "image": "https://salt.tikicdn.com/cache/w1200/ts/product/23/67/68/73919242d992953284346028887e3871.jpg",
+      "url": "#"
+    },
+    {
+      "id": 2,
+      "name": "Mô hình xe tăng 390",
+      "price": 250000,
+      "type": "souvenir",
+      "image": "https://bizweb.dktcdn.net/100/356/472/products/1-11a364be-ae3a-4496-ae58-f9479361ad38.jpg",
+      "url": "#"
+    },
+    {
+      "id": 3,
+      "name": "Tranh khắc gỗ dân gian Đông Hồ",
+      "price": 500000,
+      "type": "souvenir",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Damcuoichuot.jpg/800px-Damcuoichuot.jpg",
+      "url": "#"
+    },
+    {
+      "id": 4,
+      "name": "Nón lá Huế (Nón bài thơ)",
+      "price": 80000,
+      "type": "souvenir",
+      "image": "https://cdn.tgdd.vn/Files/2021/07/07/1366224/non-bai-tho-xu-hue-la-gi-mua-o-dau-gia-bao-nhieu-202201171031346034.jpg",
+      "url": "#"
+    }
+  ],
+  "levels": [
+    {
+      "id": "demo_hidden_object",
+      "type": "HIDDEN_OBJECT",
+      "description": "Demo màn hình tìm vật phẩm",
+      "screens": [
         {
           "id": "demo_quiz",
           "name": "Quiz Demo",
@@ -724,7 +1284,12 @@
           "type": "QUIZ",
           "description": "Demo màn hình câu hỏi",
           "question": "Việt Nam có bao nhiêu di sản thế giới được UNESCO công nhận?",
-          "options": ["5 di sản", "8 di sản", "10 di sản", "12 di sản"],
+          "options": [
+            "5 di sản",
+            "8 di sản",
+            "10 di sản",
+            "12 di sản"
+          ],
           "correct_answer": 1,
           "time_limit": 30,
           "points": 20
@@ -857,7 +1422,12 @@
         {
           "id": "quiz1",
           "question": "Triều Nguyễn được thành lập vào năm nào?",
-          "options": ["1800", "1802", "1804", "1806"],
+          "options": [
+            "1800",
+            "1802",
+            "1804",
+            "1806"
+          ],
           "correct_answer": 1,
           "points": 15,
           "hint": "Nguyễn Ánh lên ngôi hoàng đế"
@@ -865,7 +1435,12 @@
         {
           "id": "quiz2",
           "question": "Pháp tấn công Đà Nẵng vào năm nào?",
-          "options": ["1856", "1858", "1860", "1862"],
+          "options": [
+            "1856",
+            "1858",
+            "1860",
+            "1862"
+          ],
           "correct_answer": 1,
           "points": 15,
           "hint": "Bắt đầu xâm lược Việt Nam"
@@ -873,7 +1448,12 @@
         {
           "id": "quiz3",
           "question": "Cách mạng Tháng Tám thành công vào năm nào?",
-          "options": ["1943", "1944", "1945", "1946"],
+          "options": [
+            "1943",
+            "1944",
+            "1945",
+            "1946"
+          ],
           "correct_answer": 2,
           "points": 15,
           "hint": "Việt Nam giành độc lập"
@@ -1020,13 +1600,20 @@
           "hint": "Ở giữa sân khấu, gần mặt nước"
         }
       ],
-      "artifact_ids": [2],
+      "artifact_ids": [
+        2
+      ],
       "heritage_site_id": 1,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Múa rối nước ra đời từ triều đại nào?",
-          "options": ["Triều Lý", "Triều Trần", "Triều Lê", "Triều Nguyễn"],
+          "options": [
+            "Triều Lý",
+            "Triều Trần",
+            "Triều Lê",
+            "Triều Nguyễn"
+          ],
           "correct_answer": 0,
           "points": 20,
           "hint": "Thế kỷ 11-12"
@@ -1034,7 +1621,12 @@
         {
           "id": "quiz2",
           "question": "Múa rối nước biểu diễn trên đâu?",
-          "options": ["Sân khấu", "Mặt nước", "Sân đất", "Trong nhà"],
+          "options": [
+            "Sân khấu",
+            "Mặt nước",
+            "Sân đất",
+            "Trong nhà"
+          ],
           "correct_answer": 1,
           "points": 15,
           "hint": "Thủy đình"
@@ -1042,7 +1634,12 @@
         {
           "id": "quiz3",
           "question": "Chú Tễu là nhân vật gì trong múa rối?",
-          "options": ["Người kể chuyện", "Nông dân", "Quan lại", "Vua chúa"],
+          "options": [
+            "Người kể chuyện",
+            "Nông dân",
+            "Quan lại",
+            "Vua chúa"
+          ],
           "correct_answer": 0,
           "points": 20,
           "hint": "Vai trò dẫn chuyện"
@@ -1149,7 +1746,12 @@
         {
           "id": "quiz1",
           "question": "Hoàng Thành Thăng Long được xây dựng năm nào?",
-          "options": ["1008", "1010", "1012", "1015"],
+          "options": [
+            "1008",
+            "1010",
+            "1012",
+            "1015"
+          ],
           "correct_answer": 1,
           "points": 20,
           "hint": "Vua Lý Thái Tổ dời đô"
@@ -1157,7 +1759,12 @@
         {
           "id": "quiz2",
           "question": "Hoàng Thành là trung tâm quyền lực trong bao nhiêu thế kỷ?",
-          "options": ["10 thế kỷ", "12 thế kỷ", "13 thế kỷ", "15 thế kỷ"],
+          "options": [
+            "10 thế kỷ",
+            "12 thế kỷ",
+            "13 thế kỷ",
+            "15 thế kỷ"
+          ],
           "correct_answer": 2,
           "points": 20,
           "hint": "Hơn 1000 năm"
@@ -1165,7 +1772,12 @@
         {
           "id": "quiz3",
           "question": "UNESCO công nhận Hoàng Thành năm nào?",
-          "options": ["2008", "2009", "2010", "2011"],
+          "options": [
+            "2008",
+            "2009",
+            "2010",
+            "2011"
+          ],
           "correct_answer": 2,
           "points": 15,
           "hint": "1000 năm Thăng Long"
@@ -1279,13 +1891,20 @@
           "hint": "Khu luyện kim"
         }
       ],
-      "artifact_ids": [3],
+      "artifact_ids": [
+        3
+      ],
       "heritage_site_id": 4,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Văn minh Óc Eo phát triển từ thế kỷ nào?",
-          "options": ["Thế kỷ 1-5", "Thế kỷ 1-7", "Thế kỷ 3-9", "Thế kỷ 5-10"],
+          "options": [
+            "Thế kỷ 1-5",
+            "Thế kỷ 1-7",
+            "Thế kỷ 3-9",
+            "Thế kỷ 5-10"
+          ],
           "correct_answer": 1,
           "points": 25,
           "hint": "Thời kỳ rất cổ xưa"
@@ -1293,7 +1912,12 @@
         {
           "id": "quiz2",
           "question": "Óc Eo giao lưu với những quốc gia nào?",
-          "options": ["Chỉ Trung Quốc", "Ấn Độ và Trung Quốc", "Ấn Độ, La Mã, Trung Quốc", "Chỉ La Mã"],
+          "options": [
+            "Chỉ Trung Quốc",
+            "Ấn Độ và Trung Quốc",
+            "Ấn Độ, La Mã, Trung Quốc",
+            "Chỉ La Mã"
+          ],
           "correct_answer": 2,
           "points": 25,
           "hint": "Trung tâm thương mại quốc tế"
@@ -1301,7 +1925,12 @@
         {
           "id": "quiz3",
           "question": "Óc Eo là trung tâm gì?",
-          "options": ["Trung tâm quân sự", "Trung tâm thương mại", "Trung tâm tôn giáo", "Trung tâm học thuật"],
+          "options": [
+            "Trung tâm quân sự",
+            "Trung tâm thương mại",
+            "Trung tâm tôn giáo",
+            "Trung tâm học thuật"
+          ],
           "correct_answer": 1,
           "points": 20,
           "hint": "Cảng biển quan trọng"
@@ -1408,7 +2037,12 @@
         {
           "id": "quiz1",
           "question": "Thánh Gióng thuộc nhóm thánh nào?",
-          "options": ["Tứ Bất Tử", "Tam Thánh", "Ngũ Thánh", "Thập Đại Thánh"],
+          "options": [
+            "Tứ Bất Tử",
+            "Tam Thánh",
+            "Ngũ Thánh",
+            "Thập Đại Thánh"
+          ],
           "correct_answer": 0,
           "points": 30,
           "hint": "4 vị bất tử"
@@ -1416,7 +2050,12 @@
         {
           "id": "quiz2",
           "question": "Thánh Gióng mấy tuổi mới biết nói?",
-          "options": ["1 tuổi", "2 tuổi", "3 tuổi", "4 tuổi"],
+          "options": [
+            "1 tuổi",
+            "2 tuổi",
+            "3 tuổi",
+            "4 tuổi"
+          ],
           "correct_answer": 2,
           "points": 25,
           "hint": "Rất muộn so với trẻ bình thường"
@@ -1424,7 +2063,12 @@
         {
           "id": "quiz3",
           "question": "Thánh Gióng cưỡi gì đánh giặc?",
-          "options": ["Ngựa thường", "Ngựa sắt", "Voi", "Rồng"],
+          "options": [
+            "Ngựa thường",
+            "Ngựa sắt",
+            "Voi",
+            "Rồng"
+          ],
           "correct_answer": 1,
           "points": 25,
           "hint": "Thần kỵ làm bằng kim loại"
@@ -1573,7 +2217,12 @@
           "id": "quiz1",
           "name": "Câu hỏi 1",
           "content": "Văn Miếu được xây dựng năm nào?",
-          "options": ["1010", "1070", "1076", "1086"],
+          "options": [
+            "1010",
+            "1070",
+            "1076",
+            "1086"
+          ],
           "correct_answer": 1,
           "points": 25,
           "hint": "Sau 60 năm Thăng Long thành lập"
@@ -1582,7 +2231,12 @@
           "id": "quiz2",
           "name": "Câu hỏi 2",
           "content": "Văn Miếu thờ ai?",
-          "options": ["Chu Văn An", "Lý Thánh Tông", "Khổng Tử", "Lê Thánh Tông"],
+          "options": [
+            "Chu Văn An",
+            "Lý Thánh Tông",
+            "Khổng Tử",
+            "Lê Thánh Tông"
+          ],
           "correct_answer": 2,
           "points": 20,
           "hint": "Vị thánh của nho giáo"
@@ -1591,19 +2245,31 @@
           "id": "quiz3",
           "name": "Câu hỏi 3",
           "content": "Có bao nhiêu bia tiến sĩ?",
-          "options": ["72", "82", "92", "102"],
+          "options": [
+            "72",
+            "82",
+            "92",
+            "102"
+          ],
           "correct_answer": 1,
           "points": 25,
           "hint": "Con số này được UNESCO công nhận"
         }
       ],
-      "artifact_ids": [4],
+      "artifact_ids": [
+        4
+      ],
       "heritage_site_id": 6,
       "quizzes": [
         {
           "id": "quiz1",
           "question": "Văn Miếu được xây dựng năm nào?",
-          "options": ["1010", "1070", "1076", "1086"],
+          "options": [
+            "1010",
+            "1070",
+            "1076",
+            "1086"
+          ],
           "correct_answer": 1,
           "points": 25,
           "hint": "Sau 60 năm Thăng Long thành lập"
@@ -1611,7 +2277,12 @@
         {
           "id": "quiz2",
           "question": "Văn Miếu thờ ai?",
-          "options": ["Chu Văn An", "Lý Thánh Tông", "Khổng Tử", "Lê Thánh Tông"],
+          "options": [
+            "Chu Văn An",
+            "Lý Thánh Tông",
+            "Khổng Tử",
+            "Lê Thánh Tông"
+          ],
           "correct_answer": 2,
           "points": 20,
           "hint": "Vị thánh của nho giáo"
@@ -1619,7 +2290,12 @@
         {
           "id": "quiz3",
           "question": "Có bao nhiêu bia tiến sĩ?",
-          "options": ["72", "82", "92", "102"],
+          "options": [
+            "72",
+            "82",
+            "92",
+            "102"
+          ],
           "correct_answer": 1,
           "points": 25,
           "hint": "Con số này được UNESCO công nhận"
@@ -1627,7 +2303,12 @@
         {
           "id": "quiz4",
           "question": "Văn Miếu là trường đại học đầu tiên của Việt Nam?",
-          "options": ["Đúng", "Sai", "Không rõ", "Là trường cấp 2"],
+          "options": [
+            "Đúng",
+            "Sai",
+            "Không rõ",
+            "Là trường cấp 2"
+          ],
           "correct_answer": 0,
           "points": 20,
           "hint": "Quốc Tử Giám"
@@ -1653,8 +2334,13 @@
       "description": "Bộ sưu tập các cổ vật đặc sắc thời Lý",
       "visibility": "public",
       "total_items": 2,
-      "heritage_site_ids": [2, 5],
-      "artifact_ids": [3],
+      "heritage_site_ids": [
+        2,
+        5
+      ],
+      "artifact_ids": [
+        3
+      ],
       "exhibition_ids": [],
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-01-01T00:00:00Z"
@@ -1904,7 +2590,11 @@
       "total_points": 241,
       "level": 1,
       "coins": 1000,
-      "unlocked_chapters": [1, 2, 3],
+      "unlocked_chapters": [
+        1,
+        2,
+        3
+      ],
       "completed_levels": [],
       "collected_characters": [],
       "badges": [],
@@ -1929,7 +2619,11 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 1,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -1992,7 +2686,11 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2084,7 +2782,9 @@
       "timeline_order": [],
       "score": 25,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2121,12 +2821,21 @@
       "status": "expired",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2212,7 +2921,9 @@
       "timeline_order": [],
       "score": 25,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2241,7 +2952,9 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2291,7 +3004,11 @@
       "timeline_order": [],
       "score": 45,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2577,20 +3294,52 @@
       "id": 29,
       "user_id": 3,
       "level_id": "99",
-      "status": "in_progress",
+      "status": "abandoned",
       "current_screen_id": "demo_hidden",
       "current_screen_index": 3,
-      "collected_items": ["evt1"],
+      "collected_items": [
+        "evt1"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 10,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue", "demo_image", "demo_video"],
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image",
+        "demo_video"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2026-01-11T04:23:07.846Z",
-      "last_activity": "2026-01-11T04:23:18.852Z"
+      "last_activity": "2026-01-11T04:23:18.852Z",
+      "expired_at": "2026-01-12T01:28:21.452Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 30,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "completed",
+      "current_screen_id": "demo_hidden",
+      "current_screen_index": 3,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image",
+        "demo_video"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-12T01:28:21.456Z",
+      "last_activity": "2026-01-12T01:28:38.024Z",
+      "completed_at": "2026-01-12T01:28:39.486Z"
     }
   ],
   "learning_modules": [
@@ -2611,7 +3360,12 @@
           {
             "id": 1,
             "question": "Trống đồng Đông Sơn thuộc nền văn hóa nào?",
-            "options": ["Văn hóa Hòa Bình", "Văn hóa Đông Sơn", "Văn hóa Sa Huỳnh", "Văn hóa Óc Eo"],
+            "options": [
+              "Văn hóa Hòa Bình",
+              "Văn hóa Đông Sơn",
+              "Văn hóa Sa Huỳnh",
+              "Văn hóa Óc Eo"
+            ],
             "correct_answer": 1,
             "explanation": "Trống đồng là hiện vật tiêu biểu nhất của văn hóa Đông Sơn."
           }
@@ -2635,13 +3389,23 @@
           {
             "id": 1,
             "question": "Cố đô Huế được UNESCO công nhận năm nào?",
-            "options": ["1990", "1993", "1999", "2003"],
+            "options": [
+              "1990",
+              "1993",
+              "1999",
+              "2003"
+            ],
             "correct_answer": 1
           },
           {
             "id": 2,
             "question": "Triều đại nào đã xây dựng Cố đô Huế?",
-            "options": ["Triều Lý", "Triều Trần", "Triều Lê", "Triều Nguyễn"],
+            "options": [
+              "Triều Lý",
+              "Triều Trần",
+              "Triều Lê",
+              "Triều Nguyễn"
+            ],
             "correct_answer": 3
           }
         ]
@@ -2664,19 +3428,34 @@
           {
             "id": 1,
             "question": "Văn Miếu - Quốc Tử Giám thờ ai?",
-            "options": ["Khổng Tử", "Lão Tử", "Phật Thích Ca", "Vua Hùng"],
+            "options": [
+              "Khổng Tử",
+              "Lão Tử",
+              "Phật Thích Ca",
+              "Vua Hùng"
+            ],
             "correct_answer": 0
           },
           {
             "id": 2,
             "question": "Di sản nào sau đây là Di sản Thiên nhiên Thế giới?",
-            "options": ["Phố cổ Hội An", "Vịnh Hạ Long", "Thánh địa Mỹ Sơn", "Hoàng thành Thăng Long"],
+            "options": [
+              "Phố cổ Hội An",
+              "Vịnh Hạ Long",
+              "Thánh địa Mỹ Sơn",
+              "Hoàng thành Thăng Long"
+            ],
             "correct_answer": 1
           },
           {
             "id": 3,
             "question": "Dân ca Quan họ thuộc vùng nào?",
-            "options": ["Bắc Bộ", "Trung Bộ", "Nam Bộ", "Tây Nguyên"],
+            "options": [
+              "Bắc Bộ",
+              "Trung Bộ",
+              "Nam Bộ",
+              "Tây Nguyên"
+            ],
             "correct_answer": 0
           }
         ]
@@ -2691,18 +3470,47 @@
       "status": "completed",
       "current_screen_id": "screen4",
       "current_screen_index": 3,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 171,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2026-01-06T15:03:10.031Z",
       "last_activity": "2026-01-06T15:03:15.467Z",
-      "completed_at": "2026-01-06T15:03:15.784Z"
+      "completed_at": "2026-01-06T15:03:15.784Z",
+      "completed_modules": [
+        {
+          "module_id": "1",
+          "completed_date": "2026-01-12T01:30:08.138Z",
+          "score": 0,
+          "time_spent": 0
+        },
+        {
+          "module_id": "1",
+          "completed_date": "2026-01-12T01:30:11.369Z",
+          "score": 100,
+          "time_spent": 0
+        }
+      ],
+      "total_points": 50,
+      "level": 1,
+      "badges": [
+        "newbie",
+        "perfect_score"
+      ]
     },
     {
       "id": 39,
@@ -2732,12 +3540,19 @@
       "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2753,12 +3568,21 @@
       "status": "completed",
       "current_screen_id": "screen4",
       "current_screen_index": 3,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2794,12 +3618,21 @@
       "status": "completed",
       "current_screen_id": "screen4",
       "current_screen_index": 3,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2814,12 +3647,19 @@
       "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2835,12 +3675,19 @@
       "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2856,12 +3703,19 @@
       "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2898,12 +3752,19 @@
       "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2919,12 +3780,19 @@
       "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2940,12 +3808,19 @@
       "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2982,12 +3857,19 @@
       "status": "expired",
       "current_screen_id": "screen2",
       "current_screen_index": 1,
-      "collected_items": ["clue1", "clue2", "clue3", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue2",
+        "clue3",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3037,7 +3919,9 @@
       "timeline_order": [],
       "score": 25,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3066,7 +3950,9 @@
       "timeline_order": [],
       "score": 25,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3095,7 +3981,9 @@
       "timeline_order": [],
       "score": 25,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3124,7 +4012,9 @@
       "timeline_order": [],
       "score": 25,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3296,7 +4186,9 @@
       "completed_quests": [],
       "total_points": 400,
       "level": 3,
-      "badges": ["perfect_score"],
+      "badges": [
+        "perfect_score"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3312,7 +4204,12 @@
       "status": "abandoned",
       "current_screen_id": "screen1",
       "current_screen_index": 0,
-      "collected_items": ["clue1", "clue3", "clue2", "clue4"],
+      "collected_items": [
+        "clue1",
+        "clue3",
+        "clue2",
+        "clue4"
+      ],
       "answered_questions": [],
       "timeline_order": [],
       "score": 100,
@@ -3464,7 +4361,9 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3506,7 +4405,11 @@
       "timeline_order": [],
       "score": 300,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3632,7 +4535,9 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue"],
+      "completed_screens": [
+        "demo_dialogue"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3653,7 +4558,9 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue"],
+      "completed_screens": [
+        "demo_dialogue"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3674,7 +4581,10 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue", "demo_image"],
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3695,7 +4605,10 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue", "demo_image"],
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3716,7 +4629,11 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue", "demo_image", "demo_video"],
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image",
+        "demo_video"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3758,7 +4675,9 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue"],
+      "completed_screens": [
+        "demo_dialogue"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3779,7 +4698,9 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue"],
+      "completed_screens": [
+        "demo_dialogue"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3800,7 +4721,9 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue"],
+      "completed_screens": [
+        "demo_dialogue"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3821,7 +4744,9 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue"],
+      "completed_screens": [
+        "demo_dialogue"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3842,7 +4767,11 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue", "demo_image", "demo_video"],
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image",
+        "demo_video"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3863,7 +4792,12 @@
       "timeline_order": [],
       "score": 40,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue", "demo_image", "demo_video", "demo_hidden"],
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image",
+        "demo_video",
+        "demo_hidden"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3913,7 +4847,11 @@
       "timeline_order": [],
       "score": 45,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3962,7 +4900,11 @@
       "timeline_order": [],
       "score": 45,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -3982,7 +4924,9 @@
       "timeline_order": [],
       "score": 100,
       "total_screens": 4,
-      "completed_screens": ["screen1"],
+      "completed_screens": [
+        "screen1"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -4053,7 +4997,11 @@
       "timeline_order": [],
       "score": 45,
       "total_screens": 4,
-      "completed_screens": ["screen1", "screen2", "screen3"],
+      "completed_screens": [
+        "screen1",
+        "screen2",
+        "screen3"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -4073,7 +5021,12 @@
       "timeline_order": [],
       "score": 40,
       "total_screens": 6,
-      "completed_screens": ["demo_dialogue", "demo_image", "demo_video", "demo_hidden"],
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image",
+        "demo_video",
+        "demo_hidden"
+      ],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
