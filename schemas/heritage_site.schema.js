@@ -19,7 +19,16 @@ module.exports = {
     enum: ['monument', 'temple', 'museum', 'archaeological_site', 'historic_building', 'natural_heritage', 'intangible_heritage'],
     required: false,
     default: 'monument',
-    description: 'Loại di sản'
+    description: 'Loại di sản',
+    labels: {
+      monument: 'Di tích lịch sử',
+      temple: 'Đền, chùa, miếu',
+      museum: 'Bảo tàng',
+      archaeological_site: 'Khu khảo cổ',
+      historic_building: 'Công trình kiến trúc lịch sử',
+      natural_heritage: 'Di sản thiên nhiên',
+      intangible_heritage: 'Di sản phi vật thể'
+    }
   },
   cultural_period: {
     type: 'string',
@@ -114,7 +123,12 @@ module.exports = {
     enum: ['local', 'national', 'international'],
     required: false,
     default: 'local',
-    description: 'Tầm quan trọng'
+    description: 'Tầm quan trọng',
+    labels: {
+      local: 'Cấp địa phương',
+      national: 'Cấp quốc gia',
+      international: 'Cấp quốc tế'
+    }
   },
   historical_events: {
     type: 'array',

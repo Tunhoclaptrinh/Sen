@@ -12,7 +12,7 @@ services:
     build:
       context: ../..
       dockerfile: Docker/Dev/Dockerfile
-    image: dev-sen-backend-dev
+    image: dev-sen-backend
     container_name: sen-backend-dev
     restart: unless-stopped
     env_file:

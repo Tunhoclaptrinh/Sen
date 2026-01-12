@@ -29,7 +29,20 @@ module.exports = {
     type: 'enum',
     enum: ['sculpture', 'painting', 'document', 'pottery', 'textile', 'tool', 'weapon', 'jewelry', 'manuscript', 'photograph', 'other'],
     required: true,
-    description: 'Loại cổ vật'
+    description: 'Loại cổ vật',
+    labels: {
+      sculpture: 'Điêu khắc',
+      painting: 'Hội họa',
+      document: 'Văn bản',
+      pottery: 'Gốm sứ',
+      textile: 'Dệt may',
+      tool: 'Công cụ',
+      weapon: 'Vũ khí',
+      jewelry: 'Trang sức',
+      manuscript: 'Bản thảo',
+      photograph: 'Ảnh',
+      other: 'Khác'
+    }
   },
   year_created: {
     type: 'number',
@@ -69,7 +82,13 @@ module.exports = {
     enum: ['excellent', 'good', 'fair', 'poor'],
     required: false,
     default: 'fair',
-    description: 'Tình trạng'
+    description: 'Tình trạng',
+    labels: {
+      excellent: 'Xuất sắc',
+      good: 'Tốt',
+      fair: 'Khá',
+      poor: 'Kém'
+    }
   },
   image: {
     type: 'string',
