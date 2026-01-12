@@ -11,6 +11,7 @@ router.use('/artifacts', require('./artifact.routes'));
 router.use('/categories', require('./category.routes'));
 router.use('/exhibitions', require('./exhibition.routes'));
 router.use('/learning', require('./learning.routes'));
+router.use('/history', require('./history.routes'));
 
 // User Content
 router.use('/collections', require('./collection.routes'));

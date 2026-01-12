@@ -37,4 +37,10 @@ router.put('/change-password',
   authController.changePassword
 );
 
+// Refresh Token (Simplified for demo)
+router.post('/refresh', (req, res) => {
+    // For demo, just return success true
+    res.json({ success: true, token: 'demo_refreshed_token' });
+});
+
 module.exports = router;
