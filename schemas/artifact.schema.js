@@ -111,6 +111,11 @@ module.exports = {
     default: true,
     description: 'Đang trưng bày'
   },
+  gallery: {
+    type: 'array',
+    required: false,
+    description: 'Bộ sưu tập hình ảnh'
+  },
   // Related items (admin-managed)
   related_heritage_ids: {
     type: 'array',

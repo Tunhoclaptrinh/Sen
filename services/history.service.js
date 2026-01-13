@@ -7,6 +7,63 @@ class HistoryService extends BaseService {
   }
 
   /**
+   * Transform data before create
+   */
+  async beforeCreate(data) {
+    if (data.shortDescription && !data.short_description) {
+      data.short_description = data.shortDescription;
+    }
+    
+    // Ensure numeric fields
+    if (data.category_id) data.category_id = Number(data.category_id);
+    if (data.views) data.views = Number(data.views);
+    
+    return super.beforeCreate(data);
+  }
+
+  /**
+   * Transform data before update
+   */
+  async beforeUpdate(id, data) {
+    if (data.shortDescription && !data.short_description) {
+      data.short_description = data.shortDescription;
+    }
+
+    // Ensure numeric fields
+    if (data.category_id) data.category_id = Number(data.category_id);
+    if (data.views) data.views = Number(data.views);
+
+    return super.beforeUpdate(id, data);
+  }
+
+  /**
+   * Get statistics for history articles
+   */
+  async getStats() {
+    const allArticles = await db.findAll('history_articles');
+    
+    const active = allArticles.filter(a => a.is_active !== false).length;
+    const inactive = allArticles.length - active;
+
+    const stats = {
+      total: allArticles.length,
+      active: active,
+      inactive: inactive,
+      totalViews: allArticles.reduce((sum, a) => sum + (a.views || 0), 0),
+      avgViews: allArticles.length > 0 ? (allArticles.reduce((sum, a) => sum + (a.views || 0), 0) / allArticles.length).toFixed(0) : 0,
+      summary: [
+          { status: 'active', count: active, label: 'Đang hiển thị' },
+          { status: 'inactive', count: inactive, label: 'Đã ẩn' }
+      ]
+    };
+
+    return {
+      success: true,
+      data: stats
+    };
+  }
+
+  /**
    * Override find to support search by title
    */
   async find(params) {
