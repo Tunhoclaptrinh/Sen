@@ -7,6 +7,12 @@ module.exports = {
     maxLength: 200,
     description: 'Tên di sản văn hóa'
   },
+  short_description: {
+    type: 'string',
+    required: false,
+    maxLength: 500,
+    description: 'Mô tả ngắn gọn về di sản'
+  },
   description: {
     type: 'string',
     required: true,

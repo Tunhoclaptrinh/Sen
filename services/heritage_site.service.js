@@ -22,6 +22,9 @@ class HeritageSiteService extends BaseService {
       data.cultural_period = data.period;
     }
 
+    // Debug logging
+    console.log('[HeritageService] Creating:', { name: data.name, short_desc: data.short_description, gallery: data.gallery?.length });
+
     return super.beforeCreate(data);
   }
 
@@ -40,7 +43,23 @@ class HeritageSiteService extends BaseService {
       data.cultural_period = data.period;
     }
 
+    // Debug logging
+    console.log('[HeritageService] Updating:', { id, short_desc: data.short_description, gallery: data.gallery?.length });
+
     return super.beforeUpdate(id, data);
+  }
+
+  async findById(id) {
+    const site = await super.findById(id);
+    if (!site) return null;
+
+    // No longer auto-populate related items
+    // Frontend will fetch them separately using related_artifact_ids and related_history_ids
+
+    return {
+      success: true,
+      data: site
+    };
   }
 
   async findNearby(lat, lon, radius = 5, options = {}) {

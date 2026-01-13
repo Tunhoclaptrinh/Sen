@@ -30,6 +30,7 @@ class UploadService {
       path.join(this.uploadDir, 'artifacts'),
       path.join(this.uploadDir, 'exhibitions'),
       path.join(this.uploadDir, 'game_assets'),
+      path.join(this.uploadDir, 'general'),
       path.join(this.uploadDir, 'temp')
     ];
 
@@ -48,6 +49,9 @@ class UploadService {
     return multer.diskStorage({
       destination: (req, file, cb) => {
         const uploadPath = path.join(this.uploadDir, folder);
+        if (!fs.existsSync(uploadPath)) {
+          fs.mkdirSync(uploadPath, { recursive: true });
+        }
         cb(null, uploadPath);
       },
       filename: (req, file, cb) => {
@@ -311,6 +315,42 @@ class UploadService {
       return {
         success: true,
         url: `/uploads/exhibitions/${path.basename(newPath)}`
+      };
+    } catch (error) {
+      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+      throw error;
+    }
+  }
+
+  /**
+   * Upload General File
+   */
+  async uploadGeneralFile(file) {
+    try {
+      const generalDir = path.join(this.uploadDir, 'general');
+      if (!fs.existsSync(generalDir)) {
+          fs.mkdirSync(generalDir, { recursive: true });
+      }
+      const newPath = path.join(generalDir, `file-${Date.now()}.jpeg`);
+
+      // General images: resize to reasonable max width, keep ratio
+      const result = await this.processImage(file.path, {
+        width: 1200,
+        height: 1200,
+        fit: 'inside',
+        quality: 85,
+        format: 'jpeg'
+      });
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      fs.renameSync(result.filePath, newPath);
+
+      return {
+        success: true,
+        url: `/uploads/general/${path.basename(newPath)}`
       };
     } catch (error) {
       if (fs.existsSync(file.path)) fs.unlinkSync(file.path);

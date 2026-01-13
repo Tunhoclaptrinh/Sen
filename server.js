@@ -25,7 +25,8 @@ app.use(helmet({
     maxAge: 31536000,
     includeSubDomains: true,
     preload: true
-  }
+  },
+  crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
 
@@ -344,6 +345,7 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
+  console.log(`✅ Server restart triggered at ${new Date().toISOString()}`);
   console.log(`
 ╔══════════════════════════════════════════════════════════════════╗
 ║   🏛️ Sen Server Started!                                 ║
