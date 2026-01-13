@@ -6,6 +6,40 @@ class ArtifactService extends BaseService {
     super('artifacts');
   }
 
+  /**
+   * Transform data before create
+   */
+  async beforeCreate(data) {
+    if (data.shortDescription && !data.short_description) {
+      data.short_description = data.shortDescription;
+    }
+    
+    // Ensure numeric fields
+    if (data.category_id) data.category_id = Number(data.category_id);
+    if (data.heritage_site_id) data.heritage_site_id = Number(data.heritage_site_id);
+    if (data.year_created) data.year_created = Number(data.year_created);
+    if (data.weight) data.weight = Number(data.weight);
+    
+    return super.beforeCreate(data);
+  }
+
+  /**
+   * Transform data before update
+   */
+  async beforeUpdate(id, data) {
+    if (data.shortDescription && !data.short_description) {
+      data.short_description = data.shortDescription;
+    }
+
+    // Ensure numeric fields
+    if (data.category_id) data.category_id = Number(data.category_id);
+    if (data.heritage_site_id) data.heritage_site_id = Number(data.heritage_site_id);
+    if (data.year_created) data.year_created = Number(data.year_created);
+    if (data.weight) data.weight = Number(data.weight);
+
+    return super.beforeUpdate(id, data);
+  }
+
   async getByType(type) {
     const artifacts = await db.findMany('artifacts', { artifact_type: type });
     return {

@@ -13,6 +13,12 @@ module.exports = {
     maxLength: 500,
     description: 'Mô tả ngắn gọn về di sản'
   },
+  shortDescription: {
+    type: 'string',
+    required: false,
+    maxLength: 500,
+    description: 'Bí danh cho short_description'
+  },
   description: {
     type: 'string',
     required: true,
@@ -137,5 +143,23 @@ module.exports = {
     required: false,
     default: 0,
     description: 'Số lượt khám phá (gamification)'
+  },
+  // Related items (admin-managed)
+  related_artifact_ids: {
+    type: 'array',
+    items: { type: 'number' },
+    required: false,
+    description: 'Danh sách ID hiện vật liên quan'
+  },
+  related_history_ids: {
+    type: 'array',
+    items: { type: 'number' },
+    required: false,
+    description: 'Danh sách ID bài viết lịch sử liên quan'
+  },
+  timeline: {
+    type: 'array',
+    required: false,
+    description: 'Dòng thời gian sự kiện'
   }
 };

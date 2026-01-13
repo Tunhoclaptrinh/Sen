@@ -42,6 +42,9 @@ exports.parseQuery = (req, res, next) => {
     if (key.includes('_gte') || key.includes('_lte') || key.includes('_ne') ||
       key.includes('_like') || key.includes('_in')) {
       parsedQuery.filter[key] = query[key];
+    } else if (key === 'ids') {
+      // Map 'ids=1,2,3' to 'id_in=1,2,3' for compatibility
+      parsedQuery.filter['id_in'] = query[key];
     } else {
       // Regular filter - convert to appropriate type
       const value = query[key];

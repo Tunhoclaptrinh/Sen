@@ -13,6 +13,30 @@ module.exports = {
     maxLength: 3000,
     description: 'Mô tả chi tiết'
   },
+  short_description: {
+    type: 'string',
+    required: false,
+    maxLength: 500,
+    description: 'Mô tả ngắn gọn'
+  },
+  shortDescription: {
+    type: 'string',
+    required: false,
+    maxLength: 500,
+    description: 'Bí danh cho short_description'
+  },
+  historical_context: {
+    type: 'string',
+    required: false,
+    maxLength: 2000,
+    description: 'Bối cảnh lịch sử'
+  },
+  cultural_significance: {
+    type: 'string',
+    required: false,
+    maxLength: 2000,
+    description: 'Ý nghĩa văn hóa'
+  },
   heritage_site_id: {
     type: 'number',
     required: true,
@@ -66,10 +90,15 @@ module.exports = {
   },
   condition: {
     type: 'enum',
-    enum: ['excellent', 'good', 'fair', 'poor'],
+    enum: ['excellent', 'good', 'fair', 'poor', 'GOOD', 'FAIR', 'POOR', 'EXCELLENT'],
     required: false,
     default: 'fair',
     description: 'Tình trạng'
+  },
+  location_in_site: {
+    type: 'string',
+    required: false,
+    description: 'Vị trí trưng bày'
   },
   image: {
     type: 'string',
@@ -81,5 +110,18 @@ module.exports = {
     required: false,
     default: true,
     description: 'Đang trưng bày'
+  },
+  // Related items (admin-managed)
+  related_heritage_ids: {
+    type: 'array',
+    items: { type: 'number' },
+    required: false,
+    description: 'Danh sách ID di sản liên quan'
+  },
+  related_history_ids: {
+    type: 'array',
+    items: { type: 'number' },
+    required: false,
+    description: 'Danh sách ID bài viết lịch sử liên quan'
   }
 };
