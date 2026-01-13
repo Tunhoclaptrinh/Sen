@@ -52,6 +52,14 @@ router.post('/game/:type/:id',
   uploadController.uploadGameAsset
 );
 
+// Generic file upload (Admin/Researcher)
+router.post('/file',
+  protect,
+  authorize('admin', 'researcher'),
+  uploadController.getUploadMiddleware('general'),
+  uploadController.uploadGeneralFile
+);
+
 // Delete file (Admin only)
 router.delete('/file',
   protect,

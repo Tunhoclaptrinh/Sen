@@ -10,6 +10,7 @@ class UploadController {
       const middleware = uploadService.getSingleUpload('image', type);
       middleware(req, res, (err) => {
         if (err) {
+          console.error('Upload Metadata Error:', err);
           return res.status(400).json({
             success: false,
             message: err.message
@@ -202,6 +203,26 @@ class UploadController {
 
       const { type, id } = req.params;
       const result = await uploadService.uploadGameAsset(req.file, type, id);
+
+      res.status(200).json({
+        success: true,
+        data: result
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Upload general file
+   */
+  uploadGeneralFile = async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: 'Please upload a file' });
+      }
+
+      const result = await uploadService.uploadGeneralFile(req.file);
 
       res.status(200).json({
         success: true,

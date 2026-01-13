@@ -22,6 +22,9 @@ class HeritageSiteService extends BaseService {
       data.cultural_period = data.period;
     }
 
+    // Debug logging
+    console.log('[HeritageService] Creating:', { name: data.name, short_desc: data.short_description, gallery: data.gallery?.length });
+
     return super.beforeCreate(data);
   }
 
@@ -39,6 +42,9 @@ class HeritageSiteService extends BaseService {
     if (data.period && !data.cultural_period) {
       data.cultural_period = data.period;
     }
+
+    // Debug logging
+    console.log('[HeritageService] Updating:', { id, short_desc: data.short_description, gallery: data.gallery?.length });
 
     return super.beforeUpdate(id, data);
   }

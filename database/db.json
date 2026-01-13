@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-12T01:30:32.336Z"
+      "lastLogin": "2026-01-13T10:06:29.837Z"
     },
     {
       "id": 2,
@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-12T01:38:39.325Z"
+      "lastLogin": "2026-01-12T02:08:03.401Z"
     },
     {
       "id": 4,
@@ -103,9 +103,9 @@
       "phone": "0123456789",
       "role": "customer",
       "avatar": "https://ui-avatars.com/api/?name=Nguy%E1%BB%85n%20V%C4%83n%20A&background=random",
-      "isActive": false,
+      "isActive": true,
       "createdAt": 46022.54436064815,
-      "updatedAt": "2026-01-02T20:01:13.805Z",
+      "updatedAt": "2026-01-13T09:07:35.429Z",
       "__v": 0
     }
   ],
@@ -305,6 +305,26 @@
       "is_active": true,
       "unesco_listed": true,
       "significance": "international"
+    },
+    {
+      "id": 8,
+      "name": "Quần thể di tích cố đô Huế",
+      "type": "monument",
+      "region": "Trung",
+      "significance": "national",
+      "year_established": null,
+      "unesco_listed": true,
+      "is_active": true,
+      "description": "<div class=\"news_list_related\">&nbsp;</div>\n<div class=\"des-info-caption\">\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_idnewsimg\" class=\"news_img details\">\n<div class=\"group-cap\">\n<div class=\"overlay-cap\"><a id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_rptRelatedNews_lnkTitleRelated_2\" class=\"news_link\" title=\"Tranh gương xứ Huế\" href=\"https://khamphahue.com.vn/Chuyen-trang-truyen-thong/San-vat-A-Luoi/Chi-tiet/tid/Tranh-guong-xu-Hue.html/pid/4991/cid/81\"></a></div>\n<img id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_imgAnhDaiDien\" class=\"news_thumb\" src=\"https://khamphahue.com.vn/Portals/0/Medias/Nam2022/T10/QuanTheDiTichCoDoHue-NgoMonHue_5_10_2022_13_48_46_416_CH.jpg\" alt=\"Đại Nội Huế\">\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_lblNewsSummary\" class=\"news_summary\">Với một khối lượng di sản văn ho&aacute; vật thể v&agrave; tinh thần mang &yacute; nghĩa quốc hồn quốc tu&yacute; của d&acirc;n tộc, Huế l&agrave; một hiện tượng văn ho&aacute; độc đ&aacute;o của Việt Nam v&agrave; thế giới.</div>\n</div>\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_idnoteimg\" class=\"news_noteimg\">Đại Nội Huế</div>\n</div>\n</div>\n<div class=\"description-info-detail\">\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_groupDiaChi\" class=\"spDetail-group\"><span class=\"sp-DetailType\">Địa chỉ:</span><span id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_lblTableDiaChi\" class=\"sp-DetailValue\">Th&agrave;nh phố Huế, Thừa Thi&ecirc;n Huế</span></div>\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_groupTinhTrang\" class=\"spDetail-group\"><span class=\"sp-DetailType\">T&igrave;nh trạng:</span><span id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_lblTinHTrang\" class=\"sp-DetailValue\">Được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a Thế giới</span></div>\n</div>\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_groupGioiThieu\" class=\"spDetail-group\">\n<h4 class=\"sp-DetailType\">Giới thiệu:</h4>\n<div id=\"lblGioiThieu\" class=\"sp-DetailValue\">\n<p>Trong gần 400 năm (1558-1945), Huế đ&atilde; từng l&agrave; thủ phủ của c&aacute;c ch&uacute;a Nguyễn ở xứ Đ&agrave;ng Trong (1306). L&agrave; kinh đ&ocirc; của triều đại T&acirc;y Sơn, rồi đến kinh quốc triều Nguyễn. Cố đ&ocirc; Huế ng&agrave;y nay vẫn c&ograve;n lưu giữ trong l&ograve;ng những di sản văn ho&aacute; vật thể v&agrave; phi vật thể chứa đựng nhiều gi&aacute; trị biểu trưng cho tr&iacute; tuệ v&agrave; t&acirc;m hồn của d&acirc;n tộc Việt Nam. Suốt mấy thế kỷ qua, bao nhi&ecirc;u tinh hoa của cả nước được chắt lọc hội tụ về đ&acirc;y hun đ&uacute;c cho một nền văn ho&aacute; đậm đ&agrave; bản sắc để ho&agrave;n chỉnh th&agrave;nh một bức tranh thi&ecirc;n nhi&ecirc;n tuyệt vời với s&ocirc;ng n&uacute;i hữu t&igrave;nh thơ mộng. Bởi vậy, n&oacute;i đến Huế, người ta nghĩ ngay đến những th&agrave;nh qu&aacute;ch, cung điện v&agrave;ng son, những đền đ&agrave;i miếu vũ lộng lẫy, những lăng tẩm uy nghi&ecirc;m, những danh lam cổ tự trầm tư u tịch, những thắng t&iacute;ch do thi&ecirc;n nhi&ecirc;n kh&eacute;o tạo.</p>\n<div>\n<p>Tr&ecirc;n nền tảng vật chất v&agrave; tinh thần đ&atilde; được h&igrave;nh th&agrave;nh ở Huế từ đầu thế kỷ XIV, c&aacute;c ch&uacute;a Nguyễn (thế kỷ XVI-XVIII), triều đại T&acirc;y Sơn (cuối thế kỷ XVIII) v&agrave; c&aacute;c vua Nguyễn (1802-1945) đ&atilde; tiếp tục ph&aacute;t huy v&agrave; g&acirc;y dựng ở v&ugrave;ng Huế một t&agrave;i sản văn ho&aacute; v&ocirc; gi&aacute;. Ti&ecirc;u biểu nhất l&agrave; Quần thể di t&iacute;ch của Cố đ&ocirc; Huế đ&atilde; được UNESCO ghi v&agrave;o danh mục Di sản Văn ho&aacute; Thế giới của UNESCO.</p>\n<p>Ng&agrave;y nay, Quần thể di t&iacute;ch cố đ&ocirc; Huế đ&atilde; được Thủ tướng ch&iacute;nh phủ Việt Nam đưa v&agrave;o danh s&aacute;ch xếp hạng 95 di t&iacute;ch quốc gia đặc biệt quan trọng của Việt Nam.</p>\n</div>\n</div>\n</div>\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_lblNewsContent\" class=\"news_content\"></div>\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_groupNetDacTrung\" class=\"spDetail-group\">\n<h4 class=\"sp-DetailType\">N&eacute;t đặc trưng:</h4>\n<div id=\"lblTableNetDacTrung\" class=\"sp-DetailValue\">\n<p>Quần thể kiến tr&uacute;c Cố đ&ocirc; Huế bao gồm hệ thống c&aacute;c di t&iacute;ch li&ecirc;n quan đến triều Nguyễn, ph&acirc;n bố ở th&agrave;nh phố Huế v&agrave; c&aacute;c huyện Hương Tr&agrave;, Hương Thủy, Ph&uacute; Vang, Ph&uacute; Lộc, thuộc tỉnh Thừa Thi&ecirc;n Huế. Kiến tr&uacute;c Huế l&agrave; sự kết hợp độc đ&aacute;o giữa những nguy&ecirc;n tắc của kiến tr&uacute;c truyền thống Việt, tư tưởng triết l&yacute; phương Đ&ocirc;ng, c&ugrave;ng những đặc điểm mang ảnh hưởng của kiến tr&uacute;c qu&acirc;n sự phương T&acirc;y, h&agrave;i h&ograve;a với c&aacute;c yếu tố tự nhi&ecirc;n: n&uacute;i Ngự B&igrave;nh, s&ocirc;ng Hương, cồn Gi&atilde; Vi&ecirc;n, cồn Bộc Thanh, cồn Hến&hellip;</p>\n<p>Trải qua thời gian v&agrave; những biến thi&ecirc;n của lịch sử, Huế vẫn bảo tồn được diện mạo của một kinh đ&ocirc; xưa, với h&agrave;ng trăm c&ocirc;ng tr&igrave;nh nghệ thuật tuyệt mỹ, vừa c&oacute; gi&aacute; trị đặc biệt về lịch sử v&agrave; văn h&oacute;a, vừa phong ph&uacute;, đa dạng, mang đậm bản sắc Huế&hellip;</p>\n</div>\n</div>\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_groupKienTruc\" class=\"spDetail-group\">\n<h4 class=\"sp-DetailType\">Kiến tr&uacute;c:</h4>\n<div id=\"lblTableKienTruc\" class=\"sp-DetailValue\">\n<p>Về di sản kiến tr&uacute;c của Cố đ&ocirc; Huế, c&oacute; thể kể đến những di t&iacute;ch ti&ecirc;u biểu sau: Kinh th&agrave;nh, Ho&agrave;ng th&agrave;nh v&agrave; Tử Cấm th&agrave;nh, hệ thống lăng tẩm của c&aacute;c vua Nguyễn, cung An Định, Trai cung, bến thuyền Cung đ&igrave;nh, Trấn B&igrave;nh đ&agrave;i, Trấn Hải th&agrave;nh, điện H&ograve;n Ch&eacute;n, nh&agrave; b&agrave; Từ Cung, Văn miếu, V&otilde; miếu, Hải V&acirc;n quan,&hellip;</p>\n<p><img title=\"\" src=\"https://khamphahue.com.vn/Portals/0/DiSan/DiSanVatThe/QuanTheDiTichCoDo/QuanTheDiTichCoDoHue-1.jpg?ver=2022-10-05-135441-743\" alt=\"\"></p>\n<p><em>Kinh th&agrave;nh Huế:&nbsp;</em>được khởi c&ocirc;ng x&acirc;y dựng từ năm 1805, ho&agrave;n th&agrave;nh năm 1832, nằm b&ecirc;n bờ Bắc của s&ocirc;ng Hương, quay mặt về hướng Nam, gồm ba to&agrave; th&agrave;nh lồng v&agrave;o nhau, được bố tr&iacute; đăng đối tr&ecirc;n một trục dọc, xuy&ecirc;n suốt từ mặt Nam ra mặt Bắc, xung quanh c&oacute; 10 cửa ch&iacute;nh v&agrave; hệ thống vọng canh, h&agrave;o nước&hellip;</p>\n<p><em>Đại nội (Ho&agrave;ng th&agrave;nh, Ho&agrave;ng cung):</em>&nbsp;nằm giữa trục ch&iacute;nh của Kinh th&agrave;nh Huế, bao gồm c&aacute;c khu vực ch&iacute;nh như sau:</p>\n<p>- Khu vực ph&ograve;ng vệ gồm: hệ thống hồ Kim thủy (h&agrave;o), tường bao bọc v&agrave; 10 c&acirc;y cầu.</p>\n<p>- Khu vực cử h&agrave;nh đại lễ: được t&iacute;nh từ Ngọ m&ocirc;n đến điện Th&aacute;i H&ograve;a, l&agrave; nơi cử h&agrave;nh c&aacute;c nghi lễ Nguy&ecirc;n đ&aacute;n, Vạn thọ, Hưng quốc Kh&aacute;nh niệm, Ban s&oacute;c, Duyệt binh, Truyền l&ocirc;, Đăng quang, Tứ tuần, Ngũ tuần Đại kh&aacute;nh tiết của c&aacute;c Vua nh&agrave; Nguyễn.</p>\n<p>- Khu vực c&aacute;c miếu thờ của vua ch&uacute;a Nguyễn gồm: Triệu miếu, Th&aacute;i miếu, Hưng miếu, Thế miếu, điện Phụng ti&ecirc;n.</p>\n<p>- Khu vực ăn ở của Ho&agrave;ng th&aacute;i hậu v&agrave; Th&aacute;i Ho&agrave;ng th&aacute;i hậu gồm: cung Di&ecirc;n Thọ v&agrave; cung Trường Sanh (Sinh).</p>\n<p>- Khu vực phủ Nội vụ gồm: nh&agrave; kho lưu giữ đồ qu&yacute;, xưởng thủ c&ocirc;ng mỹ nghệ chế tạo đồ v&agrave;ng, bạc, ngọc, ng&agrave;, gấm, v&oacute;c.</p>\n<p>- Khu vực vườn Cơ Hạ v&agrave; điện Kh&acirc;m Văn: l&agrave; nơi học tập v&agrave; chơi đ&ugrave;a của c&aacute;c Ho&agrave;ng tử khi chưa xuất phủ.</p>\n<p>- Khu vực Tử Cấm Th&agrave;nh: l&agrave; chốn cung cấm, d&agrave;nh ri&ecirc;ng cho Vua v&agrave; ho&agrave;ng gia ăn ở, sinh hoạt.</p>\n<p><em>-&nbsp;</em>Ngọ m&ocirc;n: l&agrave; cổng ch&iacute;nh ph&iacute;a Nam của Ho&agrave;ng th&agrave;nh, được x&acirc;y dựng v&agrave;o năm Minh Mạng thứ 14 (1833), ph&iacute;a tr&ecirc;n c&oacute; lầu Ngũ Phụng, l&agrave; nơi xưa kia triều đ&igrave;nh tổ chức nghi lễ.</p>\n<p>- Điện Th&aacute;i H&ograve;a: được x&acirc;y dựng năm 1805. Điện được x&acirc;y theo lối &lsquo;&lsquo;tr&ugrave;ng thiềm điệp ốc&rsquo;&rsquo;, với hệ thống v&igrave; k&egrave;o truyền thống, được sơn thếp v&agrave; trang tr&iacute; đồ &aacute;n rồng vờn...</p>\n<p><img title=\"\" src=\"https://khamphahue.com.vn/Portals/0/DiSan/DiSanVatThe/QuanTheDiTichCoDo/Khamphahue_QuanTheDiTichCoDoHue_langVuaMinhMang.jpg?ver=2022-10-05-135730-927\" alt=\"\"><em>Lăng vua Minh Mạng</em></p>\n<p><em>Lăng tẩm của c&aacute;c vua Nguyễn:&nbsp;</em>được xem l&agrave; những th&agrave;nh tựu của nền k</p>\n</div>\n</div>\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_groupGiaTriNgheThuat\" class=\"spDetail-group\">\n<h4 class=\"sp-DetailType\">Gi&aacute; trị nghệ thuật:</h4>\n<div id=\"lblTableGiaTriNgheThuat\" class=\"sp-DetailValue\">\n<p>Gần một thế kỷ rưỡi l&agrave; Kinh đ&ocirc; của một triều đại phong kiến với thiết chế ch&iacute;nh trị dựa tr&ecirc;n nền tảng Nho gi&aacute;o, từng l&agrave; thủ phủ của Phật gi&aacute;o một thời, b&ecirc;n cạnh những kiến tr&uacute;c cung đ&igrave;nh lộng lẫy v&agrave;ng son, Huế c&ograve;n lưu giữ h&agrave;ng trăm ng&ocirc;i ch&ugrave;a th&acirc;m nghi&ecirc;m cổ k&iacute;nh, an lạc giữa những n&uacute;i rừng hoang vu, u tịch. &Ocirc;ng Amadou Mahtar M&rsquo;bow - Nguy&ecirc;n Tổng gi&aacute;m đốc UNESCO, đ&atilde; thật tinh tế khi đưa ra một nhận x&eacute;t trong lời k&ecirc;u gọi cho cuộc vận động bảo vệ, giữ g&igrave;n, tu sửa v&agrave; t&ocirc;n tạo Di sản văn ho&aacute; Huế: &ldquo;Nhưng Huế kh&ocirc;ng phải chỉ l&agrave; một mẫu mực về kiến tr&uacute;c m&agrave; c&ograve;n l&agrave; một cao điểm về tinh thần v&agrave; một trung t&acirc;m văn ho&aacute; s&ocirc;i động - ở đ&oacute; đạo Phật v&agrave; đạo Khổng đ&atilde; thấm s&acirc;u, ho&agrave; nhuyễn v&agrave;o truyền thống địa phương, nu&ocirc;i dưỡng một tư tưởng t&ocirc;n gi&aacute;o, triết học v&agrave; đạo l&yacute; hết sức độc đ&aacute;o&rdquo;.</p>\n<p>Với một khối lượng di sản văn ho&aacute; vật thể v&agrave; tinh thần mang &yacute; nghĩa quốc hồn quốc tu&yacute; của d&acirc;n tộc, Huế l&agrave; một hiện tượng văn ho&aacute; độc đ&aacute;o của Việt Nam v&agrave; thế giới. Ng&agrave;y 12/08/2009, Thủ tướng Ch&iacute;nh phủ đ&atilde; c&oacute; Quyết định số 1272/QĐ-TTg về việc xếp hạng Di t&iacute;ch lịch sử v&agrave; kiến tr&uacute;c nghệ thuật Quần thể kiến tr&uacute;c Cố đ&ocirc; Huế l&agrave; di t&iacute;ch quốc gia đặc biệt.</p>\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_groupYoutube\" class=\"spDetail-group\">\n<h4 class=\"sp-DetailType mg-30 mg-20\">Video Youtube:</h4>\n<div id=\"lblYoutube\" class=\"sp-DetailValue\"><iframe src=\"https://www.youtube.com/embed/K1ie-Vgss-Q\" width=\"100%\" height=\"400\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"allowfullscreen\"></iframe></div>\n</div>\n<div class=\"FileDinhKemTinBai\">&nbsp;</div>\n<div class=\"meta-source\">\n<div class=\"news_author\"><span id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_tblNewsAuthor\">Nguồn ảnh: Bảo Minh, Thanh To&agrave;n</span></div>\n<div class=\"news_footer\">\n<div id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_groupNguonTin\" class=\"spDetail-group\"><span class=\"sp-DetailType\">Nguồn:&nbsp;</span><span id=\"dnn_ctr891_ViewTinBai_DsChuyenMucTinBai_lblNguonTin\" class=\"sp-DetailValue\">Kh&aacute;m ph&aacute; Huế tổng hợp</span></div>\n</div>\n</div>\n</div>\n</div>",
+      "createdAt": "2026-01-13T09:50:34.737Z",
+      "updatedAt": "2026-01-13T11:23:48.767Z",
+      "image": "/uploads/general/file-1768303427235.jpeg",
+      "short_description": "HIHIHII",
+      "gallery": [
+        "/uploads/general/file-1768302490767.jpeg",
+        "/uploads/general/file-1768302493994.jpeg"
+      ],
+      "entrance_fee": 120000
     }
   ],
   "artifacts": [
@@ -1156,6 +1176,103 @@
           "year": "1076",
           "title": "Lập Quốc Tử Giám",
           "description": "Vua Lý Nhân Tông cho lập Quốc Tử Giám bên cạnh Văn Miếu."
+        }
+      ],
+      "related_heritage": [
+        {
+          "id": 2,
+          "name": "Hoàng Thành Thăng Long",
+          "type": "monument",
+          "cultural_period": "Triều Lý",
+          "region": "Hà Nội",
+          "latitude": 21.0341,
+          "longitude": 105.8372,
+          "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
+          "year_established": 1010,
+          "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600",
+          "rating": 4.7,
+          "total_reviews": 892,
+          "visit_hours": "8:00 - 17:00",
+          "entrance_fee": 30000,
+          "is_active": true,
+          "unesco_listed": true,
+          "significance": "international",
+          "author": "Admin",
+          "publishDate": "2024-08-05T09:30:00Z",
+          "description": "<p>Hoàng thành Thăng Long là quần thể di tích lịch sử gắn bó mật thiết với sự phát triển của Thăng Long – Hà Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII – IX), khu di tích tiếp tục phát triển qua các triều đại Đinh – Tiền Lê (thế kỷ XI) và đạt đến đỉnh cao dưới thời Lý – Trần – Lê (thế kỷ XI – XVIII). Dưới triều Nguyễn (thế kỷ XIX – XX), mặc dù kinh đô được dời vào Phú Xuân (Huế), nhưng Hoàng thành Thăng Long vẫn giữ vai trò quan trọng.</p><p>Năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Thăng Long, ông đã quy hoạch kinh thành theo mô hình “tam trùng thành quách”, gồm ba vòng thành: Kinh thành (nơi cư dân sinh sống), Hoàng thành (khu vực dành cho quan lại làm việc) và Cấm thành (khu vực chỉ dành riêng cho hoàng gia). Từ thế kỷ XI đến XVIII, Hoàng thành Thăng Long luôn là trung tâm chính trị, hành chính của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đô vào Phú Xuân, Thăng Long bị hạ cấp thành Bắc Thành (thành Hà Nội). Dù vậy, điện Kính Thiên và Hậu Lâu trong Cấm thành vẫn được duy trì làm hành cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p><p>Sang thời kỳ Pháp thuộc, Hà Nội trở thành trung tâm hành chính của Liên bang Đông Dương, và Thành cổ Hà Nội được sử dụng làm Sở chỉ huy quân sự của Pháp. Lúc này, hầu hết các công trình cung điện, đền đài trong Hoàng thành đều bị phá hủy, chỉ còn Bắc Môn và Kỳ Đài được bảo tồn. Trên nền điện Kính Thiên và sân Long Trì, người Pháp xây dựng các công trình kiến trúc mới theo phong cách châu Âu. Đến năm 1954, sau khi Thủ đô được giải phóng, Thành Hà Nội trở thành Tổng hành dinh của Quân đội nhân dân Việt Nam và duy trì vai trò này đến năm 2004.</p><p>Ngày nay, Khu trung tâm Hoàng thành Thăng Long, gồm di tích khảo cổ học 18 Hoàng Diệu và Thành cổ Hà Nội, nằm trong khu vực trung tâm chính trị Ba Đình – nơi đặt trụ sở của các cơ quan lãnh đạo cao nhất của Đảng và Nhà nước. Đây không chỉ là một khu di tích lịch sử – văn hóa quan trọng mà còn là không gian kiến trúc mang giá trị đặc biệt, gắn liền chặc chẽ với quá trình phát triển của đất nước. Đây cũng là nơi tổ chức các sự kiện chính trị, văn hóa trọng đại của quốc gia.</p><h3>Vị thế và tầm vóc</h3><p>Trải qua 13 thế kỷ, Hoàng thành Thăng Long luôn giữ vị thế trung tâm chính trị và là một trong những di tích quan trọng nhất của Việt Nam. Ngày 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung tâm Hoàng thành Thăng Long – Hà Nội chính thức được UNESCO công nhận là Di sản văn hóa thế giới. Giá trị nổi bật của di sản này thể hiện qua chiều dài lịch sử liên tục suốt 13 thế kỷ, vai trò là trung tâm quyền lực trong nhiều thời kỳ và hệ thống di tích, di vật phong phú. Đây cũng là nơi lưu giữ những dấu ấn văn hóa quan trọng và chứng kiến nhiều sự kiện mang tầm vóc lớn lao trong lịch sử dân tộc.</p><img src='https://images.unsplash.com/photo-1555921015-5532091f6026?w=1000' alt='Hoang Thanh Thang Long' style='width:100%; border-radius: 8px; margin: 16px 0;' /><h3>Các di vật được khảo cổ, khai quật trong Hoàng Thành Thăng Long</h3><p>Các di vật được khai quật và hiện đang trưng bày ở Khu khảo cổ 18 Hoàng Diệu.</p><p>Thềm chia làm 3 lối lên xuống đều nhau, lối giữa ngăn cách với 2 lối bên bằng đôi rồng đá được xây dựng năm 1467 ( đời vua Lê Thánh Tông ). Rồng được tạo tác khá đẹp và trau chuốt, tạo khối kiểu tượng tròn có dáng mập, khỏe, đầu vươn cao phía chân thềm bậc, thân uốn khúc nhịp nhàng và chạy dài theo 9 bậc lên. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, râu và tóc kết thành đao bay về sau.</p><p>Tai rồng lớn kiểu tai trâu, sừng đơn vươn dài ra phía sau và áp sát thân rồng. Dọc sống lưng đục chạm hàng vây cá to, mập. Bên ngoài bậc thềm có 2 lan can hình rồng cách điệu dạng phù điêu ( gọi là vân hóa rồng ), mặt trong trang trí vân mây, bên ngoài thể hiện hoa cúc dây. Các hoa văn này được phủ kín mặt ngoài của thân rồng đá cách điệu.</p><p>Phía ngoài là hai đám mây hóa rồng. Đây là hai tảng đá nguyên khối dày 36 – 39 cm, phần đầu thấp dày hơn, có những đường cuốn cắt ngang cùng những đường gờ nổi nối tiếp nhau chạy hết chiều dài phiến đá 5,3 m, những đường gờ nổi không theo quy luật.</p><p>Mặt trong và ngoài của hai con rồng cách điệu này trang trí hoa văn, họa tiết khắc chìm vào đá. Phía ngoài, có hai đường thẳng chạy dọc theo thân rồng cách nhau 10 cm, chia đôi thành hai nửa trên dưới, bên trong là những bông hoa bốn cánh xếp liền nhau. Nửa trên là những cuộn mây, đao lửa ít theo quy luật rõ rang, nửa dưới là những hình ảnh mặt trời cách điệu, đao lửa, mây vờn. Phía mặt trong của phiến đá do có bậc thềm cao nên diện tích trạm khắc ít hơn, một đường thẳng bên trên là những cuộn mây nhỏ dẫn từ dưới thấp lên cao.</p><p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
+          "commentCount": 85
+        },
+        {
+          "id": 6,
+          "name": "Văn Miếu - Quốc Tử Giám",
+          "type": "historic_building",
+          "cultural_period": "Triều Lý",
+          "region": "Hà Nội",
+          "latitude": 21.0277,
+          "longitude": 105.8355,
+          "address": "58 Quốc Tử Giám, Đống Đa, Hà Nội",
+          "year_established": 1070,
+          "image": "https://images.unsplash.com/photo-1528127269322-539801943592?w=600",
+          "rating": 4.8,
+          "total_reviews": 756,
+          "visit_hours": "8:00 - 17:00",
+          "entrance_fee": 30000,
+          "is_active": true,
+          "unesco_listed": false,
+          "significance": "national"
+        }
+      ],
+      "related_artifacts": [
+        {
+          "id": 4,
+          "name": "Nguyễn Dynasty Woodblocks",
+          "description": "Một bộ sưu tập các bản khắc gỗ in ấn triều Nguyễn, gồm hơn 34,000 bản khắc được dùng để in các văn bản lịch sử và văn hóa, được UNESCO đưa vào danh sách Ký ức Thế giới.",
+          "heritage_site_id": 6,
+          "category_id": 3,
+          "artifact_type": "woodblock",
+          "year_created": 1800,
+          "creator": "Thợ khắc gỗ triều Nguyễn",
+          "material": "Gỗ",
+          "dimensions": null,
+          "condition": "good",
+          "image": "https://image.vietnamnews.vn/uploadvnnews/Article/2017/8/23/mocban88444128PM.jpg",
+          "is_on_display": true,
+          "location_in_site": "Bảo tàng Cổ vật Cung đình Huế",
+          "updatedAt": "2026-01-10T00:00:00.000Z",
+          "author": "Admin",
+          "publishDate": "2024-09-15T09:45:00Z",
+          "shortDescription": "Kho tàng tư liệu lịch sử vô giá của triều Nguyễn, Di sản tư liệu thế giới.",
+          "commentCount": 28
+        }
+      ],
+      "related_levels": [
+        {
+          "id": 102,
+          "chapter_id": 2,
+          "name": "Khám phá Hoàng Thành",
+          "description": "Giải mã các bí mật khảo cổ dưới lòng đất Thăng Long.",
+          "type": "puzzle",
+          "difficulty": "medium",
+          "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+          "ai_character_id": 1
+        }
+      ],
+      "related_products": [
+        {
+          "id": 1,
+          "name": "Sách: Việt Nam Sử Lược",
+          "price": 180000,
+          "type": "book",
+          "image": "https://salt.tikicdn.com/cache/w1200/ts/product/23/67/68/73919242d992953284346028887e3871.jpg",
+          "url": "#"
+        },
+        {
+          "id": 3,
+          "name": "Tranh khắc gỗ dân gian Đông Hồ",
+          "price": 500000,
+          "type": "souvenir",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Damcuoichuot.jpg/800px-Damcuoichuot.jpg",
+          "url": "#"
         }
       ]
     },
@@ -3340,6 +3457,25 @@
       "started_at": "2026-01-12T01:28:21.456Z",
       "last_activity": "2026-01-12T01:28:38.024Z",
       "completed_at": "2026-01-12T01:28:39.486Z"
+    },
+    {
+      "id": 31,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "in_progress",
+      "current_screen_id": "demo_dialogue",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-13T02:02:31.800Z",
+      "last_activity": "2026-01-13T02:02:31.800Z"
     }
   ],
   "learning_modules": [
