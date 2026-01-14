@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-13T14:08:30.774Z"
+      "lastLogin": "2026-01-14T10:54:10.197Z"
     },
     {
       "id": 2,
@@ -773,8 +773,11 @@
       "description": "Những câu chuyện khởi nguồn của văn hóa Bắc Bộ.",
       "layer_index": 1,
       "petal_state": "blooming",
-      "required_petals": 0,
-      "is_active": true
+      "required_petals": 15,
+      "is_active": true,
+      "theme": "Hahahaha",
+      "order": 1,
+      "updatedAt": "2026-01-14T06:20:20.528Z"
     },
     {
       "id": 2,

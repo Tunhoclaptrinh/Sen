@@ -107,7 +107,7 @@ class UserService extends BaseService {
     if (!user) {
       return {
         success: false,
-        message: 'User not found',
+        message: 'Không tìm thấy người dùng',
         statusCode: 404
       };
     }
@@ -149,7 +149,7 @@ class UserService extends BaseService {
     if (!user) {
       return {
         success: false,
-        message: 'User not found',
+        message: 'Không tìm thấy người dùng',
         statusCode: 404
       };
     }
@@ -161,7 +161,7 @@ class UserService extends BaseService {
 
     return {
       success: true,
-      message: `User ${updated.isActive ? 'activated' : 'deactivated'} successfully`,
+      message: `Người dùng đã được ${updated.isActive ? 'kích hoạt' : 'vô hiệu hóa'} thành công`,
       data: sanitizeUser(updated)
     };
   }
@@ -172,7 +172,7 @@ class UserService extends BaseService {
     if (!user) {
       return {
         success: false,
-        message: 'User not found',
+        message: 'Không tìm thấy người dùng',
         statusCode: 404
       };
     }
@@ -211,7 +211,7 @@ class UserService extends BaseService {
 
     return {
       success: true,
-      message: 'User and all related data permanently deleted',
+      message: 'Đã xóa vĩnh viễn người dùng và tất cả dữ liệu liên quan',
       deleted
     };
   }
