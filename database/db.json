@@ -443,7 +443,7 @@
       "material": "Đồng",
       "dimensions": "cao khoảng 62 cm, đường kính mặt 89 cm",
       "condition": "good",
-      "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600",
+      "image": "https://live.staticflickr.com/2418/1529750162_e58f202fe6_z.jpg",
       "is_on_display": true,
       "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
       "updatedAt": "2026-01-10T00:00:00.000Z",
@@ -464,7 +464,7 @@
       "material": "Gốm nung",
       "dimensions": "cao khoảng 40 cm",
       "condition": "fair",
-      "image": "https://images.unsplash.com/photo-1627916531940-bf7d4c229415?w=600",
+      "image": "https://images2.thanhnien.vn/zoom/1200_630/528068263637045248/2025/7/9/photo-1752077258505-17520772589601450002990-0-0-1034-1654-crop-17520772675141271528548.jpeg",
       "is_on_display": true,
       "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
       "updatedAt": "2026-01-10T00:00:00.000Z",
@@ -519,7 +519,19 @@
       "period": "hiện đại",
       "culturalSignificance": "danh nhân thế giới tương lai",
       "createdAt": "2025-12-03T09:23:39.017Z",
-      "updatedAt": "2025-12-03T09:23:39.017Z"
+      "updatedAt": "2026-01-14T01:20:53.060Z",
+      "image": "/uploads/general/file-1768353627545.jpeg",
+      "gallery": [
+        "/uploads/general/file-1768353632463.jpeg",
+        "/uploads/general/file-1768353636366.jpeg"
+      ],
+      "short_description": "ahiii",
+      "artifact_type": "sculpture",
+      "heritage_site_id": 2,
+      "category_id": 1,
+      "condition": "good",
+      "is_on_display": true,
+      "shortDescription": "ahiii"
     },
     {
       "id": 7,
@@ -533,7 +545,7 @@
       "material": "Đá",
       "dimensions": "Dài 5.3m, cao 0.36-0.39m",
       "condition": "good",
-      "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600",
+      "image": "https://live.staticflickr.com/2418/1529750162_e58f202fe6_z.jpg",
       "is_on_display": true,
       "location_in_site": "Bậc thềm điện Kính Thiên",
       "updatedAt": "2026-01-13T00:00:00.000Z",
@@ -3778,7 +3790,7 @@
       "id": 31,
       "user_id": 3,
       "level_id": "99",
-      "status": "in_progress",
+      "status": "abandoned",
       "current_screen_id": "demo_dialogue",
       "current_screen_index": 0,
       "collected_items": [],
@@ -3791,7 +3803,33 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2026-01-13T02:02:31.800Z",
-      "last_activity": "2026-01-13T02:02:31.800Z"
+      "last_activity": "2026-01-13T02:02:31.800Z",
+      "expired_at": "2026-01-14T02:03:28.648Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 32,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "completed",
+      "current_screen_id": "demo_hidden",
+      "current_screen_index": 3,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_image",
+        "demo_video"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-14T02:03:28.663Z",
+      "last_activity": "2026-01-14T02:03:51.701Z",
+      "completed_at": "2026-01-14T02:03:54.052Z"
     }
   ],
   "learning_modules": [
@@ -5825,6 +5863,118 @@
         "route": "uncertain"
       },
       "created_at": "2026-01-11T03:57:12.810Z"
+    },
+    {
+      "id": 12,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "Hi",
+      "response": "Chào bạn! Mình là Minh. Bạn cần mình giúp gì về văn hóa Việt Nam không?",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Hi",
+        "route": "chitchat"
+      },
+      "created_at": "2026-01-14T01:47:58.440Z"
+    },
+    {
+      "id": 13,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "giới thiệu về Tối nước",
+      "response": "Chào bạn! Múa rối nước là một loại hình nghệ thuật độc đáo và đặc trưng của Việt Nam, nổi bật với sự kết hợp giữa nghệ thuật diễn xuất và yếu tố nước. Đây là một hình thức biểu diễn mà các con rối được điều khiển từ dưới nước, tạo nên những màn trình diễn sống động và thú vị.\n\nMúa rối nước không chỉ đơn thuần là một trò giải trí; nó còn mang trong mình những giá trị văn hóa sâu sắc, phản ánh cuộc sống, tâm tư và ước vọng của người dân lao động. Những câu chuyện trong các tiết mục múa rối thường xoay quanh các chủ đề như tình yêu, cuộc sống hàng ngày, và những truyền thuyết dân gian, mang đến cho khán giả cảm giác gần gũi và thân thuộc.\n\nĐiểm đặc biệt của Múa rối nước là sức hấp dẫn không chỉ đến từ kịch bản hay ngôn ngữ văn học, mà chủ yếu từ hành động của các con rối. Những màn trình diễn thường rất vui nhộn, kỳ thú, tạo ra không khí thư giãn và thoải mái cho người xem. Thông qua nghệ thuật này, người Việt thể hiện sự khéo léo và sáng tạo trong việc tương tác với thiên nhiên và xã hội.\n\nMúa rối nước đã vượt ra khỏi biên giới Việt Nam để đến với bạn bè quốc tế, mang theo thông điệp về giá trị nhân văn và vẻ đẹp của cuộc sống. Nếu bạn có cơ hội, hãy thử xem một buổi biểu diễn Múa rối nước để cảm nhận sự kỳ diệu của nghệ thuật này nhé!",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Bạn có thể giới thiệu về Múa rối nước không?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-14T01:49:20.108Z"
+    },
+    {
+      "id": 14,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "giới thiệu về rối nước",
+      "response": "Rối nước là một loại hình nghệ thuật diễn xướng dân gian độc đáo của Việt Nam, đặc biệt gắn liền với nền văn minh lúa nước của cư dân vùng châu thổ sông Hồng. Những đặc điểm nổi bật trong nghệ thuật biểu diễn rối nước bao gồm:\n\n1. **Hành động của con rối**: Sức hấp dẫn chính của rối nước nằm ở hành động của các con rối, tạo nên những câu chuyện thú vị mà không cần nhiều lời thoại.\n\n2. **Tính kỳ diệu và hài hước**: Nghệ thuật rối nước thể hiện tính kỳ diệu, nghịch thường và mang lại tiếng cười, phản ánh cái đẹp và sự vui tươi trong cuộc sống.\n\n3. **Kỹ thuật điều khiển**: Việc điều khiển các con rối đòi hỏi kỹ thuật cao, phức tạp, thể hiện sự khéo léo và sáng tạo của người nghệ sĩ.\n\n4. **Sự hòa đồng của cộng đồng**: Múa rối nước là sản phẩm sáng tạo của tập thể, thể hiện sự hòa đồng và hợp tác giữa các cá nhân trong cộng đồng.\n\n5. **Nội dung phản ánh hiện thực**: Các vở diễn thường mang nội dung phản ánh hiện thực về cuộc sống, ước mơ của nhân dân lao động, hướng tới cuộc sống ấm no, hạnh phúc và thanh bình.\n\nMúa rối nước không chỉ là một hình thức nghệ thuật mà còn là một phần quan trọng trong văn hóa và đời sống tinh thần của người Việt.",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Rối nước là gì và có những đặc điểm gì nổi bật trong nghệ thuật biểu diễn này?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-14T01:50:10.646Z"
+    },
+    {
+      "id": 15,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "có dấu mốc thời gian gì không",
+      "response": "Có, một trong những dấu mốc quan trọng trong lịch sử nghệ thuật múa rối nước ở Việt Nam là bia Sùng Thiện Diên Linh được dựng vào năm 1121. Bia này ghi nhận rằng trò Rối đã được trình diễn cho Vua xem, cho thấy nghệ thuật múa rối nước đã phát triển và đạt đến trình độ nghệ thuật cao từ thời Lý. Ngoài ra, trong thời Trần, nghệ thuật này tiếp tục được phát triển và hấp thụ các yếu tố văn hóa khác, khẳng định vị trí của nó trong văn hóa dân gian Đại Việt.",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Có dấu mốc thời gian nào trong lịch sử nghệ thuật múa rối nước ở Việt Nam không?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-14T01:50:47.389Z"
+    },
+    {
+      "id": 16,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "bạn biết về Bạn Dương Văn Tú không",
+      "response": "Xin lỗi, nhưng mình không có thông tin về Dương Văn Tú. Nếu bạn cần biết thêm về một chủ đề khác, hãy cho mình biết nhé!",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Bạn có biết về Dương Văn Tú không?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-14T01:52:08.806Z"
+    },
+    {
+      "id": 17,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "tôi sẽ giới thiệu về Tú nhé, Tú là một người bạn của tôi, năm sản xuất là 2005",
+      "response": "Xin lỗi, nhưng tôi không có thông tin về Dương Văn Tú. Nếu bạn cần biết thêm về Bùi Xương Trạch hoặc các nhân vật lịch sử khác, tôi rất vui lòng giúp đỡ!",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Bạn có thể cho biết về Dương Văn Tú không?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-14T01:53:33.411Z"
+    },
+    {
+      "id": 18,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "ok tôi vừa giới thiệu về Tú rồi hãy cho tôi biết Tú sinh năm bao nhiêu",
+      "response": "Xin lỗi, nhưng trong thông tin mà tôi có không đề cập đến Dương Văn Tú. Nếu bạn cần thông tin khác, hãy cho tôi biết!",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Dương Văn Tú sinh năm bao nhiêu?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-14T01:54:08.111Z"
+    },
+    {
+      "id": 19,
+      "user_id": 3,
+      "level_id": null,
+      "character_id": 1,
+      "message": "hôm nay tôi rất vui, hôm nay tôi nên học cái gì nhỉ",
+      "response": "Chào bạn! Hôm nay, bạn có thể học về những giá trị lịch sử và văn hóa của dân tộc Việt Nam, như Cách mạng Tháng Tám và tục xin chữ, cho chữ. Những bài học từ Cách mạng Tháng Tám sẽ giúp bạn hiểu rõ hơn về sức mạnh của khối đại đoàn kết và vai trò của mỗi cá nhân trong việc xây dựng đất nước. Còn tục xin chữ sẽ mang đến cho bạn cái nhìn sâu sắc về truyền thống hiếu học và tôn trọng tri thức của người Việt. Chúc bạn có một ngày học tập thú vị!",
+      "context": {
+        "characterId": 1,
+        "rewritten": "Hôm nay tôi nên học cái gì?",
+        "route": "uncertain"
+      },
+      "created_at": "2026-01-14T01:54:50.681Z"
     }
   ]
 }
