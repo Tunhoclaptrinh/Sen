@@ -14,6 +14,15 @@ class HistoryController extends BaseController {
       next(error);
     }
   };
+
+  getStats = async (req, res, next) => {
+    try {
+      const result = await this.service.getStats();
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = new HistoryController();

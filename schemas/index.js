@@ -1,25 +1,26 @@
 module.exports = {
   // Auth & User
-  user: require('./user.schema'),
+  users: require('./user.schema'),
 
   // Heritage & Culture
-  heritage_site: require('./heritage_site.schema'),
-  artifact: require('./artifact.schema'),
-  cultural_category: require('./cultural_category.schema'),
-  exhibition: require('./exhibition.schema'),
-  timeline: require('./timeline.schema'),
+  heritage_sites: require('./heritage_site.schema'),
+  artifacts: require('./artifact.schema'),
+  cultural_categories: require('./cultural_category.schema'),
+  exhibitions: require('./exhibition.schema'),
+  timelines: require('./timeline.schema'),
 
   // User Content
-  collection: require('./collection.schema'),
-  favorite: require('./favorite.schema'),
-  review: require('./review.schema'),
-  notification: require('./notification.schema'),
+  collections: require('./collection.schema'),
+  favorites: require('./favorite.schema'),
+  reviews: require('./review.schema'),
+  notifications: require('./notification.schema'),
 
   // Game System
-  game_chapter: require('./game_chapter.schema'),
-  game_level: require('./game_level.schema'),
-  game_character: require('./game_character.schema'),
+  game_chapters: require('./game_chapter.schema'),
+  game_levels: require('./game_level.schema'),
+  game_characters: require('./game_character.schema'),
   game_progress: require('./game_progress.schema'),
-  scan_object: require('./scan_object.schema'),
-  shop_item: require('./shop_item.schema')
+  scan_objects: require('./scan_object.schema'),
+  shop_items: require('./shop_item.schema'),
+  history_articles: require('./history_article.schema')
 };

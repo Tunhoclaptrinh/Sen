@@ -22,8 +22,16 @@ class HeritageSiteService extends BaseService {
       data.cultural_period = data.period;
     }
 
+    if (data.shortDescription && !data.short_description) {
+      data.short_description = data.shortDescription;
+    }
+    
+    // Ensure numeric fields are numbers
+    if (data.entrance_fee) data.entrance_fee = Number(data.entrance_fee);
+    if (data.year_established) data.year_established = Number(data.year_established);
+
     // Debug logging
-    console.log('[HeritageService] Creating:', { name: data.name, short_desc: data.short_description, gallery: data.gallery?.length });
+    console.log('[HeritageService] Creating:', { name: data.name, short_desc: data.short_description });
 
     return super.beforeCreate(data);
   }
@@ -43,8 +51,16 @@ class HeritageSiteService extends BaseService {
       data.cultural_period = data.period;
     }
 
+    if (data.shortDescription && !data.short_description) {
+      data.short_description = data.shortDescription;
+    }
+    
+    // Ensure numeric fields are numbers
+    if (data.entrance_fee) data.entrance_fee = Number(data.entrance_fee);
+    if (data.year_established) data.year_established = Number(data.year_established);
+
     // Debug logging
-    console.log('[HeritageService] Updating:', { id, short_desc: data.short_description, gallery: data.gallery?.length });
+    console.log('[HeritageService] Updating:', { id, short_desc: data.short_description });
 
     return super.beforeUpdate(id, data);
   }
@@ -91,8 +107,19 @@ class HeritageSiteService extends BaseService {
   }
 
   async getTimeline(siteId) {
+    // 1. First check if timeline is nested in the site record
+    const siteRes = await db.findById('heritage_sites', siteId);
+    if (siteRes && siteRes.timeline && siteRes.timeline.length > 0) {
+      return {
+        success: true,
+        data: siteRes.timeline.sort((a, b) => (a.year || 0) - (b.year || 0))
+      };
+    }
+
+    // 2. Fallback to separate collection if that's where it's stored
     const timelines = (await db.findMany('timelines', { heritage_site_id: parseInt(siteId) }))
       .sort((a, b) => a.year - b.year);
+    
     return {
       success: true,
       data: timelines

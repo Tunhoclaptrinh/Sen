@@ -6,6 +6,7 @@ const historyController = require('../controllers/history.controller');
 
 // Public Routes
 router.get('/', historyController.getAll);
+router.get('/stats/summary', historyController.getStats);
 router.get('/:id', historyController.getById);
 router.get('/:id/related', historyController.getRelated);
 
