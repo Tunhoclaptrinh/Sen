@@ -61,7 +61,7 @@ class AIService {
   //       console.error('❌ LỖI TẠI AI SERVICE:', error.message);
   //       return {
   //         success: false,
-  //         message: 'Dịch vụ AI đang bảo trì, Minh sẽ quay lại sớm!',
+  //         message: 'Dịch vụ AI đang bảo trì, Sen sẽ quay lại sớm!',
   //         statusCode: 500
   //       };
   //     }
@@ -107,7 +107,7 @@ class AIService {
         { timeout: 60000 }
       );
 
-      const { answer, rewritten_query, route, score } = response.data;
+      const { answer, rewritten_query, route, score, audio_base64 } = response.data;
 
       // 4. LƯU VÀO db.json QUA WRAPPER DATABASE CỦA BẠN
       const chatRecord = await db.create("ai_chat_history", {
@@ -116,6 +116,7 @@ class AIService {
         character_id: context.characterId || (character ? character.id : 1),
         message: cleanMessage,
         response: answer,
+        audio_base64: audio_base64 || null, // Lưu audio nếu có
         context: {
           ...context,
           rewritten: rewritten_query,
@@ -131,13 +132,14 @@ class AIService {
           character: character,
           timestamp: chatRecord.created_at,
           route: route,
+          audio_base64: audio_base64 // Trả về cho frontend ngay lập tức
         },
       };
     } catch (error) {
       console.error("AI Chat Error:", error);
       return {
         success: false,
-        message: "Dịch vụ AI đang bảo trì, Minh sẽ quay lại sớm!",
+        message: "Dịch vụ AI đang bảo trì, Sen sẽ quay lại sớm!",
         statusCode: 500,
       };
     }
@@ -155,10 +157,10 @@ class AIService {
       if (level) characterId = level.ai_character_id;
     }
 
-    if (!characterId) characterId = 1; // Mặc định là Minh/Tễu
+    if (!characterId) characterId = 1; // Mặc định là Sen
 
     const character = await db.findById("game_characters", characterId);
-    if (!character) return { name: "Minh", speaking_style: "Thân thiện" };
+    if (!character) return { name: "Sen", speaking_style: "Thân thiện" };
 
     return {
       id: character.id,
@@ -225,6 +227,7 @@ class AIService {
         content: record.response,
         timestamp: record.created_at,
         context: record.context,
+        audio_base64: record.audio_base64 || null, // Map audio
       });
     });
 
