@@ -34,13 +34,13 @@
     },
     {
       "id": 4,
-      "name": "Sen",
-      "email": "sen@sen.com",
+      "name": "Nguyễn Minh Anh",
+      "email": "minhanh@sen.com",
       "password": "$2b$10$wT/p/Cg...hashed...",
       "phone": "0909123456",
       "role": "customer",
-      "bio": "Hướng dẫn viên AI chuyên gia về di sản văn hóa Việt Nam",
-      "avatar": "https://ui-avatars.com/api/?name=Sen&background=FB7185&color=fff",
+      "bio": "Học sinh THPT, đam mê văn hóa dân gian",
+      "avatar": "https://ui-avatars.com/api/?name=Minh+Anh&background=8B5CF6&color=fff",
       "isActive": true,
       "createdAt": "2024-04-05T11:00:00Z"
     },
