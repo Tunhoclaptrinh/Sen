@@ -23,7 +23,8 @@ module.exports = {
     type: "string",
     required: true,
     minLength: 10,
-    maxLength: 10000,
+    // tạm thời
+    // maxLength: 10000,
     description: "Mô tả chi tiết về di sản",
   },
   type: {
