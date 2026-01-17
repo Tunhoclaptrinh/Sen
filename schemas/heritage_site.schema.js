@@ -2,7 +2,7 @@ module.exports = {
   name: {
     type: "string",
     required: true,
-    unique: true,
+    // unique: true,
     minLength: 5,
     maxLength: 200,
     description: "Tên di sản văn hóa",
@@ -23,12 +23,12 @@ module.exports = {
     type: "string",
     required: true,
     minLength: 10,
-    maxLength: 5000,
+    maxLength: 10000,
     description: "Mô tả chi tiết về di sản",
   },
   type: {
     type: "enum",
-    enum: ["monument","temple","museum","archaeological_site","historic_building","natural_heritage","intangible_heritage",],
+    enum: ["monument", "temple", "museum", "archaeological_site", "historic_building", "natural_heritage", "intangible_heritage",],
     required: false,
     default: "monument",
     description: "Loại di sản",
