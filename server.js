@@ -343,14 +343,31 @@ app.use((err, req, res, next) => {
 
 // ==================== SERVER START ====================
 
+const os = require('os');
+
+function getNetworkIp() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const interface of interfaces[name]) {
+      const {address, family, internal} = interface;
+      if (family === 'IPv4' && !internal) {
+        return address;
+      }
+    }
+  }
+  return 'localhost';
+}
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
+  const networkIp = getNetworkIp();
   console.log(`✅ Server restart triggered at ${new Date().toISOString()}`);
   console.log(`
 ╔══════════════════════════════════════════════════════════════════╗
 ║   🏛️ Sen Server Started!                                 ║
 ╠══════════════════════════════════════════════════════════════════╣
-║   📍 URL: http://localhost:${PORT}                                  ║
+║   📍 Local:   http://localhost:${PORT}                              ║
+║   📡 Network: http://${networkIp}:${PORT}                           ║
 ║   🌍 Environment: ${process.env.NODE_ENV || 'development'}                                    ║
 ║   📊 API Docs: http://localhost:${PORT}/api                         ║
 ║   ❤️  Health: http://localhost:${PORT}/api/health                    ║
