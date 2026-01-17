@@ -3,6 +3,16 @@ const router = express.Router();
 const { protect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const historyController = require('../controllers/history.controller');
+const importExportController = require('../controllers/importExport.controller');
+
+// Export/Import (MUST come before /:id)
+router.get('/export', 
+    (req, res, next) => {
+        req.params.entity = 'history_articles';
+        next();
+    },
+    importExportController.exportData
+);
 
 // Public Routes
 router.get('/', historyController.getAll);

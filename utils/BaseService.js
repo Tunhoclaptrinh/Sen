@@ -115,7 +115,7 @@ class BaseService {
   /**
    * Validate data theo schema
    */
-  async validateBySchema(data) {
+  async validateBySchema(data, options = {}) {
     if (!this.schema) return { success: true };
 
     const errors = {};
@@ -167,7 +167,12 @@ class BaseService {
 
       // Unique validation
       if (rule.unique) {
-        const existing = await db.findOne(this.collection, { [field]: value });
+        const query = { [field]: value };
+        if (options.excludeId) {
+          query.id = { $ne: Number(options.excludeId) };
+        }
+        
+        const existing = await db.findOne(this.collection, query);
         if (existing) {
           errors[field] = `${field} '${value}' already exists`;
         }
@@ -371,8 +376,9 @@ class BaseService {
         return existCheck;
       }
 
+
       // Schema validation
-      const schemaValidation = await this.validateBySchema(data);
+      const schemaValidation = await this.validateBySchema(data, { excludeId: id });
       if (!schemaValidation.success) {
         return {
           success: false,
