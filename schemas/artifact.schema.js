@@ -1,132 +1,134 @@
 module.exports = {
   name: {
-    type: 'string',
+    type: "string",
     required: true,
     minLength: 3,
     maxLength: 150,
-    description: 'Tên tư liệu/cổ vật'
+    description: "Tên tư liệu/cổ vật",
   },
   description: {
-    type: 'string',
+    type: "string",
     required: true,
     minLength: 20,
     maxLength: 3000,
-    description: 'Mô tả chi tiết'
+    description: "Mô tả chi tiết",
   },
   short_description: {
-    type: 'string',
+    type: "string",
     required: false,
     maxLength: 500,
-    description: 'Mô tả ngắn gọn'
+    description: "Mô tả ngắn gọn",
   },
   shortDescription: {
-    type: 'string',
+    type: "string",
     required: false,
     maxLength: 500,
-    description: 'Bí danh cho short_description'
+    description: "Bí danh cho short_description",
   },
   historical_context: {
-    type: 'string',
+    type: "string",
     required: false,
     maxLength: 2000,
-    description: 'Bối cảnh lịch sử'
+    description: "Bối cảnh lịch sử",
   },
   cultural_significance: {
-    type: 'string',
+    type: "string",
     required: false,
     maxLength: 2000,
-    description: 'Ý nghĩa văn hóa'
+    description: "Ý nghĩa văn hóa",
   },
   heritage_site_id: {
-    type: 'number',
+    type: "number",
     required: true,
-    foreignKey: 'heritage_sites',
-    description: 'Thuộc di sản nào'
+    foreignKey: "heritage_sites",
+    description: "Thuộc di sản nào",
   },
   category_id: {
-    type: 'number',
+    type: "number",
     required: true,
-    foreignKey: 'cultural_categories',
-    description: 'Phân loại'
+    foreignKey: "cultural_categories",
+    description: "Phân loại",
   },
   artifact_type: {
-    type: 'enum',
-    enum: ['sculpture', 'painting', 'document', 'pottery', 'textile', 'tool', 'weapon', 'jewelry', 'manuscript', 'photograph', 'other'],
+    type: "enum",
+    enum: ["sculpture", "painting", "document", "pottery", "textile", "tool", "weapon", "jewelry", "manuscript", "photograph", "other",],
     required: true,
-    description: 'Loại cổ vật'
+    description: "Loại cổ vật",
+
   },
   year_created: {
-    type: 'number',
+    type: "number",
     required: false,
-    description: 'Năm tạo tác'
+    description: "Năm tạo tác",
   },
   year_discovered: {
-    type: 'number',
+    type: "number",
     required: false,
-    description: 'Năm phát hiện'
+    description: "Năm phát hiện",
   },
   creator: {
-    type: 'string',
+    type: "string",
     required: false,
     maxLength: 200,
-    description: 'Tác giả'
+    description: "Tác giả",
   },
   material: {
-    type: 'string',
+    type: "string",
     required: false,
     maxLength: 200,
-    description: 'Chất liệu'
+    description: "Chất liệu",
   },
   dimensions: {
-    type: 'string',
+    type: "string",
     required: false,
     maxLength: 100,
-    description: 'Kích thước'
+    description: "Kích thước",
   },
   weight: {
-    type: 'number',
+    type: "number",
     required: false,
-    description: 'Trọng lượng (kg)'
+    description: "Trọng lượng (kg)",
   },
   condition: {
-    type: 'enum',
-    enum: ['excellent', 'good', 'fair', 'poor', 'GOOD', 'FAIR', 'POOR', 'EXCELLENT'],
+    type: "enum",
+    enum: ["excellent", "good", "fair", "poor", "GOOD", "FAIR", "POOR", "EXCELLENT",],
     required: false,
-    default: 'fair',
-    description: 'Tình trạng'
+    default: "fair",
+    description: "Tình trạng",
+
   },
   location_in_site: {
-    type: 'string',
+    type: "string",
     required: false,
-    description: 'Vị trí trưng bày'
+    description: "Vị trí trưng bày",
   },
   image: {
-    type: 'string',
+    type: "string",
     required: false,
-    description: 'Hình ảnh'
+    description: "Hình ảnh",
   },
   is_on_display: {
-    type: 'boolean',
+    type: "boolean",
     required: false,
     default: true,
-    description: 'Đang trưng bày'
+    description: "Đang trưng bày",
   },
   gallery: {
-    type: 'array',
+    type: "array",
     required: false,
-    description: 'Bộ sưu tập hình ảnh'
+    description: "Bộ sưu tập hình ảnh",
   },
   // Related items (admin-managed)
   related_heritage_ids: {
-    type: 'array',
-    items: { type: 'number' },
+    type: "array",
+    items: { type: "number" },
     required: false,
-    description: 'Danh sách ID di sản liên quan'
+    description: "Danh sách ID di sản liên quan",
   },
   related_history_ids: {
-    type: 'array',
-    items: { type: 'number' },
+    type: "array",
+    items: { type: "number" },
     required: false,
-    description: 'Danh sách ID bài viết lịch sử liên quan'
-  }
+    description: "Danh sách ID bài viết lịch sử liên quan",
+  },
 };

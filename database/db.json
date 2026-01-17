@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-13T10:06:29.837Z"
+      "lastLogin": "2026-01-14T10:54:10.197Z"
     },
     {
       "id": 2,
@@ -36,9 +36,11 @@
       "id": 4,
       "name": "Nguyễn Minh Anh",
       "email": "minhanh@sen.com",
-      "password": "$2a$10$ljLMJFWpt4uYURYEkQdvGeBijln.p8.XQjHSP/iKWCesuPVaLhg/m",
+      "password": "$2b$10$wT/p/Cg...hashed...",
       "phone": "0909123456",
       "role": "customer",
+      "bio": "Học sinh THPT, đam mê văn hóa dân gian",
+      "avatar": "https://ui-avatars.com/api/?name=Minh+Anh&background=8B5CF6&color=fff",
       "isActive": true,
       "createdAt": "2024-04-05T11:00:00Z"
     },
@@ -601,6 +603,31 @@
       "publishDate": "2024-10-10T10:15:00Z",
       "shortDescription": "Bia đá ghi chép sự kiện trọng đại trong lịch sử Hoàng Thành.",
       "commentCount": 28
+    },
+    {
+      "id": 10,
+      "image": "",
+      "gallery": [],
+      "short_description": "ádasdas",
+      "name": "ádasdasdasdasdas",
+      "artifact_type": "painting",
+      "heritage_site_id": 2,
+      "category_id": 5,
+      "year_created": 2000,
+      "material": "vg",
+      "dimensions": "12331212",
+      "condition": "good",
+      "creator": "ádas",
+      "location_in_site": "Phòng số 1",
+      "is_on_display": true,
+      "description": "<p>&aacute;dasdasasdasdasdasd</p>",
+      "historical_context": "<p>&aacute;dasdasdasdsdddddd</p>",
+      "cultural_significance": "<p>dddddddddddddddddddddddddddddd</p>",
+      "related_heritage_ids": [],
+      "related_history_ids": [],
+      "shortDescription": "ádasdas",
+      "createdAt": "2026-01-17T03:42:14.161Z",
+      "updatedAt": "2026-01-17T03:42:14.161Z"
     }
   ],
   "timelines": [
@@ -785,8 +812,11 @@
       "description": "Những câu chuyện khởi nguồn của văn hóa Bắc Bộ.",
       "layer_index": 1,
       "petal_state": "blooming",
-      "required_petals": 0,
-      "is_active": true
+      "required_petals": 15,
+      "is_active": true,
+      "theme": "Hahahaha",
+      "order": 1,
+      "updatedAt": "2026-01-14T06:20:20.528Z"
     },
     {
       "id": 2,
@@ -810,7 +840,7 @@
   "game_characters": [
     {
       "id": 1,
-      "name": "Chú Tễu",
+      "name": "Sen",
       "description": "Nhân vật rối nước vui tính, thông minh",
       "persona": "Bạn là Chú Tễu, một nhân vật rối nước vui tính từ múa rối Bắc Bộ. Bạn đang bị mất trí nhớ và mất màu sơn. Bạn cần sự giúp đỡ của người chơi để tìm lại ký ức.",
       "speaking_style": "Vui vẻ, hài hước, sử dụng từ ngữ dân dã, có chút nhí nhảnh",

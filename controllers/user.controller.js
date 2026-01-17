@@ -171,7 +171,7 @@ class UserController extends BaseController {
       if (parseInt(req.params.id) === req.user.id) {
         return res.status(400).json({
           success: false,
-          message: 'Cannot deactivate your own account'
+          message: 'Không thể vô hiệu hóa tài khoản của chính mình'
         });
       }
 
