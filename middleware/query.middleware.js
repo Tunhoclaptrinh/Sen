@@ -32,7 +32,8 @@ exports.parseQuery = (req, res, next) => {
   Object.keys(query).forEach(key => {
     // Skip special parameters
     const specialParams = ['_page', '_limit', '_sort', '_order', '_q', '_embed', '_expand',
-      'page', 'limit', 'sort', 'order', 'q', 'embed', 'expand'];
+      'page', 'limit', 'sort', 'order', 'q', 'embed', 'expand',
+      'format', 'columns', 'includeRelations'];
 
     if (specialParams.includes(key)) {
       return;

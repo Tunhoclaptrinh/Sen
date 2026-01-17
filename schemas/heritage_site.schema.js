@@ -28,15 +28,7 @@ module.exports = {
   },
   type: {
     type: "enum",
-    enum: [
-      "monument",
-      "temple",
-      "museum",
-      "archaeological_site",
-      "historic_building",
-      "natural_heritage",
-      "intangible_heritage",
-    ],
+    enum: ["monument","temple","museum","archaeological_site","historic_building","natural_heritage","intangible_heritage",],
     required: false,
     default: "monument",
     description: "Loại di sản",
@@ -51,6 +43,11 @@ module.exports = {
     type: "string",
     required: false,
     description: "Vùng miền (Bắc, Trung, Nam)",
+  },
+  province: {
+    type: "string",
+    required: false,
+    description: "Tỉnh/Thành phố",
   },
   latitude: {
     type: "number",

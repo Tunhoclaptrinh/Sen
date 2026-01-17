@@ -27,7 +27,8 @@ class ImportExportService {
       'reviews': require('../services/review.service'),
       'favorites': require('../services/favorite.service'),
       'game_levels': require('../services/level_cms.service'), // Use CMS service for import/export
-      'game_chapters': require('../services/chapter_cms.service') // Use CMS service
+      'game_chapters': require('../services/chapter_cms.service'), // Use CMS service
+      'history_articles': require('../services/history.service')
     };
 
     const service = serviceMap[entityName];
@@ -168,7 +169,7 @@ class ImportExportService {
       // Get data from service
       const data = await service.prepareExportData(options);
 
-      if (!data || data.length === 0) {
+      if (!data || !Array.isArray(data) || data.length === 0) {
         // Return empty file
         return this.generateEmptyFile(format);
       }

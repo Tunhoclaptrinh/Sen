@@ -295,6 +295,11 @@ class JsonAdapter {
         const aVal = a[field];
         const bVal = b[field];
 
+        if (typeof aVal === 'string' && typeof bVal === 'string') {
+          const comparison = aVal.localeCompare(bVal, 'vi');
+          return order === 'asc' ? comparison : -comparison;
+        }
+
         if (aVal < bVal) return order === 'asc' ? -1 : 1;
         if (aVal > bVal) return order === 'asc' ? 1 : -1;
       }
