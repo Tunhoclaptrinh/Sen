@@ -6,6 +6,12 @@ const { checkPermission } = require('../middleware/rbac.middleware');
 const { getSchemaDoc, validateSchema } = require('../middleware/validation.middleware');
 const importExportController = require('../controllers/importExport.controller');
 
+// === USER PROFILE ROUTES (Must be before :id routes) ===
+router.put('/profile',
+  protect,
+  userController.updateProfile
+);
+
 // === ADMIN ROUTES ===
 // Quản lý user, stats, status
 router.post('/',
@@ -77,9 +83,6 @@ router.get('/schema', (req, res, next) => {
 router.get('/:id/activity', protect, userController.getUserActivity);
 router.get('/:id', protect, userController.getById);
 
-router.put('/profile',
-  protect,
-  userController.updateProfile
-);
+
 
 module.exports = router;

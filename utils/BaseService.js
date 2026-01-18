@@ -123,6 +123,11 @@ class BaseService {
     for (const [field, rule] of Object.entries(this.schema)) {
       const value = data[field];
 
+      // Update Patch: Skip if field is missing in update (partial update)
+      if (options.isUpdate && value === undefined) {
+        continue;
+      }
+
       // Required check
       if (
         rule.required &&
@@ -378,7 +383,7 @@ class BaseService {
 
 
       // Schema validation
-      const schemaValidation = await this.validateBySchema(data, { excludeId: id });
+      const schemaValidation = await this.validateBySchema(data, { excludeId: id, isUpdate: true });
       if (!schemaValidation.success) {
         return {
           success: false,
