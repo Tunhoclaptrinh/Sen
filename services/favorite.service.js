@@ -23,6 +23,8 @@ class FavoriteService extends BaseService {
         item = await db.findById('artifacts', fav.reference_id);
       } else if (fav.type === 'exhibition') {
         item = await db.findById('exhibitions', fav.reference_id);
+      } else if (fav.type === 'article') {
+        item = await db.findById('history_articles', fav.reference_id);
       }
 
       return {
@@ -39,7 +41,7 @@ class FavoriteService extends BaseService {
   }
 
   async addFavorite(userId, type, referenceId) {
-    if (!['heritage_site', 'artifact', 'exhibition'].includes(type)) {
+    if (!['heritage_site', 'artifact', 'exhibition', 'article'].includes(type)) {
       return {
         success: false,
         message: 'Invalid type',
@@ -163,7 +165,8 @@ class FavoriteService extends BaseService {
       byType: {
         heritage_site: favorites.filter(f => f.type === 'heritage_site').length,
         artifact: favorites.filter(f => f.type === 'artifact').length,
-        exhibition: favorites.filter(f => f.type === 'exhibition').length
+        exhibition: favorites.filter(f => f.type === 'exhibition').length,
+        article: favorites.filter(f => f.type === 'article').length
       }
     };
 

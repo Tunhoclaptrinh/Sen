@@ -765,6 +765,34 @@
       "type": "artifact",
       "referenceId": 3,
       "createdAt": "2024-11-10T16:30:00Z"
+    },
+    {
+      "id": 5,
+      "user_id": 1,
+      "type": "heritage_site",
+      "reference_id": 8,
+      "created_at": "2026-01-18T01:38:38.221Z"
+    },
+    {
+      "id": 6,
+      "user_id": 1,
+      "type": "artifact",
+      "reference_id": 1,
+      "created_at": "2026-01-18T02:54:01.916Z"
+    },
+    {
+      "id": 7,
+      "user_id": 1,
+      "type": "heritage_site",
+      "reference_id": 5,
+      "created_at": "2026-01-18T03:58:33.855Z"
+    },
+    {
+      "id": 8,
+      "user_id": 1,
+      "type": "article",
+      "reference_id": 2,
+      "created_at": "2026-01-18T04:49:08.047Z"
     }
   ],
   "reviews": [
@@ -1102,7 +1130,7 @@
           "material": "Đồng",
           "dimensions": "cao khoảng 62 cm, đường kính mặt 89 cm",
           "condition": "good",
-          "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600",
+          "image": "https://live.staticflickr.com/2418/1529750162_e58f202fe6_z.jpg",
           "is_on_display": true,
           "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
           "updatedAt": "2026-01-10T00:00:00.000Z",
@@ -1560,6 +1588,61 @@
           "year": "938",
           "title": "Trận Đại Chiến",
           "description": "Cọc gỗ cắm xuống lòng sông, quân Nam Hán đại bại."
+        }
+      ],
+      "related_heritage": [
+        {
+          "id": 2,
+          "name": "Hoàng Thành Thăng Long",
+          "type": "monument",
+          "cultural_period": "Triều Lý",
+          "region": "Hà Nội",
+          "latitude": 21.0341,
+          "longitude": 105.8372,
+          "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
+          "year_established": 1010,
+          "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600",
+          "rating": 4.7,
+          "total_reviews": 892,
+          "visit_hours": "8:00 - 17:00",
+          "entrance_fee": 30000,
+          "is_active": true,
+          "unesco_listed": true,
+          "significance": "international",
+          "author": "Admin",
+          "publishDate": "2024-08-05T09:30:00Z",
+          "description": "<p>Hoàng thành Thăng Long là quần thể di tích lịch sử gắn bó mật thiết với sự phát triển của Thăng Long – Hà Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII – IX), khu di tích tiếp tục phát triển qua các triều đại Đinh – Tiền Lê (thế kỷ XI) và đạt đến đỉnh cao dưới thời Lý – Trần – Lê (thế kỷ XI – XVIII). Dưới triều Nguyễn (thế kỷ XIX – XX), mặc dù kinh đô được dời vào Phú Xuân (Huế), nhưng Hoàng thành Thăng Long vẫn giữ vai trò quan trọng.</p><p>Năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Thăng Long, ông đã quy hoạch kinh thành theo mô hình “tam trùng thành quách”, gồm ba vòng thành: Kinh thành (nơi cư dân sinh sống), Hoàng thành (khu vực dành cho quan lại làm việc) và Cấm thành (khu vực chỉ dành riêng cho hoàng gia). Từ thế kỷ XI đến XVIII, Hoàng thành Thăng Long luôn là trung tâm chính trị, hành chính của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đô vào Phú Xuân, Thăng Long bị hạ cấp thành Bắc Thành (thành Hà Nội). Dù vậy, điện Kính Thiên và Hậu Lâu trong Cấm thành vẫn được duy trì làm hành cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p><p>Sang thời kỳ Pháp thuộc, Hà Nội trở thành trung tâm hành chính của Liên bang Đông Dương, và Thành cổ Hà Nội được sử dụng làm Sở chỉ huy quân sự của Pháp. Lúc này, hầu hết các công trình cung điện, đền đài trong Hoàng thành đều bị phá hủy, chỉ còn Bắc Môn và Kỳ Đài được bảo tồn. Trên nền điện Kính Thiên và sân Long Trì, người Pháp xây dựng các công trình kiến trúc mới theo phong cách châu Âu. Đến năm 1954, sau khi Thủ đô được giải phóng, Thành Hà Nội trở thành Tổng hành dinh của Quân đội nhân dân Việt Nam và duy trì vai trò này đến năm 2004.</p><p>Ngày nay, Khu trung tâm Hoàng thành Thăng Long, gồm di tích khảo cổ học 18 Hoàng Diệu và Thành cổ Hà Nội, nằm trong khu vực trung tâm chính trị Ba Đình – nơi đặt trụ sở của các cơ quan lãnh đạo cao nhất của Đảng và Nhà nước. Đây không chỉ là một khu di tích lịch sử – văn hóa quan trọng mà còn là không gian kiến trúc mang giá trị đặc biệt, gắn liền chặc chẽ với quá trình phát triển của đất nước. Đây cũng là nơi tổ chức các sự kiện chính trị, văn hóa trọng đại của quốc gia.</p><h3>Vị thế và tầm vóc</h3><p>Trải qua 13 thế kỷ, Hoàng thành Thăng Long luôn giữ vị thế trung tâm chính trị và là một trong những di tích quan trọng nhất của Việt Nam. Ngày 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung tâm Hoàng thành Thăng Long – Hà Nội chính thức được UNESCO công nhận là Di sản văn hóa thế giới. Giá trị nổi bật của di sản này thể hiện qua chiều dài lịch sử liên tục suốt 13 thế kỷ, vai trò là trung tâm quyền lực trong nhiều thời kỳ và hệ thống di tích, di vật phong phú. Đây cũng là nơi lưu giữ những dấu ấn văn hóa quan trọng và chứng kiến nhiều sự kiện mang tầm vóc lớn lao trong lịch sử dân tộc.</p><img src='https://images.unsplash.com/photo-1555921015-5532091f6026?w=1000' alt='Hoang Thanh Thang Long' style='width:100%; border-radius: 8px; margin: 16px 0;' /><h3>Các di vật được khảo cổ, khai quật trong Hoàng Thành Thăng Long</h3><p>Các di vật được khai quật và hiện đang trưng bày ở Khu khảo cổ 18 Hoàng Diệu.</p><p>Thềm chia làm 3 lối lên xuống đều nhau, lối giữa ngăn cách với 2 lối bên bằng đôi rồng đá được xây dựng năm 1467 ( đời vua Lê Thánh Tông ). Rồng được tạo tác khá đẹp và trau chuốt, tạo khối kiểu tượng tròn có dáng mập, khỏe, đầu vươn cao phía chân thềm bậc, thân uốn khúc nhịp nhàng và chạy dài theo 9 bậc lên. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, râu và tóc kết thành đao bay về sau.</p><p>Tai rồng lớn kiểu tai trâu, sừng đơn vươn dài ra phía sau và áp sát thân rồng. Dọc sống lưng đục chạm hàng vây cá to, mập. Bên ngoài bậc thềm có 2 lan can hình rồng cách điệu dạng phù điêu ( gọi là vân hóa rồng ), mặt trong trang trí vân mây, bên ngoài thể hiện hoa cúc dây. Các hoa văn này được phủ kín mặt ngoài của thân rồng đá cách điệu.</p><p>Phía ngoài là hai đám mây hóa rồng. Đây là hai tảng đá nguyên khối dày 36 – 39 cm, phần đầu thấp dày hơn, có những đường cuốn cắt ngang cùng những đường gờ nổi nối tiếp nhau chạy hết chiều dài phiến đá 5,3 m, những đường gờ nổi không theo quy luật.</p><p>Mặt trong và ngoài của hai con rồng cách điệu này trang trí hoa văn, họa tiết khắc chìm vào đá. Phía ngoài, có hai đường thẳng chạy dọc theo thân rồng cách nhau 10 cm, chia đôi thành hai nửa trên dưới, bên trong là những bông hoa bốn cánh xếp liền nhau. Nửa trên là những cuộn mây, đao lửa ít theo quy luật rõ rang, nửa dưới là những hình ảnh mặt trời cách điệu, đao lửa, mây vờn. Phía mặt trong của phiến đá do có bậc thềm cao nên diện tích trạm khắc ít hơn, một đường thẳng bên trên là những cuộn mây nhỏ dẫn từ dưới thấp lên cao.</p><p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
+          "commentCount": 85,
+          "related_artifact_ids": [
+            7,
+            8,
+            9
+          ],
+          "related_history_ids": [
+            1
+          ]
+        }
+      ],
+      "related_levels": [
+        {
+          "id": 101,
+          "chapter_id": 1,
+          "name": "Trận chiến Bạch Đằng 938",
+          "description": "Tái hiện trận thủy chiến lừng lẫy tiêu diệt quân Nam Hán.",
+          "type": "historical_battle",
+          "difficulty": "hard",
+          "background_image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Tran_Bach_Dang_938.jpg/1200px-Tran_Bach_Dang_938.jpg",
+          "ai_character_id": 3
+        }
+      ],
+      "related_products": [
+        {
+          "id": 1,
+          "name": "Sách: Việt Nam Sử Lược",
+          "price": 180000,
+          "type": "book",
+          "image": "https://salt.tikicdn.com/cache/w1200/ts/product/23/67/68/73919242d992953284346028887e3871.jpg",
+          "url": "#"
         }
       ]
     },
