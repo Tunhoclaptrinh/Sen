@@ -358,6 +358,52 @@ function getNetworkIp() {
   return 'localhost';
 }
 
+// ==================== KEEPER ALIVE SERVICE ====================
+const axios = require('axios');
+const KEEPALIVE_INTERVAL = 14 * 60 * 1000; // 14 minutes
+
+function startKeepAlive() {
+  const serviceUrl = process.env.PYTHON_SERVICE_URL;
+  if (!serviceUrl || serviceUrl.includes('localhost') || serviceUrl.includes('127.0.0.1')) {
+     return;
+  }
+
+  // Extract base URL (e.g., https://npc-sen.onrender.com) from /process_query
+  try {
+    const urlObj = new URL(serviceUrl);
+    const targetUrl = `${urlObj.origin}/`; // Ping root path always
+
+    console.log(`⏰ Wake up SEN periodically: ${targetUrl}`);
+
+    // Initial ping
+    pingService(targetUrl);
+
+    // Periodic ping
+    setInterval(() => {
+        pingService(targetUrl);
+    }, KEEPALIVE_INTERVAL);
+
+  } catch (err) {
+      console.error(err.message);
+  }
+}
+
+async function pingService(url) {
+  try {
+    // GET request to root should return 200 OK
+    await axios.get(url, { timeout: 10000 });
+    console.log(`[${new Date().toISOString()}] 💓 Wake up successful (Status: 200)`);
+  } catch (error) {
+    // If root doesn't exist but we got a response, that's still a wake-up success (e.g. 404)
+    // But 405 means method not allowed, which is what we want to avoid.
+    if (error.response) {
+         console.log(`[${new Date().toISOString()}] 💓 Wake up successful (Status: ${error.response.status})`);
+    } else {
+         console.error(`[${new Date().toISOString()}] ⚠️ Wake up failed: ${error.message}`);
+    }
+  }
+}
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   const networkIp = getNetworkIp();
@@ -373,6 +419,9 @@ app.listen(PORT, () => {
 ║   ❤️  Health: http://localhost:${PORT}/api/health                    ║
 ╚══════════════════════════════════════════════════════════════════╝
   `);
+  
+  // Start Keep Alive
+  startKeepAlive();
 });
 
 module.exports = app;
