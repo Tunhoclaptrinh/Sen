@@ -16,7 +16,7 @@ router.put('/:id', checkPermission('user_data', 'update_own'), collectionControl
 router.delete('/:id', checkPermission('user_data', 'delete_own'), collectionController.delete);
 
 // Thêm/Xóa Artifact vào Collection
-router.post('/:id/artifacts/:artifactId', checkPermission('user_data', 'update_own'), collectionController.addArtifact);
-router.delete('/:id/artifacts/:artifactId', checkPermission('user_data', 'update_own'), collectionController.removeArtifact);
+router.post('/:id/items', checkPermission('user_data', 'update_own'), collectionController.addItem);
+router.delete('/:id/items/:itemId', checkPermission('user_data', 'update_own'), collectionController.removeItem);
 
 module.exports = router;
