@@ -1,13 +1,23 @@
-const db = require('../config/database');
+const collectionService = require('../services/collection.service');
 
 class CollectionController {
+  constructor() {
+    this.service = collectionService;
+  }
+
   getAll = async (req, res, next) => {
     try {
-      const collections = await db.findMany('collections', { user_id: req.user.id });
+      // Use findMany to filter by user_id
+      const result = await this.service.findMany({ user_id: req.user.id });
+
+      if (!result.success) {
+        return res.status(400).json(result);
+      }
+
       res.json({
         success: true,
-        count: collections.length,
-        data: collections
+        count: result.data.length,
+        data: result.data
       });
     } catch (error) {
       next(error);
@@ -16,14 +26,16 @@ class CollectionController {
 
   getById = async (req, res, next) => {
     try {
-      const collection = await db.findById('collections', req.params.id);
-      if (!collection) {
-        return res.status(404).json({
-          success: false,
-          message: 'Collection not found'
-        });
+      // Use service.getById to get populated items
+      const result = await this.service.getById(req.params.id);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 404).json(result);
       }
 
+      const collection = result.data;
+
+      // Check ownership
       if (collection.user_id !== req.user.id && req.user.role !== 'admin') {
         return res.status(403).json({
           success: false,
@@ -31,10 +43,7 @@ class CollectionController {
         });
       }
 
-      res.json({
-        success: true,
-        data: collection
-      });
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -42,21 +51,20 @@ class CollectionController {
 
   create = async (req, res, next) => {
     try {
-      const collection = await db.create('collections', {
+      const collectionData = {
         ...req.body,
         user_id: req.user.id,
-        artifact_ids: req.body.artifact_ids || [],
-        heritage_site_ids: req.body.heritage_site_ids || [],
-        exhibition_ids: req.body.exhibition_ids || [],
-        total_items: (req.body.artifact_ids || []).length,
-        createdAt: new Date().toISOString()
-      });
+        items: [], // Initialize empty items array
+        total_items: 0
+      };
 
-      res.status(201).json({
-        success: true,
-        message: 'Collection created',
-        data: collection
-      });
+      const result = await this.service.create(collectionData);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+
+      res.status(201).json(result);
     } catch (error) {
       next(error);
     }
@@ -64,31 +72,26 @@ class CollectionController {
 
   update = async (req, res, next) => {
     try {
-      const collection = await db.findById('collections', req.params.id);
-      if (!collection) {
-        return res.status(404).json({
-          success: false,
-          message: 'Collection not found'
-        });
+      // First check ownership
+      const check = await this.service.findById(req.params.id);
+      if (!check.success) {
+        return res.status(check.statusCode || 404).json(check);
       }
 
-      if (collection.user_id !== req.user.id && req.user.role !== 'admin') {
+      if (check.data.user_id !== req.user.id && req.user.role !== 'admin') {
         return res.status(403).json({
           success: false,
           message: 'Not authorized'
         });
       }
 
-      const updated = await db.update('collections', req.params.id, {
-        ...req.body,
-        updatedAt: new Date().toISOString()
-      });
+      const result = await this.service.update(req.params.id, req.body);
 
-      res.json({
-        success: true,
-        message: 'Collection updated',
-        data: updated
-      });
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -96,97 +99,82 @@ class CollectionController {
 
   delete = async (req, res, next) => {
     try {
-      const collection = await db.findById('collections', req.params.id);
-      if (!collection) {
-        return res.status(404).json({
-          success: false,
-          message: 'Collection not found'
-        });
+      // Check ownership
+      const check = await this.service.findById(req.params.id);
+      if (!check.success) {
+        return res.status(check.statusCode || 404).json(check);
       }
 
-      if (collection.user_id !== req.user.id && req.user.role !== 'admin') {
+      if (check.data.user_id !== req.user.id && req.user.role !== 'admin') {
         return res.status(403).json({
           success: false,
           message: 'Not authorized'
         });
       }
 
-      await db.delete('collections', req.params.id);
-      res.json({
-        success: true,
-        message: 'Collection deleted'
-      });
+      const result = await this.service.delete(req.params.id);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+
+      res.json(result);
     } catch (error) {
       next(error);
     }
   };
 
-  addArtifact = async (req, res, next) => {
+  addItem = async (req, res, next) => {
     try {
-      const collection = await db.findById('collections', req.params.id);
-      if (!collection) {
-        return res.status(404).json({
-          success: false,
-          message: 'Collection not found'
-        });
+      // Check ownership first
+      const check = await this.service.findById(req.params.id);
+      if (!check.success) return res.status(404).json(check);
+
+      if (check.data.user_id !== req.user.id) return res.status(403).json({ success: false, message: 'Not authorized' });
+
+      // req.body: { id: number, type: 'heritage'|'artifact' }
+      const itemData = req.body;
+      if (!itemData.id || !itemData.type) {
+        return res.status(400).json({ success: false, message: 'Item ID and Type are required' });
       }
 
-      if (collection.user_id !== req.user.id) {
-        return res.status(403).json({
-          success: false,
-          message: 'Not authorized'
-        });
+      // Convert id to number just in case
+      itemData.id = parseInt(itemData.id);
+
+      const result = await this.service.addItem(req.params.id, itemData);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
       }
 
-      if (collection.artifact_ids.includes(parseInt(req.params.artifactId))) {
-        return res.status(400).json({
-          success: false,
-          message: 'Artifact already in collection'
-        });
-      }
-
-      const updated = await db.update('collections', req.params.id, {
-        artifact_ids: [...collection.artifact_ids, parseInt(req.params.artifactId)],
-        total_items: (collection.artifact_ids.length || 0) + 1
-      });
-
-      res.json({
-        success: true,
-        message: 'Artifact added to collection',
-        data: updated
-      });
+      res.json(result);
     } catch (error) {
       next(error);
     }
   };
 
-  removeArtifact = async (req, res, next) => {
+  removeItem = async (req, res, next) => {
     try {
-      const collection = await db.findById('collections', req.params.id);
-      if (!collection) {
-        return res.status(404).json({
-          success: false,
-          message: 'Collection not found'
-        });
+      // Check ownership first
+      const check = await this.service.findById(req.params.id);
+      if (!check.success) return res.status(404).json(check);
+
+      if (check.data.user_id !== req.user.id) return res.status(403).json({ success: false, message: 'Not authorized' });
+
+      const { itemId } = req.params;
+      const { type } = req.query; // Pass type as query param: ?type=artifact
+
+      if (!type) {
+        return res.status(400).json({ success: false, message: 'Type query param is required' });
       }
 
-      if (collection.user_id !== req.user.id) {
-        return res.status(403).json({
-          success: false,
-          message: 'Not authorized'
-        });
+      const result = await this.service.removeItem(req.params.id, itemId, type);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
       }
 
-      const updated = await db.update('collections', req.params.id, {
-        artifact_ids: collection.artifact_ids.filter(id => id !== parseInt(req.params.artifactId)),
-        total_items: (collection.artifact_ids.length || 1) - 1
-      });
-
-      res.json({
-        success: true,
-        message: 'Artifact removed from collection',
-        data: updated
-      });
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -194,3 +182,4 @@ class CollectionController {
 }
 
 module.exports = new CollectionController();
+
