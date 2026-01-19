@@ -20,10 +20,12 @@ module.exports = {
     foreignKey: 'users',
     description: 'Người tạo bộ sưu tập'
   },
-  artifact_ids: {
+  items: {
     type: 'array',
     required: false,
-    description: 'Danh sách cổ vật trong bộ sưu tập'
+    default: [],
+    description: 'Danh sách mục trong bộ sưu tập (Di sản/Cổ vật)',
+    // Structure of each item: { id, type, note, addedAt }
   },
   is_public: {
     type: 'boolean',
