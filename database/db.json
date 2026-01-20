@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-18T07:07:25.713Z"
+      "lastLogin": "2026-01-20T01:13:06.173Z"
     },
     {
       "id": 4,
@@ -3175,22 +3175,213 @@
       "current_chapter": 3,
       "total_sen_petals": 5,
       "total_points": 241,
-      "level": 1,
+      "level": 12,
       "coins": 1000,
       "unlocked_chapters": [
         1,
         2,
         3
       ],
-      "completed_levels": [],
+      "completed_levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "collected_characters": [
+        1,
+        2
+      ],
+      "badges": [
+        1
+      ],
+      "achievements": [
+        1
+      ],
+      "museum_open": false,
+      "museum_income": 0,
+      "streak_days": 3,
+      "last_login": "2026-01-20T00:27:11.512Z",
+      "created_at": "2025-12-03T07:36:29.597Z"
+    },
+    {
+      "id": 2,
+      "user_id": 4,
+      "current_chapter": 5,
+      "total_sen_petals": 12,
+      "total_points": 850,
+      "level": 25,
+      "coins": 2500,
+      "unlocked_chapters": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "completed_levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "collected_characters": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "badges": [
+        1,
+        2,
+        3
+      ],
+      "achievements": [
+        1,
+        2
+      ],
+      "museum_open": true,
+      "museum_income": 50,
+      "streak_days": 10,
+      "last_login": "2026-01-20T07:00:00.000Z",
+      "created_at": "2024-04-05T11:00:00Z"
+    },
+    {
+      "id": 3,
+      "user_id": 6,
+      "current_chapter": 4,
+      "total_sen_petals": 8,
+      "total_points": 620,
+      "level": 18,
+      "coins": 1500,
+      "unlocked_chapters": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "completed_levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "collected_characters": [
+        1,
+        2,
+        3
+      ],
+      "badges": [
+        1,
+        2
+      ],
+      "achievements": [
+        1
+      ],
+      "museum_open": false,
+      "museum_income": 0,
+      "streak_days": 5,
+      "last_login": "2026-01-19T10:00:00.000Z",
+      "created_at": "2024-06-01T08:00:00Z"
+    },
+    {
+      "id": 4,
+      "user_id": 7,
+      "current_chapter": 2,
+      "total_sen_petals": 3,
+      "total_points": 410,
+      "level": 9,
+      "coins": 800,
+      "unlocked_chapters": [
+        1,
+        2
+      ],
+      "completed_levels": [
+        1,
+        2,
+        3
+      ],
+      "collected_characters": [
+        1
+      ],
+      "badges": [
+        1
+      ],
+      "achievements": [],
+      "museum_open": false,
+      "museum_income": 0,
+      "streak_days": 2,
+      "last_login": "2026-01-20T05:30:00.000Z",
+      "created_at": "2024-06-15T09:00:00Z"
+    },
+    {
+      "id": 5,
+      "user_id": 2,
+      "current_chapter": 3,
+      "total_sen_petals": 6,
+      "total_points": 350,
+      "level": 15,
+      "coins": 1200,
+      "unlocked_chapters": [
+        1,
+        2,
+        3
+      ],
+      "completed_levels": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "collected_characters": [
+        1,
+        2
+      ],
+      "badges": [
+        1
+      ],
+      "achievements": [
+        1
+      ],
+      "museum_open": false,
+      "museum_income": 0,
+      "streak_days": 4,
+      "last_login": "2026-01-18T14:20:00.000Z",
+      "created_at": "2024-02-20T14:20:00Z"
+    },
+    {
+      "id": 6,
+      "user_id": 5,
+      "current_chapter": 1,
+      "total_sen_petals": 1,
+      "total_points": 120,
+      "level": 5,
+      "coins": 500,
+      "unlocked_chapters": [
+        1
+      ],
+      "completed_levels": [
+        1
+      ],
       "collected_characters": [],
       "badges": [],
       "achievements": [],
       "museum_open": false,
       "museum_income": 0,
-      "streak_days": 0,
-      "last_login": "2025-12-03T07:36:29.597Z",
-      "created_at": "2025-12-03T07:36:29.597Z"
+      "streak_days": 1,
+      "last_login": "2026-01-15T09:00:00.000Z",
+      "created_at": "2024-05-12T14:30:00Z"
     }
   ],
   "game_sessions": [
@@ -3972,6 +4163,27 @@
       "started_at": "2026-01-14T02:03:28.663Z",
       "last_activity": "2026-01-14T02:03:51.701Z",
       "completed_at": "2026-01-14T02:03:54.052Z"
+    },
+    {
+      "id": 33,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "in_progress",
+      "current_screen_id": "demo_image",
+      "current_screen_index": 1,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 4,
+      "completed_screens": [
+        "demo_dialogue"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-20T01:07:18.844Z",
+      "last_activity": "2026-01-20T01:07:20.896Z"
     }
   ],
   "learning_modules": [
