@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-19T16:32:26.573Z"
+      "lastLogin": "2026-01-19T17:57:38.246Z"
     },
     {
       "id": 2,
@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-19T17:13:27.499Z"
+      "lastLogin": "2026-01-19T17:57:52.411Z"
     },
     {
       "id": 4,
@@ -922,7 +922,7 @@
       "id": 99,
       "chapter_id": 1,
       "name": "[DEMO] Test All Screens",
-      "description": "Level demo để test tất cả các loại màn hình",
+      "description": "Level demo đầy đủ tính năng: Đối thoại, Tìm vật, Trắc nghiệm, Dòng thời gian, Xem ảnh, Video.",
       "type": "mixed",
       "difficulty": "easy",
       "order": 0,
@@ -934,63 +934,154 @@
       "screens": [
         {
           "id": "demo_dialogue",
-          "name": "Dialogue Demo",
-          "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+          "index": 0,
+          "name": "1. Dialogue Screen",
+          "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
           "type": "DIALOGUE",
           "description": "Demo màn hình hội thoại",
+          "is_first": true,
+          "is_last": false,
           "content": [
             {
               "speaker": "AI",
-              "text": "Xin chào! Mình là trợ lý Sen. Mình sẽ hướng dẫn bạn khám phá di sản văn hóa Việt Nam.",
-              "avatar": "",
+              "text": "Chào mừng bạn đến với level Demo Tính Năng!",
+              "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
               "emotion": "happy"
             },
             {
-              "speaker": "NARRATOR",
-              "text": "Bạn bắt đầu hành trình khám phá những di sản văn hóa quý giá của dân tộc.",
-              "avatar": "",
-              "emotion": ""
-            },
-            {
               "speaker": "AI",
-              "text": "Hãy cùng mình tìm hiểu về lịch sử phong phú của Việt Nam nhé!",
-              "avatar": "",
+              "text": "Chúng ta sẽ lần lượt trải nghiệm: Hội thoại, Tìm vật, Trắc nghiệm, Timeline, Ảnh và Video.",
+              "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
               "emotion": "excited"
             }
           ]
         },
         {
+          "id": "demo_hidden",
+          "index": 1,
+          "name": "2. Hidden Object Screen",
+          "background_image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+          "type": "HIDDEN_OBJECT",
+          "description": "Hãy tìm 3 vật phẩm: Cái Quạt, Cờ Hội và Đàn Nguyệt.",
+          "is_first": false,
+          "is_last": false,
+          "required_items": 3,
+          "items": [
+            {
+              "id": "fan",
+              "name": "Cái Quạt",
+              "x": 20,
+              "y": 60,
+              "fact_popup": "Quạt giấy truyền thống."
+            },
+            {
+              "id": "flag",
+              "name": "Cờ Hội",
+              "x": 70,
+              "y": 30,
+              "fact_popup": "Cờ ngũ sắc trong lễ hội."
+            },
+            {
+              "id": "instrument",
+              "name": "Đàn Nguyệt",
+              "x": 50,
+              "y": 50,
+              "fact_popup": "Nhạc cụ dân tộc."
+            }
+          ]
+        },
+        {
+          "id": "demo_quiz",
+          "index": 2,
+          "name": "3. Quiz Screen",
+          "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+          "type": "QUIZ",
+          "description": "Câu hỏi trắc nghiệm kiến thức",
+          "is_first": false,
+          "is_last": false,
+          "question": "Tính năng nào sau đây KHÔNG có trong demo này?",
+          "options": [
+            {
+              "text": "Xem ảnh 360 độ",
+              "is_correct": true,
+              "explanation": "Chính xác! Hiện tại Web chưa hỗ trợ 360 viewer."
+            },
+            {
+              "text": "Dòng thời gian",
+              "is_correct": false,
+              "explanation": "Sai rồi, lát nữa sẽ có timeline."
+            },
+            {
+              "text": "Video Player",
+              "is_correct": false,
+              "explanation": "Sai rồi, video ở cuối level."
+            }
+          ],
+          "points": 100
+        },
+        {
+          "id": "demo_timeline",
+          "index": 3,
+          "name": "4. Timeline Screen",
+          "background_image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+          "type": "TIMELINE",
+          "description": "Sắp xếp các triều đại Việt Nam theo thứ tự thời gian.",
+          "is_first": false,
+          "is_last": false,
+          "events": [
+            {
+              "id": "e1",
+              "year": 1010,
+              "title": "Nhà Lý",
+              "description": "Lý Thái Tổ dời đô về Thăng Long."
+            },
+            {
+              "id": "e2",
+              "year": 1225,
+              "title": "Nhà Trần",
+              "description": "Tiếp nối nhà Lý, 3 lần thắng quân Nguyên Mông."
+            },
+            {
+              "id": "e3",
+              "year": 1428,
+              "title": "Nhà Hậu Lê",
+              "description": "Lê Lợi khởi nghĩa Lam Sơn thành công."
+            }
+          ],
+          "correct_order": [
+            "e1",
+            "e2",
+            "e3"
+          ]
+        },
+        {
           "id": "demo_image",
-          "name": "Image Viewer Demo",
-          "background": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+          "index": 4,
+          "name": "5. Image Viewer Screen",
+          "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
           "type": "IMAGE_VIEWER",
           "description": "Demo màn hình xem ảnh",
+          "is_first": false,
+          "is_last": false,
           "content": {
-            "title": "Di sản Hội An",
-            "description": "Phố cổ Hội An là một trong những di sản văn hóa thế giới được UNESCO công nhận. Nơi đây lưu giữ nét kiến trúc cổ kính độc đáo của Việt Nam.",
-            "image_url": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800"
+            "title": "Chùa Một Cột",
+            "description": "Biểu tượng văn hóa tâm linh độc đáo của Hà Nội, được xây dựng từ thời Lý.",
+            "image_url": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800"
           }
         },
         {
           "id": "demo_video",
-          "name": "Video Demo",
-          "background": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+          "index": 5,
+          "name": "6. Video Screen",
+          "background_image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=800",
           "type": "VIDEO",
           "description": "Demo màn hình video",
+          "is_first": false,
+          "is_last": true,
           "content": {
-            "title": "Lịch sử Việt Nam",
-            "description": "Xem video để tìm hiểu về lịch sử hào hùng của dân tộc Việt Nam.",
+            "title": "Giới thiệu Sen Hoa",
+            "description": "Trailer giới thiệu dự án game lịch sử Sen Hoa. Hãy cùng thưởng thức!",
             "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
-          }
-        },
-        {
-          "id": "demo_hidden",
-          "name": "Hidden Object Demo",
-          "background": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
-          "type": "HIDDEN_OBJECT",
-          "description": "Demo màn hình tìm đồ vật",
-          "content": {
-            "objects": []
           }
         }
       ]
@@ -3973,6 +4064,120 @@
       "started_at": "2026-01-14T02:03:28.663Z",
       "last_activity": "2026-01-14T02:03:51.701Z",
       "completed_at": "2026-01-14T02:03:54.052Z"
+    },
+    {
+      "id": 33,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "completed",
+      "current_screen_id": "demo_video",
+      "current_screen_index": 5,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "demo_quiz",
+          "answer": "Xem ảnh 360 độ",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-19T17:58:21.439Z"
+        }
+      ],
+      "timeline_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "score": 50,
+      "total_screens": 6,
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_hidden",
+        "demo_quiz",
+        "demo_timeline",
+        "demo_image"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-19T17:58:01.456Z",
+      "last_activity": "2026-01-19T17:59:12.798Z",
+      "completed_at": "2026-01-19T17:59:15.221Z"
+    },
+    {
+      "id": 34,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "completed",
+      "current_screen_id": "demo_video",
+      "current_screen_index": 5,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "demo_quiz",
+          "answer": "Xem ảnh 360 độ",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-19T18:00:18.192Z"
+        }
+      ],
+      "timeline_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "score": 50,
+      "total_screens": 6,
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_hidden",
+        "demo_quiz",
+        "demo_timeline",
+        "demo_image"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-19T18:00:28.189Z",
+      "last_activity": "2026-01-19T18:00:50.868Z",
+      "completed_at": "2026-01-19T18:01:01.981Z"
+    },
+    {
+      "id": 35,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "completed",
+      "current_screen_id": "demo_video",
+      "current_screen_index": 5,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "demo_quiz",
+          "answer": "Xem ảnh 360 độ",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-19T18:02:31.480Z"
+        }
+      ],
+      "timeline_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "score": 50,
+      "total_screens": 6,
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_hidden",
+        "demo_quiz",
+        "demo_timeline",
+        "demo_image"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-19T18:01:08.858Z",
+      "last_activity": "2026-01-19T18:03:53.820Z",
+      "completed_at": "2026-01-19T18:04:23.801Z"
     }
   ],
   "learning_modules": [
