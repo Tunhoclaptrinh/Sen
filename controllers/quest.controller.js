@@ -6,9 +6,28 @@ class QuestController extends BaseController {
     super(questService);
   }
 
-  getAvailable = async (req, res, next) => {
+  getActive = async (req, res, next) => {
     try {
-      const result = await this.service.getAvailableQuests(req.user.id);
+      const result = await this.service.getActiveQuests(req.user.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  start = async (req, res, next) => {
+    try {
+      const result = await this.service.startQuest(req.params.id, req.user.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  updateProgress = async (req, res, next) => {
+    try {
+      const { current_value } = req.body;
+      const result = await this.service.updateQuestProgress(req.params.id, req.user.id, current_value);
       res.json(result);
     } catch (error) {
       next(error);
@@ -17,15 +36,16 @@ class QuestController extends BaseController {
 
   complete = async (req, res, next) => {
     try {
-      const { score } = req.body;
-      if (score === undefined) {
-        return res.status(400).json({
-          success: false,
-          message: 'Score is required'
-        });
-      }
+      const result = await this.service.completeQuest(req.params.id, req.user.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 
-      const result = await this.service.completeQuest(req.params.id, req.user.id, score);
+  claimReward = async (req, res, next) => {
+    try {
+      const result = await this.service.claimReward(req.params.id, req.user.id);
       res.json(result);
     } catch (error) {
       next(error);

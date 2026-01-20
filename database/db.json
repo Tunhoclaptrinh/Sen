@@ -4369,6 +4369,44 @@
       "started_at": "2026-01-19T18:01:08.858Z",
       "last_activity": "2026-01-19T18:03:53.820Z",
       "completed_at": "2026-01-19T18:04:23.801Z"
+    },
+    {
+      "id": 36,
+      "user_id": 3,
+      "level_id": "99",
+      "status": "completed",
+      "current_screen_id": "demo_video",
+      "current_screen_index": 5,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "demo_quiz",
+          "answer": "Xem ảnh 360 độ",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-20T01:49:29.732Z"
+        }
+      ],
+      "timeline_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "score": 50,
+      "total_screens": 6,
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_hidden",
+        "demo_quiz",
+        "demo_timeline",
+        "demo_image"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-20T01:47:23.480Z",
+      "last_activity": "2026-01-20T01:50:13.645Z",
+      "completed_at": "2026-01-20T01:50:15.077Z"
     }
   ],
   "learning_modules": [
@@ -6589,6 +6627,86 @@
         "route": "uncertain"
       },
       "created_at": "2026-01-19T09:36:03.582Z"
+    }
+  ],
+  "game_quests": [
+    {
+      "id": 1,
+      "title": "Người Mới Nhập Môn",
+      "description": "Hoàn thành bài học đầu tiên để làm quen với thế giới di sản.",
+      "type": "daily",
+      "category": "learning",
+      "difficulty": "easy",
+      "is_active": true,
+      "requirements": [
+        {
+          "type": "complete_level",
+          "target": 1,
+          "description": "Hoàn thành 1 màn chơi bất kỳ"
+        }
+      ],
+      "rewards": {
+        "coins": 50,
+        "experience": 100,
+        "petals": 5
+      },
+      "thumbnail": "https://img.freepik.com/free-vector/scroll-feather-isolated-white-background_1284-42861.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Nhà Thám Hiểm Di Tích",
+      "description": "Khám phá các di tích lịch sử quan trọng của Thăng Long.",
+      "type": "weekly",
+      "category": "exploration",
+      "difficulty": "medium",
+      "is_active": true,
+      "requirements": [
+        {
+          "type": "visit_site",
+          "target": 3,
+          "description": "Tham quan 3 di tích khác nhau"
+        }
+      ],
+      "rewards": {
+        "coins": 200,
+        "experience": 500,
+        "petals": 20,
+        "badge": "explorer_silver"
+      },
+      "thumbnail": "https://img.freepik.com/free-vector/compass-rose-retro-style_1284-42171.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Kho Báu Hoàng Thành",
+      "description": "Thu thập đầy đủ các hiện vật quý hiếm trong bộ sưu tập.",
+      "type": "achievement",
+      "category": "discovery",
+      "difficulty": "hard",
+      "is_active": true,
+      "requirements": [
+        {
+          "type": "collect_artifact",
+          "target": 10,
+          "description": "Thu thập 10 cổ vật vào bộ sưu tập"
+        }
+      ],
+      "rewards": {
+        "coins": 1000,
+        "experience": 2000,
+        "petals": 100,
+        "badge": "collector_gold"
+      },
+      "thumbnail": "https://img.freepik.com/free-vector/treasure-chest-illustration_1284-43666.jpg"
+    }
+  ],
+  "user_quests": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "quest_id": "1",
+      "status": "in_progress",
+      "current_value": 0,
+      "started_at": "2026-01-20T02:25:41.178Z"
     }
   ]
 }
