@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-20T01:11:20.952Z"
+      "lastLogin": "2026-01-19T01:12:06.872Z"
     },
     {
       "id": 2,
@@ -2891,7 +2891,36 @@
       ],
       "exhibition_ids": [],
       "createdAt": "2024-01-01T00:00:00Z",
-      "updatedAt": "2024-01-01T00:00:00Z"
+      "updatedAt": "2026-01-19T01:50:38.397Z",
+      "items": [
+        {
+          "id": 1,
+          "type": "heritage",
+          "addedAt": "2026-01-19T02:17:46.964Z"
+        },
+        {
+          "id": 2,
+          "type": "artifact",
+          "addedAt": "2026-01-19T02:17:46.964Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "name": "Nghiên cứu Lịch sử",
+      "description": "Tài liệu và hiện vật cho bài luận văn.",
+      "items": [
+        {
+          "id": 4,
+          "type": "artifact",
+          "addedAt": "2026-01-19T02:17:46.964Z"
+        }
+      ],
+      "is_public": false,
+      "created_at": "2026-01-19T01:46:49.856Z",
+      "total_items": 1,
+      "updatedAt": "2026-01-19T02:12:52.563Z"
     }
   ],
   "scan_objects": [
