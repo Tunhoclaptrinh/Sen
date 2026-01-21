@@ -41,6 +41,12 @@ module.exports = {
     required: false,
     description: 'Chapters đã mở'
   },
+  finished_chapters: {
+    type: 'array',
+    required: false,
+    default: [],
+    description: 'Chapters đã hoàn thành (đủ điều kiện mở chương sau)'
+  },
   completed_levels: {
     type: 'array',
     required: false,

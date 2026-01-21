@@ -1,6 +1,5 @@
 /**
- * Unified Game Service - FIXED VERSION
- * Sửa lỗi duplicate methods, thêm missing implementations
+ * Unified Game Service
  */
 
 const db = require('../config/database');
@@ -184,36 +183,74 @@ class GameService {
   async getChapters(userId) {
     const progress = await this.getProgress(userId);
     const chaptersData = await db.findAll('game_chapters');
-    const chapters = chaptersData.sort((a, b) => a.order - b.order);
+    // Filter active chapters
+    const activeChapters = chaptersData.filter(c => c.is_active !== false);
+    const chapters = activeChapters.sort((a, b) => a.order - b.order);
 
+    // const enriched = await Promise.all(chapters.map(async (chapter, index) => {
     const enriched = await Promise.all(chapters.map(async (chapter) => {
-      const isUnlocked = progress.data.unlocked_chapters.includes(chapter.id);
+      const isUnlocked = (progress.data.unlocked_chapters || []).includes(chapter.id);
+      const isFinished = (progress.data.finished_chapters || []).includes(chapter.id);
       const levels = await db.findMany('game_levels', { chapter_id: chapter.id });
       const completedCount = levels.filter(l =>
         progress.data.completed_levels.includes(l.id)
       ).length;
 
+      // Sequential Check:
+      // Chapter 1 is always unlockable (if not already unlocked).
+      // Chapter N requires Previous Chapter to be FINISHED.
+      let canUnlock = false;
+      if (!isUnlocked) {
+        if (chapter.order === 1) {
+          canUnlock = true;
+        } else {
+             // Find previous chapter by order
+             const prevChapter = chapters.find(c => c.order === chapter.order - 1);
+             if (prevChapter && (progress.data.finished_chapters || []).includes(prevChapter.id)) {
+                 // Check currency (Petals)
+                 if (progress.data.total_sen_petals >= chapter.required_petals) {
+                     canUnlock = true;
+                 }
+             }
+        }
+      }
+
+      // Dynamic Petal State Calculation
+      let calculatedPetalState = 'locked';
+      if (isFinished) {
+        calculatedPetalState = 'full';
+      } else if (isUnlocked) {
+        calculatedPetalState = 'blooming';
+      } else if (canUnlock) {
+        calculatedPetalState = 'closed';
+      }
+
       return {
-        ...chapter,
+        id: chapter.id,
+        name: chapter.name || "",
+        description: chapter.description || "",
+        theme: chapter.theme || "Không có",
+        order: chapter.order,
+        color: chapter.color || "#D35400",
+        image: chapter.image || "", 
+        layer_index: chapter.layer_index || 1,
+        petal_state: calculatedPetalState,
+        petal_image_closed: chapter.petal_image_closed || "",
+        petal_image_bloom: chapter.petal_image_bloom || "",
+        petal_image_full: chapter.petal_image_full || "",
+        required_petals: chapter.required_petals || 0,
         is_unlocked: isUnlocked,
+        is_finished: isFinished,
         total_levels: levels.length,
         completed_levels: completedCount,
         completion_rate: levels.length > 0
           ? Math.round((completedCount / levels.length) * 100)
           : 0,
-        can_unlock: this.canUnlockChapter(chapter, progress.data)
+        can_unlock: canUnlock
       };
     }));
 
     return { success: true, data: enriched };
-  }
-
-  /**
-   * Kiểm tra có thể mở khóa chapter không (Sync logic, no DB calls)
-   */
-  canUnlockChapter(chapter, progress) {
-    if (chapter.required_petals === 0) return true;
-    return progress.total_sen_petals >= chapter.required_petals;
   }
 
   /**
@@ -258,19 +295,39 @@ class GameService {
 
     const progress = await db.findOne('game_progress', { user_id: userId });
 
+    // 1. Check if already unlocked
     if (progress.unlocked_chapters.includes(parseInt(chapterId))) {
       return { success: false, message: 'Chapter already unlocked', statusCode: 400 };
     }
 
-    if (!this.canUnlockChapter(chapter, progress)) {
+    // 2. Sequential Check
+    if (chapter.order > 1) {
+        // Find previous chapter
+        const prevChapter = await db.findOne('game_chapters', { order: chapter.order - 1 });
+        if (!prevChapter) {
+             return { success: false, message: 'Previous chapter configuration error', statusCode: 500 };
+        }
+        
+        // Check if previous chapter is finished
+        if (!progress.finished_chapters.includes(prevChapter.id)) {
+            return { 
+                success: false, 
+                message: `You must finish Chapter ${prevChapter.order}: ${prevChapter.name} first!`, 
+                statusCode: 403 
+            };
+        }
+    }
+
+    // 3. Currency Check (Sen Petals)
+    if (progress.total_sen_petals < chapter.required_petals) {
       return {
         success: false,
-        message: `Need ${chapter.required_petals} sen petals to unlock`,
+        message: `Need ${chapter.required_petals} Sen Petals to unlock`,
         statusCode: 400
       };
     }
 
-    // Deduct petals and unlock chapter
+    // 4. Deduct Petals and Unlock
     const newPetalsCount = progress.total_sen_petals - chapter.required_petals;
 
     await db.update('game_progress', progress.id, {
@@ -308,7 +365,7 @@ class GameService {
       type: level.type,
       difficulty: level.difficulty,
       order: level.order,
-      thumbnail: level.thumbnail,
+      image: level.image,
       is_completed: progress.data.completed_levels.includes(level.id),
       is_locked: !this.canPlayLevel(level, progress.data),
       rewards: level.rewards,
@@ -996,6 +1053,22 @@ class GameService {
         coins: newCoins,
         collected_characters: newCharacters
       });
+
+      // ✅ CHECK CHAPTER COMPLETION (Sequential Logic)
+      // Get all levels in this chapter
+      const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
+      // Check if ALL levels are in completed_levels
+      const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
+      
+      if (allCompleted) {
+          // Check if already in finished_chapters
+          const isChapterFinished = progress.finished_chapters.includes(level.chapter_id);
+          if (!isChapterFinished) {
+              await db.update('game_progress', progress.id, {
+                  finished_chapters: [...(progress.finished_chapters || []), level.chapter_id]
+              });
+          }
+      }
 
       return {
         success: true,
