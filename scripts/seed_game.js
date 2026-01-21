@@ -14,16 +14,30 @@ const newChapters = [
         "layer_index": 1,
         "petal_state": "blooming",
         "required_petals": 0,
-        "is_active": true
+        "is_active": true,
+        "theme": "Văn Hóa Bắc Bộ",
+        "order": 1,
+        "color": "#D35400",
+        "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600",
+        "petal_image_closed": "https://example.com/c1_closed.png",
+        "petal_image_bloom": "https://example.com/c1_bloom.png",
+        "petal_image_full": "https://example.com/c1_full.png"
     },
     {
         "id": 2,
         "name": "Sen Vàng - Giao Thoa",
         "description": "Sự giao thoa văn hóa thế kỷ 18-19.",
         "layer_index": 2,
-        "petal_state": "locked",
+        "petal_state": "closed",
         "required_petals": 5,
-        "is_active": true
+        "is_active": true,
+        "theme": "Giao Thoa Văn Hóa",
+        "order": 2,
+        "color": "#F1C40F",
+        "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600",
+        "petal_image_closed": "https://example.com/c2_closed.png",
+        "petal_image_bloom": "https://example.com/c2_bloom.png",
+        "petal_image_full": "https://example.com/c2_full.png"
     },
     {
         "id": 3,
@@ -32,7 +46,14 @@ const newChapters = [
         "layer_index": 3,
         "petal_state": "locked",
         "required_petals": 10,
-        "is_active": true
+        "is_active": true,
+        "theme": "Di Sản Phong Kiến",
+        "order": 3,
+        "color": "#ECF0F1",
+        "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600",
+        "petal_image_closed": "https://example.com/c3_closed.png",
+        "petal_image_bloom": "https://example.com/c3_bloom.png",
+        "petal_image_full": "https://example.com/c3_full.png"
     }
 ];
 
@@ -87,6 +108,9 @@ const newLevels = [
         "order": 1,
         "required_level": null,
         "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+        "background_music": null,
+        "ai_character_id": 1,
+        "knowledge_base": "Kiến thức về múa rối nước và Chú Tễu",
         "screens": [
             {
                 "id": "screen1",
@@ -139,6 +163,9 @@ const newLevels = [
         "order": 2,
         "required_level": 1,
         "background_image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+        "background_music": null,
+        "ai_character_id": 1,
+        "knowledge_base": "Sân khấu thủy đình và các tích trò rối nước",
         "screens": [
             {
                 "id": "screen1",
@@ -188,6 +215,9 @@ const newLevels = [
         "order": 3,
         "required_level": 2,
         "background_image": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800",
+        "background_music": null,
+        "ai_character_id": 1,
+        "knowledge_base": "Các sự kiện lịch sử Việt Nam qua các thời kỳ",
         "screens": [
             {
                 "id": "screen1",

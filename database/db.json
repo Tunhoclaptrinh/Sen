@@ -845,7 +845,11 @@
       "theme": "Hahahaha",
       "order": 1,
       "updatedAt": "2026-01-19T17:35:37.595Z",
-      "color": "#782f2f"
+      "color": "#782f2f",
+      "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600",
+      "petal_image_closed": "https://example.com/c1_closed.png",
+      "petal_image_bloom": "https://example.com/c1_bloom.png",
+      "petal_image_full": "https://example.com/c1_full.png"
     },
     {
       "id": 2,
@@ -854,7 +858,11 @@
       "layer_index": 2,
       "petal_state": "locked",
       "required_petals": 0,
-      "is_active": true
+      "is_active": true,
+      "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600",
+      "petal_image_closed": "https://example.com/c2_closed.png",
+      "petal_image_bloom": "https://example.com/c2_bloom.png",
+      "petal_image_full": "https://example.com/c2_full.png"
     },
     {
       "id": 3,
@@ -863,7 +871,11 @@
       "layer_index": 3,
       "petal_state": "locked",
       "required_petals": 0,
-      "is_active": true
+      "is_active": true,
+      "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600",
+      "petal_image_closed": "https://example.com/c3_closed.png",
+      "petal_image_bloom": "https://example.com/c3_bloom.png",
+      "petal_image_full": "https://example.com/c3_full.png"
     }
   ],
   "game_characters": [
