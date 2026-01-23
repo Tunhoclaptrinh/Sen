@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-22T05:49:58.309Z"
+      "lastLogin": "2026-01-23T10:24:10.709Z"
     },
     {
       "id": 2,
@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-23T07:37:58.905Z"
+      "lastLogin": "2026-01-23T10:26:35.993Z"
     },
     {
       "id": 4,
@@ -1161,6 +1161,7 @@
       "difficulty": "easy",
       "order": 0,
       "required_level": null,
+      "thumbnail": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
       "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
       "background_music": null,
       "ai_character_id": 1,

@@ -80,12 +80,13 @@
 
 ### 2. 🎮 Game System (Unified Architecture)
 
-- **Chapter System (Sen Flower Layers)**
+- **Chapter System**
 
-  - 3 lớp cánh hoa sen tượng trưng cho 3 chương game
-  - Chapter 1: Sen Hồng - Ký Ức Đầu Tiên (Cội Nguồn)
-  - Chapter 2: Sen Vàng - Thời Hoàng Kim (Giao Thoa)
-  - Chapter 3: Sen Trắng - Di Sản Bất Tử (Vươn Xa)
+  - Hệ thống hiện đang có 3 chương game chính, mở khóa tuần tự.
+  - Người chơi phải hoàn thành các điều kiện để mở khóa chương mới. Đồng thời sử dụng **Sen Petals** (Cánh Hoa Sen) tích lũy để mở chương mới.
+  - Chapter 1: Sen Hồng - Ký ức Đầu tiên (Cội nguồn)
+  - Chapter 2: Sen Vàng - Thời hoàng kim (Giao thoa)
+  - Chapter 3: Sen Trắng - Di sản Bất tử (Vươn xa)
 
 - **Level System (Screen-based)**
 

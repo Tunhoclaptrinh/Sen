@@ -12,21 +12,12 @@ class LearningService extends BaseService {
       return { success: false, message: 'Module not found', statusCode: 404 };
     }
 
-    let userProgress = await db.findOne('user_progress', { user_id: userId });
-    if (!userProgress) {
-      userProgress = await db.create('user_progress', {
-        user_id: userId,
-        completed_modules: [],
-        completed_quests: [],
-        total_points: 0,
-        level: 1,
-        badges: [],
-        achievements: [],
-        streak: 0,
-        total_learning_time: 0,
-        bookmarked_artifacts: [],
-        bookmarked_sites: []
-      });
+    // Use game_progress
+    let gameProgress = await db.findOne('game_progress', { user_id: userId });
+    
+    if (!gameProgress) {
+        const gameService = require('./game.service');
+        gameProgress = await gameService.initializeProgress(userId);
     }
 
     const completedModule = {
@@ -40,12 +31,12 @@ class LearningService extends BaseService {
     const points = score >= passingScore ? 50 : 0;
 
     // Level calculation: Every 200 points = 1 level
-    const newTotalPoints = (userProgress.total_points || 0) + points;
+    const newTotalPoints = (gameProgress.total_points || 0) + points;
     const newLevel = Math.floor(newTotalPoints / 200) + 1;
 
     // Badge logic
-    let newBadges = [...(userProgress.badges || [])];
-    const completedCount = (userProgress.completed_modules || []).length + 1;
+    let newBadges = [...(gameProgress.badges || [])];
+    const completedCount = (gameProgress.completed_modules || []).length + 1;
 
     if (completedCount === 1 && !newBadges.includes('newbie')) {
       newBadges.push('newbie'); // Badge: Người Mới Bắt Đầu
@@ -53,14 +44,15 @@ class LearningService extends BaseService {
     if (score === 100 && !newBadges.includes('perfect_score')) {
       newBadges.push('perfect_score'); // Badge: Điểm Tuyệt Đối
     }
-    if (newLevel > (userProgress.level || 1)) {
+
+    if (newLevel > (gameProgress.level || 1)) {
       // Logic for level up badge could go here
     }
 
-    const updated = await db.update('user_progress', userProgress.id, {
-      completed_modules: [...(userProgress.completed_modules || []), completedModule],
+    await db.update('game_progress', gameProgress.id, {
+      completed_modules: [...(gameProgress.completed_modules || []), completedModule],
       total_points: newTotalPoints,
-      level: newLevel,
+      level: Math.max(gameProgress.level, newLevel),
       badges: newBadges
     });
 
@@ -77,14 +69,19 @@ class LearningService extends BaseService {
   }
 
   async getLearningPath(userId) {
-    const userProgress = await db.findOne('user_progress', { user_id: userId });
+    let gameProgress = await db.findOne('game_progress', { user_id: userId });
+    if (!gameProgress) {
+        // Just return empty state if no progress yet
+        gameProgress = { completed_modules: [] };
+    }
+    
     const allModules = (await db.findAll('learning_modules'))
       .sort((a, b) => a.order - b.order);
 
-    const completedModuleIds = userProgress?.completed_modules?.map(m => m.module_id) || [];
+    const completedModuleIds = gameProgress?.completed_modules?.map(m => m.module_id) || [];
 
     const path = allModules.map(module => {
-      const completedData = userProgress?.completed_modules?.find(m => m.module_id === module.id);
+      const completedData = gameProgress?.completed_modules?.find(m => m.module_id === module.id);
 
       return {
         id: module.id,

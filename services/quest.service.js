@@ -121,30 +121,28 @@ class QuestService extends BaseService {
       claimed_at: new Date().toISOString()
     });
 
-    // Award rewards in user_progress
-    let userProgress = await db.findOne('user_progress', { user_id: userId });
-    if (!userProgress) {
-      userProgress = await db.create('user_progress', {
-        user_id: userId,
-        total_points: 0,
-        level: 1,
-        badges: [],
-        petals: 0,
-        completed_quests_count: 0
-      });
+    // Award rewards in game_progress
+    let gameProgress = await db.findOne('game_progress', { user_id: userId });
+    // Auto-init if missing (should not happen for active players but safe to have)
+    if (!gameProgress) {
+      const gameService = require('./game.service');
+      gameProgress = await gameService.initializeProgress(userId);
     }
 
-    const newPoints = (userProgress.total_points || 0) + (quest.rewards.experience || 0);
-    const newLevel = Math.floor(newPoints / 1000) + 1;
-    const newPetals = (userProgress.petals || 0) + (quest.rewards.petals || 0);
-    const newBadges = [...new Set([...(userProgress.badges || []), ...(quest.rewards.badge ? [quest.rewards.badge] : [])])];
+    const newPoints = (gameProgress.total_points || 0) + (quest.rewards.experience || 0);
+    const newLevel = Math.floor(newPoints / 1000) + 1; 
+    const newPetals = (gameProgress.total_sen_petals || 0) + (quest.rewards.petals || 0);
+    const newCoins = (gameProgress.coins || 0) + (quest.rewards.coins || 0);
+    const newBadges = [...new Set([...(gameProgress.badges || []), ...(quest.rewards.badge ? [quest.rewards.badge] : [])])];
+    
 
-    const updatedProgress = await db.update('user_progress', userProgress.id, {
+    const updatedProgress = await db.update('game_progress', gameProgress.id, {
       total_points: newPoints,
-      level: newLevel,
-      petals: newPetals,
+      level: Math.max(gameProgress.level, newLevel), // Keep max to avoid downgrade
+      total_sen_petals: newPetals,
+      coins: newCoins,
       badges: newBadges,
-      completed_quests_count: (userProgress.completed_quests_count || 0) + 1
+      completed_quests_count: (gameProgress.completed_quests_count || 0) + 1
     });
 
     return {
@@ -158,7 +156,8 @@ class QuestService extends BaseService {
   }
 
   async getLeaderboard(limit = 10) {
-    const allProgress = (await db.findAll('user_progress'))
+    // Read from game_progress
+    const allProgress = (await db.findAll('game_progress'))
       .sort((a, b) => (b.total_points || 0) - (a.total_points || 0))
       .slice(0, limit);
 

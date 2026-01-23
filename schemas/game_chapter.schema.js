@@ -30,7 +30,7 @@ module.exports = {
     default: 0,
     description: 'Số cánh hoa sen cần để mở'
   },
-  thumbnail: {
+  image: {
     type: 'string',
     required: false,
     description: 'Hình ảnh thumbnail'
@@ -54,10 +54,14 @@ module.exports = {
   },
   petal_image_closed: {
     type: 'string',
-    description: 'Ảnh cánh sen khi chưa nở (nụ)'
+    description: 'Ảnh cánh sen khi chưa nở (chưa làm)'
   },
   petal_image_bloom: {
     type: 'string',
-    description: 'Ảnh cánh sen khi đã nở rộ'
+    description: 'Ảnh cánh sen khi đang nở (đang làm)'
+  },
+  petal_image_full: {
+    type: 'string',
+    description: 'Ảnh cánh sen khi đã nở rộ (hoàn thành)'
   },
 };
