@@ -4,6 +4,7 @@
  */
 
 const gameService = require('../services/game.service');
+// Trigger restart 4
 
 class GameController {
 
@@ -32,7 +33,7 @@ class GameController {
   getChapterDetail = async (req, res, next) => {
     try {
       const result = await gameService.getChapterDetail(
-        req.params.id,
+        parseInt(req.params.id),
         req.user.id
       );
 
@@ -52,7 +53,7 @@ class GameController {
   unlockChapter = async (req, res, next) => {
     try {
       const result = await gameService.unlockChapter(
-        req.params.id,
+        parseInt(req.params.id),
         req.user.id
       );
 
@@ -74,7 +75,7 @@ class GameController {
   getLevels = async (req, res, next) => {
     try {
       const result = await gameService.getLevels(
-        req.params.chapterId,
+        parseInt(req.params.chapterId),
         req.user.id
       );
       res.json(result);
@@ -86,7 +87,7 @@ class GameController {
   getLevelDetail = async (req, res, next) => {
     try {
       const result = await gameService.getLevelDetail(
-        req.params.id,
+        parseInt(req.params.id),
         req.user.id
       );
 
@@ -106,7 +107,7 @@ class GameController {
   startLevel = async (req, res, next) => {
     try {
       const result = await gameService.startLevel(
-        req.params.id,
+        parseInt(req.params.id),
         req.user.id
       );
 
@@ -135,7 +136,7 @@ class GameController {
       }
 
       const result = await gameService.collectClue(
-        req.params.id,
+        parseInt(req.params.id),
         req.user.id,
         clueId
       );
@@ -158,7 +159,7 @@ class GameController {
       const { score, timeSpent } = req.body;
 
       const result = await gameService.completeLevel(
-        req.params.id,
+        parseInt(req.params.id),
         req.user.id,
         { score, timeSpent }
       );
@@ -185,7 +186,7 @@ class GameController {
   navigateToNextScreen = async (req, res, next) => {
     try {
       const result = await gameService.navigateToNextScreen(
-        req.params.id,
+        parseInt(req.params.id),
         req.user.id
       );
 
@@ -219,7 +220,7 @@ class GameController {
       }
 
       const result = await gameService.submitAnswer(
-        req.params.id,
+        parseInt(req.params.id),
         req.user.id,
         answerId
       );
@@ -251,7 +252,7 @@ class GameController {
       }
 
       const result = await gameService.submitTimelineOrder(
-        sessionId,
+        parseInt(sessionId),
         req.user.id,
         eventOrder
       );
