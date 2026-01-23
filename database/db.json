@@ -9,7 +9,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-22T05:49:58.309Z"
+      "lastLogin": "2026-01-23T10:24:10.709Z"
     },
     {
       "id": 2,
@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-23T07:37:58.905Z"
+      "lastLogin": "2026-01-23T10:26:35.993Z"
     },
     {
       "id": 4,
@@ -1161,6 +1161,7 @@
       "difficulty": "easy",
       "order": 0,
       "required_level": null,
+      "thumbnail": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
       "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
       "background_music": null,
       "ai_character_id": 1,
@@ -1861,31 +1862,7 @@
       "created_at": "2024-01-01T00:00:00Z"
     }
   ],
-  "game_progress": [
-    {
-      "id": 1,
-      "user_id": 3,
-      "current_chapter": 1,
-      "total_sen_petals": 0,
-      "total_points": 0,
-      "level": 1,
-      "coins": 1000,
-      "unlocked_chapters": [
-        1
-      ],
-      "completed_levels": [],
-      "collected_characters": [],
-      "badges": [],
-      "achievements": [],
-      "museum_open": false,
-      "museum_income": 0,
-      "streak_days": 0,
-      "last_login": "2026-01-23T09:31:59.560Z",
-      "created_at": "2026-01-23T09:31:59.560Z",
-      "completed_modules": [],
-      "completed_quests_count": 0
-    }
-  ],
+  "game_progress": [],
   "game_sessions": [],
   "learning_modules": [
     {

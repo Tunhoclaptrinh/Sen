@@ -368,6 +368,8 @@ class GameService {
       difficulty: level.difficulty,
       order: level.order,
       image: level.image,
+      thumbnail: level.thumbnail,
+      background_image: level.background_image,
       is_completed: progress.data.completed_levels.includes(level.id),
       is_locked: !this.canPlayLevel(level, progress.data),
       rewards: level.rewards,
