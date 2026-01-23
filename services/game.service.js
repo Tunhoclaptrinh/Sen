@@ -630,7 +630,7 @@ class GameService {
     }
 
     const isCorrect = selectedOption.is_correct;
-    const pointsEarned = isCorrect ? (currentScreen.reward?.points || 20) : 0;
+    const pointsEarned = isCorrect ? (currentScreen.reward?.points || currentScreen.points || 20) : 0;
 
     const updatedSession = await db.update('game_sessions', sessionId, {
       answered_questions: [
@@ -752,7 +752,7 @@ class GameService {
     }
 
     // ADD POINTS IF CORRECT
-    const pointsEarned = currentScreen.reward?.points || 20;
+    const pointsEarned = currentScreen.reward?.points || currentScreen.points || 20;
     await db.update('game_sessions', session.id, {
       score: session.score + pointsEarned
     });
@@ -830,9 +830,8 @@ class GameService {
     if (nextScreenIndex >= level.screens.length) {
       // Auto complete level
       return {
-        success: false,
+        success: true,
         message: 'Level completed. Please call completeLevel endpoint.',
-        statusCode: 400,
         data: {
           level_finished: true,
           final_score: session.score
@@ -842,11 +841,19 @@ class GameService {
 
     const nextScreen = level.screens[nextScreenIndex];
 
+    // ⚡ Calculate points for completing the CURRENT screen (e.g. passive screens like Video/Image)
+    // Only if points are defined and NOT already awarded (like Quiz/HiddenObject/Timeline which use submit endpoints)
+    let pointsToAdd = 0;
+    if (!['QUIZ', 'HIDDEN_OBJECT', 'TIMELINE'].includes(currentScreen.type)) {
+        pointsToAdd = currentScreen.reward?.points || currentScreen.points || 0;
+    }
+
     // Update session - reset collected_items for new screen
     const updatedSession = await db.update('game_sessions', session.id, {
       current_screen_id: nextScreen.id,
       current_screen_index: nextScreenIndex,
       completed_screens: [...session.completed_screens, currentScreen.id],
+      score: session.score + pointsToAdd,
       collected_items: [], // Reset for new screen
       last_activity: new Date().toISOString() // ⚡ UPDATE LAST ACTIVITY
     });
@@ -982,36 +989,13 @@ class GameService {
     const level = await db.findById('game_levels', levelId);
     const progress = await db.findOne('game_progress', { user_id: userId });
 
-    // ✅ CHECK IF ALREADY COMPLETED
-    const alreadyCompleted = progress.completed_levels.includes(levelId);
-
-    if (alreadyCompleted) {
-      // Update session as completed but NO rewards
-      await db.update('game_sessions', session.id, {
-        status: 'completed',
-        completed_at: new Date().toISOString()
-      });
-
-      return {
-        success: true,
-        message: 'Level completed (no rewards for replay)',
-        data: {
-          passed: true,
-          score: score || session.score,
-          alreadyCompleted: true,
-          rewardsGiven: false,
-          note: 'You already completed this level. No additional rewards.'
-        }
-      };
-    }
-
-    // ✅ FIRST TIME COMPLETION - GIVE REWARDS
+    // ✅ SHARED SCORE CALCULATION
     const timeBonus = this.calculateTimeBonus(timeSpent || session.time_spent, level.time_limit);
     const hintPenalty = session.hints_used * 5;
-    const finalScore = Math.max(0, (score || session.score) + timeBonus - hintPenalty);
+    const finalScore = Math.max(0, session.score + timeBonus - hintPenalty);
     const passed = finalScore >= (level.passing_score || 70);
 
-    // Cập nhật session
+    // ✅ UPDATE SESSION STATUS
     await db.update('game_sessions', session.id, {
       status: 'completed',
       score: finalScore,
@@ -1031,71 +1015,99 @@ class GameService {
       };
     }
 
-    // ✅ GIVE REWARDS (First time only)
-    const rewards = level.rewards || {};
-    const newPetals = progress.total_sen_petals + (rewards.petals || 1);
-    const newCoins = progress.coins + (rewards.coins || 50);
-    const newCompleted = [...progress.completed_levels, levelId];
-
-    let newCharacters = [...progress.collected_characters];
-    if (rewards.character && !newCharacters.includes(rewards.character)) {
-      newCharacters.push(rewards.character);
-    }
-
-    const sessionBackup = { ...session };
-    const progressBackup = { ...progress };
-
-
+    // ✅ CALCULATE NEXT LEVEL (For both first-time and replay)
+    let nextLevelId = null;
     try {
-      await db.update('game_sessions', session.id, { status: 'completed' });
-      await db.update('game_progress', progress.id, {
-        completed_levels: newCompleted,
-        total_sen_petals: newPetals,
-        total_points: progress.total_points + finalScore,
-        coins: newCoins,
-        collected_characters: newCharacters
-      });
-
-      // ✅ CHECK CHAPTER COMPLETION (Sequential Logic)
-      // Get all levels in this chapter
-      const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
-      // Check if ALL levels are in completed_levels
-      const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
+      const allLevels = await db.findAll('game_levels');
+      const currentLevel = allLevels.find(l => l.id === parseInt(levelId));
       
-      if (allCompleted) {
-          // Check if already in finished_chapters
-          const isChapterFinished = progress.finished_chapters.includes(level.chapter_id);
-          if (!isChapterFinished) {
-              await db.update('game_progress', progress.id, {
-                  finished_chapters: [...(progress.finished_chapters || []), level.chapter_id]
-              });
-          }
+      if (currentLevel) {
+         const sameChapterLevels = allLevels.filter(l => l.chapter_id === currentLevel.chapter_id)
+                                          .sort((a, b) => a.order - b.order);
+         const currentIndex = sameChapterLevels.findIndex(l => l.id === parseInt(levelId));
+         
+         if (currentIndex !== -1 && currentIndex < sameChapterLevels.length - 1) {
+             nextLevelId = sameChapterLevels[currentIndex + 1].id;
+         } else {
+             // Check next chapter
+             const allChapters = await db.findAll('game_chapters');
+             allChapters.sort((a, b) => a.order - b.order);
+             const currentChapterIndex = allChapters.findIndex(c => c.id === currentLevel.chapter_id);
+             
+             if (currentChapterIndex !== -1 && currentChapterIndex < allChapters.length - 1) {
+                 const nextChapter = allChapters[currentChapterIndex + 1];
+                 const nextChapterLevels = allLevels.filter(l => l.chapter_id === nextChapter.id)
+                                                    .sort((a, b) => a.order - b.order);
+                 if (nextChapterLevels.length > 0) {
+                     nextLevelId = nextChapterLevels[0].id;
+                 }
+             }
+         }
       }
-
-      return {
-        success: true,
-        message: 'Level completed successfully!',
-        data: {
-          passed: true,
-          score: finalScore,
-          rewards: {
-            petals: rewards.petals || 1,
-            coins: rewards.coins || 50,
-            character: rewards.character || null
-          },
-          new_totals: {
-            petals: newPetals,
-            points: progress.total_points + finalScore,
-            coins: newCoins
-          }
-        }
-      };
-    } catch (error) {
-      // Rollback
-      await db.update('game_sessions', session.id, sessionBackup);
-      await db.update('game_progress', progress.id, progressBackup);
-      throw error;
+    } catch (err) {
+      console.error('Error calculating next level:', err);
     }
+
+    // ✅ CHECK REWARDS (Only for first time)
+    const alreadyCompleted = progress.completed_levels.includes(parseInt(levelId));
+    let rewardsData = null;
+    let newTotals = null;
+
+    if (!alreadyCompleted) {
+        const rewards = level.rewards || {};
+        const newPetals = progress.total_sen_petals + (rewards.petals || 1);
+        const newCoins = progress.coins + (rewards.coins || 50);
+        const levelIdInt = parseInt(levelId);
+        const newCompleted = [...progress.completed_levels, levelIdInt];
+        let newCharacters = [...progress.collected_characters];
+        if (rewards.character && !newCharacters.includes(rewards.character)) {
+          newCharacters.push(rewards.character);
+        }
+
+        const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
+        // Kiểm tra xem tất cả level trong chapter đã có trong danh sách hoàn thành chưa
+        const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
+        
+        let finishedChapters = [...(progress.finished_chapters || [])];
+        if (allCompleted && !finishedChapters.includes(level.chapter_id)) {
+            finishedChapters.push(level.chapter_id);
+        }
+
+        // Update Progress
+        await db.update('game_progress', progress.id, {
+          completed_levels: newCompleted,
+          total_sen_petals: newPetals,
+          total_points: progress.total_points + finalScore,
+          coins: newCoins,
+          collected_characters: newCharacters,
+          finished_chapters: finishedChapters
+        });
+
+        rewardsData = {
+          petals: rewards.petals || 1,
+          coins: rewards.coins || 50,
+          character: rewards.character || null
+        };
+        
+        newTotals = {
+          petals: newPetals,
+          points: progress.total_points + finalScore,
+          coins: newCoins
+        };
+    }
+
+    return {
+      success: true,
+      message: alreadyCompleted ? 'Level completed (Revision mode)' : 'Level completed successfully!',
+      data: {
+        passed: true,
+        score: finalScore,
+        next_level_id: nextLevelId,
+        rewards: rewardsData, // null if revision
+        new_totals: newTotals, // null if revision
+        alreadyCompleted: alreadyCompleted
+      }
+    };
   }
 
   calculateTimeBonus(timeSpent, timeLimit) {
