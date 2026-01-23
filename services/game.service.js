@@ -39,7 +39,9 @@ class GameService {
       museum_income: 0,
       streak_days: 0,
       last_login: new Date().toISOString(),
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
+      completed_modules: [],
+      completed_quests_count: 0
     });
   }
 
