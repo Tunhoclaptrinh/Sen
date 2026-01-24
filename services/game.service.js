@@ -520,8 +520,10 @@ class GameService {
         session_id: session.id,
         level: {
           id: level.id,
+          chapter_id: level.chapter_id,
           name: level.name,
           description: level.description,
+          thumbnail: level.thumbnail,
           total_screens: level.screens.length,
           ai_character: aiCharacter
         },
@@ -834,27 +836,42 @@ class GameService {
       }
     }
 
+    // ⚡ Calculate points for completing the CURRENT screen (e.g. passive screens like Video/Image)
+    // Only if points are defined and NOT already awarded (like Quiz/HiddenObject/Timeline which use submit endpoints)
+    let pointsToAdd = 0;
+    if (['DIALOGUE', 'VIDEO', 'IMAGE_VIEWER'].includes(currentScreen.type)) {
+        // Default 10 points for watching/reading if not specified
+        pointsToAdd = currentScreen.reward?.points || currentScreen.points || 10;
+        
+        // Prevent farming: Check if screen already in completed_screens
+        if (session.completed_screens.includes(currentScreen.id)) {
+            pointsToAdd = 0;
+        }
+    }
+
     // Check if level finished
     if (nextScreenIndex >= level.screens.length) {
+      // ⚡ Update session with final points BEFORE finishing
+      // Ensure we add the current screen to completed_screens too
+      await db.update('game_sessions', session.id, {
+          score: session.score + pointsToAdd,
+          completed_screens: [...session.completed_screens, currentScreen.id],
+          last_activity: new Date().toISOString()
+      });
+
       // Auto complete level
       return {
         success: true,
         message: 'Level completed. Please call completeLevel endpoint.',
         data: {
           level_finished: true,
-          final_score: session.score
+          final_score: session.score + pointsToAdd,
+          points_earned: pointsToAdd
         }
       };
     }
 
     const nextScreen = level.screens[nextScreenIndex];
-
-    // ⚡ Calculate points for completing the CURRENT screen (e.g. passive screens like Video/Image)
-    // Only if points are defined and NOT already awarded (like Quiz/HiddenObject/Timeline which use submit endpoints)
-    let pointsToAdd = 0;
-    if (!['QUIZ', 'HIDDEN_OBJECT', 'TIMELINE'].includes(currentScreen.type)) {
-        pointsToAdd = currentScreen.reward?.points || currentScreen.points || 0;
-    }
 
     // Update session - reset collected_items for new screen
     const updatedSession = await db.update('game_sessions', session.id, {
@@ -884,7 +901,8 @@ class GameService {
           percentage: Math.round(
             (updatedSession.completed_screens.length / level.screens.length) * 100
           )
-        }
+        },
+        points_earned: pointsToAdd // ⚡ Return for frontend animation
       }
     };
   }
@@ -1017,6 +1035,11 @@ class GameService {
         data: {
           passed: false,
           score: finalScore,
+          breakdown: {
+              base_score: session.score,
+              time_bonus: timeBonus,
+              hint_penalty: hintPenalty
+          },
           required_score: level.passing_score || 70,
           can_retry: true
         }
@@ -1110,6 +1133,11 @@ class GameService {
       data: {
         passed: true,
         score: finalScore,
+        breakdown: {
+            base_score: session.score,
+            time_bonus: timeBonus,
+            hint_penalty: hintPenalty
+        },
         next_level_id: nextLevelId,
         rewards: rewardsData, // null if revision
         new_totals: newTotals, // null if revision
@@ -1205,7 +1233,27 @@ class GameService {
       }
     }
 
-    return enriched;
+    // Calculate potential score for this screen
+    let potentialScore = 0;
+    switch (screen.type) {
+        case 'HIDDEN_OBJECT':
+            const items = enriched.items || [];
+            potentialScore = items.reduce((sum, item) => sum + (item.points || 10), 0);
+            break;
+        case 'QUIZ':
+        case 'TIMELINE':
+            potentialScore = screen.reward?.points || screen.points || 20;
+            break;
+        case 'DIALOGUE':
+        case 'VIDEO':
+        case 'IMAGE_VIEWER':
+            potentialScore = screen.reward?.points || screen.points || 10;
+            break;
+        default:
+            potentialScore = 0;
+    }
+
+    return { ...enriched, potential_score: potentialScore };;
   }
 
   // ==================== MUSEUM ====================
