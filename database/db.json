@@ -121,14 +121,14 @@
   "heritage_sites": [
     {
       "id": 1,
-      "name": "Thành Phố Hội An",
+      "name": "Phố Cổ Hội An",
       "type": "historic_building",
-      "cultural_period": "Triều Nguyễn - Pháp thuộc",
-      "region": "Quảng Nam",
+      "cultural_period": "",
+      "region": "Trung",
       "latitude": 15.8801,
       "longitude": 108.3288,
       "address": "Thành phố Hội An, Quảng Nam",
-      "year_established": 1624,
+      "year_established": null,
       "year_restored": 1999,
       "image": "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/10/6/1101769/Hoi-An-22.jpeg",
       "rating": 4.9,
@@ -143,19 +143,8 @@
       "shortDescription": "Phố cổ Hội An là di sản văn hóa thế giới được UNESCO công nhận, nổi tiếng với kiến trúc cổ kính và lồng đèn rực rỡ.",
       "commentCount": 128,
       "short_description": "Phố cổ Hội An là di sản văn hóa thế giới được UNESCO công nhận, nổi tiếng với kiến trúc cổ kính và lồng đèn rực rỡ.",
-      "related_artifact_ids": [
-        1
-      ],
+      "related_artifact_ids": [1],
       "timeline": [
-        {
-          "id": 1,
-          "title": "Thành lập Hội An",
-          "description": "Hội An được thành lập như một cảng thương mại quan trọng",
-          "year": 1624,
-          "heritage_site_id": 1,
-          "category": "founded",
-          "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600"
-        },
         {
           "id": 2,
           "title": "Tu bổ Phố cổ",
@@ -175,22 +164,23 @@
           "image": "https://images.unsplash.com/photo-1579722821273-8a36ae95db51?w=600"
         }
       ],
-      "updatedAt": "2026-01-13T15:15:40.293Z",
-      "related_history_ids": [
-        1
-      ]
+      "updatedAt": "2026-01-23T10:48:28.169Z",
+      "related_history_ids": [1],
+      "description": "<p>Thương cảng Hội An được h&igrave;nh th&agrave;nh khoảng khoảng thế kỷ XV - XVI, thịnh đạt trong thế kỷ XVII - XVIII, nhưng trước đ&oacute; rất l&acirc;u, v&ugrave;ng đất Hội An đ&atilde; nằm trong địa b&agrave;n ph&acirc;n bố của văn h&oacute;a tiền Sa Huỳnh, Sa Huỳnh v&agrave; c&ograve;n l&agrave; một cảng thị trọng yếu của Chămpa (từ thế kỷ II - XV). Từ khoảng cuối thế kỷ XV, khu vực Hội An đ&atilde; c&oacute; d&acirc;n cư Đại Việt tới sinh sống, lập l&agrave;ng, người Việt đ&atilde; s&aacute;ng tạo ra nhiều ng&agrave;nh nghề ph&ugrave; hợp với điều kiện tự nhi&ecirc;n v&agrave; x&atilde; hội nơi đ&acirc;y. Cuối thế kỷ XVI - XVII, người Hoa v&agrave; người Nhật đ&atilde; đến đ&acirc;y định cư, gi&uacute;p cho hoạt động thương nghiệp ở Hội An ph&aacute;t triển mạnh. Với vị tr&iacute; địa l&yacute; thuận lợi cũng như bối cảnh kinh tế, x&atilde; hội, văn h&oacute;a Đ&agrave;ng Trong ph&aacute;t triển tương đối ổn định, Hội An nhanh ch&oacute;ng trở th&agrave;nh đ&ocirc; thị/thương cảng phồn thịnh trong nhiều thế kỷ.</p>\n<p>Những di t&iacute;ch kiến tr&uacute;c trong phố cổ Hội An đều mang đậm dấu ấn xưa cũ vốn c&oacute;. Kiểu nh&agrave; ở phổ biến nhất trong khu vực n&agrave;y thường c&oacute; mặt bằng dạng h&igrave;nh ống, c&aacute;c nếp nh&agrave; li&ecirc;n tiếp nối nhau bởi nh&agrave; cầu v&agrave; s&acirc;n trời, theo một thứ tự gần như thống nhất, gồm: nh&agrave; - s&acirc;n - nh&agrave;. C&aacute;c nh&agrave; đều được l&agrave;m khung gỗ, xung quanh c&oacute; tường gạch (một số nếp nh&agrave; c&oacute; v&aacute;ch gỗ). Kết cấu đỡ m&aacute;i kh&aacute; đa dạng, như chồng rường - giả thủ, cột trốn - kẻ chuyền, k&egrave;o cầu - c&aacute;nh &aacute;c, chồng đấu - con son,&nbsp; đặc biệt c&oacute; kết cấu &ldquo;v&igrave; vỏ cua&rdquo; ở hi&ecirc;n, m&aacute;i thường lợp ng&oacute;i m&aacute;ng (kiểu &acirc;m dương), tường hồi b&iacute;t đốc c&oacute; bờ dải uốn lượn mềm mại (kiểu long đ&igrave;nh). Tr&ecirc;n kiến tr&uacute;c thường được chạm khắc trang tr&iacute; c&aacute;c đề t&agrave;i truyền thống, với c&aacute;c thủ ph&aacute;p tạo h&igrave;nh như chạm nổi, chạm thủng, k&ecirc;nh bong. Đặc biệt, trước nh&agrave; c&oacute; hai mắt cửa gỗ, được gắn tr&ecirc;n bạo cửa ra v&agrave;o ch&iacute;nh.</p>\n<p>Hiện nay, phố cổ Hội An - một di sản thế giới ở Việt Nam đ&atilde; thực sự trở th&agrave;nh nguồn lực của sự ph&aacute;t triển kinh tế - x&atilde; hội ở Hội An, c&oacute; đ&oacute;ng g&oacute;p t&iacute;ch cực v&agrave;o sự ph&aacute;t triển kinh tế - du lịch dịch vụ, n&acirc;ng cao thu nhập, cải thiện đời sống của nh&acirc;n d&acirc;n địa phương, qua đ&oacute; cũng tạo ra những điều kiện thuận lợi để t&aacute;i đầu tư bảo tồn v&agrave; ph&aacute;t huy gi&aacute; trị di t&iacute;ch một c&aacute;ch bền vững&hellip;</p>\n<p>Với những gi&aacute; trị lịch sử, văn ho&aacute; v&agrave; khoa học đặc biệt của di t&iacute;ch,&nbsp; Thủ tướng Ch&iacute;nh phủ đ&atilde; quyết định xếp hạng Di t&iacute;ch kiến tr&uacute;c nghệ thuật Đ&ocirc; thị cổ Hội An l&agrave; di t&iacute;ch quốc gia đặc biệt (Quyết định số 1272/QĐ-TTg, ng&agrave;y 12/8/2009).</p>\n<p style=\"text-align: right;\"><strong>Ho&agrave;ng Ph&uacute;c (Theo Hồ sơ xếp hạng di t&iacute;ch, tư liệu Cục Di sản văn h&oacute;a)</strong></p>",
+      "province": "Quảng Nam",
+      "gallery": []
     },
     {
       "id": 2,
       "name": "Hoàng Thành Thăng Long",
       "type": "monument",
       "cultural_period": "Triều Lý",
-      "region": "Hà Nội",
+      "region": "Bắc",
       "latitude": 21.0341,
       "longitude": 105.8372,
       "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
       "year_established": 1010,
-      "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600",
+      "image": "/uploads/general/file-1769165335029.jpeg",
       "rating": 4.7,
       "total_reviews": 892,
       "visit_hours": "8:00 - 17:00",
@@ -200,16 +190,53 @@
       "significance": "international",
       "author": "Admin",
       "publishDate": "2024-08-05T09:30:00Z",
-      "description": "<p>Hoàng thành Thăng Long là quần thể di tích lịch sử gắn bó mật thiết với sự phát triển của Thăng Long – Hà Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII – IX), khu di tích tiếp tục phát triển qua các triều đại Đinh – Tiền Lê (thế kỷ XI) và đạt đến đỉnh cao dưới thời Lý – Trần – Lê (thế kỷ XI – XVIII). Dưới triều Nguyễn (thế kỷ XIX – XX), mặc dù kinh đô được dời vào Phú Xuân (Huế), nhưng Hoàng thành Thăng Long vẫn giữ vai trò quan trọng.</p><p>Năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Thăng Long, ông đã quy hoạch kinh thành theo mô hình “tam trùng thành quách”, gồm ba vòng thành: Kinh thành (nơi cư dân sinh sống), Hoàng thành (khu vực dành cho quan lại làm việc) và Cấm thành (khu vực chỉ dành riêng cho hoàng gia). Từ thế kỷ XI đến XVIII, Hoàng thành Thăng Long luôn là trung tâm chính trị, hành chính của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đô vào Phú Xuân, Thăng Long bị hạ cấp thành Bắc Thành (thành Hà Nội). Dù vậy, điện Kính Thiên và Hậu Lâu trong Cấm thành vẫn được duy trì làm hành cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p><p>Sang thời kỳ Pháp thuộc, Hà Nội trở thành trung tâm hành chính của Liên bang Đông Dương, và Thành cổ Hà Nội được sử dụng làm Sở chỉ huy quân sự của Pháp. Lúc này, hầu hết các công trình cung điện, đền đài trong Hoàng thành đều bị phá hủy, chỉ còn Bắc Môn và Kỳ Đài được bảo tồn. Trên nền điện Kính Thiên và sân Long Trì, người Pháp xây dựng các công trình kiến trúc mới theo phong cách châu Âu. Đến năm 1954, sau khi Thủ đô được giải phóng, Thành Hà Nội trở thành Tổng hành dinh của Quân đội nhân dân Việt Nam và duy trì vai trò này đến năm 2004.</p><p>Ngày nay, Khu trung tâm Hoàng thành Thăng Long, gồm di tích khảo cổ học 18 Hoàng Diệu và Thành cổ Hà Nội, nằm trong khu vực trung tâm chính trị Ba Đình – nơi đặt trụ sở của các cơ quan lãnh đạo cao nhất của Đảng và Nhà nước. Đây không chỉ là một khu di tích lịch sử – văn hóa quan trọng mà còn là không gian kiến trúc mang giá trị đặc biệt, gắn liền chặc chẽ với quá trình phát triển của đất nước. Đây cũng là nơi tổ chức các sự kiện chính trị, văn hóa trọng đại của quốc gia.</p><h3>Vị thế và tầm vóc</h3><p>Trải qua 13 thế kỷ, Hoàng thành Thăng Long luôn giữ vị thế trung tâm chính trị và là một trong những di tích quan trọng nhất của Việt Nam. Ngày 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung tâm Hoàng thành Thăng Long – Hà Nội chính thức được UNESCO công nhận là Di sản văn hóa thế giới. Giá trị nổi bật của di sản này thể hiện qua chiều dài lịch sử liên tục suốt 13 thế kỷ, vai trò là trung tâm quyền lực trong nhiều thời kỳ và hệ thống di tích, di vật phong phú. Đây cũng là nơi lưu giữ những dấu ấn văn hóa quan trọng và chứng kiến nhiều sự kiện mang tầm vóc lớn lao trong lịch sử dân tộc.</p><img src='https://images.unsplash.com/photo-1555921015-5532091f6026?w=1000' alt='Hoang Thanh Thang Long' style='width:100%; border-radius: 8px; margin: 16px 0;' /><h3>Các di vật được khảo cổ, khai quật trong Hoàng Thành Thăng Long</h3><p>Các di vật được khai quật và hiện đang trưng bày ở Khu khảo cổ 18 Hoàng Diệu.</p><p>Thềm chia làm 3 lối lên xuống đều nhau, lối giữa ngăn cách với 2 lối bên bằng đôi rồng đá được xây dựng năm 1467 ( đời vua Lê Thánh Tông ). Rồng được tạo tác khá đẹp và trau chuốt, tạo khối kiểu tượng tròn có dáng mập, khỏe, đầu vươn cao phía chân thềm bậc, thân uốn khúc nhịp nhàng và chạy dài theo 9 bậc lên. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, râu và tóc kết thành đao bay về sau.</p><p>Tai rồng lớn kiểu tai trâu, sừng đơn vươn dài ra phía sau và áp sát thân rồng. Dọc sống lưng đục chạm hàng vây cá to, mập. Bên ngoài bậc thềm có 2 lan can hình rồng cách điệu dạng phù điêu ( gọi là vân hóa rồng ), mặt trong trang trí vân mây, bên ngoài thể hiện hoa cúc dây. Các hoa văn này được phủ kín mặt ngoài của thân rồng đá cách điệu.</p><p>Phía ngoài là hai đám mây hóa rồng. Đây là hai tảng đá nguyên khối dày 36 – 39 cm, phần đầu thấp dày hơn, có những đường cuốn cắt ngang cùng những đường gờ nổi nối tiếp nhau chạy hết chiều dài phiến đá 5,3 m, những đường gờ nổi không theo quy luật.</p><p>Mặt trong và ngoài của hai con rồng cách điệu này trang trí hoa văn, họa tiết khắc chìm vào đá. Phía ngoài, có hai đường thẳng chạy dọc theo thân rồng cách nhau 10 cm, chia đôi thành hai nửa trên dưới, bên trong là những bông hoa bốn cánh xếp liền nhau. Nửa trên là những cuộn mây, đao lửa ít theo quy luật rõ rang, nửa dưới là những hình ảnh mặt trời cách điệu, đao lửa, mây vờn. Phía mặt trong của phiến đá do có bậc thềm cao nên diện tích trạm khắc ít hơn, một đường thẳng bên trên là những cuộn mây nhỏ dẫn từ dưới thấp lên cao.</p><p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
+      "description": "<p>Ho&agrave;ng th&agrave;nh Thăng Long l&agrave; quần thể di t&iacute;ch lịch sử gắn b&oacute; mật thiết với sự ph&aacute;t triển của Thăng Long &ndash; H&agrave; Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII &ndash; IX), khu di t&iacute;ch tiếp tục ph&aacute;t triển qua c&aacute;c triều đại Đinh &ndash; Tiền L&ecirc; (thế kỷ XI) v&agrave; đạt đến đỉnh cao dưới thời L&yacute; &ndash; Trần &ndash; L&ecirc; (thế kỷ XI &ndash; XVIII). Dưới triều Nguyễn (thế kỷ XIX &ndash; XX), mặc d&ugrave; kinh đ&ocirc; được dời v&agrave;o Ph&uacute; Xu&acirc;n (Huế), nhưng Ho&agrave;ng th&agrave;nh Thăng Long vẫn giữ vai tr&ograve; quan trọng.</p>\n<p>Năm 1010, khi vua L&yacute; Th&aacute;i Tổ dời đ&ocirc; từ Hoa Lư ra Thăng Long, &ocirc;ng đ&atilde; quy hoạch kinh th&agrave;nh theo m&ocirc; h&igrave;nh &ldquo;tam tr&ugrave;ng th&agrave;nh qu&aacute;ch&rdquo;, gồm ba v&ograve;ng th&agrave;nh: Kinh th&agrave;nh (nơi cư d&acirc;n sinh sống), Ho&agrave;ng th&agrave;nh (khu vực d&agrave;nh cho quan lại l&agrave;m việc) v&agrave; Cấm th&agrave;nh (khu vực chỉ d&agrave;nh ri&ecirc;ng cho ho&agrave;ng gia). Từ thế kỷ XI đến XVIII, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n l&agrave; trung t&acirc;m ch&iacute;nh trị, h&agrave;nh ch&iacute;nh của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đ&ocirc; v&agrave;o Ph&uacute; Xu&acirc;n, Thăng Long bị hạ cấp th&agrave;nh Bắc Th&agrave;nh (th&agrave;nh H&agrave; Nội). D&ugrave; vậy, điện K&iacute;nh Thi&ecirc;n v&agrave; Hậu L&acirc;u trong Cấm th&agrave;nh vẫn được duy tr&igrave; l&agrave;m h&agrave;nh cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p>\n<p>Sang thời kỳ Ph&aacute;p thuộc, H&agrave; Nội trở th&agrave;nh trung t&acirc;m h&agrave;nh ch&iacute;nh của Li&ecirc;n bang Đ&ocirc;ng Dương, v&agrave; Th&agrave;nh cổ H&agrave; Nội được sử dụng l&agrave;m Sở chỉ huy qu&acirc;n sự của Ph&aacute;p. L&uacute;c n&agrave;y, hầu hết c&aacute;c c&ocirc;ng tr&igrave;nh cung điện, đền đ&agrave;i trong Ho&agrave;ng th&agrave;nh đều bị ph&aacute; hủy, chỉ c&ograve;n Bắc M&ocirc;n v&agrave; Kỳ Đ&agrave;i được bảo tồn. Tr&ecirc;n nền điện K&iacute;nh Thi&ecirc;n v&agrave; s&acirc;n Long Tr&igrave;, người Ph&aacute;p x&acirc;y dựng c&aacute;c c&ocirc;ng tr&igrave;nh kiến tr&uacute;c mới theo phong c&aacute;ch ch&acirc;u &Acirc;u. Đến năm 1954, sau khi Thủ đ&ocirc; được giải ph&oacute;ng, Th&agrave;nh H&agrave; Nội trở th&agrave;nh Tổng h&agrave;nh dinh của Qu&acirc;n đội nh&acirc;n d&acirc;n Việt Nam v&agrave; duy tr&igrave; vai tr&ograve; n&agrave;y đến năm 2004.</p>\n<p>Ng&agrave;y nay, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long, gồm di t&iacute;ch khảo cổ học 18 Ho&agrave;ng Diệu v&agrave; Th&agrave;nh cổ H&agrave; Nội, nằm trong khu vực trung t&acirc;m ch&iacute;nh trị Ba Đ&igrave;nh &ndash; nơi đặt trụ sở của c&aacute;c cơ quan l&atilde;nh đạo cao nhất của Đảng v&agrave; Nh&agrave; nước. Đ&acirc;y kh&ocirc;ng chỉ l&agrave; một khu di t&iacute;ch lịch sử &ndash; văn h&oacute;a quan trọng m&agrave; c&ograve;n l&agrave; kh&ocirc;ng gian kiến tr&uacute;c mang gi&aacute; trị đặc biệt, gắn liền chặc chẽ với qu&aacute; tr&igrave;nh ph&aacute;t triển của đất nước. Đ&acirc;y cũng l&agrave; nơi tổ chức c&aacute;c sự kiện ch&iacute;nh trị, văn h&oacute;a trọng đại của quốc gia.</p>\n<h3>Vị thế v&agrave; tầm v&oacute;c</h3>\n<p>Trải qua 13 thế kỷ, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n giữ vị thế trung t&acirc;m ch&iacute;nh trị v&agrave; l&agrave; một trong những di t&iacute;ch quan trọng nhất của Việt Nam. Ng&agrave;y 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long &ndash; H&agrave; Nội ch&iacute;nh thức được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a thế giới. Gi&aacute; trị nổi bật của di sản n&agrave;y thể hiện qua chiều d&agrave;i lịch sử li&ecirc;n tục suốt 13 thế kỷ, vai tr&ograve; l&agrave; trung t&acirc;m quyền lực trong nhiều thời kỳ v&agrave; hệ thống di t&iacute;ch, di vật phong ph&uacute;. Đ&acirc;y cũng l&agrave; nơi lưu giữ những dấu ấn văn h&oacute;a quan trọng v&agrave; chứng kiến nhiều sự kiện mang tầm v&oacute;c lớn lao trong lịch sử d&acirc;n tộc.</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://i.pinimg.com/1200x/ea/42/15/ea4215828ac658b735472adfddf13132.jpg\"></p>\n<h3>C&aacute;c di vật được khảo cổ, khai quật trong Ho&agrave;ng Th&agrave;nh Thăng Long</h3>\n<p>C&aacute;c di vật được khai quật v&agrave; hiện đang trưng b&agrave;y ở Khu khảo cổ 18 Ho&agrave;ng Diệu.</p>\n<p>Thềm chia l&agrave;m 3 lối l&ecirc;n xuống đều nhau, lối giữa ngăn c&aacute;ch với 2 lối b&ecirc;n bằng đ&ocirc;i rồng đ&aacute; được x&acirc;y dựng năm 1467 ( đời vua L&ecirc; Th&aacute;nh T&ocirc;ng ). Rồng được tạo t&aacute;c kh&aacute; đẹp v&agrave; trau chuốt, tạo khối kiểu tượng tr&ograve;n c&oacute; d&aacute;ng mập, khỏe, đầu vươn cao ph&iacute;a ch&acirc;n thềm bậc, th&acirc;n uốn kh&uacute;c nhịp nh&agrave;ng v&agrave; chạy d&agrave;i theo 9 bậc l&ecirc;n. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, r&acirc;u v&agrave; t&oacute;c kết th&agrave;nh đao bay về sau.</p>\n<p>Tai rồng lớn kiểu tai tr&acirc;u, sừng đơn vươn d&agrave;i ra ph&iacute;a sau v&agrave; &aacute;p s&aacute;t th&acirc;n rồng. Dọc sống lưng đục chạm h&agrave;ng v&acirc;y c&aacute; to, mập. B&ecirc;n ngo&agrave;i bậc thềm c&oacute; 2 lan can h&igrave;nh rồng c&aacute;ch điệu dạng ph&ugrave; đi&ecirc;u ( gọi l&agrave; v&acirc;n h&oacute;a rồng ), mặt trong trang tr&iacute; v&acirc;n m&acirc;y, b&ecirc;n ngo&agrave;i thể hiện hoa c&uacute;c d&acirc;y. C&aacute;c hoa văn n&agrave;y được phủ k&iacute;n mặt ngo&agrave;i của th&acirc;n rồng đ&aacute; c&aacute;ch điệu.</p>\n<p>Ph&iacute;a ngo&agrave;i l&agrave; hai đ&aacute;m m&acirc;y h&oacute;a rồng. Đ&acirc;y l&agrave; hai tảng đ&aacute; nguy&ecirc;n khối d&agrave;y 36 &ndash; 39 cm, phần đầu thấp d&agrave;y hơn, c&oacute; những đường cuốn cắt ngang c&ugrave;ng những đường gờ nổi nối tiếp nhau chạy hết chiều d&agrave;i phiến đ&aacute; 5,3 m, những đường gờ nổi kh&ocirc;ng theo quy luật.</p>\n<p>Mặt trong v&agrave; ngo&agrave;i của hai con rồng c&aacute;ch điệu n&agrave;y trang tr&iacute; hoa văn, họa tiết khắc ch&igrave;m v&agrave;o đ&aacute;. Ph&iacute;a ngo&agrave;i, c&oacute; hai đường thẳng chạy dọc theo th&acirc;n rồng c&aacute;ch nhau 10 cm, chia đ&ocirc;i th&agrave;nh hai nửa tr&ecirc;n dưới, b&ecirc;n trong l&agrave; những b&ocirc;ng hoa bốn c&aacute;nh xếp liền nhau. Nửa tr&ecirc;n l&agrave; những cuộn m&acirc;y, đao lửa &iacute;t theo quy luật r&otilde; rang, nửa dưới l&agrave; những h&igrave;nh ảnh mặt trời c&aacute;ch điệu, đao lửa, m&acirc;y vờn. Ph&iacute;a mặt trong của phiến đ&aacute; do c&oacute; bậc thềm cao n&ecirc;n diện t&iacute;ch trạm khắc &iacute;t hơn, một đường thẳng b&ecirc;n tr&ecirc;n l&agrave; những cuộn m&acirc;y nhỏ dẫn từ dưới thấp l&ecirc;n cao.</p>\n<p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
       "commentCount": 85,
-      "related_artifact_ids": [
-        7,
-        8,
-        9
+      "related_artifact_ids": [7, 8, 9],
+      "related_history_ids": [1],
+      "short_description": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
+      "shortDescription": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
+      "province": "Hà Nội",
+      "gallery": [],
+      "timeline": [
+        {
+          "id": 6,
+          "title": "Lý Thái Tổ dời đô",
+          "description": "Vua Lý Thái Tổ ban chiếu Thiên đô, dời đô từ Hoa Lư về Thăng Long",
+          "year": 1010,
+          "heritage_site_id": 2,
+          "category": "founded",
+          "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600"
+        },
+        {
+          "id": 7,
+          "title": "Xây dựng điện Kính Thiên",
+          "description": "Vua Lê Thái Tổ cho xây dựng điện Kính Thiên làm nơi triều chính",
+          "year": 1428,
+          "heritage_site_id": 2,
+          "category": "construction",
+          "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600"
+        },
+        {
+          "id": 8,
+          "title": "Khai quật khảo cổ",
+          "description": "Bắt đầu khai quật khảo cổ học tại khu vực 18 Hoàng Diệu, phát hiện nhiều di vật quý",
+          "year": 2002,
+          "heritage_site_id": 2,
+          "category": "discovery",
+          "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600"
+        },
+        {
+          "id": 5,
+          "title": "UNESCO công nhận Hoàng Thành",
+          "description": "Hoàng Thành Thăng Long được UNESCO công nhận",
+          "year": 2010,
+          "heritage_site_id": 2,
+          "category": "recognition",
+          "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600"
+        }
       ],
-      "related_history_ids": [
-        1
-      ]
+      "updatedAt": "2026-01-23T10:52:01.619Z"
     },
     {
       "id": 3,
@@ -221,7 +248,7 @@
       "longitude": 106.6955,
       "address": "65 Lý Tự Trọng, Q. 1, TP. Hồ Chí Minh",
       "year_established": 1956,
-      "image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600",
+      "image": "/uploads/general/file-1769165693020.jpeg",
       "rating": 4.5,
       "total_reviews": 234,
       "visit_hours": "8:00 - 17:00",
@@ -232,20 +259,26 @@
       "author": "Admin",
       "publishDate": "2024-08-10T14:45:00Z",
       "shortDescription": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
-      "commentCount": 42
+      "commentCount": 42,
+      "short_description": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
+      "gallery": [],
+      "related_artifact_ids": [],
+      "related_history_ids": [],
+      "timeline": [],
+      "updatedAt": "2026-01-23T10:54:56.058Z"
     },
     {
       "id": 4,
       "name": "Khu khảo cổ Óc Eo",
       "type": "archaeological_site",
       "cultural_period": "Thời kỳ Óc Eo",
-      "region": "An Giang",
+      "region": "Nam",
       "latitude": 10.1333,
       "longitude": 104.7667,
       "address": "Xã Tân Trung, huyện Tịnh Biên, An Giang",
       "year_established": 150,
       "year_restored": 2000,
-      "image": "https://images.unsplash.com/photo-1528127269322-539801943592?w=600",
+      "image": "/uploads/general/file-1769165730295.jpeg",
       "rating": 4.3,
       "total_reviews": 145,
       "visit_hours": "8:00 - 16:30",
@@ -256,7 +289,14 @@
       "author": "Admin",
       "publishDate": "2024-08-15T08:20:00Z",
       "shortDescription": "Di tích khảo cổ học quan trọng thuộc nền văn hóa Óc Eo, một nền văn hóa cổ ở Nam Bộ.",
-      "commentCount": 19
+      "commentCount": 19,
+      "short_description": "Di tích khảo cổ học quan trọng thuộc nền văn hóa Óc Eo, một nền văn hóa cổ ở Nam Bộ.",
+      "province": "An Giang",
+      "gallery": [],
+      "related_artifact_ids": [],
+      "related_history_ids": [],
+      "timeline": [],
+      "updatedAt": "2026-01-23T10:55:52.011Z"
     }
   ],
   "artifacts": [
@@ -281,73 +321,82 @@
       "publishDate": "2024-09-01T11:00:00Z",
       "shortDescription": "Kiệt tác sơn dầu của Tô Ngọc Vân, biểu tượng của vẻ đẹp thiếu nữ Hà Nội xưa.",
       "commentCount": 56,
-      "related_heritage_ids": [
-        1,
-        5
-      ]
+      "related_heritage_ids": [1, 5]
     },
     {
       "id": 2,
-      "name": "Ngọc Lũ drum (Trống đồng Ngọc Lũ)",
-      "description": "Trống đồng Ngọc Lũ là một trong những hiện vật điển hình nhất của văn hóa Đông Sơn, thuộc thời kỳ đồ đồng khoảng thế kỷ 3–2 trước Công Nguyên. Đây là điển hình cho nghệ thuật đúc đồng tinh xảo của người Đông Sơn, với các họa tiết trang trí tinh tế.",
+      "name": "Trống đồng Ngọc Lũ",
+      "description": "<p>Trống đồng Ngọc Lũ l&agrave; một trong những hiện vật điển h&igrave;nh nhất của văn h&oacute;a Đ&ocirc;ng Sơn, thuộc thời kỳ đồ đồng khoảng thế kỷ 3&ndash;2 trước C&ocirc;ng Nguy&ecirc;n. Đ&acirc;y l&agrave; điển h&igrave;nh cho nghệ thuật đ&uacute;c đồng tinh xảo của người Đ&ocirc;ng Sơn, với c&aacute;c họa tiết trang tr&iacute; tinh tế.</p>",
       "heritage_site_id": 4,
       "category_id": 4,
-      "artifact_type": "bronze drum",
-      "year_created": -200,
+      "artifact_type": "sculpture",
+      "year_created": null,
       "creator": "Người văn hóa Đông Sơn",
       "material": "Đồng",
       "dimensions": "cao khoảng 62 cm, đường kính mặt 89 cm",
       "condition": "good",
-      "image": "https://live.staticflickr.com/2418/1529750162_e58f202fe6_z.jpg",
+      "image": "/uploads/general/file-1769165881586.jpeg",
       "is_on_display": true,
       "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
-      "updatedAt": "2026-01-10T00:00:00.000Z",
+      "updatedAt": "2026-01-23T11:12:23.233Z",
       "author": "Admin",
       "publishDate": "2024-09-05T15:30:00Z",
       "shortDescription": "Bảo vật quốc gia, biểu tượng rực rỡ nhất của nền văn hóa Đông Sơn.",
-      "commentCount": 34
+      "commentCount": 34,
+      "gallery": [],
+      "short_description": "Bảo vật quốc gia, biểu tượng rực rỡ nhất của nền văn hóa Đông Sơn.",
+      "related_heritage_ids": [],
+      "related_history_ids": []
     },
     {
       "id": 3,
-      "name": "Đồ gốm Đông Sơn – Nồi gốm nấu xôi (Dong Tien pot)",
+      "name": "Đồ gốm Đông Sơn",
       "description": "Một loại đồ gốm sớm từ văn hóa Đông Sơn, dùng để hấp/đun nấu thức ăn, thể hiện kỹ thuật gốm tinh xảo của cư dân Đông Sơn hơn 2000 năm trước.",
       "heritage_site_id": 4,
       "category_id": 4,
       "artifact_type": "pottery",
-      "year_created": -500,
+      "year_created": null,
       "creator": "Người văn hóa Đông Sơn",
       "material": "Gốm nung",
       "dimensions": "cao khoảng 40 cm",
       "condition": "fair",
-      "image": "https://images2.thanhnien.vn/zoom/1200_630/528068263637045248/2025/7/9/photo-1752077258505-17520772589601450002990-0-0-1034-1654-crop-17520772675141271528548.jpeg",
+      "image": "/uploads/general/file-1769166521698.jpeg",
       "is_on_display": true,
       "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
-      "updatedAt": "2026-01-10T00:00:00.000Z",
+      "updatedAt": "2026-01-23T11:08:57.177Z",
       "author": "Admin",
       "publishDate": "2024-09-10T10:15:00Z",
       "shortDescription": "Hiện vật gốm độc đáo phản ánh đời sống sinh hoạt của cư dân Việt cổ.",
-      "commentCount": 12
+      "commentCount": 12,
+      "gallery": [],
+      "short_description": "Hiện vật gốm độc đáo phản ánh đời sống sinh hoạt của cư dân Việt cổ.",
+      "related_heritage_ids": [],
+      "related_history_ids": []
     },
     {
       "id": 4,
-      "name": "Nguyễn Dynasty Woodblocks",
-      "description": "Một bộ sưu tập các bản khắc gỗ in ấn triều Nguyễn, gồm hơn 34,000 bản khắc được dùng để in các văn bản lịch sử và văn hóa, được UNESCO đưa vào danh sách Ký ức Thế giới.",
+      "name": "Mộc bản triều Nguyễn",
+      "description": "<p>Một bộ sưu tập c&aacute;c bản khắc gỗ in ấn triều Nguyễn, gồm hơn 34,000 bản khắc được d&ugrave;ng để in c&aacute;c văn bản lịch sử v&agrave; văn h&oacute;a, được UNESCO đưa v&agrave;o danh s&aacute;ch K&yacute; ức Thế giới.</p>",
       "heritage_site_id": 6,
       "category_id": 3,
-      "artifact_type": "woodblock",
+      "artifact_type": "sculpture",
       "year_created": 1800,
       "creator": "Thợ khắc gỗ triều Nguyễn",
       "material": "Gỗ",
       "dimensions": null,
       "condition": "good",
-      "image": "https://image.vietnamnews.vn/uploadvnnews/Article/2017/8/23/mocban88444128PM.jpg",
+      "image": "/uploads/general/file-1769166625428.jpeg",
       "is_on_display": true,
       "location_in_site": "Bảo tàng Cổ vật Cung đình Huế",
-      "updatedAt": "2026-01-10T00:00:00.000Z",
+      "updatedAt": "2026-01-23T11:10:35.340Z",
       "author": "Admin",
       "publishDate": "2024-09-15T09:45:00Z",
       "shortDescription": "Kho tàng tư liệu lịch sử vô giá của triều Nguyễn, Di sản tư liệu thế giới.",
-      "commentCount": 28
+      "commentCount": 28,
+      "gallery": [],
+      "short_description": "Kho tàng tư liệu lịch sử vô giá của triều Nguyễn, Di sản tư liệu thế giới.",
+      "related_heritage_ids": [],
+      "related_history_ids": []
     }
   ],
   "timelines": [
@@ -435,10 +484,7 @@
       "end_date": "2026-12-31T23:59:59Z",
       "curator": "ThS. Trần Văn An",
       "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
-      "artifact_ids": [
-        1,
-        2
-      ],
+      "artifact_ids": [1, 2],
       "is_active": true
     },
     {
@@ -451,9 +497,7 @@
       "end_date": "2026-08-31T23:59:59Z",
       "curator": "GS. Lê Văn Minh",
       "image": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=600",
-      "artifact_ids": [
-        3
-      ],
+      "artifact_ids": [3],
       "is_active": true
     }
   ],
@@ -1283,11 +1327,7 @@
               "description": "Lê Lợi khởi nghĩa Lam Sơn thành công."
             }
           ],
-          "correct_order": [
-            "e1",
-            "e2",
-            "e3"
-          ]
+          "correct_order": ["e1", "e2", "e3"]
         },
         {
           "id": "demo_image",
@@ -1333,19 +1373,10 @@
       "publishDate": "2024-05-07T00:00:00Z",
       "is_active": true,
       "views": 2540,
-      "related_heritage_ids": [
-        2
-      ],
-      "related_artifact_ids": [
-        2
-      ],
-      "related_level_ids": [
-        99
-      ],
-      "related_product_ids": [
-        1,
-        2
-      ],
+      "related_heritage_ids": [2],
+      "related_artifact_ids": [2],
+      "related_level_ids": [99],
+      "related_product_ids": [1, 2],
       "timeline_events": [
         {
           "year": "1953",
@@ -1374,24 +1405,15 @@
       "title": "Đại thắng mùa Xuân 1975",
       "shortDescription": "Chiến dịch Hồ Chí Minh lịch sử, giải phóng hoàn toàn miền Nam, thống nhất đất nước.",
       "content": "<p>Cuộc Tổng tiến công và nổi dậy mùa Xuân năm 1975 mà đỉnh cao là Chiến dịch Hồ Chí Minh lịch sử đã kết thúc thắng lợi cuộc kháng chiến chống Mỹ, cứu nước vĩ đại của dân tộc ta.</p><h3>Ý nghĩa lịch sử</h3><p>Thắng lợi này đã chấm dứt ách thống trị của chủ nghĩa thực dân, đế quốc trên đất nước ta, hoàn thành cuộc cách mạng dân tộc dân chủ nhân dân trong cả nước, mở ra kỷ nguyên mới - kỷ nguyên độc lập, tự do và đi lên chủ nghĩa xã hội.</p>",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Dinh_Doc_Lap_1975.jpg",
+      "image": "/uploads/general/file-1769167164956.jpeg",
       "author": "Nguyễn Văn Sử",
       "publishDate": "2024-04-30T00:00:00Z",
       "is_active": true,
       "views": 3100,
-      "related_heritage_ids": [
-        3
-      ],
-      "related_artifact_ids": [
-        5
-      ],
-      "related_level_ids": [
-        99
-      ],
-      "related_product_ids": [
-        2,
-        4
-      ],
+      "related_heritage_ids": [],
+      "related_artifact_ids": [],
+      "related_level_ids": [99],
+      "related_product_ids": [2, 4],
       "timeline_events": [
         {
           "year": "04/03/1975",
@@ -1408,121 +1430,368 @@
           "title": "Thống nhất đất nước",
           "description": "Xe tăng quân giải phóng húc đổ cổng Dinh Độc Lập. Miền Nam hoàn toàn giải phóng."
         }
-      ]
-    },
-    {
-      "id": 5,
-      "title": "Văn Miếu - Quốc Tử Giám: Trường Đại học đầu tiên",
-      "shortDescription": "Nơi hội tụ tinh hoa đạo học, biểu tượng của nền giáo dục khoa cử Việt Nam thời phong kiến.",
-      "content": "<p>Văn Miếu – Quốc Tử Giám là quần thể di tích đa dạng và phong phú hàng đầu của thành phố Hà Nội, nằm ở phía Nam kinh thành Thăng Long...</p><h3>Kiến trúc</h3><p>Quần thể kiến trúc Văn Miếu – Quốc Tử Giám bao gồm: hồ Văn, khu Văn Miếu – Quốc Tử Giám và vườn Giám, mà kiến trúc chủ thể là Văn Miếu - nơi thờ Khổng Tử và Quốc Tử Giám - trường đại học đầu tiên của Việt Nam.</p>",
-      "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
-      "author": "Tiến sĩ Giấy",
-      "publishDate": "2024-02-03T00:00:00Z",
-      "is_active": true,
-      "views": 1850,
-      "related_heritage_ids": [
-        6,
-        2
       ],
-      "related_artifact_ids": [
-        4
-      ],
-      "related_level_ids": [
-        102
-      ],
-      "related_product_ids": [
-        1,
-        3
-      ],
-      "timeline_events": [
+      "related_heritage": [
         {
-          "year": "1070",
-          "title": "Xây dựng Văn Miếu",
-          "description": "Vua Lý Thánh Tông cho xây dựng Văn Miếu để thờ các bậc tiên thánh, tiên hiền Nho giáo."
+          "id": 3,
+          "name": "Bảo tàng Thành phố Hồ Chí Minh",
+          "type": "museum",
+          "cultural_period": "Hiện đại",
+          "region": "TP. Hồ Chí Minh",
+          "latitude": 10.7929,
+          "longitude": 106.6955,
+          "address": "65 Lý Tự Trọng, Q. 1, TP. Hồ Chí Minh",
+          "year_established": 1956,
+          "image": "/uploads/general/file-1769165693020.jpeg",
+          "rating": 4.5,
+          "total_reviews": 234,
+          "visit_hours": "8:00 - 17:00",
+          "entrance_fee": 50000,
+          "is_active": true,
+          "unesco_listed": false,
+          "significance": "national",
+          "author": "Admin",
+          "publishDate": "2024-08-10T14:45:00Z",
+          "shortDescription": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
+          "commentCount": 42,
+          "short_description": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
+          "gallery": [],
+          "related_artifact_ids": [],
+          "related_history_ids": [],
+          "timeline": [],
+          "updatedAt": "2026-01-23T10:54:56.058Z"
+        }
+      ],
+      "related_artifacts": [],
+      "related_levels": [
+        {
+          "id": 99,
+          "chapter_id": 1,
+          "name": "[DEMO] Test All Screens",
+          "description": "Level demo đầy đủ tính năng: Đối thoại, Tìm vật, Trắc nghiệm, Dòng thời gian, Xem ảnh, Video.",
+          "type": "mixed",
+          "difficulty": "easy",
+          "order": 0,
+          "required_level": null,
+          "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+          "background_music": null,
+          "ai_character_id": 1,
+          "knowledge_base": "Level demo cho tất cả screen types",
+          "screens": [
+            {
+              "id": "demo_dialogue",
+              "index": 0,
+              "name": "1. Dialogue Screen",
+              "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+              "type": "DIALOGUE",
+              "description": "Demo màn hình hội thoại",
+              "is_first": true,
+              "is_last": false,
+              "content": [
+                {
+                  "speaker": "AI",
+                  "text": "Chào mừng bạn đến với level Demo Tính Năng!",
+                  "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
+                  "emotion": "happy"
+                },
+                {
+                  "speaker": "AI",
+                  "text": "Chúng ta sẽ lần lượt trải nghiệm: Hội thoại, Tìm vật, Trắc nghiệm, Timeline, Ảnh và Video.",
+                  "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
+                  "emotion": "excited"
+                }
+              ]
+            },
+            {
+              "id": "demo_hidden",
+              "index": 1,
+              "name": "2. Hidden Object Screen",
+              "background_image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+              "type": "HIDDEN_OBJECT",
+              "description": "Hãy tìm 3 vật phẩm: Cái Quạt, Cờ Hội và Đàn Nguyệt.",
+              "is_first": false,
+              "is_last": false,
+              "required_items": 3,
+              "items": [
+                {
+                  "id": "fan",
+                  "name": "Cái Quạt",
+                  "x": 20,
+                  "y": 60,
+                  "fact_popup": "Quạt giấy truyền thống."
+                },
+                {
+                  "id": "flag",
+                  "name": "Cờ Hội",
+                  "x": 70,
+                  "y": 30,
+                  "fact_popup": "Cờ ngũ sắc trong lễ hội."
+                },
+                {
+                  "id": "instrument",
+                  "name": "Đàn Nguyệt",
+                  "x": 50,
+                  "y": 50,
+                  "fact_popup": "Nhạc cụ dân tộc."
+                }
+              ]
+            },
+            {
+              "id": "demo_quiz",
+              "index": 2,
+              "name": "3. Quiz Screen",
+              "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+              "type": "QUIZ",
+              "description": "Câu hỏi trắc nghiệm kiến thức",
+              "is_first": false,
+              "is_last": false,
+              "question": "Tính năng nào sau đây KHÔNG có trong demo này?",
+              "options": [
+                {
+                  "text": "Xem ảnh 360 độ",
+                  "is_correct": true,
+                  "explanation": "Chính xác! Hiện tại Web chưa hỗ trợ 360 viewer."
+                },
+                {
+                  "text": "Dòng thời gian",
+                  "is_correct": false,
+                  "explanation": "Sai rồi, lát nữa sẽ có timeline."
+                },
+                {
+                  "text": "Video Player",
+                  "is_correct": false,
+                  "explanation": "Sai rồi, video ở cuối level."
+                }
+              ],
+              "points": 100
+            },
+            {
+              "id": "demo_timeline",
+              "index": 3,
+              "name": "4. Timeline Screen",
+              "background_image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+              "type": "TIMELINE",
+              "description": "Sắp xếp các triều đại Việt Nam theo thứ tự thời gian.",
+              "is_first": false,
+              "is_last": false,
+              "events": [
+                {
+                  "id": "e1",
+                  "year": 1010,
+                  "title": "Nhà Lý",
+                  "description": "Lý Thái Tổ dời đô về Thăng Long."
+                },
+                {
+                  "id": "e2",
+                  "year": 1225,
+                  "title": "Nhà Trần",
+                  "description": "Tiếp nối nhà Lý, 3 lần thắng quân Nguyên Mông."
+                },
+                {
+                  "id": "e3",
+                  "year": 1428,
+                  "title": "Nhà Hậu Lê",
+                  "description": "Lê Lợi khởi nghĩa Lam Sơn thành công."
+                }
+              ],
+              "correct_order": ["e1", "e2", "e3"]
+            },
+            {
+              "id": "demo_image",
+              "index": 4,
+              "name": "5. Image Viewer Screen",
+              "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+              "type": "IMAGE_VIEWER",
+              "description": "Demo màn hình xem ảnh",
+              "is_first": false,
+              "is_last": false,
+              "content": {
+                "title": "Chùa Một Cột",
+                "description": "Biểu tượng văn hóa tâm linh độc đáo của Hà Nội, được xây dựng từ thời Lý.",
+                "image_url": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800"
+              }
+            },
+            {
+              "id": "demo_video",
+              "index": 5,
+              "name": "6. Video Screen",
+              "background_image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=800",
+              "type": "VIDEO",
+              "description": "Demo màn hình video",
+              "is_first": false,
+              "is_last": true,
+              "content": {
+                "title": "Giới thiệu Sen Hoa",
+                "description": "Trailer giới thiệu dự án game lịch sử Sen Hoa. Hãy cùng thưởng thức!",
+                "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+              }
+            }
+          ]
+        }
+      ],
+      "related_products": [
+        {
+          "id": 2,
+          "name": "Mô hình xe tăng 390",
+          "price": 250000,
+          "type": "souvenir",
+          "image": "https://bizweb.dktcdn.net/100/356/472/products/1-11a364be-ae3a-4496-ae58-f9479361ad38.jpg",
+          "url": "#"
         },
         {
-          "year": "1076",
-          "title": "Lập Quốc Tử Giám",
-          "description": "Vua Lý Nhân Tông cho lập Quốc Tử Giám bên cạnh Văn Miếu."
+          "id": 4,
+          "name": "Nón lá Huế (Nón bài thơ)",
+          "price": 80000,
+          "type": "souvenir",
+          "image": "https://cdn.tgdd.vn/Files/2021/07/07/1366224/non-bai-tho-xu-hue-la-gi-mua-o-dau-gia-bao-nhieu-202201171031346034.jpg",
+          "url": "#"
         }
-      ]
+      ],
+      "short_description": "Chiến dịch Hồ Chí Minh lịch sử, giải phóng hoàn toàn miền Nam, thống nhất đất nước.",
+      "gallery": [],
+      "updatedAt": "2026-01-23T11:19:26.010Z"
     },
     {
       "id": 6,
       "title": "Chiến thắng Bạch Đằng 938",
       "shortDescription": "Trận thủy chiến lừng lẫy chấm dứt 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập.",
       "content": "<p>Năm 938, Ngô Quyền lãnh đạo quân dân ta đánh bại quân Nam Hán trên sông Bạch Đằng. Đây là mốc son chói lọi trong lịch sử giữ nước, chấm dứt hơn 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập, tự chủ lâu dài cho dân tộc Việt Nam.</p><h3>Bối cảnh</h3><p>Kiều Công Tiễn giết Dương Đình Nghệ để đoạt chức Tiết độ sứ, sau đó cầu cứu nhà Nam Hán. Vua Nam Hán sai con là Lưu Hoằng Tháo mang quân sang xâm lược.</p><h3>Diễn biến</h3><p>Ngô Quyền cho đóng cọc gỗ đầu bịt sắt xuống lòng sông Bạch Đằng. Lợi dụng thủy triều lên xuống, ông dụ thuyền địch vào bãi cọc rồi phản công quyết liệt khiến quân Nam Hán đại bại.</p>",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Tran_Bach_Dang_938.jpg/1200px-Tran_Bach_Dang_938.jpg",
+      "image": "/uploads/general/file-1769167157139.jpeg",
       "author": "Sử Gia",
       "publishDate": "2024-01-10T00:00:00Z",
       "is_active": true,
       "views": 5000,
-      "related_heritage_ids": [
-        2
-      ],
+      "related_heritage_ids": [],
       "related_artifact_ids": [],
-      "related_level_ids": [
-        101
-      ],
-      "related_product_ids": [
-        1
-      ],
+      "related_level_ids": [101],
+      "related_product_ids": [1],
       "timeline_events": [
         {
           "year": "938",
           "title": "Trận Đại Chiến",
           "description": "Cọc gỗ cắm xuống lòng sông, quân Nam Hán đại bại."
         }
-      ]
+      ],
+      "related_heritage": [
+        {
+          "id": 2,
+          "name": "Hoàng Thành Thăng Long",
+          "type": "monument",
+          "cultural_period": "Triều Lý",
+          "region": "Bắc",
+          "latitude": 21.0341,
+          "longitude": 105.8372,
+          "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
+          "year_established": 1010,
+          "image": "/uploads/general/file-1769165335029.jpeg",
+          "rating": 4.7,
+          "total_reviews": 892,
+          "visit_hours": "8:00 - 17:00",
+          "entrance_fee": 30000,
+          "is_active": true,
+          "unesco_listed": true,
+          "significance": "international",
+          "author": "Admin",
+          "publishDate": "2024-08-05T09:30:00Z",
+          "description": "<p>Ho&agrave;ng th&agrave;nh Thăng Long l&agrave; quần thể di t&iacute;ch lịch sử gắn b&oacute; mật thiết với sự ph&aacute;t triển của Thăng Long &ndash; H&agrave; Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII &ndash; IX), khu di t&iacute;ch tiếp tục ph&aacute;t triển qua c&aacute;c triều đại Đinh &ndash; Tiền L&ecirc; (thế kỷ XI) v&agrave; đạt đến đỉnh cao dưới thời L&yacute; &ndash; Trần &ndash; L&ecirc; (thế kỷ XI &ndash; XVIII). Dưới triều Nguyễn (thế kỷ XIX &ndash; XX), mặc d&ugrave; kinh đ&ocirc; được dời v&agrave;o Ph&uacute; Xu&acirc;n (Huế), nhưng Ho&agrave;ng th&agrave;nh Thăng Long vẫn giữ vai tr&ograve; quan trọng.</p>\n<p>Năm 1010, khi vua L&yacute; Th&aacute;i Tổ dời đ&ocirc; từ Hoa Lư ra Thăng Long, &ocirc;ng đ&atilde; quy hoạch kinh th&agrave;nh theo m&ocirc; h&igrave;nh &ldquo;tam tr&ugrave;ng th&agrave;nh qu&aacute;ch&rdquo;, gồm ba v&ograve;ng th&agrave;nh: Kinh th&agrave;nh (nơi cư d&acirc;n sinh sống), Ho&agrave;ng th&agrave;nh (khu vực d&agrave;nh cho quan lại l&agrave;m việc) v&agrave; Cấm th&agrave;nh (khu vực chỉ d&agrave;nh ri&ecirc;ng cho ho&agrave;ng gia). Từ thế kỷ XI đến XVIII, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n l&agrave; trung t&acirc;m ch&iacute;nh trị, h&agrave;nh ch&iacute;nh của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đ&ocirc; v&agrave;o Ph&uacute; Xu&acirc;n, Thăng Long bị hạ cấp th&agrave;nh Bắc Th&agrave;nh (th&agrave;nh H&agrave; Nội). D&ugrave; vậy, điện K&iacute;nh Thi&ecirc;n v&agrave; Hậu L&acirc;u trong Cấm th&agrave;nh vẫn được duy tr&igrave; l&agrave;m h&agrave;nh cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p>\n<p>Sang thời kỳ Ph&aacute;p thuộc, H&agrave; Nội trở th&agrave;nh trung t&acirc;m h&agrave;nh ch&iacute;nh của Li&ecirc;n bang Đ&ocirc;ng Dương, v&agrave; Th&agrave;nh cổ H&agrave; Nội được sử dụng l&agrave;m Sở chỉ huy qu&acirc;n sự của Ph&aacute;p. L&uacute;c n&agrave;y, hầu hết c&aacute;c c&ocirc;ng tr&igrave;nh cung điện, đền đ&agrave;i trong Ho&agrave;ng th&agrave;nh đều bị ph&aacute; hủy, chỉ c&ograve;n Bắc M&ocirc;n v&agrave; Kỳ Đ&agrave;i được bảo tồn. Tr&ecirc;n nền điện K&iacute;nh Thi&ecirc;n v&agrave; s&acirc;n Long Tr&igrave;, người Ph&aacute;p x&acirc;y dựng c&aacute;c c&ocirc;ng tr&igrave;nh kiến tr&uacute;c mới theo phong c&aacute;ch ch&acirc;u &Acirc;u. Đến năm 1954, sau khi Thủ đ&ocirc; được giải ph&oacute;ng, Th&agrave;nh H&agrave; Nội trở th&agrave;nh Tổng h&agrave;nh dinh của Qu&acirc;n đội nh&acirc;n d&acirc;n Việt Nam v&agrave; duy tr&igrave; vai tr&ograve; n&agrave;y đến năm 2004.</p>\n<p>Ng&agrave;y nay, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long, gồm di t&iacute;ch khảo cổ học 18 Ho&agrave;ng Diệu v&agrave; Th&agrave;nh cổ H&agrave; Nội, nằm trong khu vực trung t&acirc;m ch&iacute;nh trị Ba Đ&igrave;nh &ndash; nơi đặt trụ sở của c&aacute;c cơ quan l&atilde;nh đạo cao nhất của Đảng v&agrave; Nh&agrave; nước. Đ&acirc;y kh&ocirc;ng chỉ l&agrave; một khu di t&iacute;ch lịch sử &ndash; văn h&oacute;a quan trọng m&agrave; c&ograve;n l&agrave; kh&ocirc;ng gian kiến tr&uacute;c mang gi&aacute; trị đặc biệt, gắn liền chặc chẽ với qu&aacute; tr&igrave;nh ph&aacute;t triển của đất nước. Đ&acirc;y cũng l&agrave; nơi tổ chức c&aacute;c sự kiện ch&iacute;nh trị, văn h&oacute;a trọng đại của quốc gia.</p>\n<h3>Vị thế v&agrave; tầm v&oacute;c</h3>\n<p>Trải qua 13 thế kỷ, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n giữ vị thế trung t&acirc;m ch&iacute;nh trị v&agrave; l&agrave; một trong những di t&iacute;ch quan trọng nhất của Việt Nam. Ng&agrave;y 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long &ndash; H&agrave; Nội ch&iacute;nh thức được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a thế giới. Gi&aacute; trị nổi bật của di sản n&agrave;y thể hiện qua chiều d&agrave;i lịch sử li&ecirc;n tục suốt 13 thế kỷ, vai tr&ograve; l&agrave; trung t&acirc;m quyền lực trong nhiều thời kỳ v&agrave; hệ thống di t&iacute;ch, di vật phong ph&uacute;. Đ&acirc;y cũng l&agrave; nơi lưu giữ những dấu ấn văn h&oacute;a quan trọng v&agrave; chứng kiến nhiều sự kiện mang tầm v&oacute;c lớn lao trong lịch sử d&acirc;n tộc.</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://i.pinimg.com/1200x/ea/42/15/ea4215828ac658b735472adfddf13132.jpg\"></p>\n<h3>C&aacute;c di vật được khảo cổ, khai quật trong Ho&agrave;ng Th&agrave;nh Thăng Long</h3>\n<p>C&aacute;c di vật được khai quật v&agrave; hiện đang trưng b&agrave;y ở Khu khảo cổ 18 Ho&agrave;ng Diệu.</p>\n<p>Thềm chia l&agrave;m 3 lối l&ecirc;n xuống đều nhau, lối giữa ngăn c&aacute;ch với 2 lối b&ecirc;n bằng đ&ocirc;i rồng đ&aacute; được x&acirc;y dựng năm 1467 ( đời vua L&ecirc; Th&aacute;nh T&ocirc;ng ). Rồng được tạo t&aacute;c kh&aacute; đẹp v&agrave; trau chuốt, tạo khối kiểu tượng tr&ograve;n c&oacute; d&aacute;ng mập, khỏe, đầu vươn cao ph&iacute;a ch&acirc;n thềm bậc, th&acirc;n uốn kh&uacute;c nhịp nh&agrave;ng v&agrave; chạy d&agrave;i theo 9 bậc l&ecirc;n. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, r&acirc;u v&agrave; t&oacute;c kết th&agrave;nh đao bay về sau.</p>\n<p>Tai rồng lớn kiểu tai tr&acirc;u, sừng đơn vươn d&agrave;i ra ph&iacute;a sau v&agrave; &aacute;p s&aacute;t th&acirc;n rồng. Dọc sống lưng đục chạm h&agrave;ng v&acirc;y c&aacute; to, mập. B&ecirc;n ngo&agrave;i bậc thềm c&oacute; 2 lan can h&igrave;nh rồng c&aacute;ch điệu dạng ph&ugrave; đi&ecirc;u ( gọi l&agrave; v&acirc;n h&oacute;a rồng ), mặt trong trang tr&iacute; v&acirc;n m&acirc;y, b&ecirc;n ngo&agrave;i thể hiện hoa c&uacute;c d&acirc;y. C&aacute;c hoa văn n&agrave;y được phủ k&iacute;n mặt ngo&agrave;i của th&acirc;n rồng đ&aacute; c&aacute;ch điệu.</p>\n<p>Ph&iacute;a ngo&agrave;i l&agrave; hai đ&aacute;m m&acirc;y h&oacute;a rồng. Đ&acirc;y l&agrave; hai tảng đ&aacute; nguy&ecirc;n khối d&agrave;y 36 &ndash; 39 cm, phần đầu thấp d&agrave;y hơn, c&oacute; những đường cuốn cắt ngang c&ugrave;ng những đường gờ nổi nối tiếp nhau chạy hết chiều d&agrave;i phiến đ&aacute; 5,3 m, những đường gờ nổi kh&ocirc;ng theo quy luật.</p>\n<p>Mặt trong v&agrave; ngo&agrave;i của hai con rồng c&aacute;ch điệu n&agrave;y trang tr&iacute; hoa văn, họa tiết khắc ch&igrave;m v&agrave;o đ&aacute;. Ph&iacute;a ngo&agrave;i, c&oacute; hai đường thẳng chạy dọc theo th&acirc;n rồng c&aacute;ch nhau 10 cm, chia đ&ocirc;i th&agrave;nh hai nửa tr&ecirc;n dưới, b&ecirc;n trong l&agrave; những b&ocirc;ng hoa bốn c&aacute;nh xếp liền nhau. Nửa tr&ecirc;n l&agrave; những cuộn m&acirc;y, đao lửa &iacute;t theo quy luật r&otilde; rang, nửa dưới l&agrave; những h&igrave;nh ảnh mặt trời c&aacute;ch điệu, đao lửa, m&acirc;y vờn. Ph&iacute;a mặt trong của phiến đ&aacute; do c&oacute; bậc thềm cao n&ecirc;n diện t&iacute;ch trạm khắc &iacute;t hơn, một đường thẳng b&ecirc;n tr&ecirc;n l&agrave; những cuộn m&acirc;y nhỏ dẫn từ dưới thấp l&ecirc;n cao.</p>\n<p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
+          "commentCount": 85,
+          "related_artifact_ids": [7, 8, 9],
+          "related_history_ids": [1],
+          "short_description": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
+          "shortDescription": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
+          "province": "Hà Nội",
+          "gallery": [],
+          "timeline": [
+            {
+              "id": 6,
+              "title": "Lý Thái Tổ dời đô",
+              "description": "Vua Lý Thái Tổ ban chiếu Thiên đô, dời đô từ Hoa Lư về Thăng Long",
+              "year": 1010,
+              "heritage_site_id": 2,
+              "category": "founded",
+              "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600"
+            },
+            {
+              "id": 7,
+              "title": "Xây dựng điện Kính Thiên",
+              "description": "Vua Lê Thái Tổ cho xây dựng điện Kính Thiên làm nơi triều chính",
+              "year": 1428,
+              "heritage_site_id": 2,
+              "category": "construction",
+              "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600"
+            },
+            {
+              "id": 8,
+              "title": "Khai quật khảo cổ",
+              "description": "Bắt đầu khai quật khảo cổ học tại khu vực 18 Hoàng Diệu, phát hiện nhiều di vật quý",
+              "year": 2002,
+              "heritage_site_id": 2,
+              "category": "discovery",
+              "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600"
+            },
+            {
+              "id": 5,
+              "title": "UNESCO công nhận Hoàng Thành",
+              "description": "Hoàng Thành Thăng Long được UNESCO công nhận",
+              "year": 2010,
+              "heritage_site_id": 2,
+              "category": "recognition",
+              "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600"
+            }
+          ],
+          "updatedAt": "2026-01-23T10:52:01.619Z"
+        }
+      ],
+      "related_levels": [],
+      "related_products": [
+        {
+          "id": 1,
+          "name": "Sách: Việt Nam Sử Lược",
+          "price": 180000,
+          "type": "book",
+          "image": "https://salt.tikicdn.com/cache/w1200/ts/product/23/67/68/73919242d992953284346028887e3871.jpg",
+          "url": "#"
+        }
+      ],
+      "short_description": "Trận thủy chiến lừng lẫy chấm dứt 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập.",
+      "gallery": [],
+      "updatedAt": "2026-01-23T11:19:18.153Z"
     },
     {
       "id": 7,
       "title": "Khởi nghĩa Hai Bà Trưng",
       "shortDescription": "Cuộc khởi nghĩa đầu tiên chống lại ách đô hộ phương Bắc do hai nữ tướng lãnh đạo.",
       "content": "<p>Năm 40, Hai Bà Trưng phất cờ khởi nghĩa tại Mê Linh nhằm đền nợ nước, trả thù nhà. Cuộc khởi nghĩa đã đánh đuổi được thái thú Tô Định, giành lại độc lập cho đất nước trong 3 năm.</p><h3>Lời thề Mê Linh</h3><p>'Một xin rửa sạch nước thù / Hai xin dựng lại nghiệp xưa họ Hùng / Ba kẻo oan ức lòng chồng / Bốn xin vẹn vẹn sở công lênh này'.</p>",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Hai_Ba_Trung.jpg/800px-Hai_Ba_Trung.jpg",
+      "image": "/uploads/general/file-1769167302173.jpeg",
       "author": "Nữ Sử",
       "publishDate": "2024-03-08T00:00:00Z",
       "is_active": true,
       "views": 4200,
       "related_heritage_ids": [],
-      "related_artifact_ids": [
-        5
-      ],
+      "related_artifact_ids": [],
       "related_level_ids": [],
-      "related_product_ids": [
-        3
-      ],
+      "related_product_ids": [3],
       "timeline_events": [
         {
           "year": "40",
           "title": "Phất cờ khởi nghĩa",
           "description": "Hai Bà Trưng dựng cờ khởi nghĩa tại Hát Môn."
         }
-      ]
-    },
-    {
-      "id": 8,
-      "title": "Văn hóa Đông Sơn",
-      "shortDescription": "Đỉnh cao của nền văn minh lúa nước và kỹ thuật đúc đồng thời dựng nước.",
-      "content": "<p>Văn hóa Đông Sơn là nền văn hóa khảo cổ học thời kỳ đồ đồng và đồ sắt sớm (khoảng 800 TCN - 200 SCN). Đây là thời kỳ rực rỡ nhất của thời đại kim khí ở Việt Nam với biểu tượng là Trống đồng Đông Sơn.</p><p>Người Đông Sơn đã biết thâm canh lúa nước, dùng sức kéo trâu bò, và đặc biệt là kỹ thuật luyện kim đúc đồng đạt trình độ rất cao.</p>",
-      "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
-      "author": "Khảo Cổ Học",
-      "publishDate": "2024-06-01T00:00:00Z",
-      "is_active": true,
-      "views": 3300,
-      "related_heritage_ids": [
-        4
       ],
-      "related_artifact_ids": [
-        2,
-        3
+      "related_artifacts": [],
+      "related_products": [
+        {
+          "id": 3,
+          "name": "Tranh khắc gỗ dân gian Đông Hồ",
+          "price": 500000,
+          "type": "souvenir",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Damcuoichuot.jpg/800px-Damcuoichuot.jpg",
+          "url": "#"
+        }
       ],
-      "related_level_ids": [],
-      "related_product_ids": [
-        1
-      ],
-      "timeline_events": []
+      "short_description": "Cuộc khởi nghĩa đầu tiên chống lại ách đô hộ phương Bắc do hai nữ tướng lãnh đạo.",
+      "gallery": [],
+      "updatedAt": "2026-01-23T11:21:43.101Z"
     }
   ],
   "products": [
@@ -1576,13 +1845,8 @@
       "description": "Bộ sưu tập các cổ vật đặc sắc thời Lý",
       "visibility": "public",
       "total_items": 2,
-      "heritage_site_ids": [
-        2,
-        5
-      ],
-      "artifact_ids": [
-        3
-      ],
+      "heritage_site_ids": [2, 5],
+      "artifact_ids": [3],
       "exhibition_ids": [],
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2026-01-19T01:50:38.397Z",
@@ -1871,15 +2135,8 @@
       "total_points": 570,
       "level": 3,
       "coins": 1350,
-      "unlocked_chapters": [
-        1
-      ],
-      "completed_levels": [
-        99,
-        1,
-        2,
-        3
-      ],
+      "unlocked_chapters": [1],
+      "completed_levels": [99, 1, 2, 3],
       "collected_characters": [],
       "badges": [],
       "achievements": [],
@@ -1909,20 +2166,10 @@
           "answered_at": "2026-01-23T11:38:27.069Z"
         }
       ],
-      "timeline_order": [
-        "e1",
-        "e2",
-        "e3"
-      ],
+      "timeline_order": ["e1", "e2", "e3"],
       "score": 150,
       "total_screens": 6,
-      "completed_screens": [
-        "demo_dialogue",
-        "demo_hidden",
-        "demo_quiz",
-        "demo_timeline",
-        "demo_image"
-      ],
+      "completed_screens": ["demo_dialogue", "demo_hidden", "demo_quiz", "demo_timeline", "demo_image"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -1950,10 +2197,7 @@
       "timeline_order": [],
       "score": 100,
       "total_screens": 3,
-      "completed_screens": [
-        "intro_d1",
-        "intro_q1"
-      ],
+      "completed_screens": ["intro_d1", "intro_q1"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -1981,9 +2225,7 @@
       "timeline_order": [],
       "score": 120,
       "total_screens": 2,
-      "completed_screens": [
-        "ho_1"
-      ],
+      "completed_screens": ["ho_1"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2000,11 +2242,7 @@
       "current_screen_index": 0,
       "collected_items": [],
       "answered_questions": [],
-      "timeline_order": [
-        "e1",
-        "e2",
-        "e3"
-      ],
+      "timeline_order": ["e1", "e2", "e3"],
       "score": 150,
       "total_screens": 1,
       "completed_screens": [],
@@ -2027,9 +2265,7 @@
       "timeline_order": [],
       "score": 0,
       "total_screens": 2,
-      "completed_screens": [
-        "vid_1"
-      ],
+      "completed_screens": ["vid_1"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2058,9 +2294,7 @@
       "timeline_order": [],
       "score": 20,
       "total_screens": 2,
-      "completed_screens": [
-        "vid_1"
-      ],
+      "completed_screens": ["vid_1"],
       "screen_states": {},
       "time_spent": 0,
       "hints_used": 0,
@@ -2107,34 +2341,19 @@
           {
             "id": 1,
             "question": "Việt Nam có bao nhiêu dân tộc anh em?",
-            "options": [
-              "53",
-              "54",
-              "55",
-              "64"
-            ],
+            "options": ["53", "54", "55", "64"],
             "correct_answer": 1
           },
           {
             "id": 2,
             "question": "Biểu tượng nào thường gắn liền với làng quê Việt Nam?",
-            "options": [
-              "Cây Baobab",
-              "Cây Tre",
-              "Cây Sồi",
-              "Cây Thông"
-            ],
+            "options": ["Cây Baobab", "Cây Tre", "Cây Sồi", "Cây Thông"],
             "correct_answer": 1
           },
           {
             "id": 3,
             "question": "Vị vua nào đã dời đô về Thăng Long (Hà Nội)?",
-            "options": [
-              "Đinh Bộ Lĩnh",
-              "Lê Lợi",
-              "Lý Thái Tổ",
-              "Quang Trung"
-            ],
+            "options": ["Đinh Bộ Lĩnh", "Lê Lợi", "Lý Thái Tổ", "Quang Trung"],
             "correct_answer": 2
           }
         ]
@@ -2157,34 +2376,19 @@
           {
             "id": 1,
             "question": "Ẩm thực Việt Nam chú trọng sự cân bằng của mấy vị cơ bản?",
-            "options": [
-              "3 vị",
-              "4 vị",
-              "5 vị",
-              "6 vị"
-            ],
+            "options": ["3 vị", "4 vị", "5 vị", "6 vị"],
             "correct_answer": 2
           },
           {
             "id": 2,
             "question": "Thành phần nào tạo nên mùi thơm đặc trưng của nước dùng Phở?",
-            "options": [
-              "Hồi, Quế, Thảo quả",
-              "Sả, Ớt",
-              "Tỏi, Hành tây",
-              "Mắm tôm"
-            ],
+            "options": ["Hồi, Quế, Thảo quả", "Sả, Ớt", "Tỏi, Hành tây", "Mắm tôm"],
             "correct_answer": 0
           },
           {
             "id": 3,
             "question": "Cơm Tấm là đặc sản nổi tiếng của vùng nào?",
-            "options": [
-              "Hà Nội",
-              "Huế",
-              "TP. Hồ Chí Minh",
-              "Hải Phòng"
-            ],
+            "options": ["Hà Nội", "Huế", "TP. Hồ Chí Minh", "Hải Phòng"],
             "correct_answer": 2
           }
         ]
@@ -2207,23 +2411,13 @@
           {
             "id": 1,
             "question": "Trang phục nào được xem là Quốc phục của Việt Nam?",
-            "options": [
-              "Áo Bà Ba",
-              "Áo Tứ Thân",
-              "Áo Dài",
-              "Áo Yếm"
-            ],
+            "options": ["Áo Bà Ba", "Áo Tứ Thân", "Áo Dài", "Áo Yếm"],
             "correct_answer": 2
           },
           {
             "id": 2,
             "question": "Áo Tứ Thân thường gắn liền với phụ nữ vùng nào?",
-            "options": [
-              "Miền Bắc",
-              "Miền Trung",
-              "Miền Nam",
-              "Tây Nguyên"
-            ],
+            "options": ["Miền Bắc", "Miền Trung", "Miền Nam", "Tây Nguyên"],
             "correct_answer": 0
           }
         ]
@@ -2259,9 +2453,7 @@
       "completed_modules": [],
       "total_points": 300,
       "level": 2,
-      "badges": [
-        "hard_worker"
-      ]
+      "badges": ["hard_worker"]
     }
   ],
   "ai_chat_history": [
