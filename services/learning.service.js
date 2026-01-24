@@ -10,17 +10,19 @@ class LearningService extends BaseService {
     const moduleIdInt = parseInt(moduleId);
     let finalScore = parseInt(score);
 
-    const module = await db.findById('learning_modules', moduleIdInt);
-    if (!module) {
+    // 1. Get Module Detail using BaseService standard
+    const moduleResult = await this.findById(moduleIdInt);
+    if (!moduleResult.success) {
       return { success: false, message: 'Module not found', statusCode: 404 };
     }
+    const moduleItem = moduleResult.data;
 
-    // Server-side score validation (Weighted Scoring)
-    if (answers && module.quiz && module.quiz.questions) {
+    // 2. Server-side score validation (Weighted Scoring)
+    if (answers && moduleItem.quiz && moduleItem.quiz.questions) {
         let totalPoints = 0;
         let earnedPoints = 0;
 
-        module.quiz.questions.forEach(q => {
+        moduleItem.quiz.questions.forEach(q => {
             const questionPoint = q.point || 10;
             totalPoints += questionPoint;
             
@@ -36,6 +38,8 @@ class LearningService extends BaseService {
         }
     }
 
+    // 3. User Game Progress Logic
+    // ... (rest of game logic)
     // Use game_progress
     let gameProgress = await db.findOne('game_progress', { user_id: userId });
 
@@ -55,7 +59,7 @@ class LearningService extends BaseService {
       time_spent: 0
     };
 
-    const passingScore = module.quiz?.passing_score || 70;
+    const passingScore = moduleItem.quiz?.passing_score || 70;
 
     // Points logic:
     // - 50 points for first time completion (if passed or no quiz)
@@ -79,11 +83,9 @@ class LearningService extends BaseService {
     if (finalScore === 100 && !newBadges.includes('perfect_score')) {
       newBadges.push('perfect_score'); // Badge: Điểm Tuyệt Đối
     }
-    if (newLevel > (gameProgress.level || 1)) {
-      // Logic for level up badge could go here
-    }
-
-    const updated = await db.update('game_progress', gameProgress.id, {
+    
+    // Update Progress
+    await db.update('game_progress', gameProgress.id, {
       completed_modules: [...(gameProgress.completed_modules || []), completedModule],
       total_points: newTotalPoints,
       level: Math.max(gameProgress.level, newLevel),
@@ -94,7 +96,7 @@ class LearningService extends BaseService {
       success: true,
       message: 'Module completed',
       data: {
-        module_title: module.title,
+        module_title: moduleItem.title,
         score: finalScore,
         points_earned: points,
         passed: finalScore >= passingScore,
