@@ -28,7 +28,7 @@ const newChapters = [
         "name": "Sen Vàng - Giao Thoa",
         "description": "Sự giao thoa văn hóa thế kỷ 18-19.",
         "layer_index": 2,
-        "petal_state": "blooming",
+        "petal_state": "locked",
         "required_petals": 0,
         "is_active": true,
         "theme": "Giao Thoa Văn Hóa",
@@ -44,7 +44,7 @@ const newChapters = [
         "name": "Sen Trắng - Di Sản",
         "description": "Thời kỳ phồn vinh của các triều đại phong kiến.",
         "layer_index": 3,
-        "petal_state": "blooming",
+        "petal_state": "locked",
         "required_petals": 0,
         "is_active": true,
         "theme": "Di Sản Phong Kiến",
@@ -103,149 +103,168 @@ const newLevels = [
         "id": 1,
         "chapter_id": 1,
         "name": "Huyền thoại Rồng Tiên",
-        "description": "Tìm hiểu về nguồn gốc Lạc Long Quân và Âu Cơ.",
+        "description": "Câu chuyện về cội nguồn dân tộc Việt Nam qua truyền thuyết Lạc Long Quân và Âu Cơ.",
         "type": "story",
         "difficulty": "easy",
         "order": 1,
         "required_level": null,
         "is_locked": false,
         "thumbnail": "https://quantri.longbien.shieldixcloud.com/uploadfoldernew/sgdlongbien/image/mntuoihoa/2022_5_image/tai-xuong-7_09052022.jpg",
-        "background_music": null,
-        "ai_character_id": 1,
-        "knowledge_base": "Truyền thuyết Con Rồng Cháu Tiên",
+        "passing_score": 0, // Story only requires completion
+        "time_limit": 300,
         "screens": [
             {
-                "id": "screen1",
+                "id": "intro_d1",
                 "type": "DIALOGUE",
-                "background_image": "https://quantri.longbien.shieldixcloud.com/uploadfoldernew/sgdlongbien/image/mntuoihoa/2022_5_image/tai-xuong-7_09052022.jpg",
+                "background_image": "https://bcp.cdnchinhphu.vn/Uploaded/nguyenthikimlien/2017_11_06/phh-con-rong-chau-tien-14-1509867509529.jpg",
                 "content": [
-                    { "speaker": "AI", "text": "Ngày xửa ngày xưa, ở đất Lĩnh Nam...", "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu" },
-                    { "speaker": "USER", "text": "Có Lạc Long Quân nòi Rồng và Âu Cơ dòng Tiên phải không?" },
-                    { "speaker": "AI", "text": "Đúng rồi! Họ sinh ra bọc trăm trứng, nở trăm con.", "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu", "emotion": "happy" }
+                    { "speaker": "AI", "text": "Chào bạn! Mình là Chú Tễu. Hôm nay mình sẽ kể cho bạn nghe về nguồn gốc con Rồng cháu Tiên nhé!", "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu" },
+                    { "speaker": "USER", "text": "Mình rất sẵn lòng! Hãy bắt đầu thôi." },
+                    { "speaker": "AI", "text": "Ngày xưa, Lạc Long Quân thuộc nòi Rồng, kết duyên cùng Âu Cơ thuộc dòng dõi Tiên...", "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu", "emotion": "happy" }
                 ]
+            },
+            {
+                "id": "story_video",
+                "type": "VIDEO",
+                "content": {
+                    "title": "Truyền thuyết Con Rồng Cháu Tiên",
+                    "description": "Xem đoạn phim ngắn về sự tích bọc trăm trứng.",
+                    "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                }
+            },
+            {
+                "id": "intro_q1",
+                "type": "QUIZ",
+                "question": "Lạc Long Quân và Âu Cơ sinh ra bao nhiêu người con?",
+                "options": [
+                    { "text": "50 người con", "is_correct": false, "explanation": "Chưa chính xác. 50 người con theo cha xuống biển, 50 theo mẹ lên non." },
+                    { "text": "100 người con", "is_correct": true, "explanation": "Chính xác! Bọc trăm trứng nở trăm con." },
+                    { "text": "10 người con", "is_correct": false, "explanation": "Sai rồi." }
+                ],
+                "points": 100
             }
         ],
-        "rewards": { "coins": 50, "petals": 1 }
+        "rewards": { "coins": 100, "petals": 1 }
     },
     {
         "id": 2,
         "chapter_id": 1,
         "name": "Âm vang Trống Đồng",
-        "description": "Biểu tượng văn hóa Đông Sơn rực rỡ.",
+        "description": "Khám phá các họa tiết bí ẩn trên mặt trống đồng Đông Sơn.",
         "type": "hidden_object",
         "difficulty": "medium",
         "order": 2,
         "required_level": 1,
         "is_locked": false,
+        "passing_score": 60, // Require collecting all items
+        "time_limit": 120,
         "thumbnail": "https://luocsutocviet.com/wp-content/uploads/2021/12/vszvdsvds.png?w=768&h=351&crop=1",
         "screens": [
             {
-                "id": "screen1",
+                "id": "ho_intro",
+                "type": "DIALOGUE",
+                "content": [{ "speaker": "AI", "text": "Hãy tìm 3 biểu tượng quan trọng trên mặt trống đồng nhé!" }]
+            },
+            {
+                "id": "ho_1",
                 "type": "HIDDEN_OBJECT",
                 "background_image": "https://luocsutocviet.com/wp-content/uploads/2021/12/vszvdsvds.png?w=768&h=351&crop=1",
+                "guide_text": "Tìm: Ngôi Sao, Chim Lạc, Nhà Sàn",
                 "items": [
-                    { "id": "star", "name": "Ngôi sao", "x": 50, "y": 50, "fact_popup": "Mặt trời 14 cánh ở tâm trống." },
-                    { "id": "bird", "name": "Chim Lạc", "x": 20, "y": 30, "fact_popup": "Chim Lạc bay ngược chiều kim đồng hồ." }
+                    { "id": "star", "name": "Ngôi sao trung tâm", "x": 50, "y": 50, "points": 20, "fact_popup": "Tượng trưng cho Mặt Trời, nguồn sống của cư dân lúa nước." },
+                    { "id": "bird", "name": "Chim Lạc", "x": 20, "y": 30, "points": 20, "fact_popup": "Vật tổ của người Việt cổ, bay ngược chiều kim đồng hồ." },
+                    { "id": "house", "name": "Nhà sàn", "x": 75, "y": 60, "points": 20, "fact_popup": "Kiến trúc nhà ở truyền thống tránh thú dữ và ngập lụt." }
                 ],
-                "required_items": 2
+                "required_items": 3
+            },
+            {
+                "id": "quiz_drum",
+                "type": "QUIZ",
+                "question": "Trống đồng Đông Sơn được làm từ chất liệu gì?",
+                "options": [
+                    { "text": "Sắt", "is_correct": false },
+                    { "text": "Đồng", "is_correct": true },
+                    { "text": "Gốm", "is_correct": false }
+                ],
+                "points": 40
             }
         ],
-        "rewards": { "coins": 100, "petals": 1 }
+        "rewards": { "coins": 150, "petals": 2 }
     },
     {
         "id": 3,
         "chapter_id": 1,
-        "name": "Rối nước làng quê",
-        "description": "Nghệ thuật của người nông dân lúa nước.",
-        "type": "quiz",
-        "difficulty": "easy",
+        "name": "Lịch Sử Dựng Nước",
+        "description": "Sắp xếp các sự kiện lịch sử theo đúng trình tự thời gian.",
+        "type": "timeline",
+        "difficulty": "medium",
         "order": 3,
         "required_level": 2,
         "is_locked": false,
-        "thumbnail": "https://eggyolk.vn/wp-content/uploads/2024/09/Ve-Mua-Roi-Nuoc-Thang-Long-Tai-Ha-Noi-1024x538.jpg",
+        "passing_score": 50,
+        "thumbnail": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600",
         "screens": [
             {
-                "id": "screen1",
-                "type": "QUIZ",
-                "question": "Con rối nước được điều khiển như thế nào?",
-                "options": [
-                    { "text": "Bằng dây từ trên cao", "is_correct": false },
-                    { "text": "Bằng sào tre dưới nước", "is_correct": true },
-                    { "text": "Bằng máy", "is_correct": false }
+                "id": "tl_1",
+                "type": "TIMELINE",
+                "description": "Hãy sắp xếp các triều đại sau theo thứ tự xuất hiện:",
+                "events": [
+                    { "id": "e1", "year": 1010, "title": "Nhà Lý", "description": "Lý Thái Tổ dời đô về Thăng Long" },
+                    { "id": "e2", "year": 1225, "title": "Nhà Trần", "description": "Ba lần đánh thắng quân Nguyên Mông" },
+                    { "id": "e3", "year": 1428, "title": "Nhà Hậu Lê", "description": "Lê Lợi khởi nghĩa Lam Sơn" }
                 ],
+                "correct_order": ["e1", "e2", "e3"],
                 "points": 100
             }
         ],
-        "rewards": { "coins": 80, "petals": 1 }
+        "rewards": { "coins": 120, "petals": 1 }
     },
     {
         "id": 4,
         "chapter_id": 1,
-        "name": "Dân ca Quan Họ",
-        "description": "Lời ca giao duyên tình tứ Kinh Bắc.",
-        "type": "mixed",
-        "difficulty": "medium",
+        "name": "Văn Hóa Làng Xã",
+        "description": "Kiểm tra kiến thức về văn hóa làng xã Bắc Bộ.",
+        "type": "quiz",
+        "difficulty": "hard",
         "order": 4,
         "required_level": 3,
         "is_locked": false,
+        "passing_score": 40, // 2/3 correct required (20*2 = 40)
         "thumbnail": "https://dulichbacgiang.gov.vn/uploads/dulichbacgiang/Bai-viet/292/1.jpg",
         "screens": [
             {
-                "id": "screen1",
-                "type": "DIALOGUE",
-                "content": [
-                    { "speaker": "AI", "text": "Người ơi người ở đừng về..." }
-                ]
-            }
-        ],
-        "rewards": { "coins": 120, "petals": 2 }
-    },
-    {
-        "id": 5,
-        "chapter_id": 1,
-        "name": "Chùa Một Cột",
-        "description": "Đóa sen nghìn năm tuổi giữa lòng Hà Nội.",
-        "type": "image_viewer",
-        "difficulty": "easy",
-        "order": 5,
-        "required_level": 4,
-        "is_locked": false,
-        "thumbnail": "https://eggyolk.vn/wp-content/uploads/2024/05/kinh-nghiem-du-lich-chua-mot-cot.jpg",
-        "screens": [
+                "id": "vid_1",
+                "type": "VIDEO",
+                "content": {
+                    "title": "Cây Đa Bến Nước",
+                    "description": "Biểu tượng của làng quê Việt Nam.",
+                    "video_url": "https://www.youtube.com/embed/CD8sKixEDsI" // Placeholder
+                }
+            },
             {
-                "id": "screen1",
-                "type": "IMAGE_VIEWER",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Chua_Mot_Cot.jpg/800px-Chua_Mot_Cot.jpg",
-                "caption": "Liên Hoa Đài",
-                "description": "Chùa được xây dựng mô phỏng hình dáng bông sen nở trên mặt nước."
-            }
-        ],
-        "rewards": { "coins": 100, "petals": 1 }
-    },
-    {
-        "id": 6,
-        "chapter_id": 1,
-        "name": "Thánh Gióng Nhổ Tre",
-        "description": "Sức mạnh phi thường bảo vệ non sông.",
-        "type": "timeline",
-        "difficulty": "hard",
-        "order": 6,
-        "required_level": 5,
-        "is_locked": false,
-        "thumbnail": "https://cdnv2.tgdd.vn/bhx-static/bhx/News/Images/2025/11/05/1585286/image1_202511052252280947.jpg",
-        "screens": [
-            {
-                "id": "screen1",
-                "type": "TIMELINE",
-                "events": [
-                    { "id": "e1", "year": 0, "title": "Cậu bé không biết nói" },
-                    { "id": "e2", "year": 1, "title": "Ăn cơm vươn vai lớn dậy" },
-                    { "id": "e3", "year": 2, "title": "Nhổ tre đánh giặc Ân" }
+                "id": "q_ha",
+                "type": "QUIZ",
+                "question": "Di sản Phố cổ Hội An nằm ở tỉnh nào?",
+                "options": [
+                    { "text": "Thừa Thiên Huế", "is_correct": false },
+                    { "text": "Quảng Nam", "is_correct": true },
+                    { "text": "Đà Nẵng", "is_correct": false }
                 ],
-                "correct_order": ["e1", "e2", "e3"]
+                "points": 20
+            },
+            {
+                "id": "q_quanho",
+                "type": "QUIZ",
+                "question": "Dân ca Quan họ là di sản văn hóa của vùng nào?",
+                "options": [
+                    { "text": "Kinh Bắc (Bắc Ninh, Bắc Giang)", "is_correct": true },
+                    { "text": "Xứ Đoài (Sơn Tây)", "is_correct": false },
+                    { "text": "Phố Hiến (Hưng Yên)", "is_correct": false }
+                ],
+                "points": 20
             }
         ],
-        "rewards": { "coins": 200, "petals": 5, "badge": "chapter_1_master" }
+        "rewards": { "coins": 200, "petals": 3 }
     },
 
     // --- CHAPTER 2: Giao Thoa (Intersection) ---
