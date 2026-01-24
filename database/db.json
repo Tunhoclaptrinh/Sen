@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-23T10:26:35.993Z"
+      "lastLogin": "2026-01-23T14:15:18.770Z"
     },
     {
       "id": 4,
@@ -1862,120 +1862,366 @@
       "created_at": "2024-01-01T00:00:00Z"
     }
   ],
-  "game_progress": [],
-  "game_sessions": [],
+  "game_progress": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "current_chapter": 1,
+      "total_sen_petals": 7,
+      "total_points": 570,
+      "level": 3,
+      "coins": 1350,
+      "unlocked_chapters": [
+        1
+      ],
+      "completed_levels": [
+        99,
+        1,
+        2,
+        3
+      ],
+      "collected_characters": [],
+      "badges": [],
+      "achievements": [],
+      "museum_open": false,
+      "museum_income": 0,
+      "streak_days": 0,
+      "last_login": "2026-01-23T10:38:31.361Z",
+      "created_at": "2026-01-23T10:38:31.361Z",
+      "completed_modules": []
+    }
+  ],
+  "game_sessions": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "level_id": 99,
+      "status": "completed",
+      "current_screen_id": "demo_video",
+      "current_screen_index": 5,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "demo_quiz",
+          "answer": "Xem ảnh 360 độ",
+          "is_correct": true,
+          "points": 100,
+          "answered_at": "2026-01-23T11:38:27.069Z"
+        }
+      ],
+      "timeline_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "score": 150,
+      "total_screens": 6,
+      "completed_screens": [
+        "demo_dialogue",
+        "demo_hidden",
+        "demo_quiz",
+        "demo_timeline",
+        "demo_image"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-23T11:37:52.918Z",
+      "last_activity": "2026-01-23T11:38:29.888Z",
+      "completed_at": "2026-01-23T11:38:30.596Z"
+    },
+    {
+      "id": 2,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "completed",
+      "current_screen_id": "intro_d2",
+      "current_screen_index": 2,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "intro_q1",
+          "answer": "Việt Nam",
+          "is_correct": true,
+          "points": 100,
+          "answered_at": "2026-01-23T11:38:35.076Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 100,
+      "total_screens": 3,
+      "completed_screens": [
+        "intro_d1",
+        "intro_q1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-23T11:38:31.543Z",
+      "last_activity": "2026-01-23T11:38:35.545Z",
+      "completed_at": "2026-01-23T11:38:36.661Z"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "level_id": 2,
+      "status": "completed",
+      "current_screen_id": "quiz_drum",
+      "current_screen_index": 1,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "quiz_drum",
+          "answer": "Đồng",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-23T11:38:44.208Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 120,
+      "total_screens": 2,
+      "completed_screens": [
+        "ho_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-23T11:38:37.626Z",
+      "last_activity": "2026-01-23T11:38:44.208Z",
+      "completed_at": "2026-01-23T11:38:45.312Z"
+    },
+    {
+      "id": 4,
+      "user_id": 3,
+      "level_id": 3,
+      "status": "completed",
+      "current_screen_id": "tl_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "score": 150,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-23T11:38:46.188Z",
+      "last_activity": "2026-01-23T11:38:47.886Z",
+      "completed_at": "2026-01-23T11:38:48.454Z"
+    },
+    {
+      "id": 5,
+      "user_id": 3,
+      "level_id": 4,
+      "status": "abandoned",
+      "current_screen_id": "q_ha",
+      "current_screen_index": 1,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 2,
+      "completed_screens": [
+        "vid_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-23T11:38:49.672Z",
+      "last_activity": "2026-01-23T11:42:38.467Z",
+      "expired_at": "2026-01-23T14:15:27.436Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 6,
+      "user_id": 3,
+      "level_id": 4,
+      "status": "completed",
+      "current_screen_id": "q_ha",
+      "current_screen_index": 1,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "q_ha",
+          "answer": "Quảng Nam",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-23T14:15:29.344Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 20,
+      "total_screens": 2,
+      "completed_screens": [
+        "vid_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-23T14:15:27.439Z",
+      "last_activity": "2026-01-23T14:15:29.344Z",
+      "completed_at": "2026-01-23T14:15:29.973Z"
+    },
+    {
+      "id": 7,
+      "user_id": 3,
+      "level_id": 4,
+      "status": "in_progress",
+      "current_screen_id": "vid_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 2,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-23T14:15:31.791Z",
+      "last_activity": "2026-01-23T14:15:31.791Z"
+    }
+  ],
   "learning_modules": [
     {
       "id": 1,
-      "title": "Lịch sử Trống Đồng Đông Sơn",
-      "description": "Khám phá nguồn gốc, ý nghĩa đặc sắc của trống đồng Đông Sơn trong văn hóa Việt cổ.",
+      "title": "Nhập môn Văn Hóa Việt",
+      "description": "Khám phá bản sắc độc đáo của văn hóa Việt Nam qua lăng kính lịch sử và địa lý.",
       "category": "history",
       "difficulty": "easy",
-      "estimated_duration": 15,
       "order": 1,
-      "content_type": "article",
-      "content_url": "<p><strong>Trống đồng Đông Sơn</strong> tiêu biểu cho Văn hóa Đông Sơn (700 TCN - 100) của người Việt cổ...</p><p>Trống đồng không chỉ là nhạc cụ mà còn là biểu tượng quyền lực của các thủ lĩnh...</p>",
+      "content_type": "video",
+      "content_url": "https://www.youtube.com/embed/ZzDB_t3vjCc",
+      "duration_minutes": 10,
+      "estimated_duration": 10,
+      "thumbnail": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600",
       "quiz": {
-        "id": 1,
-        "passing_score": 50,
+        "passing_score": 80,
         "questions": [
           {
             "id": 1,
-            "question": "Trống đồng Đông Sơn thuộc nền văn hóa nào?",
+            "question": "Việt Nam có bao nhiêu dân tộc anh em?",
             "options": [
-              "Văn hóa Hòa Bình",
-              "Văn hóa Đông Sơn",
-              "Văn hóa Sa Huỳnh",
-              "Văn hóa Óc Eo"
+              "53",
+              "54",
+              "55",
+              "64"
             ],
-            "correct_answer": 1,
-            "explanation": "Trống đồng là hiện vật tiêu biểu nhất của văn hóa Đông Sơn."
+            "correct_answer": 1
+          },
+          {
+            "id": 2,
+            "question": "Biểu tượng nào thường gắn liền với làng quê Việt Nam?",
+            "options": [
+              "Cây Baobab",
+              "Cây Tre",
+              "Cây Sồi",
+              "Cây Thông"
+            ],
+            "correct_answer": 1
+          },
+          {
+            "id": 3,
+            "question": "Vị vua nào đã dời đô về Thăng Long (Hà Nội)?",
+            "options": [
+              "Đinh Bộ Lĩnh",
+              "Lê Lợi",
+              "Lý Thái Tổ",
+              "Quang Trung"
+            ],
+            "correct_answer": 2
           }
         ]
       }
     },
     {
       "id": 2,
-      "title": "Kiến trúc Cố đô Huế",
-      "description": "Tìm hiểu về quần thể di tích Cố đô Huế, di sản văn hóa thế giới.",
-      "category": "architecture",
+      "title": "Tinh Hoa Ẩm Thực Việt",
+      "description": "Tìm hiểu sự tinh tế trong cách chế biến và thưởng thức món ăn của ba miền Bắc - Trung - Nam.",
+      "category": "culture",
       "difficulty": "medium",
-      "estimated_duration": 20,
       "order": 2,
-      "content_type": "video",
-      "content_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "content_type": "article",
+      "content_url": "<h1>Ẩm Thực Việt Nam: Hương Vị Của Sự Cân Bằng</h1><p>Ẩm thực Việt Nam nổi tiếng thế giới nhờ sự kết hợp hài hòa của 5 vị: Mặn, Ngọt, Chua, Cay, Đắng, tương ứng với ngũ hành.</p><h2>1. Phở - Quốc Hồn Quốc Túy</h2><p>Phở không chỉ là món ăn sáng mà còn là đại sứ văn hóa. Nước dùng phở được ninh từ xương bò trong nhiều giờ cùng các loại gia vị như hồi, quế, thảo quả.</p><h2>2. Bánh Mì - Sự Giao Thoa Văn Hóa</h2><p>Bánh mì Việt Nam là sự sáng tạo tuyệt vời từ bánh mì baguette của Pháp, thêm vào đó là pate, thịt nguội, đồ chua và rau thơm đặc trưng.</p><h2>3. Cơm Tấm Sài Gòn</h2><p>Món ăn dân dã từ gạo tấm, sườn nướng, bì chả đã trở thành đặc sản không thể bỏ qua khi đến TP.HCM.</p>",
+      "estimated_duration": 15,
+      "thumbnail": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600",
       "quiz": {
-        "id": 2,
         "passing_score": 70,
         "questions": [
           {
             "id": 1,
-            "question": "Cố đô Huế được UNESCO công nhận năm nào?",
+            "question": "Ẩm thực Việt Nam chú trọng sự cân bằng của mấy vị cơ bản?",
             "options": [
-              "1990",
-              "1993",
-              "1999",
-              "2003"
+              "3 vị",
+              "4 vị",
+              "5 vị",
+              "6 vị"
             ],
-            "correct_answer": 1
+            "correct_answer": 2
           },
           {
             "id": 2,
-            "question": "Triều đại nào đã xây dựng Cố đô Huế?",
+            "question": "Thành phần nào tạo nên mùi thơm đặc trưng của nước dùng Phở?",
             "options": [
-              "Triều Lý",
-              "Triều Trần",
-              "Triều Lê",
-              "Triều Nguyễn"
+              "Hồi, Quế, Thảo quả",
+              "Sả, Ớt",
+              "Tỏi, Hành tây",
+              "Mắm tôm"
             ],
-            "correct_answer": 3
+            "correct_answer": 0
+          },
+          {
+            "id": 3,
+            "question": "Cơm Tấm là đặc sản nổi tiếng của vùng nào?",
+            "options": [
+              "Hà Nội",
+              "Huế",
+              "TP. Hồ Chí Minh",
+              "Hải Phòng"
+            ],
+            "correct_answer": 2
           }
         ]
       }
     },
     {
       "id": 3,
-      "title": "Trắc nghiệm tổng hợp văn hóa",
-      "description": "Kiểm tra kiến thức tổng quát về di sản văn hóa Việt Nam.",
-      "category": "general",
-      "difficulty": "hard",
-      "estimated_duration": 10,
+      "title": "Trang Phục Truyền Thống",
+      "description": "Ngắm nhìn vẻ đẹp của Áo Dài, Áo Tứ Thân và tìm hiểu ý nghĩa văn hóa sau từng tà áo.",
+      "category": "culture",
+      "difficulty": "medium",
       "order": 3,
-      "content_type": "quiz",
-      "content_url": "",
+      "content_type": "video",
+      "content_url": "https://www.youtube.com/embed/ZzDB_t3vjCc",
+      "estimated_duration": 20,
+      "thumbnail": "https://images.unsplash.com/photo-1599708153386-53c8469cbdd3?w=600",
       "quiz": {
-        "id": 3,
-        "passing_score": 80,
+        "passing_score": 70,
         "questions": [
           {
             "id": 1,
-            "question": "Văn Miếu - Quốc Tử Giám thờ ai?",
+            "question": "Trang phục nào được xem là Quốc phục của Việt Nam?",
             "options": [
-              "Khổng Tử",
-              "Lão Tử",
-              "Phật Thích Ca",
-              "Vua Hùng"
+              "Áo Bà Ba",
+              "Áo Tứ Thân",
+              "Áo Dài",
+              "Áo Yếm"
             ],
-            "correct_answer": 0
+            "correct_answer": 2
           },
           {
             "id": 2,
-            "question": "Di sản nào sau đây là Di sản Thiên nhiên Thế giới?",
+            "question": "Áo Tứ Thân thường gắn liền với phụ nữ vùng nào?",
             "options": [
-              "Phố cổ Hội An",
-              "Vịnh Hạ Long",
-              "Thánh địa Mỹ Sơn",
-              "Hoàng thành Thăng Long"
-            ],
-            "correct_answer": 1
-          },
-          {
-            "id": 3,
-            "question": "Dân ca Quan họ thuộc vùng nào?",
-            "options": [
-              "Bắc Bộ",
-              "Trung Bộ",
-              "Nam Bộ",
+              "Miền Bắc",
+              "Miền Trung",
+              "Miền Nam",
               "Tây Nguyên"
             ],
             "correct_answer": 0
@@ -1988,26 +2234,34 @@
     {
       "id": 1,
       "user_id": 3,
-      "completed_modules": [
-        {
-          "module_id": "1",
-          "completed_date": "2026-01-23T07:40:54.797Z",
-          "score": 100,
-          "time_spent": 0
-        }
-      ],
+      "completed_modules": [],
       "completed_quests": [],
-      "total_points": 50,
-      "level": 1,
-      "badges": [
-        "newbie",
-        "perfect_score"
-      ],
+      "total_points": 800,
+      "level": 5,
+      "badges": [],
       "achievements": [],
       "streak": 0,
       "total_learning_time": 0,
       "bookmarked_artifacts": [],
       "bookmarked_sites": []
+    },
+    {
+      "id": 1769167111754,
+      "user_id": 1,
+      "completed_modules": [],
+      "total_points": 0,
+      "level": 1,
+      "badges": []
+    },
+    {
+      "id": 1769167111756,
+      "user_id": 2,
+      "completed_modules": [],
+      "total_points": 300,
+      "level": 2,
+      "badges": [
+        "hard_worker"
+      ]
     }
   ],
   "ai_chat_history": [
