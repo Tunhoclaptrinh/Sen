@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-24T04:58:10.809Z"
+      "lastLogin": "2026-01-24T08:05:59.398Z"
     },
     {
       "id": 4,
@@ -619,52 +619,61 @@
     {
       "id": 1,
       "name": "Sen Hồng - Cội Nguồn",
-      "description": "Khám phá nguồn gốc của văn hóa Việt qua hình tượng Sen Hồng.",
-      "thumbnail": "/assets/chapters/chapter1.png",
-      "order": 1,
+      "description": "Những câu chuyện khởi nguồn của văn hóa Bắc Bộ.",
+      "layer_index": 1,
+      "petal_state": "blooming",
       "required_petals": 0,
-      "rewards": {
-        "coins": 500,
-        "petals": 0
-      },
-      "is_unlocked": true
+      "is_active": true,
+      "theme": "Văn Hóa Bắc Bộ",
+      "order": 1,
+      "color": "#D35400",
+      "image": "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2017/11/26/tinh_hoa_vinh_bac_bo.jpg",
+      "petal_image_closed": "https://example.com/c1_closed.png",
+      "petal_image_bloom": "https://example.com/c1_bloom.png",
+      "petal_image_full": "https://example.com/c1_full.png"
     },
     {
       "id": 2,
       "name": "Sen Vàng - Giao Thoa",
-      "description": "Hành trình văn hóa trong thời kỳ hội nhập và phát triển.",
-      "thumbnail": "/assets/chapters/chapter2.png",
+      "description": "Sự giao thoa văn hóa thế kỷ 18-19.",
+      "layer_index": 2,
+      "petal_state": "blooming",
+      "required_petals": 0,
+      "is_active": true,
+      "theme": "Giao Thoa Văn Hóa",
       "order": 2,
-      "required_petals": 10,
-      "rewards": {
-        "coins": 1000,
-        "petals": 0
-      },
-      "is_unlocked": false
+      "color": "#F1C40F",
+      "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600",
+      "petal_image_closed": "https://example.com/c2_closed.png",
+      "petal_image_bloom": "https://example.com/c2_bloom.png",
+      "petal_image_full": "https://example.com/c2_full.png"
     },
     {
       "id": 3,
       "name": "Sen Trắng - Di Sản",
-      "description": "Gìn giữ và phát huy các giá trị văn hóa cốt lõi.",
-      "thumbnail": "/assets/chapters/chapter3.png",
+      "description": "Thời kỳ phồn vinh của các triều đại phong kiến.",
+      "layer_index": 3,
+      "petal_state": "blooming",
+      "required_petals": 0,
+      "is_active": true,
+      "theme": "Di Sản Phong Kiến",
       "order": 3,
-      "required_petals": 25,
-      "rewards": {
-        "coins": 2000,
-        "petals": 0
-      },
-      "is_unlocked": false
+      "color": "#ECF0F1",
+      "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600",
+      "petal_image_closed": "https://example.com/c3_closed.png",
+      "petal_image_bloom": "https://example.com/c3_bloom.png",
+      "petal_image_full": "https://example.com/c3_full.png"
     }
   ],
   "game_characters": [
     {
       "id": 1,
-      "name": "Sen",
+      "name": "Chú Tễu",
       "description": "Nhân vật rối nước vui tính, thông minh",
-      "persona": "Bạn là Chú Tễu, một nhân vật rối nước vui tính từ múa rối Bắc Bộ. Bạn đang bị mất trí nhớ và mất màu sơn. Bạn cần sự giúp đỡ của người chơi để tìm lại ký ức.",
-      "speaking_style": "Vui vẻ, hài hước, sử dụng từ ngữ dân dã, có chút nhí nhảnh",
-      "avatar": "https://example.com/teu-colored.png",
-      "avatar_uncolored": "https://example.com/teu-uncolored.png",
+      "persona": "Bạn là Chú Tễu. Ở trạng thái mất trí nhớ, bạn ngơ ngác và hay hỏi lại. Khi hồi phục, bạn vui vẻ, hay cười 'hi hi' và kể chuyện tiếu lâm.",
+      "speaking_style": "Vui vẻ, dân dã, dùng từ địa phương Bắc Bộ",
+      "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
+      "avatar_uncolored": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu&backgroundColor=b6b6b6",
       "rarity": "rare",
       "origin": "Múa rối nước",
       "is_collectible": true,
@@ -673,10 +682,10 @@
     {
       "id": 2,
       "name": "Thị Kính",
-      "description": "Nhân vật trong truyền thuyết Quan Âm Thị Kính",
-      "persona": "Bạn là Thị Kính, người phụ nữ kiên cường và nhân từ. Bạn hướng dẫn người chơi với sự dịu dàng và khôn ngoan.",
-      "speaking_style": "Nhẹ nhàng, từ tốn, khôn ngoan",
-      "avatar": "https://example.com/thikinh.png",
+      "description": "Quan Âm Thị Kính - Biểu tượng của sự nhẫn nhịn",
+      "persona": "Bạn là Thị Kính. Bạn nhẹ nhàng, từ tốn và luôn khuyên răn người khác làm việc thiện.",
+      "speaking_style": "Nhẹ nhàng, từ bi, bác học",
+      "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=Kinh",
       "rarity": "epic",
       "origin": "Truyền thuyết dân gian",
       "is_collectible": true,
@@ -685,24 +694,12 @@
     {
       "id": 3,
       "name": "Thánh Gióng",
-      "description": "Vị thánh trong truyền thuyết dân gian Việt Nam",
-      "persona": "Bạn là Thánh Gióng, vị anh hùng bảo vệ dân tộc. Bạn dũng mãnh, quyết đoán và luôn sẵn sàng chiến đấu vì chính nghĩa.",
-      "speaking_style": "Hùng hồn, mạnh mẽ, có khí phách",
-      "avatar": "https://example.com/giong.png",
+      "description": "Vị thánh chống giặc ngoại xâm",
+      "persona": "Bạn là Thánh Gióng. Bạn ít nói, hành động dứt khoát, giọng nói vang rền như sấm.",
+      "speaking_style": "Mạnh mẽ, ngắn gọn, uy lực",
+      "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=Giong",
       "rarity": "legendary",
       "origin": "Truyền thuyết Thánh Gióng",
-      "is_collectible": true,
-      "created_at": "2024-01-01T00:00:00Z"
-    },
-    {
-      "id": 4,
-      "name": "Chú Cuội",
-      "description": "Nhân vật trong truyền thuyết cây đa",
-      "persona": "Bạn là Chú Cuội, người gắn liền với cây đa và mặt trăng. Bạn hiền lành, yêu thiên nhiên và hay kể chuyện.",
-      "speaking_style": "Chậm rãi, thơ mộng, giàu cảm xúc",
-      "avatar": "https://example.com/cuoi.png",
-      "rarity": "rare",
-      "origin": "Truyền thuyết Chú Cuội",
       "is_collectible": true,
       "created_at": "2024-01-01T00:00:00Z"
     }
@@ -711,638 +708,207 @@
     {
       "id": 1,
       "chapter_id": 1,
-      "name": "Gặp gỡ Chú Tễu",
-      "description": "Làm quen với người dẫn đường vui tính.",
+      "name": "Huyền thoại Rồng Tiên",
+      "description": "Tìm hiểu về nguồn gốc Lạc Long Quân và Âu Cơ.",
       "type": "story",
       "difficulty": "easy",
       "order": 1,
       "required_level": null,
-      "thumbnail": "/assets/chapters/level1.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
+      "is_locked": false,
+      "thumbnail": "https://quantri.longbien.shieldixcloud.com/uploadfoldernew/sgdlongbien/image/mntuoihoa/2022_5_image/tai-xuong-7_09052022.jpg",
+      "background_music": null,
+      "ai_character_id": 1,
+      "knowledge_base": "Truyền thuyết Con Rồng Cháu Tiên",
       "screens": [
         {
-          "id": "intro_d1",
+          "id": "screen1",
           "type": "DIALOGUE",
+          "background_image": "https://quantri.longbien.shieldixcloud.com/uploadfoldernew/sgdlongbien/image/mntuoihoa/2022_5_image/tai-xuong-7_09052022.jpg",
           "content": [
             {
               "speaker": "AI",
-              "text": "Chào bạn! Ta là Chú Tễu. Rất vui được gặp bạn!",
-              "avatar": "https://limitless-eyrie-09067.herokuapp.com/https://ui-avatars.com/api/?name=Teu&background=random"
-            }
-          ],
-          "next_screen_id": "intro_q1"
-        },
-        {
-          "id": "intro_q1",
-          "type": "QUIZ",
-          "question": "Hoa Sen là quốc hoa của nước nào?",
-          "options": [
-            {
-              "text": "Việt Nam",
-              "is_correct": true
+              "text": "Ngày xửa ngày xưa, ở đất Lĩnh Nam...",
+              "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu"
             },
             {
-              "text": "Thái Lan",
-              "is_correct": false
-            }
-          ],
-          "reward": {
-            "points": 100
-          },
-          "next_screen_id": "intro_d2"
-        },
-        {
-          "id": "intro_d2",
-          "type": "DIALOGUE",
-          "content": [
+              "speaker": "USER",
+              "text": "Có Lạc Long Quân nòi Rồng và Âu Cơ dòng Tiên phải không?"
+            },
             {
               "speaker": "AI",
-              "text": "Chính xác! Đi thôi nào!",
-              "avatar": "Teu"
+              "text": "Đúng rồi! Họ sinh ra bọc trăm trứng, nở trăm con.",
+              "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
+              "emotion": "happy"
             }
-          ],
-          "is_last": true
+          ]
         }
-      ]
+      ],
+      "rewards": {
+        "coins": 50,
+        "petals": 1
+      }
     },
     {
       "id": 2,
       "chapter_id": 1,
-      "name": "Bí ẩn Trống Đồng",
-      "description": "Tìm hoa văn trên Trống Đồng Đông Sơn.",
+      "name": "Âm vang Trống Đồng",
+      "description": "Biểu tượng văn hóa Đông Sơn rực rỡ.",
       "type": "hidden_object",
       "difficulty": "medium",
       "order": 2,
       "required_level": 1,
-      "thumbnail": "/assets/chapters/level2.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
+      "is_locked": false,
+      "thumbnail": "https://luocsutocviet.com/wp-content/uploads/2021/12/vszvdsvds.png?w=768&h=351&crop=1",
       "screens": [
         {
-          "id": "ho_1",
+          "id": "screen1",
           "type": "HIDDEN_OBJECT",
-          "background_image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/To_Ngoc_Van_thieu_nu_ben_hoa_hue.jpg/450px-To_Ngoc_Van_thieu_nu_ben_hoa_hue.jpg",
+          "background_image": "https://luocsutocviet.com/wp-content/uploads/2021/12/vszvdsvds.png?w=768&h=351&crop=1",
           "items": [
             {
               "id": "star",
               "name": "Ngôi sao",
-              "coordinates": {
-                "x": 50,
-                "y": 50,
-                "width": 10,
-                "height": 10
-              },
-              "fact_popup": "Mặt trời ở trung tâm trống đồng.",
-              "points": 50
+              "x": 50,
+              "y": 50,
+              "fact_popup": "Mặt trời 14 cánh ở tâm trống."
             },
             {
               "id": "bird",
               "name": "Chim Lạc",
-              "coordinates": {
-                "x": 20,
-                "y": 30,
-                "width": 10,
-                "height": 10
-              },
-              "fact_popup": "Biểu tượng khát vọng.",
-              "points": 50
+              "x": 20,
+              "y": 30,
+              "fact_popup": "Chim Lạc bay ngược chiều kim đồng hồ."
             }
           ],
-          "required_items": 2,
-          "next_screen_id": "quiz_drum"
-        },
-        {
-          "id": "quiz_drum",
-          "type": "QUIZ",
-          "question": "Trống đồng làm bằng gì?",
-          "options": [
-            {
-              "text": "Đồng",
-              "is_correct": true
-            },
-            {
-              "text": "Vàng",
-              "is_correct": false
-            }
-          ],
-          "is_last": true
+          "required_items": 2
         }
-      ]
+      ],
+      "rewards": {
+        "coins": 100,
+        "petals": 1
+      }
     },
     {
       "id": 3,
       "chapter_id": 1,
-      "name": "Dòng chảy Lịch sử",
-      "description": "Sắp xếp các triều đại.",
-      "type": "timeline",
-      "difficulty": "medium",
+      "name": "Rối nước làng quê",
+      "description": "Nghệ thuật của người nông dân lúa nước.",
+      "type": "quiz",
+      "difficulty": "easy",
       "order": 3,
       "required_level": 2,
-      "thumbnail": "/assets/chapters/level3.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
+      "is_locked": false,
+      "thumbnail": "https://eggyolk.vn/wp-content/uploads/2024/09/Ve-Mua-Roi-Nuoc-Thang-Long-Tai-Ha-Noi-1024x538.jpg",
       "screens": [
         {
-          "id": "tl_1",
-          "type": "TIMELINE",
-          "events": [
+          "id": "screen1",
+          "type": "QUIZ",
+          "question": "Con rối nước được điều khiển như thế nào?",
+          "options": [
             {
-              "id": "e1",
-              "year": 938,
-              "text": "Chiến thắng Bạch Đằng"
+              "text": "Bằng dây từ trên cao",
+              "is_correct": false
             },
             {
-              "id": "e2",
-              "year": 1010,
-              "text": "Dời đô về Thăng Long"
+              "text": "Bằng sào tre dưới nước",
+              "is_correct": true
             },
             {
-              "id": "e3",
-              "year": 1428,
-              "text": "Khởi nghĩa Lam Sơn"
+              "text": "Bằng máy",
+              "is_correct": false
             }
           ],
-          "reward": {
-            "points": 150
-          },
-          "is_last": true
+          "points": 100
         }
-      ]
+      ],
+      "rewards": {
+        "coins": 80,
+        "petals": 1
+      }
     },
     {
       "id": 4,
       "chapter_id": 1,
-      "name": "Di sản Hội An",
-      "description": "Khám phá phố cổ.",
+      "name": "Dân ca Quan Họ",
+      "description": "Lời ca giao duyên tình tứ Kinh Bắc.",
       "type": "mixed",
       "difficulty": "medium",
       "order": 4,
       "required_level": 3,
-      "thumbnail": "/assets/chapters/level4.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
+      "is_locked": false,
+      "thumbnail": "https://dulichbacgiang.gov.vn/uploads/dulichbacgiang/Bai-viet/292/1.jpg",
       "screens": [
         {
-          "id": "vid_1",
-          "type": "VIDEO",
-          "video_url": "https://www.w3schools.com/html/mov_bbb.mp4",
-          "duration": 5,
-          "content": "Giới thiệu Hội An",
-          "next_screen_id": "q_ha"
-        },
-        {
-          "id": "q_ha",
-          "type": "QUIZ",
-          "question": "Hội An nằm ở đâu?",
-          "options": [
+          "id": "screen1",
+          "type": "DIALOGUE",
+          "content": [
             {
-              "text": "Quảng Nam",
-              "is_correct": true
-            },
-            {
-              "text": "Huế",
-              "is_correct": false
+              "speaker": "AI",
+              "text": "Người ơi người ở đừng về..."
             }
-          ],
-          "is_last": true
+          ]
         }
-      ]
+      ],
+      "rewards": {
+        "coins": 120,
+        "petals": 2
+      }
     },
     {
       "id": 5,
       "chapter_id": 1,
-      "name": "Thử thách Cuối chương",
-      "description": "Kiểm tra kiến thức tổng hợp.",
-      "type": "quiz",
-      "difficulty": "hard",
+      "name": "Chùa Một Cột",
+      "description": "Đóa sen nghìn năm tuổi giữa lòng Hà Nội.",
+      "type": "image_viewer",
+      "difficulty": "easy",
       "order": 5,
       "required_level": 4,
-      "thumbnail": "/assets/chapters/level5.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 300,
-        "petals": 5,
-        "character": "teu_scholar"
-      },
+      "is_locked": false,
+      "thumbnail": "https://eggyolk.vn/wp-content/uploads/2024/05/kinh-nghiem-du-lich-chua-mot-cot.jpg",
       "screens": [
         {
-          "id": "fq_1",
-          "type": "QUIZ",
-          "question": "Văn Miếu thờ ai?",
-          "options": [
-            {
-              "text": "Khổng Tử",
-              "is_correct": true
-            },
-            {
-              "text": "Phật",
-              "is_correct": false
-            }
-          ],
-          "next_screen_id": "fq_2"
-        },
-        {
-          "id": "fq_2",
-          "type": "QUIZ",
-          "question": "Kinh đô đầu tiên?",
-          "options": [
-            {
-              "text": "Phong Châu",
-              "is_correct": true
-            },
-            {
-              "text": "Thăng Long",
-              "is_correct": false
-            }
-          ],
-          "is_last": true
+          "id": "screen1",
+          "type": "IMAGE_VIEWER",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Chua_Mot_Cot.jpg/800px-Chua_Mot_Cot.jpg",
+          "caption": "Liên Hoa Đài",
+          "description": "Chùa được xây dựng mô phỏng hình dáng bông sen nở trên mặt nước."
         }
-      ]
+      ],
+      "rewards": {
+        "coins": 100,
+        "petals": 1
+      }
     },
     {
       "id": 6,
       "chapter_id": 1,
-      "name": "Trang phục truyền thống",
-      "description": "Tìm hiểu về Áo Dài và các trang phục xưa.",
-      "type": "mixed",
-      "difficulty": "easy",
+      "name": "Thánh Gióng Nhổ Tre",
+      "description": "Sức mạnh phi thường bảo vệ non sông.",
+      "type": "timeline",
+      "difficulty": "hard",
       "order": 6,
       "required_level": 5,
-      "thumbnail": "/assets/chapters/level6.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
+      "is_locked": false,
+      "thumbnail": "https://cdnv2.tgdd.vn/bhx-static/bhx/News/Images/2025/11/05/1585286/image1_202511052252280947.jpg",
       "screens": [
         {
-          "id": "d_ad",
-          "type": "DIALOGUE",
-          "content": [
-            {
-              "speaker": "AI",
-              "text": "Áo dài là quốc phục của Việt Nam."
-            }
-          ],
-          "next_screen_id": "q_ad"
-        },
-        {
-          "id": "q_ad",
-          "type": "QUIZ",
-          "question": "Áo dài nam giới gọi là gì?",
-          "options": [
-            {
-              "text": "Áo ngũ thân",
-              "is_correct": true
-            },
-            {
-              "text": "Áo tứ thân",
-              "is_correct": false
-            }
-          ],
-          "is_last": true
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "chapter_id": 1,
-      "name": "Nhã nhạc Cung đình",
-      "description": "Lắng nghe âm hưởng Huế.",
-      "type": "mixed",
-      "difficulty": "medium",
-      "order": 7,
-      "required_level": 6,
-      "thumbnail": "/assets/chapters/level7.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
-      "screens": [
-        {
-          "id": "d_music",
-          "type": "DIALOGUE",
-          "content": [
-            {
-              "speaker": "AI",
-              "text": "Bạn có nghe thấy tiếng đàn tranh không?"
-            }
-          ],
-          "next_screen_id": "q_music"
-        },
-        {
-          "id": "q_music",
-          "type": "QUIZ",
-          "question": "Nhã nhạc là di sản loại gì?",
-          "options": [
-            {
-              "text": "Phi vật thể",
-              "is_correct": true
-            },
-            {
-              "text": "Vật thể",
-              "is_correct": false
-            }
-          ],
-          "is_last": true
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "chapter_id": 1,
-      "name": "Tổng kết: Cội Nguồn",
-      "description": "Bài kiểm tra cuối cùng.",
-      "type": "quiz",
-      "difficulty": "hard",
-      "order": 8,
-      "required_level": 7,
-      "thumbnail": "/assets/chapters/level8.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 500,
-        "petals": 10,
-        "badge": "master_chapter_1"
-      },
-      "screens": [
-        {
-          "id": "fq_8_1",
-          "type": "QUIZ",
-          "question": "Ai dời đô về Thăng Long?",
-          "options": [
-            {
-              "text": "Lý Thái Tổ",
-              "is_correct": true
-            },
-            {
-              "text": "Lý Thường Kiệt",
-              "is_correct": false
-            }
-          ],
-          "next_screen_id": "fq_8_2"
-        },
-        {
-          "id": "fq_8_2",
-          "type": "QUIZ",
-          "question": "Tên nước ta thời Lý?",
-          "options": [
-            {
-              "text": "Đại Việt",
-              "is_correct": true
-            },
-            {
-              "text": "Đại Cồ Việt",
-              "is_correct": false
-            }
-          ],
-          "is_last": true
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "chapter_id": 2,
-      "name": "Hội nhập Văn hóa",
-      "description": "Giao thương và sự du nhập văn hóa mới.",
-      "type": "story",
-      "difficulty": "easy",
-      "order": 1,
-      "required_level": null,
-      "thumbnail": "/assets/chapters/level9.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
-      "screens": [
-        {
-          "id": "d_c2_1",
-          "type": "DIALOGUE",
-          "content": [
-            {
-              "speaker": "AI",
-              "text": "Chào mừng đến với Sen Vàng! Thời kỳ hội nhập bắt đầu."
-            }
-          ],
-          "is_last": true
-        }
-      ]
-    },
-    {
-      "id": 10,
-      "chapter_id": 2,
-      "name": "Thương cảng Phố Hiến",
-      "description": "Thứ nhất Kinh Kỳ, thứ nhì Phố Hiến.",
-      "type": "hidden_object",
-      "difficulty": "medium",
-      "order": 2,
-      "required_level": 9,
-      "thumbnail": "/assets/chapters/level10.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
-      "screens": [
-        {
-          "id": "ho_ph",
-          "type": "HIDDEN_OBJECT",
-          "background_image": "https://images.unsplash.com/photo-1565060166254-8c01d9047976?w=800",
-          "items": [
-            {
-              "id": "boat",
-              "name": "Thuyền buôn",
-              "coordinates": {
-                "x": 20,
-                "y": 50,
-                "width": 20,
-                "height": 10
-              },
-              "points": 50
-            }
-          ],
-          "required_items": 1,
-          "is_last": true
-        }
-      ]
-    },
-    {
-      "id": 11,
-      "chapter_id": 2,
-      "name": "Chữ Quốc Ngữ",
-      "description": "Sự ra đời của chữ viết hiện đại.",
-      "type": "quiz",
-      "difficulty": "medium",
-      "order": 3,
-      "required_level": 10,
-      "thumbnail": "/assets/chapters/level11.png",
-      "passing_score": 50,
-      "rewards": {
-        "coins": 100,
-        "petals": 2
-      },
-      "screens": [
-        {
-          "id": "q_c2_3",
-          "type": "QUIZ",
-          "question": "Ai có công lớn trong việc tạo ra chữ Quốc Ngữ?",
-          "options": [
-            {
-              "text": "Alexandre de Rhodes",
-              "is_correct": true
-            },
-            {
-              "text": "Nguyễn Du",
-              "is_correct": false
-            }
-          ],
-          "is_last": true
-        }
-      ]
-    },
-    {
-      "id": 99,
-      "chapter_id": 1,
-      "name": "[DEMO] Test All Screens",
-      "description": "Level demo đầy đủ tính năng: Đối thoại, Tìm vật, Trắc nghiệm, Dòng thời gian, Xem ảnh, Video.",
-      "type": "mixed",
-      "difficulty": "easy",
-      "order": 0,
-      "required_level": null,
-      "thumbnail": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
-      "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
-      "background_music": null,
-      "ai_character_id": 1,
-      "knowledge_base": "Level demo cho tất cả screen types",
-      "screens": [
-        {
-          "id": "demo_dialogue",
-          "index": 0,
-          "name": "1. Dialogue Screen",
-          "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
-          "type": "DIALOGUE",
-          "description": "Demo màn hình hội thoại",
-          "is_first": true,
-          "is_last": false,
-          "content": [
-            {
-              "speaker": "AI",
-              "text": "Chào mừng bạn đến với level Demo Tính Năng!",
-              "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
-              "emotion": "happy"
-            },
-            {
-              "speaker": "AI",
-              "text": "Chúng ta sẽ lần lượt trải nghiệm: Hội thoại, Tìm vật, Trắc nghiệm, Timeline, Ảnh và Video.",
-              "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
-              "emotion": "excited"
-            }
-          ]
-        },
-        {
-          "id": "demo_hidden",
-          "index": 1,
-          "name": "2. Hidden Object Screen",
-          "background_image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
-          "type": "HIDDEN_OBJECT",
-          "description": "Hãy tìm 3 vật phẩm: Cái Quạt, Cờ Hội và Đàn Nguyệt.",
-          "is_first": false,
-          "is_last": false,
-          "required_items": 3,
-          "items": [
-            {
-              "id": "fan",
-              "name": "Cái Quạt",
-              "x": 20,
-              "y": 60,
-              "fact_popup": "Quạt giấy truyền thống."
-            },
-            {
-              "id": "flag",
-              "name": "Cờ Hội",
-              "x": 70,
-              "y": 30,
-              "fact_popup": "Cờ ngũ sắc trong lễ hội."
-            },
-            {
-              "id": "instrument",
-              "name": "Đàn Nguyệt",
-              "x": 50,
-              "y": 50,
-              "fact_popup": "Nhạc cụ dân tộc."
-            }
-          ]
-        },
-        {
-          "id": "demo_quiz",
-          "index": 2,
-          "name": "3. Quiz Screen",
-          "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
-          "type": "QUIZ",
-          "description": "Câu hỏi trắc nghiệm kiến thức",
-          "is_first": false,
-          "is_last": false,
-          "question": "Tính năng nào sau đây KHÔNG có trong demo này?",
-          "options": [
-            {
-              "text": "Xem ảnh 360 độ",
-              "is_correct": true,
-              "explanation": "Chính xác! Hiện tại Web chưa hỗ trợ 360 viewer."
-            },
-            {
-              "text": "Dòng thời gian",
-              "is_correct": false,
-              "explanation": "Sai rồi, lát nữa sẽ có timeline."
-            },
-            {
-              "text": "Video Player",
-              "is_correct": false,
-              "explanation": "Sai rồi, video ở cuối level."
-            }
-          ],
-          "points": 100
-        },
-        {
-          "id": "demo_timeline",
-          "index": 3,
-          "name": "4. Timeline Screen",
-          "background_image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+          "id": "screen1",
           "type": "TIMELINE",
-          "description": "Sắp xếp các triều đại Việt Nam theo thứ tự thời gian.",
-          "is_first": false,
-          "is_last": false,
           "events": [
             {
               "id": "e1",
-              "year": 1010,
-              "title": "Nhà Lý",
-              "description": "Lý Thái Tổ dời đô về Thăng Long."
+              "year": 0,
+              "title": "Cậu bé không biết nói"
             },
             {
               "id": "e2",
-              "year": 1225,
-              "title": "Nhà Trần",
-              "description": "Tiếp nối nhà Lý, 3 lần thắng quân Nguyên Mông."
+              "year": 1,
+              "title": "Ăn cơm vươn vai lớn dậy"
             },
             {
               "id": "e3",
-              "year": 1428,
-              "title": "Nhà Hậu Lê",
-              "description": "Lê Lợi khởi nghĩa Lam Sơn thành công."
+              "year": 2,
+              "title": "Nhổ tre đánh giặc Ân"
             }
           ],
           "correct_order": [
@@ -1350,38 +916,379 @@
             "e2",
             "e3"
           ]
-        },
-        {
-          "id": "demo_image",
-          "index": 4,
-          "name": "5. Image Viewer Screen",
-          "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
-          "type": "IMAGE_VIEWER",
-          "description": "Demo màn hình xem ảnh",
-          "is_first": false,
-          "is_last": false,
-          "content": {
-            "title": "Chùa Một Cột",
-            "description": "Biểu tượng văn hóa tâm linh độc đáo của Hà Nội, được xây dựng từ thời Lý.",
-            "image_url": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800"
-          }
-        },
-        {
-          "id": "demo_video",
-          "index": 5,
-          "name": "6. Video Screen",
-          "background_image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=800",
-          "type": "VIDEO",
-          "description": "Demo màn hình video",
-          "is_first": false,
-          "is_last": true,
-          "content": {
-            "title": "Giới thiệu Sen Hoa",
-            "description": "Trailer giới thiệu dự án game lịch sử Sen Hoa. Hãy cùng thưởng thức!",
-            "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
-          }
         }
-      ]
+      ],
+      "rewards": {
+        "coins": 200,
+        "petals": 5,
+        "badge": "chapter_1_master"
+      }
+    },
+    {
+      "id": 7,
+      "chapter_id": 2,
+      "name": "Phố Cổ Hội An",
+      "description": "Nơi hội tụ văn hóa Nhật - Hoa - Việt.",
+      "type": "hidden_object",
+      "difficulty": "medium",
+      "order": 1,
+      "required_level": null,
+      "is_locked": false,
+      "thumbnail": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=400",
+      "screens": [
+        {
+          "id": "s7_1",
+          "type": "HIDDEN_OBJECT",
+          "items": [
+            {
+              "id": "lantern",
+              "name": "Đèn lồng",
+              "x": 10,
+              "y": 20
+            }
+          ],
+          "required_items": 1
+        }
+      ],
+      "rewards": {
+        "coins": 100,
+        "petals": 1
+      }
+    },
+    {
+      "id": 8,
+      "chapter_id": 2,
+      "name": "Nhã nhạc Cung đình Huế",
+      "description": "Âm nhạc bác học của triều Nguyễn.",
+      "type": "story",
+      "difficulty": "medium",
+      "order": 2,
+      "required_level": 7,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Nha_nhac.jpg/600px-Nha_nhac.jpg",
+      "screens": [
+        {
+          "id": "s8_1",
+          "type": "DIALOGUE",
+          "content": [
+            {
+              "speaker": "AI",
+              "text": "Nhã nhạc là di sản phi vật thể đó!"
+            }
+          ]
+        }
+      ],
+      "rewards": {
+        "coins": 100,
+        "petals": 1
+      }
+    },
+    {
+      "id": 9,
+      "chapter_id": 2,
+      "name": "Nghệ thuật Chăm Pa",
+      "description": "Vẻ đẹp huyền bí của tháp Chàm.",
+      "type": "image_viewer",
+      "difficulty": "medium",
+      "order": 3,
+      "required_level": 8,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/My_Son_Sanctuary.jpg/600px-My_Son_Sanctuary.jpg",
+      "screens": [
+        {
+          "id": "s9_1",
+          "type": "IMAGE_VIEWER",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/My_Son_Sanctuary.jpg/800px-My_Son_Sanctuary.jpg",
+          "caption": "Mỹ Sơn"
+        }
+      ],
+      "rewards": {
+        "coins": 100,
+        "petals": 2
+      }
+    },
+    {
+      "id": 10,
+      "chapter_id": 2,
+      "name": "Áo Dài Năm Thân",
+      "description": "Tiền thân của tà áo dài hiện đại.",
+      "type": "quiz",
+      "difficulty": "easy",
+      "order": 4,
+      "required_level": 9,
+      "is_locked": false,
+      "thumbnail": "https://images.unsplash.com/photo-1617379893213-912dc34dfb7c?w=400",
+      "screens": [
+        {
+          "id": "s10_1",
+          "type": "QUIZ",
+          "question": "Áo ngũ thân tượng trưng cho điều gì?",
+          "options": [
+            {
+              "text": "Tứ thân phụ mẫu và bản thân",
+              "is_correct": true
+            },
+            {
+              "text": "Năm châu bốn biển",
+              "is_correct": false
+            }
+          ],
+          "points": 100
+        }
+      ],
+      "rewards": {
+        "coins": 150,
+        "petals": 2
+      }
+    },
+    {
+      "id": 11,
+      "chapter_id": 2,
+      "name": "Kiến trúc thuộc địa",
+      "description": "Dấu ấn Pháp giữa lòng Hà Nội.",
+      "type": "image_viewer",
+      "difficulty": "medium",
+      "order": 5,
+      "required_level": 10,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hanoi_Opera_House.jpg/600px-Hanoi_Opera_House.jpg",
+      "screens": [
+        {
+          "id": "s11_1",
+          "type": "IMAGE_VIEWER",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hanoi_Opera_House.jpg/800px-Hanoi_Opera_House.jpg",
+          "caption": "Nhà Hát Lớn"
+        }
+      ],
+      "rewards": {
+        "coins": 150,
+        "petals": 2
+      }
+    },
+    {
+      "id": 12,
+      "chapter_id": 2,
+      "name": "Sự ra đời chữ Quốc Ngữ",
+      "description": "Bước ngoặt văn hóa lớn của Việt Nam.",
+      "type": "timeline",
+      "difficulty": "hard",
+      "order": 6,
+      "required_level": 11,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Alexandre_de_Rhodes_dictionary.jpg/400px-Alexandre_de_Rhodes_dictionary.jpg",
+      "screens": [
+        {
+          "id": "s12_1",
+          "type": "TIMELINE",
+          "events": [
+            {
+              "id": "e1",
+              "year": 1651,
+              "title": "Từ điển Việt-Bồ-La"
+            },
+            {
+              "id": "e2",
+              "year": 1865,
+              "title": "Gia Định Báo"
+            },
+            {
+              "id": "e3",
+              "year": 1945,
+              "title": "Chữ Quốc Ngữ phổ cập"
+            }
+          ],
+          "correct_order": [
+            "e1",
+            "e2",
+            "e3"
+          ]
+        }
+      ],
+      "rewards": {
+        "coins": 300,
+        "petals": 10,
+        "badge": "chapter_2_master"
+      }
+    },
+    {
+      "id": 13,
+      "chapter_id": 3,
+      "name": "Kinh thành Huế",
+      "description": "Vẻ đẹp uy nghi của kinh đô cuối cùng.",
+      "type": "image_viewer",
+      "difficulty": "medium",
+      "order": 1,
+      "required_level": null,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Hue_Citadel.jpg/600px-Hue_Citadel.jpg",
+      "screens": [
+        {
+          "id": "s13_1",
+          "type": "IMAGE_VIEWER",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Hue_Citadel.jpg/800px-Hue_Citadel.jpg",
+          "caption": "Ngọ Môn"
+        }
+      ],
+      "rewards": {
+        "coins": 200,
+        "petals": 2
+      }
+    },
+    {
+      "id": 14,
+      "chapter_id": 3,
+      "name": "Văn Miếu - Quốc Tử Giám",
+      "description": "Trường đại học đầu tiên của Việt Nam.",
+      "type": "quiz",
+      "difficulty": "medium",
+      "order": 2,
+      "required_level": 13,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Khue_Van_Cac.jpg/400px-Khue_Van_Cac.jpg",
+      "screens": [
+        {
+          "id": "s14_1",
+          "type": "QUIZ",
+          "question": "Bia tiến sĩ tại Văn Miếu dùng để làm gì?",
+          "options": [
+            {
+              "text": "Vinh danh người đỗ đạt",
+              "is_correct": true
+            },
+            {
+              "text": "Ghi chép lịch sử",
+              "is_correct": false
+            }
+          ],
+          "points": 100
+        }
+      ],
+      "rewards": {
+        "coins": 200,
+        "petals": 2
+      }
+    },
+    {
+      "id": 15,
+      "chapter_id": 3,
+      "name": "Vịnh Hạ Long",
+      "description": "Kỳ quan thiên nhiên thế giới.",
+      "type": "hidden_object",
+      "difficulty": "easy",
+      "order": 3,
+      "required_level": 14,
+      "is_locked": false,
+      "thumbnail": "https://images.unsplash.com/photo-1554625299-47050307ee06?w=400",
+      "screens": [
+        {
+          "id": "s15_1",
+          "type": "HIDDEN_OBJECT",
+          "items": [
+            {
+              "id": "sail",
+              "name": "Cánh Buồm",
+              "x": 60,
+              "y": 40
+            }
+          ],
+          "required_items": 1
+        }
+      ],
+      "rewards": {
+        "coins": 150,
+        "petals": 2
+      }
+    },
+    {
+      "id": 16,
+      "chapter_id": 3,
+      "name": "Thánh địa Mỹ Sơn",
+      "description": "Di sản văn hóa Chăm Pa độc đáo.",
+      "type": "story",
+      "difficulty": "hard",
+      "order": 4,
+      "required_level": 15,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/My_Son_Sanctuary.jpg/600px-My_Son_Sanctuary.jpg",
+      "screens": [
+        {
+          "id": "s16_1",
+          "type": "DIALOGUE",
+          "content": [
+            {
+              "speaker": "AI",
+              "text": "Đây là nơi thờ thần Shiva."
+            }
+          ]
+        }
+      ],
+      "rewards": {
+        "coins": 200,
+        "petals": 3
+      }
+    },
+    {
+      "id": 17,
+      "chapter_id": 3,
+      "name": "Mộc bản triều Nguyễn",
+      "description": "Di sản tư liệu thế giới đầu tiên của Việt Nam.",
+      "type": "quiz",
+      "difficulty": "hard",
+      "order": 5,
+      "required_level": 16,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Moc_ban.jpg/400px-Moc_ban.jpg",
+      "screens": [
+        {
+          "id": "s17_1",
+          "type": "QUIZ",
+          "question": "Mộc bản là gì?",
+          "options": [
+            {
+              "text": "Bản khắc gỗ in sách",
+              "is_correct": true
+            },
+            {
+              "text": "Tranh khắc gỗ",
+              "is_correct": false
+            }
+          ],
+          "points": 100
+        }
+      ],
+      "rewards": {
+        "coins": 250,
+        "petals": 3
+      }
+    },
+    {
+      "id": 18,
+      "chapter_id": 3,
+      "name": "Truyện Kiều - Nguyễn Du",
+      "description": "Kiệt tác văn học vĩ đại.",
+      "type": "mixed",
+      "difficulty": "hard",
+      "order": 6,
+      "required_level": 17,
+      "is_locked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Truyen_Kieu_cover.jpg/400px-Truyen_Kieu_cover.jpg",
+      "screens": [
+        {
+          "id": "s18_1",
+          "type": "DIALOGUE",
+          "content": [
+            {
+              "speaker": "AI",
+              "text": "Trăm năm trong cõi người ta..."
+            }
+          ]
+        }
+      ],
+      "rewards": {
+        "coins": 500,
+        "petals": 20,
+        "badge": "master_of_heritage"
+      }
     }
   ],
   "history_articles": [
@@ -2188,28 +2095,58 @@
       "id": 1,
       "user_id": 3,
       "current_chapter": 1,
-      "total_sen_petals": 7,
-      "total_points": 820,
-      "level": 5,
-      "coins": 1350,
+      "total_sen_petals": 0,
+      "total_points": 100,
+      "level": 1,
+      "coins": 1000,
       "unlocked_chapters": [
         1
       ],
-      "completed_levels": [
-        99,
-        1,
-        2,
-        3
-      ],
+      "completed_levels": [],
       "collected_characters": [],
-      "badges": [],
+      "badges": [
+        "newbie",
+        "perfect_score"
+      ],
       "achievements": [],
       "museum_open": false,
       "museum_income": 0,
       "streak_days": 0,
-      "last_login": "2026-01-23T10:38:31.361Z",
-      "created_at": "2026-01-23T10:38:31.361Z",
-      "completed_modules": []
+      "last_login": "2026-01-24T08:06:04.778Z",
+      "created_at": "2026-01-24T08:06:04.778Z",
+      "completed_modules": [
+        {
+          "module_id": 3,
+          "completed_date": "2026-01-24T08:08:33.952Z",
+          "score": 100,
+          "time_spent": 0
+        },
+        {
+          "module_id": 4,
+          "completed_date": "2026-01-24T08:22:30.532Z",
+          "score": 67,
+          "time_spent": 0
+        },
+        {
+          "module_id": 4,
+          "completed_date": "2026-01-24T08:22:56.379Z",
+          "score": 67,
+          "time_spent": 0
+        },
+        {
+          "module_id": 4,
+          "completed_date": "2026-01-24T08:23:30.665Z",
+          "score": 100,
+          "time_spent": 0
+        },
+        {
+          "module_id": 4,
+          "completed_date": "2026-01-24T08:23:42.966Z",
+          "score": 100,
+          "time_spent": 0
+        }
+      ],
+      "completed_quests_count": 0
     }
   ],
   "game_sessions": [
@@ -2407,6 +2344,129 @@
       "hints_used": 0,
       "started_at": "2026-01-23T14:15:31.791Z",
       "last_activity": "2026-01-23T14:15:31.791Z"
+    },
+    {
+      "id": 8,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "completed",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-24T08:09:16.419Z",
+      "last_activity": "2026-01-24T08:09:16.419Z",
+      "completed_at": "2026-01-24T08:09:55.520Z"
+    },
+    {
+      "id": 9,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "abandoned",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-24T08:11:04.562Z",
+      "last_activity": "2026-01-24T08:11:04.562Z",
+      "expired_at": "2026-01-24T08:15:51.984Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 10,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "abandoned",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-24T08:15:52.034Z",
+      "last_activity": "2026-01-24T08:15:52.034Z",
+      "expired_at": "2026-01-24T08:24:44.224Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 11,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "abandoned",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-24T08:24:44.252Z",
+      "last_activity": "2026-01-24T08:24:44.252Z",
+      "expired_at": "2026-01-24T08:31:52.561Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 12,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "abandoned",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-24T08:31:52.574Z",
+      "last_activity": "2026-01-24T08:31:52.574Z",
+      "expired_at": "2026-01-24T08:36:45.471Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 13,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "in_progress",
+      "current_screen_id": "screen1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-24T08:36:45.512Z",
+      "last_activity": "2026-01-24T08:36:45.512Z"
     }
   ],
   "learning_modules": [

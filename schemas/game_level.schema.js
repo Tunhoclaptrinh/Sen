@@ -1,4 +1,4 @@
-// schemas/game_level.schema.js - ENHANCED VERSION
+// schemas/game_level.schema.js
 module.exports = {
   chapter_id: {
     type: 'number',
@@ -174,16 +174,13 @@ module.exports = {
     required: false,
     description: 'Thumbnail cho level'
   },
-  background_image: {
-    type: 'string',
-    required: false,
-    description: 'Background mặc định (nếu screens không có)'
-  },
+
   background_music: {
     type: 'string',
     required: false,
     description: 'Nhạc nền mặc định'
   },
+
   artifact_ids: {
     type: 'array',
     required: false,

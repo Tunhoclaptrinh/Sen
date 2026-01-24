@@ -349,7 +349,7 @@ const seedData = {
       "ai_character_id": 1,
       "knowledge_base": "Kiến thức về múa rối nước và Chú Tễu",
       "background_music": null,
-      "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=400",
+      "thumbnail": "https://images.unsplash.com/photo-1555169062-013468b47731?w=400",
       "screens": [
         {
           "id": "screen_1_1",
@@ -396,7 +396,7 @@ const seedData = {
       "ai_character_id": 1,
       "knowledge_base": "Sân khấu thủy đình và các tích trò rối nước",
       "background_music": null,
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/R%E1%BB%93ng_%C4%91%C3%A1_%C4%91i%E1%BB%87n_K%C3%ADnh_Thi%C3%AAn.jpg/600px-R%E1%BB%93ng_%C4%91%C3%A1_%C4%91i%E1%BB%87n_K%C3%ADnh_Thi%C3%AAn.jpg",
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/R%E1%BB%93ng_%C4%91%C3%A1_%C4%91i%E1%BB%87n_K%C3%ADnh_Thi%C3%AAn.jpg/600px-R%E1%BB%93ng_%C4%91%C3%A1_%C4%91i%E1%BB%87n_K%C3%ADnh_Thi%C3%AAn.jpg",
       "screens": [
         {
           "id": "screen_2_1",
@@ -437,7 +437,7 @@ const seedData = {
       "type": "mixed",
       "order": 1,
       "difficulty": "medium",
-      "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=400",
+      "thumbnail": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=400",
       "ai_character_id": 1,
       "knowledge_base": "Các sự kiện lịch sử Việt Nam qua các thời kỳ",
       "background_music": null,
