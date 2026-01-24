@@ -4,6 +4,9 @@
     "database/*.json",
     "database/uploads/*",
     "uploads/*",
+    "scripts/*",
+    "tools/*",
+    "test-fetch.js",
     "*.log",
     "node_modules/"
   ],
