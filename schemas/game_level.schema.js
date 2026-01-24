@@ -71,7 +71,7 @@ module.exports = {
         background_image: 'url',
         background_music: 'url',
         content: [
-          { speaker: 'AI', text: 'Chào bạn!', avatar: 'url' }
+          { speaker: 'AI', text: 'Chào bạn!', avatar: 'url', audio: 'base64_string' }
         ],
         next_screen_id: 'screen_02',
         skip_allowed: true
