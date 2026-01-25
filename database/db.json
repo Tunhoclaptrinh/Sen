@@ -708,7 +708,7 @@
           "content": [
             {
               "speaker": "AI",
-              "text": "Chào bạn! Mình là Chú Tễu. Hôm nay mình sẽ kể cho bạn nghe về nguồn gốc con Rồng cháu Tiên nhé!",
+              "text": "Chào bạn! Mình là Sen. Hôm nay mình sẽ kể cho bạn nghe về nguồn gốc con Rồng cháu Tiên nhé!",
               "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu"
             },
             {
@@ -723,11 +723,11 @@
         {
           "id": "intro_d2",
           "type": "DIALOGUE",
-          "background_image": "https://api.dicebear.com/7.x/adventurer/svg?seed=Giong",
+          "background_image": "https://i.pinimg.com/736x/3c/2c/9b/3c2c9b551163446c3c1781bbd518a805.jpg",
           "content": [
             {
               "speaker": "AI",
-              "text": "Chào bạn! Mình là Chú Tễu. Hôm nay mình sẽ kể cho bạn nghe về nguồn gốc con Rồng cháu Tiên nhé!",
+              "text": "Chào bạn! Mình là Sen. Hôm nay mình sẽ kể cho bạn nghe về nguồn gốc con Rồng cháu Tiên nhé!",
               "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu"
             },
             {
@@ -843,7 +843,7 @@
           "content": {
             "title": "Họa tiết trống đồng",
             "description": "Hãy quan sát kỹ hoa văn trước khi trả lời câu hỏi tiếp theo.",
-            "image_url": "https://i.pinimg.com/1200x/a0/7a/30/a07a3026b35316a6cc79d96d735c19a1.jpg"
+            "image_url": "https://i.pinimg.com/1200x/e7/7a/89/e77a8980de2368500805c202b73e50e3.jpg"
           }
         },
         {
