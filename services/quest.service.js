@@ -12,7 +12,7 @@ class QuestService extends BaseService {
     const userQuests = await db.findMany('user_quests', { user_id: userId });
 
     const data = activeQuests.map(quest => {
-      const userQuest = userQuests.find(uq => uq.quest_id === quest.id);
+      const userQuest = userQuests.find(uq => uq.quest_id == quest.id);
       return {
         ...quest,
         progress: userQuest ? {
@@ -83,6 +83,44 @@ class QuestService extends BaseService {
       success: true,
       data: updated
     };
+  }
+
+  /**
+   * Helper to automatically check and advance quests based on user actions
+   * @param {number} userId 
+   * @param {string} type - 'complete_chapter', 'collect_artifact', etc.
+   * @param {number} incrementValue - Usually 1
+   */
+  async checkAndAdvance(userId, type, incrementValue = 1) {
+    try {
+      // Find all active quests for this user
+      const allQuests = await db.findAll('game_quests');
+      const activeQuests = allQuests.filter(q => q.is_active && q.requirements && q.requirements[0]?.type === type);
+      
+      const userQuests = await db.findMany('user_quests', { user_id: userId, status: 'in_progress' });
+      
+      for (const quest of activeQuests) {
+        // Check if user has started this quest
+        let userQuest = userQuests.find(uq => uq.quest_id == quest.id);
+        
+        // If not started, auto-start it (Passive Quest Logic)
+        if (!userQuest) {
+             const startResult = await this.startQuest(quest.id, userId);
+             if (startResult.success) {
+                 userQuest = startResult.data;
+                 console.log(`[Quest] Auto-started passive quest ${quest.id} for user ${userId}`);
+             }
+        }
+
+        if (userQuest) {
+           const newValue = (userQuest.current_value || 0) + incrementValue;
+           await this.updateQuestProgress(quest.id, userId, newValue);
+           console.log(`[Quest] Auto-advanced quest ${quest.id} for user ${userId} to ${newValue}`);
+        }
+      }
+    } catch (error) {
+       console.error('[Quest] Auto-advance error:', error);
+    }
   }
 
   async completeQuest(questId, userId) {

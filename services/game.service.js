@@ -574,6 +574,14 @@ class GameService {
     const requiredItems = currentScreen.required_items || allItems.length;
     const allCollected = updatedSession.collected_items.length >= requiredItems;
 
+    // TRIGGER QUEST UPDATE
+    try {
+        const questService = require('./quest.service');
+        await questService.checkAndAdvance(userId, 'collect_artifact', 1);
+    } catch (e) {
+        console.error('Quest trigger failed', e);
+    }
+
     return {
       success: true,
       message: 'Item collected',
@@ -656,6 +664,20 @@ class GameService {
       score: session.score + pointsEarned,
       last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
     });
+
+    // TRIGGER QUEST CHECK (Quiz Success)
+    if (isCorrect) {
+        try {
+            const questService = require('./quest.service');
+             // Trigger 'perfect_quiz' if the user answers correctly. 
+             // Ideally we check if they got ALL questions right in a row, but for now, 
+             // given the simple mechanic (1 question per screen?), we verify if this success counts.
+             // If the quest requires 1 'perfect_quiz', and they passed a quiz screen, we trigger it.
+             await questService.checkAndAdvance(userId, 'perfect_quiz', 1);
+        } catch (e) {
+             console.error('Quest trigger failed', e);
+        }
+    }
 
     return {
       success: true,
@@ -1125,6 +1147,46 @@ class GameService {
           points: progress.total_points + finalScore,
           coins: newCoins
         };
+    }
+
+    // TRIGGER QUESTS
+    try {
+      const questService = require('./quest.service');
+      
+      // 1. Trigger Level Complete Quest
+      await questService.checkAndAdvance(userId, 'complete_level', 1);
+
+      // 2. Trigger Chapter Complete Quest
+      const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
+      
+      // Use the potentially updated list from above if available, otherwise fetch
+      // Note: 'newCompleted' is only defined inside the if (!alreadyCompleted) block above.
+      // We must reconstruct the reliable list.
+      
+      let effectiveCompletedIds = [];
+      if (!alreadyCompleted) {
+          // If we just completed it, we calculated newCompleted above but it's scoped.
+          // Re-calculate or fetch and append.
+          // Better: Use currentProgress fetch but FORCE add the current level if missing.
+          const currentProgress = await db.findOne('game_progress', { user_id: userId });
+          effectiveCompletedIds = currentProgress?.completed_levels || [];
+          if (!effectiveCompletedIds.includes(parseInt(levelId))) {
+              effectiveCompletedIds.push(parseInt(levelId));
+          }
+      } else {
+          // Already completed, just verify
+          const currentProgress = await db.findOne('game_progress', { user_id: userId });
+          effectiveCompletedIds = currentProgress?.completed_levels || [];
+      }
+
+      const isChapterDone = chapterLevels.every(l => effectiveCompletedIds.includes(l.id));
+
+      if (isChapterDone) {
+         console.log(`[GameService] Chapter ${level.chapter_id} complete for user ${userId}. Triggering quest.`);
+         await questService.checkAndAdvance(userId, 'complete_chapter', 1);
+      }
+    } catch (e) {
+      console.error('Quest trigger failed', e);
     }
 
     return {

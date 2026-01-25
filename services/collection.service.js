@@ -105,6 +105,15 @@ class CollectionService extends BaseService {
             updatedAt: new Date().toISOString()
         });
 
+        // TRIGGER QUEST UPDATE
+        try {
+            const questService = require('./quest.service');
+            // Assuming 'collect_artifact' is the type
+            await questService.checkAndAdvance(collection.user_id, 'collect_artifact', 1);
+        } catch (e) {
+            console.error('Quest trigger failed', e);
+        }
+
         return {
             success: true,
             message: 'Item added to collection',
