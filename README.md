@@ -375,16 +375,6 @@ Backend/
 └── run.sh                         # Docker runner script
 ```
 
----
-
-#### Production Notes - Health & Optional Secrets
-
-- **Health checks**: Production and Dev services use a lightweight `/api/health` endpoint for health checks. Ensure the backend exposes a stable health endpoint that returns a quick 200 OK for liveness checks.
-
-- **Cloudflared**: If you plan to run the Cloudflare Tunnel from the production host, authenticate using `cloudflared tunnel login` and mount `$HOME/.cloudflared` as a volume into the tunnel container for non-interactive operation.
-
----
-
 ### 💻 Cách 2: Chạy Local (Không Dùng Docker)
 
 #### Bước 1: Clone Repository
@@ -1486,7 +1476,7 @@ router.get("/api/heritage-sites", heritageSiteController.getAll);
 router.get(
   "/api/game/progress",
   protect, // Verify JWT
-  gameController.getProgress,
+  gameController.getProgress
 );
 
 // Admin only route
@@ -1494,7 +1484,7 @@ router.post(
   "/api/admin/levels",
   protect, // Verify JWT
   authorize("admin"), // Check role
-  levelController.create,
+  levelController.create
 );
 
 // Ownership check
@@ -1502,7 +1492,7 @@ router.delete(
   "/api/collections/:id",
   protect, // Verify JWT
   checkOwnership("collections"), // Verify ownership
-  collectionController.delete,
+  collectionController.delete
 );
 ```
 

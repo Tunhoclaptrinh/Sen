@@ -87,7 +87,6 @@ start_docker() {
         seed)
             run_exec "npm run seed" "Full Database Seeding" "true"
             ;;
-
         reset)
             run_exec "node scripts/reset_game.js" "Reset User Progress" "true"
             ;;
@@ -124,7 +123,6 @@ if [ $# -gt 0 ]; then
     case $1 in
         build|dev|prod|logs|down) start_docker $1; exit 0 ;;
         seed) start_docker "seed"; exit 0 ;;
-
         reset) start_docker "reset"; exit 0 ;;
         query) start_docker "query"; exit 0 ;;
         test-ai) start_docker "test-ai"; exit 0 ;;
