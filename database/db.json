@@ -30,7 +30,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-01-24T10:22:14.231Z"
+      "lastLogin": "2026-01-24T10:54:56.175Z"
     },
     {
       "id": 4,
@@ -2389,7 +2389,7 @@
       "id": 7,
       "user_id": 3,
       "level_id": 4,
-      "status": "in_progress",
+      "status": "expired",
       "current_screen_id": "vid_1",
       "current_screen_index": 0,
       "collected_items": [],
@@ -2402,7 +2402,9 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2026-01-23T14:15:31.791Z",
-      "last_activity": "2026-01-23T14:15:31.791Z"
+      "last_activity": "2026-01-23T14:15:31.791Z",
+      "expired_at": "2026-01-24T14:51:12.429Z",
+      "expired_reason": "Session timeout (24 hours inactive)"
     },
     {
       "id": 8,
@@ -3018,7 +3020,7 @@
       "id": 36,
       "user_id": 3,
       "level_id": 1,
-      "status": "in_progress",
+      "status": "abandoned",
       "current_screen_id": "intro_d1",
       "current_screen_index": 0,
       "collected_items": [],
@@ -3031,7 +3033,49 @@
       "time_spent": 0,
       "hints_used": 0,
       "started_at": "2026-01-24T10:23:10.288Z",
-      "last_activity": "2026-01-24T10:23:10.288Z"
+      "last_activity": "2026-01-24T10:23:10.288Z",
+      "expired_at": "2026-01-24T10:57:26.582Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 37,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "abandoned",
+      "current_screen_id": "intro_d1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 3,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-24T10:57:26.592Z",
+      "last_activity": "2026-01-24T10:57:26.592Z",
+      "expired_at": "2026-01-24T11:18:41.528Z",
+      "expired_reason": "New session started"
+    },
+    {
+      "id": 38,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "in_progress",
+      "current_screen_id": "intro_d1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 3,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-24T11:18:41.584Z",
+      "last_activity": "2026-01-24T11:18:41.584Z"
     }
   ],
   "learning_modules": [
