@@ -17,14 +17,13 @@ show_menu() {
     echo "  [1] Build Images   (First time / Rebuild only)"
     echo "  [2] Start Dev      (docker-compose up)"
     echo "  [3] Seed Database  (Create FULL sample data)"
-    echo "  [4] Seed Game Only (Update Levels/Chapters)"
-    echo "  [5] Reset Game     (Clear User Progress)"
-    echo "  [6] Query Tool     (Query database)"
-    echo "  [7] Test AI        (Test AI chatbot)"
-    echo "  [8] Start Prod     (docker-compose up -d)"
-    echo "  [9] View Logs"
-    echo "  [10] Stop All      (docker-compose down)"
-    echo "  [11] Exit"
+    echo "  [4] Reset Game     (Clear User Progress)"
+    echo "  [5] Query Tool     (Query database)"
+    echo "  [6] Test AI        (Test AI chatbot)"
+    echo "  [7] Start Prod     (docker-compose up -d)"
+    echo "  [8] View Logs"
+    echo "  [9] Stop All      (docker-compose down)"
+    echo "  [10] Exit"
     echo ""
 }
 
@@ -88,9 +87,7 @@ start_docker() {
         seed)
             run_exec "npm run seed" "Full Database Seeding" "true"
             ;;
-        seed-game)
-            run_exec "node scripts/seed_game.js" "Update Game Data Only" "true"
-            ;;
+
         reset)
             run_exec "node scripts/reset_game.js" "Reset User Progress" "true"
             ;;
@@ -127,7 +124,7 @@ if [ $# -gt 0 ]; then
     case $1 in
         build|dev|prod|logs|down) start_docker $1; exit 0 ;;
         seed) start_docker "seed"; exit 0 ;;
-        seed-game) start_docker "seed-game"; exit 0 ;;
+
         reset) start_docker "reset"; exit 0 ;;
         query) start_docker "query"; exit 0 ;;
         test-ai) start_docker "test-ai"; exit 0 ;;
@@ -151,18 +148,17 @@ while true; do
         1) start_docker "build" ;;
         2) start_docker "dev"; break ;;
         3) start_docker "seed" ;;
-        4) start_docker "seed-game" ;;
-        5) start_docker "reset" ;;
-        6) start_docker "query" ;;
-        7) start_docker "test-ai" ;;
-        8) start_docker "prod"; break ;;
-        9) start_docker "logs" ;;
-        10) start_docker "down" ;;
-        11) echo "Goodbye!"; exit 0 ;;
+        4) start_docker "reset" ;;
+        5) start_docker "query" ;;
+        6) start_docker "test-ai" ;;
+        7) start_docker "prod"; break ;;
+        8) start_docker "logs" ;;
+        9) start_docker "down" ;;
+        10) echo "Goodbye!"; exit 0 ;;
         *) echo "[Error] Invalid choice!"; sleep 1 ;;
     esac
     
-    if [ "$choice" != "11" ]; then
+    if [ "$choice" != "10" ]; then
         echo ""
         read -p "Press Enter to continue..."
     fi

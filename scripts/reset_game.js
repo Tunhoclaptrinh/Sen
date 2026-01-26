@@ -22,7 +22,8 @@ async function resetGameData() {
       sessions: db.data.game_sessions?.length || 0,
       inventory: db.data.user_inventory?.length || 0,
       scans: db.data.scan_history?.length || 0,
-      notifications: db.data.notifications?.length || 0
+      notifications: db.data.notifications?.length || 0,
+      quests: db.data.user_quests?.length || 0
     };
 
     console.log(`📊 Found data to clear:`);
@@ -30,6 +31,7 @@ async function resetGameData() {
     console.log(`   - Active Sessions: ${stats.sessions}`);
     console.log(`   - User Inventories: ${stats.inventory}`);
     console.log(`   - Scan Histories: ${stats.scans}`);
+    console.log(`   - User Quests: ${stats.quests}`);
 
     // 3. Perform Reset
     // We strictly reset arrays to empty []
@@ -37,6 +39,7 @@ async function resetGameData() {
     db.data.game_sessions = [];
     db.data.user_inventory = [];
     db.data.scan_history = [];
+    db.data.user_quests = [];
     
     // Optional: Clear game-related notifications only? 
     // For now, let's keep notifications as they might be system-wide.

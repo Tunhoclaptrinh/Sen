@@ -22,7 +22,7 @@ services:
       - PORT=3000
       - JWT_SECRET=${JWT_SECRET:-dev_secret_key_for_development_only_32chars}
       - JWT_EXPIRE=${JWT_EXPIRE:-7d}
-      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3001,http://localhost:5173,http://localhost}
+      - CORS_ORIGIN=*
       - CORS_CREDENTIALS=true
       - LOG_LEVEL=debug
       - DB_CONNECTION=${DB_CONNECTION}
