@@ -67,7 +67,6 @@
   - Timeline các sự kiện quan trọng
   - Đánh giá và bình luận
 - **Artifacts & Collections**
-
   - Khám phá hiện vật lịch sử
   - Tạo bộ sưu tập cá nhân
   - Phân loại theo thời kỳ, khu vực
@@ -81,7 +80,6 @@
 ### 2. 🎮 Game System (Unified Architecture)
 
 - **Chapter System**
-
   - Hệ thống hiện đang có 3 chương game chính, mở khóa tuần tự.
   - Người chơi phải hoàn thành các điều kiện để mở khóa chương mới. Đồng thời sử dụng **Sen Petals** (Cánh Hoa Sen) tích lũy để mở chương mới.
   - Chapter 1: Sen Hồng - Ký ức Đầu tiên (Cội nguồn)
@@ -89,34 +87,29 @@
   - Chapter 3: Sen Trắng - Di sản Bất tử (Vươn xa)
 
 - **Level System (Screen-based)**
-
   - Màn chơi với nhiều screens tuần tự
   - 6 loại screen: DIALOGUE, HIDDEN_OBJECT, QUIZ, TIMELINE, IMAGE_VIEWER, VIDEO
   - Navigation linh hoạt giữa các screens
   - Checkpoint và save progress
 
 - **AI Characters**
-
   - NPCs lịch sử Việt Nam (Chú Tễu, Thị Kính, Thánh Gióng...)
   - 2 trạng thái: Mất trí nhớ ↔ Hồi phục
   - Context-aware conversations
   - Personality-driven responses
 
 - **Rewards & Progression**
-
   - Cánh hoa sen (petals) để mở khóa chapters
   - Sen coins để mua items
   - Experience points và leveling
   - Unlock characters và museum items
 
 - **Museum System**
-
   - Bảo tàng cá nhân với artifacts thu thập
   - Thu nhập thụ động từ museum
   - Upgrade và mở rộng
 
 - **Badges & Achievements**
-
   - 50+ badges có thể đạt được
   - Achievement tracking
   - Milestone rewards
@@ -128,13 +121,11 @@
 ### 3. 🤖 AI Assistant System
 
 - **Context-Aware Chatbot**
-
   - Chat theo ngữ cảnh level đang chơi
   - Hiểu biết về artifacts và heritage sites
   - Cung cấp hints và giải thích
 
 - **AI Character Personas**
-
   - Mỗi character có personality riêng
   - Chuyển đổi persona theo progress
   - Duy trì conversation history
@@ -147,7 +138,6 @@
 ### 4. 🎓 Learning & Quests
 
 - **Learning Paths**
-
   - Structured learning modules
   - Progress tracking
   - Quizzes and assessments
@@ -161,14 +151,12 @@
 ### 5. 👥 User Management
 
 - **Authentication & Authorization**
-
   - JWT-based authentication
   - Role-based access control (Admin, Customer)
   - Secure password hashing (bcrypt)
   - Session management
 
 - **User Profiles**
-
   - Personal information
   - Avatar upload
   - Address management
@@ -183,7 +171,6 @@
 ### 6. 🎨 Admin CMS (Content Management System)
 
 - **Level CMS**
-
   - Visual level editor
   - Screen templates
   - Drag-and-drop screen ordering
@@ -192,14 +179,12 @@
   - Export to JSON/XLSX
 
 - **Chapter Management**
-
   - Create and edit chapters
   - Order and organize levels
   - Set unlock requirements
   - Reward configuration
 
 - **Character Management**
-
   - Create AI characters
   - Define personas (amnesia & restored)
   - Upload avatars
@@ -214,7 +199,6 @@
 ### 7. 📤 Import/Export
 
 - **Data Import**
-
   - XLSX spreadsheet import
   - JSON bulk import
   - Validation and error reporting
@@ -390,8 +374,6 @@ Backend/
 │       └── Dockerfile            # Prod image
 └── run.sh                         # Docker runner script
 ```
-
----
 
 ### 💻 Cách 2: Chạy Local (Không Dùng Docker)
 
@@ -1992,18 +1974,15 @@ const distance = calculateDistance(lat1, lon1, lat2, lon2);
 When reporting an issue, please include:
 
 1. **Environment:**
-
    - Node.js version
    - Operating system
    - npm version
 
 2. **Description:**
-
    - What happened?
    - What did you expect to happen?
 
 3. **Steps to Reproduce:**
-
    - Step-by-step instructions
 
 4. **Additional Context:**

@@ -33,6 +33,7 @@ class QuestService extends BaseService {
   }
 
   async startQuest(questId, userId) {
+    questId = parseInt(questId);
     const quest = await db.findById('game_quests', questId);
     if (!quest) {
       return { success: false, message: 'Quest not found', statusCode: 404 };
@@ -58,6 +59,7 @@ class QuestService extends BaseService {
   }
 
   async updateQuestProgress(questId, userId, currentValue) {
+    questId = parseInt(questId);
     const userQuest = await db.findOne('user_quests', { quest_id: questId, user_id: userId });
     if (!userQuest) {
       return { success: false, message: 'Quest not started', statusCode: 404 };
@@ -124,6 +126,7 @@ class QuestService extends BaseService {
   }
 
   async completeQuest(questId, userId) {
+    questId = parseInt(questId);
     const userQuest = await db.findOne('user_quests', { quest_id: questId, user_id: userId });
     if (!userQuest) {
       return { success: false, message: 'Quest not started', statusCode: 404 };
@@ -145,6 +148,7 @@ class QuestService extends BaseService {
   }
 
   async claimReward(questId, userId) {
+    questId = parseInt(questId);
     const userQuest = await db.findOne('user_quests', { quest_id: questId, user_id: userId });
     if (!userQuest || userQuest.status !== 'completed') {
       return { success: false, message: 'Quest not completed or not found', statusCode: 400 };

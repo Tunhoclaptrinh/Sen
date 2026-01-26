@@ -192,8 +192,7 @@ class GameService {
     // const enriched = await Promise.all(chapters.map(async (chapter, index) => {
     const enriched = await Promise.all(chapters.map(async (chapter) => {
       // RESPECT DB OVERRIDE (For testing/seeding)
-      const isDbUnlocked = chapter.petal_state === 'blooming' || chapter.petal_state === 'full';
-      const isUnlocked = (progress.data.unlocked_chapters || []).includes(chapter.id) || isDbUnlocked;
+      const isUnlocked = (progress.data.unlocked_chapters || []).includes(chapter.id) || ['blooming', 'full'].includes(chapter.petal_state);
       const isFinished = (progress.data.finished_chapters || []).includes(chapter.id) || chapter.petal_state === 'full';
       
       const levels = await db.findMany('game_levels', { chapter_id: chapter.id });
@@ -228,9 +227,6 @@ class GameService {
         calculatedPetalState = 'blooming';
       } else if (canUnlock) {
         calculatedPetalState = 'closed';
-      } else if (isDbUnlocked) { 
-          // Fail-safe: if DB says blooming, it is blooming
-          calculatedPetalState = chapter.petal_state; 
       }
 
       return {
@@ -924,7 +920,7 @@ class GameService {
             (updatedSession.completed_screens.length / level.screens.length) * 100
           )
         },
-        points_earned: pointsToAdd // ⚡ Return for frontend animation
+        points_earned: pointsToAdd
       }
     };
   }
