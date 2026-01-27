@@ -116,6 +116,7 @@ class UserService extends BaseService {
     const sessions = await db.findMany('game_sessions', { user_id: userId });
     const scans = await db.findMany('scan_history', { user_id: userId });
     const favorites = await db.findMany('favorites', { user_id: userId });
+    const reviews = await db.findMany('reviews', { user_id: userId });
 
     const activity = {
       user: sanitizeUser(user),
@@ -134,7 +135,12 @@ class UserService extends BaseService {
       recentScans: scans
         .sort((a, b) => new Date(b.scanned_at) - new Date(a.scanned_at))
         .slice(0, 5),
-      totalFavorites: favorites.length
+      totalFavorites: favorites.length,
+      totalCollections: await db.count('collections', { user_id: userId }),
+      totalReviews: reviews.length,
+      avgRating: reviews.length > 0 
+        ? (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(1)
+        : 0
     };
 
     return {
