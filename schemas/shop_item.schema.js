@@ -11,7 +11,7 @@ module.exports = {
   },
   type: {
     type: 'enum',
-    enum: ['hint', 'boost', 'decoration', 'character_skin'],
+    enum: ['powerup', 'character', 'theme', 'premium_ai', 'decoration'],
     required: true,
     description: 'Loại item'
   },
@@ -19,17 +19,29 @@ module.exports = {
     type: 'number',
     required: true,
     min: 0,
-    description: 'Giá (coins)'
+    description: 'Giá'
+  },
+  currency: {
+    type: 'enum',
+    enum: ['coins', 'petals'],
+    required: true,
+    default: 'coins',
+    description: 'Loại tiền tệ'
   },
   icon: {
     type: 'string',
     required: false,
     description: 'Icon item'
   },
+  image: {
+    type: 'string',
+    required: false,
+    description: 'Ảnh minh họa'
+  },
   effect: {
     type: 'string',
     required: false,
-    description: 'Hiệu ứng khi dùng'
+    description: 'Hiệu ứng khi dùng (JSON/Key)'
   },
   is_consumable: {
     type: 'boolean',
@@ -43,10 +55,10 @@ module.exports = {
     default: 99,
     description: 'Số lượng tối đa trong inventory'
   },
-  is_available: {
+  is_active: {
     type: 'boolean',
     required: false,
     default: true,
-    description: 'Có bán không'
+    description: 'Đang mở bán'
   }
 };

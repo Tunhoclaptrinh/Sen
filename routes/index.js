@@ -22,6 +22,7 @@ router.use('/favorites', require('./favorite.routes'));
 router.use('/game', require('./game.routes'));
 router.use('/ai', require('./ai.routes'));
 router.use('/quests', require('./quest.routes'));
+router.use('/shop', require('./shop.routes'));
 
 router.use('/upload', require('./upload.routes'));
 router.use('/notifications', require('./notification.routes'));
