@@ -578,6 +578,28 @@ class GameService {
         console.error('Quest trigger failed', e);
     }
 
+    // TRIGGER MUSEUM ARTIFACT UNLOCK
+    if (item.artifact_id) {
+        try {
+            const existingScan = await db.findOne('scan_history', {
+                user_id: userId,
+                object_id: item.artifact_id
+            });
+
+            if (!existingScan) {
+                await db.create('scan_history', {
+                    user_id: userId,
+                    object_id: item.artifact_id,
+                    scanned_at: new Date().toISOString(),
+                    scan_code: 'HO_REWARD_' + item.id
+                });
+                console.log(`[GameService] Added artifact ${item.artifact_id} to museum for user ${userId}`);
+            }
+        } catch (e) {
+            console.error('Museum artifact unlock failed', e);
+        }
+    }
+
     return {
       success: true,
       message: 'Item collected',
@@ -1318,10 +1340,34 @@ class GameService {
 
   async getMuseum(userId) {
     const progress = await this.getProgress(userId);
+    
+    // Fetch Artifacts from Scan History
+    let artifacts = [];
+    try {
+        const scanHistory = await db.findAll('scan_history');
+        const userScans = scanHistory.filter(h => h.user_id === parseInt(userId));
+        const allArtifacts = await db.findAll('artifacts');
+        
+        artifacts = userScans.map(scan => {
+            const artifact = allArtifacts.find(a => a.id === scan.object_id);
+            if (!artifact) return null;
+            return {
+                artifact_id: artifact.id, 
+                name: artifact.name,
+                image: artifact.image,
+                description: artifact.description,
+                acquired_at: scan.scanned_at,
+                type: artifact.artifact_type
+            };
+        }).filter(a => a !== null);
+    } catch (e) {
+        console.error("Error fetching museum artifacts:", e);
+    }
+
     const lastCollection = progress.data.last_museum_collection || progress.data.created_at;
 
-    // Tính thu nhập tích lũy (read-only, không modify DB)
-    const incomeInfo = this.calculatePendingIncome(progress.data, lastCollection);
+    // Tính thu nhập tích lũy (bao gồm cả Artifacts)
+    const incomeInfo = this.calculatePendingIncome(progress.data, lastCollection, artifacts.length);
 
     return {
       success: true,
@@ -1333,7 +1379,8 @@ class GameService {
         hours_accumulated: incomeInfo.hours_accumulated,
         capped: incomeInfo.capped || false,
         characters: progress.data.collected_characters,
-        visitor_count: progress.data.collected_characters.length * 10,
+        artifacts: artifacts,
+        visitor_count: (progress.data.collected_characters.length * 50) + (artifacts.length * 20), // More visitors!
         can_collect: incomeInfo.pending > 0,
         next_collection_in: this.getNextCollectionTime(incomeInfo.rate),
 
@@ -1348,12 +1395,19 @@ class GameService {
   /**
    * Tính toán thu nhập đang chờ
    */
-  calculatePendingIncome(progressData, lastCollectionTime) {
-    if (!progressData.museum_open || progressData.collected_characters.length === 0) {
+  calculatePendingIncome(progressData, lastCollectionTime, artifactCount = 0) {
+    if (!progressData.museum_open) {
       return { rate: 0, pending: 0, hours_accumulated: 0, capped: false };
     }
 
-    const ratePerHour = progressData.collected_characters.length * 5; // 5 coins/character/hour
+    const charCount = progressData.collected_characters.length;
+    if (charCount === 0 && artifactCount === 0) {
+       return { rate: 0, pending: 0, hours_accumulated: 0, capped: false };
+    }
+
+    // FORMULA: 10 coins/char/hour + 5 coins/artifact/hour
+    const ratePerHour = (charCount * 10) + (artifactCount * 5); 
+    
     const now = new Date();
     const last = new Date(lastCollectionTime);
     const diffHours = Math.abs(now - last) / 36e5;
@@ -1362,7 +1416,7 @@ class GameService {
     const cappedHours = Math.min(diffHours, 24);
 
     // ✅ ADD HARD CAP FOR PENDING INCOME
-    const MAX_PENDING_INCOME = 5000; // Hard economy cap
+    const MAX_PENDING_INCOME = 10000; // Increased cap
     const rawPending = Math.floor(ratePerHour * cappedHours);
     const pending = Math.min(rawPending, MAX_PENDING_INCOME);
 
@@ -1377,7 +1431,7 @@ class GameService {
       pending: pending,
       hours_accumulated: cappedHours.toFixed(1),
       capped: hitCap,
-      would_be_without_cap: hitCap ? rawPending : null // For transparency
+      would_be_without_cap: hitCap ? rawPending : null
     };
   }
 
@@ -1443,7 +1497,17 @@ class GameService {
       }
 
       const lastCollection = progress.last_museum_collection || progress.created_at;
-      const incomeInfo = this.calculatePendingIncome(progress, lastCollection);
+      
+      // Fetch artifact count for calculation
+      let artifactCount = 0;
+      try {
+        const scanHistory = await db.findAll('scan_history');
+        artifactCount = scanHistory.filter(h => h.user_id === parseInt(userId)).length;
+      } catch (e) {
+         console.error("Error counting artifacts for collection:", e);
+      }
+
+      const incomeInfo = this.calculatePendingIncome(progress, lastCollection, artifactCount);
 
       if (incomeInfo.pending <= 0) {
         return {
