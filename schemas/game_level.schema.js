@@ -20,12 +20,7 @@ module.exports = {
     maxLength: 2000,
     description: 'Mô tả màn chơi'
   },
-  type: {
-    type: 'enum',
-    enum: ['story', 'hidden_object', 'timeline', 'quiz', 'memory', 'puzzle', 'mixed'],
-    required: true,
-    description: 'Loại gameplay chính (mixed = nhiều loại)'
-  },
+
   difficulty: {
     type: 'enum',
     enum: ['easy', 'medium', 'hard'],

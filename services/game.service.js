@@ -194,7 +194,7 @@ class GameService {
       // RESPECT DB OVERRIDE (For testing/seeding)
       const isUnlocked = (progress.data.unlocked_chapters || []).includes(chapter.id) || ['blooming', 'full'].includes(chapter.petal_state);
       const isFinished = (progress.data.finished_chapters || []).includes(chapter.id) || chapter.petal_state === 'full';
-      
+
       const levels = await db.findMany('game_levels', { chapter_id: chapter.id });
       const completedCount = levels.filter(l =>
         progress.data.completed_levels.includes(l.id)
@@ -208,14 +208,14 @@ class GameService {
         if (chapter.order === 1) {
           canUnlock = true;
         } else {
-             // Find previous chapter by order
-             const prevChapter = chapters.find(c => c.order === chapter.order - 1);
-             if (prevChapter && (progress.data.finished_chapters || []).includes(prevChapter.id)) {
-                 // Check currency (Petals)
-                 if (progress.data.total_sen_petals >= chapter.required_petals) {
-                     canUnlock = true;
-                 }
-             }
+          // Find previous chapter by order
+          const prevChapter = chapters.find(c => c.order === chapter.order - 1);
+          if (prevChapter && (progress.data.finished_chapters || []).includes(prevChapter.id)) {
+            // Check currency (Petals)
+            if (progress.data.total_sen_petals >= chapter.required_petals) {
+              canUnlock = true;
+            }
+          }
         }
       }
 
@@ -236,7 +236,7 @@ class GameService {
         theme: chapter.theme || "Không có",
         order: chapter.order,
         color: chapter.color || "#D35400",
-        image: chapter.image || "", 
+        image: chapter.image || "",
         layer_index: chapter.layer_index || 1,
         petal_state: calculatedPetalState,
         petal_image_closed: chapter.petal_image_closed || "",
@@ -306,20 +306,20 @@ class GameService {
 
     // 2. Sequential Check
     if (chapter.order > 1) {
-        // Find previous chapter
-        const prevChapter = await db.findOne('game_chapters', { order: chapter.order - 1 });
-        if (!prevChapter) {
-             return { success: false, message: 'Previous chapter configuration error', statusCode: 500 };
-        }
-        
-        // Check if previous chapter is finished
-        if (!progress.finished_chapters.includes(prevChapter.id)) {
-            return { 
-                success: false, 
-                message: `You must finish Chapter ${prevChapter.order}: ${prevChapter.name} first!`, 
-                statusCode: 403 
-            };
-        }
+      // Find previous chapter
+      const prevChapter = await db.findOne('game_chapters', { order: chapter.order - 1 });
+      if (!prevChapter) {
+        return { success: false, message: 'Previous chapter configuration error', statusCode: 500 };
+      }
+
+      // Check if previous chapter is finished
+      if (!progress.finished_chapters.includes(prevChapter.id)) {
+        return {
+          success: false,
+          message: `You must finish Chapter ${prevChapter.order}: ${prevChapter.name} first!`,
+          statusCode: 403
+        };
+      }
     }
 
     // 3. Currency Check (Sen Petals)
@@ -343,8 +343,8 @@ class GameService {
     return {
       success: true,
       message: 'Chapter unlocked successfully',
-      data: { 
-        chapter_id: parseInt(chapterId), 
+      data: {
+        chapter_id: parseInt(chapterId),
         chapter_name: chapter.name,
         petals_spent: chapter.required_petals,
         petals_remaining: newPetalsCount
@@ -550,7 +550,7 @@ class GameService {
     if (!item && level.clues) {
       item = level.clues.find(i => i.id === clueId);
     }
-    
+
     if (!item) {
       return { success: false, message: 'Item not found', statusCode: 404 };
     }
@@ -572,32 +572,32 @@ class GameService {
 
     // TRIGGER QUEST UPDATE
     try {
-        const questService = require('./quest.service');
-        await questService.checkAndAdvance(userId, 'collect_artifact', 1);
+      const questService = require('./quest.service');
+      await questService.checkAndAdvance(userId, 'collect_artifact', 1);
     } catch (e) {
-        console.error('Quest trigger failed', e);
+      console.error('Quest trigger failed', e);
     }
 
     // TRIGGER MUSEUM ARTIFACT UNLOCK
     if (item.artifact_id) {
-        try {
-            const existingScan = await db.findOne('scan_history', {
-                user_id: userId,
-                object_id: item.artifact_id
-            });
+      try {
+        const existingScan = await db.findOne('scan_history', {
+          user_id: userId,
+          object_id: item.artifact_id
+        });
 
-            if (!existingScan) {
-                await db.create('scan_history', {
-                    user_id: userId,
-                    object_id: item.artifact_id,
-                    scanned_at: new Date().toISOString(),
-                    scan_code: 'HO_REWARD_' + item.id
-                });
-                console.log(`[GameService] Added artifact ${item.artifact_id} to museum for user ${userId}`);
-            }
-        } catch (e) {
-            console.error('Museum artifact unlock failed', e);
+        if (!existingScan) {
+          await db.create('scan_history', {
+            user_id: userId,
+            object_id: item.artifact_id,
+            scanned_at: new Date().toISOString(),
+            scan_code: 'HO_REWARD_' + item.id
+          });
+          console.log(`[GameService] Added artifact ${item.artifact_id} to museum for user ${userId}`);
         }
+      } catch (e) {
+        console.error('Museum artifact unlock failed', e);
+      }
     }
 
     return {
@@ -685,16 +685,16 @@ class GameService {
 
     // TRIGGER QUEST CHECK (Quiz Success)
     if (isCorrect) {
-        try {
-            const questService = require('./quest.service');
-             // Trigger 'perfect_quiz' if the user answers correctly. 
-             // Ideally we check if they got ALL questions right in a row, but for now, 
-             // given the simple mechanic (1 question per screen?), we verify if this success counts.
-             // If the quest requires 1 'perfect_quiz', and they passed a quiz screen, we trigger it.
-             await questService.checkAndAdvance(userId, 'perfect_quiz', 1);
-        } catch (e) {
-             console.error('Quest trigger failed', e);
-        }
+      try {
+        const questService = require('./quest.service');
+        // Trigger 'perfect_quiz' if the user answers correctly. 
+        // Ideally we check if they got ALL questions right in a row, but for now, 
+        // given the simple mechanic (1 question per screen?), we verify if this success counts.
+        // If the quest requires 1 'perfect_quiz', and they passed a quiz screen, we trigger it.
+        await questService.checkAndAdvance(userId, 'perfect_quiz', 1);
+      } catch (e) {
+        console.error('Quest trigger failed', e);
+      }
     }
 
     return {
@@ -880,13 +880,13 @@ class GameService {
     // Only if points are defined and NOT already awarded (like Quiz/HiddenObject/Timeline which use submit endpoints)
     let pointsToAdd = 0;
     if (['DIALOGUE', 'VIDEO', 'IMAGE_VIEWER'].includes(currentScreen.type)) {
-        // Default 10 points for watching/reading if not specified
-        pointsToAdd = currentScreen.reward?.points || currentScreen.points || 10;
-        
-        // Prevent farming: Check if screen already in completed_screens
-        if (session.completed_screens.includes(currentScreen.id)) {
-            pointsToAdd = 0;
-        }
+      // Default 10 points for watching/reading if not specified
+      pointsToAdd = currentScreen.reward?.points || currentScreen.points || 10;
+
+      // Prevent farming: Check if screen already in completed_screens
+      if (session.completed_screens.includes(currentScreen.id)) {
+        pointsToAdd = 0;
+      }
     }
 
     // Check if level finished
@@ -894,9 +894,9 @@ class GameService {
       // ⚡ Update session with final points BEFORE finishing
       // Ensure we add the current screen to completed_screens too
       await db.update('game_sessions', session.id, {
-          score: session.score + pointsToAdd,
-          completed_screens: [...session.completed_screens, currentScreen.id],
-          last_activity: new Date().toISOString()
+        score: session.score + pointsToAdd,
+        completed_screens: [...session.completed_screens, currentScreen.id],
+        last_activity: new Date().toISOString()
       });
 
       // Auto complete level
@@ -1059,7 +1059,11 @@ class GameService {
     const timeBonus = this.calculateTimeBonus(timeSpent || session.time_spent, level.time_limit);
     const hintPenalty = session.hints_used * 5;
     const finalScore = Math.max(0, session.score + timeBonus - hintPenalty);
-    const passed = finalScore >= (level.passing_score || 70);
+
+    // Calculate passing threshold based on percentage
+    const maxPotentialScore = this.calculateMaxPotentialScore(level);
+    const passingThreshold = Math.ceil((maxPotentialScore * (level.passing_score || 70)) / 100);
+    const passed = finalScore >= passingThreshold;
 
     // ✅ UPDATE SESSION STATUS
     await db.update('game_sessions', session.id, {
@@ -1076,11 +1080,13 @@ class GameService {
           passed: false,
           score: finalScore,
           breakdown: {
-              base_score: session.score,
-              time_bonus: timeBonus,
-              hint_penalty: hintPenalty
+            base_score: session.score,
+            time_bonus: timeBonus,
+            hint_penalty: hintPenalty
           },
-          required_score: level.passing_score || 70,
+          required_score: passingThreshold,
+          max_potential_score: maxPotentialScore,
+          passing_percentage: level.passing_score || 70,
           can_retry: true
         }
       };
@@ -1091,29 +1097,29 @@ class GameService {
     try {
       const allLevels = await db.findAll('game_levels');
       const currentLevel = allLevels.find(l => l.id === parseInt(levelId));
-      
+
       if (currentLevel) {
-         const sameChapterLevels = allLevels.filter(l => l.chapter_id === currentLevel.chapter_id)
-                                          .sort((a, b) => a.order - b.order);
-         const currentIndex = sameChapterLevels.findIndex(l => l.id === parseInt(levelId));
-         
-         if (currentIndex !== -1 && currentIndex < sameChapterLevels.length - 1) {
-             nextLevelId = sameChapterLevels[currentIndex + 1].id;
-         } else {
-             // Check next chapter
-             const allChapters = await db.findAll('game_chapters');
-             allChapters.sort((a, b) => a.order - b.order);
-             const currentChapterIndex = allChapters.findIndex(c => c.id === currentLevel.chapter_id);
-             
-             if (currentChapterIndex !== -1 && currentChapterIndex < allChapters.length - 1) {
-                 const nextChapter = allChapters[currentChapterIndex + 1];
-                 const nextChapterLevels = allLevels.filter(l => l.chapter_id === nextChapter.id)
-                                                    .sort((a, b) => a.order - b.order);
-                 if (nextChapterLevels.length > 0) {
-                     nextLevelId = nextChapterLevels[0].id;
-                 }
-             }
-         }
+        const sameChapterLevels = allLevels.filter(l => l.chapter_id === currentLevel.chapter_id)
+          .sort((a, b) => a.order - b.order);
+        const currentIndex = sameChapterLevels.findIndex(l => l.id === parseInt(levelId));
+
+        if (currentIndex !== -1 && currentIndex < sameChapterLevels.length - 1) {
+          nextLevelId = sameChapterLevels[currentIndex + 1].id;
+        } else {
+          // Check next chapter
+          const allChapters = await db.findAll('game_chapters');
+          allChapters.sort((a, b) => a.order - b.order);
+          const currentChapterIndex = allChapters.findIndex(c => c.id === currentLevel.chapter_id);
+
+          if (currentChapterIndex !== -1 && currentChapterIndex < allChapters.length - 1) {
+            const nextChapter = allChapters[currentChapterIndex + 1];
+            const nextChapterLevels = allLevels.filter(l => l.chapter_id === nextChapter.id)
+              .sort((a, b) => a.order - b.order);
+            if (nextChapterLevels.length > 0) {
+              nextLevelId = nextChapterLevels[0].id;
+            }
+          }
+        }
       }
     } catch (err) {
       console.error('Error calculating next level:', err);
@@ -1125,83 +1131,83 @@ class GameService {
     let newTotals = null;
 
     if (!alreadyCompleted) {
-        const rewards = level.rewards || {};
-        const newPetals = progress.total_sen_petals + (rewards.petals || 1);
-        const newCoins = progress.coins + (rewards.coins || 50);
-        const levelIdInt = parseInt(levelId);
-        const newCompleted = [...progress.completed_levels, levelIdInt];
-        let newCharacters = [...progress.collected_characters];
-        if (rewards.character && !newCharacters.includes(rewards.character)) {
-          newCharacters.push(rewards.character);
-        }
+      const rewards = level.rewards || {};
+      const newPetals = progress.total_sen_petals + (rewards.petals || 1);
+      const newCoins = progress.coins + (rewards.coins || 50);
+      const levelIdInt = parseInt(levelId);
+      const newCompleted = [...progress.completed_levels, levelIdInt];
+      let newCharacters = [...progress.collected_characters];
+      if (rewards.character && !newCharacters.includes(rewards.character)) {
+        newCharacters.push(rewards.character);
+      }
 
-        const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
-        // Kiểm tra xem tất cả level trong chapter đã có trong danh sách hoàn thành chưa
-        const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
-        
-        let finishedChapters = [...(progress.finished_chapters || [])];
-        if (allCompleted && !finishedChapters.includes(level.chapter_id)) {
-            finishedChapters.push(level.chapter_id);
-        }
+      const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
+      // Kiểm tra xem tất cả level trong chapter đã có trong danh sách hoàn thành chưa
+      const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
 
-        // Update Progress
-        await db.update('game_progress', progress.id, {
-          completed_levels: newCompleted,
-          total_sen_petals: newPetals,
-          total_points: progress.total_points + finalScore,
-          coins: newCoins,
-          collected_characters: newCharacters,
-          finished_chapters: finishedChapters
-        });
+      let finishedChapters = [...(progress.finished_chapters || [])];
+      if (allCompleted && !finishedChapters.includes(level.chapter_id)) {
+        finishedChapters.push(level.chapter_id);
+      }
 
-        rewardsData = {
-          petals: rewards.petals || 1,
-          coins: rewards.coins || 50,
-          character: rewards.character || null
-        };
-        
-        newTotals = {
-          petals: newPetals,
-          points: progress.total_points + finalScore,
-          coins: newCoins
-        };
+      // Update Progress
+      await db.update('game_progress', progress.id, {
+        completed_levels: newCompleted,
+        total_sen_petals: newPetals,
+        total_points: progress.total_points + finalScore,
+        coins: newCoins,
+        collected_characters: newCharacters,
+        finished_chapters: finishedChapters
+      });
+
+      rewardsData = {
+        petals: rewards.petals || 1,
+        coins: rewards.coins || 50,
+        character: rewards.character || null
+      };
+
+      newTotals = {
+        petals: newPetals,
+        points: progress.total_points + finalScore,
+        coins: newCoins
+      };
     }
 
     // TRIGGER QUESTS
     try {
       const questService = require('./quest.service');
-      
+
       // 1. Trigger Level Complete Quest
       await questService.checkAndAdvance(userId, 'complete_level', 1);
 
       // 2. Trigger Chapter Complete Quest
       const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
-      
+
       // Use the potentially updated list from above if available, otherwise fetch
       // Note: 'newCompleted' is only defined inside the if (!alreadyCompleted) block above.
       // We must reconstruct the reliable list.
-      
+
       let effectiveCompletedIds = [];
       if (!alreadyCompleted) {
-          // If we just completed it, we calculated newCompleted above but it's scoped.
-          // Re-calculate or fetch and append.
-          // Better: Use currentProgress fetch but FORCE add the current level if missing.
-          const currentProgress = await db.findOne('game_progress', { user_id: userId });
-          effectiveCompletedIds = currentProgress?.completed_levels || [];
-          if (!effectiveCompletedIds.includes(parseInt(levelId))) {
-              effectiveCompletedIds.push(parseInt(levelId));
-          }
+        // If we just completed it, we calculated newCompleted above but it's scoped.
+        // Re-calculate or fetch and append.
+        // Better: Use currentProgress fetch but FORCE add the current level if missing.
+        const currentProgress = await db.findOne('game_progress', { user_id: userId });
+        effectiveCompletedIds = currentProgress?.completed_levels || [];
+        if (!effectiveCompletedIds.includes(parseInt(levelId))) {
+          effectiveCompletedIds.push(parseInt(levelId));
+        }
       } else {
-          // Already completed, just verify
-          const currentProgress = await db.findOne('game_progress', { user_id: userId });
-          effectiveCompletedIds = currentProgress?.completed_levels || [];
+        // Already completed, just verify
+        const currentProgress = await db.findOne('game_progress', { user_id: userId });
+        effectiveCompletedIds = currentProgress?.completed_levels || [];
       }
 
       const isChapterDone = chapterLevels.every(l => effectiveCompletedIds.includes(l.id));
 
       if (isChapterDone) {
-         console.log(`[GameService] Chapter ${level.chapter_id} complete for user ${userId}. Triggering quest.`);
-         await questService.checkAndAdvance(userId, 'complete_chapter', 1);
+        console.log(`[GameService] Chapter ${level.chapter_id} complete for user ${userId}. Triggering quest.`);
+        await questService.checkAndAdvance(userId, 'complete_chapter', 1);
       }
     } catch (e) {
       console.error('Quest trigger failed', e);
@@ -1214,10 +1220,13 @@ class GameService {
         passed: true,
         score: finalScore,
         breakdown: {
-            base_score: session.score,
-            time_bonus: timeBonus,
-            hint_penalty: hintPenalty
+          base_score: session.score,
+          time_bonus: timeBonus,
+          hint_penalty: hintPenalty
         },
+        required_score: passingThreshold,
+        max_potential_score: maxPotentialScore,
+        passing_percentage: level.passing_score || 70,
         next_level_id: nextLevelId,
         rewards: rewardsData, // null if revision
         new_totals: newTotals, // null if revision
@@ -1227,9 +1236,54 @@ class GameService {
   }
 
   calculateTimeBonus(timeSpent, timeLimit) {
-    if (!timeLimit) return 0;
-    const remaining = timeLimit - timeSpent;
-    return remaining > 0 ? Math.floor(remaining / 10) : 0;
+    if (!timeLimit || timeSpent >= timeLimit) return 0;
+    // Thưởng 1 điểm cho mỗi 10 giây còn dư
+    return Math.floor((timeLimit - timeSpent) / 10);
+  }
+
+  /**
+   * Calculate the maximum possible score for a level based on its screens
+   * @param {Object} level 
+   * @returns {number}
+   */
+  calculateMaxPotentialScore(level) {
+    if (!level || !level.screens || !Array.isArray(level.screens)) return 0;
+
+    return level.screens.reduce((total, screen) => {
+      let screenPoints = screen.reward?.points || screen.points;
+
+      // If points not explicitly defined, use defaults based on type
+      if (screenPoints === undefined || screenPoints === null) {
+        switch (screen.type) {
+          case 'QUIZ':
+            screenPoints = 20;
+            break;
+          case 'TIMELINE':
+            screenPoints = 20;
+            break;
+          case 'HIDDEN_OBJECT':
+            // HIDDEN_OBJECT awards points per item
+            const itemCount = screen.items?.length || 0;
+            const requiredCount = screen.required_items || itemCount;
+            // Assuming 10 points per required item as a default if not specified
+            screenPoints = requiredCount * 10;
+            break;
+          case 'DIALOGUE':
+          case 'VIDEO':
+          case 'IMAGE_VIEWER':
+            screenPoints = 10;
+            break;
+          default:
+            screenPoints = 0;
+        }
+      } else if (screen.type === 'HIDDEN_OBJECT' && !screen.reward?.points && !screen.points) {
+        // If items have individual points but screen doesn't have a total "reward.points"
+        const totalItemsPoints = (screen.items || []).reduce((sum, item) => sum + (item.points || 10), 0);
+        screenPoints = totalItemsPoints;
+      }
+
+      return total + screenPoints;
+    }, 0);
   }
 
   // ==================== VALIDATION ====================
@@ -1316,21 +1370,21 @@ class GameService {
     // Calculate potential score for this screen
     let potentialScore = 0;
     switch (screen.type) {
-        case 'HIDDEN_OBJECT':
-            const items = enriched.items || [];
-            potentialScore = items.reduce((sum, item) => sum + (item.points || 10), 0);
-            break;
-        case 'QUIZ':
-        case 'TIMELINE':
-            potentialScore = screen.reward?.points || screen.points || 20;
-            break;
-        case 'DIALOGUE':
-        case 'VIDEO':
-        case 'IMAGE_VIEWER':
-            potentialScore = screen.reward?.points || screen.points || 10;
-            break;
-        default:
-            potentialScore = 0;
+      case 'HIDDEN_OBJECT':
+        const items = enriched.items || [];
+        potentialScore = items.reduce((sum, item) => sum + (item.points || 10), 0);
+        break;
+      case 'QUIZ':
+      case 'TIMELINE':
+        potentialScore = screen.reward?.points || screen.points || 20;
+        break;
+      case 'DIALOGUE':
+      case 'VIDEO':
+      case 'IMAGE_VIEWER':
+        potentialScore = screen.reward?.points || screen.points || 10;
+        break;
+      default:
+        potentialScore = 0;
     }
 
     return { ...enriched, potential_score: potentialScore };;
@@ -1340,28 +1394,28 @@ class GameService {
 
   async getMuseum(userId) {
     const progress = await this.getProgress(userId);
-    
+
     // Fetch Artifacts from Scan History
     let artifacts = [];
     try {
-        const scanHistory = await db.findAll('scan_history');
-        const userScans = scanHistory.filter(h => h.user_id === parseInt(userId));
-        const allArtifacts = await db.findAll('artifacts');
-        
-        artifacts = userScans.map(scan => {
-            const artifact = allArtifacts.find(a => a.id === scan.object_id);
-            if (!artifact) return null;
-            return {
-                artifact_id: artifact.id, 
-                name: artifact.name,
-                image: artifact.image,
-                description: artifact.description,
-                acquired_at: scan.scanned_at,
-                type: artifact.artifact_type
-            };
-        }).filter(a => a !== null);
+      const scanHistory = await db.findAll('scan_history');
+      const userScans = scanHistory.filter(h => h.user_id === parseInt(userId));
+      const allArtifacts = await db.findAll('artifacts');
+
+      artifacts = userScans.map(scan => {
+        const artifact = allArtifacts.find(a => a.id === scan.object_id);
+        if (!artifact) return null;
+        return {
+          artifact_id: artifact.id,
+          name: artifact.name,
+          image: artifact.image,
+          description: artifact.description,
+          acquired_at: scan.scanned_at,
+          type: artifact.artifact_type
+        };
+      }).filter(a => a !== null);
     } catch (e) {
-        console.error("Error fetching museum artifacts:", e);
+      console.error("Error fetching museum artifacts:", e);
     }
 
     const lastCollection = progress.data.last_museum_collection || progress.data.created_at;
@@ -1402,12 +1456,12 @@ class GameService {
 
     const charCount = progressData.collected_characters.length;
     if (charCount === 0 && artifactCount === 0) {
-       return { rate: 0, pending: 0, hours_accumulated: 0, capped: false };
+      return { rate: 0, pending: 0, hours_accumulated: 0, capped: false };
     }
 
     // FORMULA: 10 coins/char/hour + 5 coins/artifact/hour
-    const ratePerHour = (charCount * 10) + (artifactCount * 5); 
-    
+    const ratePerHour = (charCount * 10) + (artifactCount * 5);
+
     const now = new Date();
     const last = new Date(lastCollectionTime);
     const diffHours = Math.abs(now - last) / 36e5;
@@ -1497,14 +1551,14 @@ class GameService {
       }
 
       const lastCollection = progress.last_museum_collection || progress.created_at;
-      
+
       // Fetch artifact count for calculation
       let artifactCount = 0;
       try {
         const scanHistory = await db.findAll('scan_history');
         artifactCount = scanHistory.filter(h => h.user_id === parseInt(userId)).length;
       } catch (e) {
-         console.error("Error counting artifacts for collection:", e);
+        console.error("Error counting artifacts for collection:", e);
       }
 
       const incomeInfo = this.calculatePendingIncome(progress, lastCollection, artifactCount);

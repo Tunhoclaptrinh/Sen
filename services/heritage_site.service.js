@@ -25,7 +25,7 @@ class HeritageSiteService extends BaseService {
     if (data.shortDescription && !data.short_description) {
       data.short_description = data.shortDescription;
     }
-    
+
     // Ensure numeric fields are numbers
     if (data.entrance_fee) data.entrance_fee = Number(data.entrance_fee);
     if (data.year_established) data.year_established = Number(data.year_established);
@@ -54,7 +54,7 @@ class HeritageSiteService extends BaseService {
     if (data.shortDescription && !data.short_description) {
       data.short_description = data.shortDescription;
     }
-    
+
     // Ensure numeric fields are numbers
     if (data.entrance_fee) data.entrance_fee = Number(data.entrance_fee);
     if (data.year_established) data.year_established = Number(data.year_established);
@@ -63,6 +63,39 @@ class HeritageSiteService extends BaseService {
     console.log('[HeritageService] Updating:', { id, short_desc: data.short_description });
 
     return super.beforeUpdate(id, data);
+  }
+
+  /**
+   * Custom find to support IDs filter
+   */
+  async find(params) {
+    const { ids, q, ...filters } = params;
+    let items = await db.findAll(this.collection);
+
+    // Filter by IDs
+    if (ids) {
+      const idList = typeof ids === 'string' ? ids.split(',').map(Number) : ids.map(Number);
+      items = items.filter(item => idList.includes(item.id));
+    }
+
+    // Filter by query
+    if (q) {
+      const lowerQ = q.toLowerCase();
+      items = items.filter(item => item.name?.toLowerCase().includes(lowerQ));
+    }
+
+    // Other filters
+    for (const key in filters) {
+      if (items.length > 0 && items[0][key] !== undefined) {
+        items = items.filter(item => item[key] == filters[key]);
+      }
+    }
+
+    return {
+      success: true,
+      data: items,
+      count: items.length
+    };
   }
 
   async findById(id) {
@@ -119,7 +152,7 @@ class HeritageSiteService extends BaseService {
     // 2. Fallback to separate collection if that's where it's stored
     const timelines = (await db.findMany('timelines', { heritage_site_id: parseInt(siteId) }))
       .sort((a, b) => a.year - b.year);
-    
+
     return {
       success: true,
       data: timelines

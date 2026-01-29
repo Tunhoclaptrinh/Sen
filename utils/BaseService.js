@@ -176,7 +176,7 @@ class BaseService {
         if (options.excludeId) {
           query.id = { $ne: Number(options.excludeId) };
         }
-        
+
         const existing = await db.findOne(this.collection, query);
         if (existing) {
           errors[field] = `${field} '${value}' already exists`;

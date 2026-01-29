@@ -28,6 +28,13 @@ class LevelManagementService extends BaseService {
       // Auto-generate screen IDs if not provided
       const processedScreens = this.processScreens(data.screens);
 
+      // Auto-assign order if not provided
+      if (!data.order && data.chapter_id) {
+        const existingLevels = await db.findMany('game_levels', { chapter_id: data.chapter_id });
+        const maxOrder = existingLevels.reduce((max, lvl) => Math.max(max, lvl.order || 0), 0);
+        data.order = maxOrder + 1;
+      }
+
       // Create level
       const level = await this.create({
         ...data,
@@ -133,9 +140,19 @@ class LevelManagementService extends BaseService {
         screen.id = `screen_${String(index + 1).padStart(2, '0')}`;
       }
 
-      // Add default next_screen_id if not specified
-      if (!screen.next_screen_id && index < screens.length - 1) {
-        screen.next_screen_id = screens[index + 1].id;
+      // Workflow and Flow Linking
+      screen.is_first = index === 0;
+
+      if (index < screens.length - 1) {
+        // Not the last screen: auto-link to next unless already linked
+        if (!screen.next_screen_id) {
+          screen.next_screen_id = screens[index + 1].id;
+        }
+        screen.is_last = false;
+      } else {
+        // Last screen in array
+        screen.next_screen_id = null;
+        screen.is_last = true;
       }
 
       // Add defaults based on type
@@ -157,6 +174,134 @@ class LevelManagementService extends BaseService {
       }
 
       return screen;
+    });
+  }
+
+  // ==================== SCREEN MANAGEMENT (GRANULAR) ====================
+
+  /**
+   * Get all screens of a level
+   */
+  async getScreens(levelId) {
+    const level = await this.findById(levelId);
+    if (!level.success) return { success: false, message: 'Level not found', statusCode: 404 };
+
+    return {
+      success: true,
+      data: level.data.screens || []
+    };
+  }
+
+  /**
+   * Add a single screen to level
+   */
+  async addScreen(levelId, screenData) {
+    const levelRes = await this.findById(levelId);
+    if (!levelRes.success) return { success: false, message: 'Level not found', statusCode: 404 };
+    const level = levelRes.data;
+
+    // Initialize screens if null
+    const screens = level.screens || [];
+
+    // Auto-generate ID if missing
+    if (!screenData.id) {
+      screenData.id = `screen_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+    }
+
+    // Validate this single screen
+    const validation = this.validateScreens([screenData]); // Reuse existing validator
+    if (!validation.success) return validation;
+
+    // Add to array
+    screens.push(screenData);
+
+    // Reprocess entire list to ensure correct linking and is_last flags
+    const processedScreens = this.processScreens(screens);
+
+    // Update level
+    return this.update(levelId, {
+      screens: processedScreens,
+      updated_at: new Date().toISOString()
+    });
+  }
+
+  /**
+   * Update a specific screen
+   */
+  async updateScreen(levelId, screenId, screenData) {
+    const levelRes = await this.findById(levelId);
+    if (!levelRes.success) return { success: false, message: 'Level not found', statusCode: 404 };
+    const level = levelRes.data;
+
+    const screens = level.screens || [];
+    const index = screens.findIndex(s => s.id === screenId);
+
+    if (index === -1) {
+      return { success: false, message: 'Screen not found', statusCode: 404 };
+    }
+
+    // Update fields
+    screens[index] = { ...screens[index], ...screenData, id: screenId };
+
+    // Reprocess entire list
+    const processedScreens = this.processScreens(screens);
+
+    return this.update(levelId, {
+      screens: processedScreens,
+      updated_at: new Date().toISOString()
+    });
+  }
+
+  /**
+   * Delete a screen
+   */
+  async deleteScreen(levelId, screenId) {
+    const levelRes = await this.findById(levelId);
+    if (!levelRes.success) return { success: false, message: 'Level not found', statusCode: 404 };
+    const level = levelRes.data;
+
+    let screens = level.screens || [];
+    const initialLength = screens.length;
+    screens = screens.filter(s => s.id !== screenId);
+
+    if (screens.length === initialLength) {
+      return { success: false, message: 'Screen not found', statusCode: 404 };
+    }
+
+    return this.update(levelId, {
+      screens,
+      updated_at: new Date().toISOString()
+    });
+  }
+
+  /**
+   * Reorder screens
+   */
+  async reorderScreens(levelId, screenIds) {
+    const levelRes = await this.findById(levelId);
+    if (!levelRes.success) return { success: false, message: 'Level not found', statusCode: 404 };
+    const level = levelRes.data;
+
+    const currentScreens = level.screens || [];
+    const screenMap = new Map(currentScreens.map(s => [s.id, s]));
+
+    const newScreens = [];
+    for (const id of screenIds) {
+      if (screenMap.has(id)) {
+        newScreens.push(screenMap.get(id));
+      }
+    }
+
+    // Append any missing screens (to be safe)
+    currentScreens.forEach(s => {
+      if (!newScreens.find(ns => ns.id === s.id)) {
+        newScreens.push(s);
+      }
+    });
+
+    return this.update(levelId, {
+      screens: newScreens,
+      updated_at: new Date().toISOString()
     });
   }
 
