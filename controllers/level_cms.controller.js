@@ -258,6 +258,86 @@ class LevelCMSController {
     }
   };
 
+  // ==================== SCREEN MANAGEMENT ====================
+
+  /**
+   * GET /api/admin/levels/:id/screens
+   */
+  getScreens = async (req, res, next) => {
+    try {
+      const result = await levelManagementService.getScreens(req.params.id);
+      if (!result.success) return res.status(result.statusCode || 404).json(result);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * POST /api/admin/levels/:id/screens
+   */
+  addScreen = async (req, res, next) => {
+    try {
+      const result = await levelManagementService.addScreen(
+        req.params.id,
+        req.body
+      );
+      if (!result.success) return res.status(result.statusCode || 400).json(result);
+      res.status(201).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * PUT /api/admin/levels/:id/screens/:screenId
+   */
+  updateScreen = async (req, res, next) => {
+    try {
+      const result = await levelManagementService.updateScreen(
+        req.params.id,
+        req.params.screenId,
+        req.body
+      );
+      if (!result.success) return res.status(result.statusCode || 400).json(result);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * DELETE /api/admin/levels/:id/screens/:screenId
+   */
+  deleteScreen = async (req, res, next) => {
+    try {
+      const result = await levelManagementService.deleteScreen(
+        req.params.id,
+        req.params.screenId
+      );
+      if (!result.success) return res.status(result.statusCode || 404).json(result);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * PUT /api/admin/levels/:id/screens/reorder
+   */
+  reorderScreens = async (req, res, next) => {
+    try {
+      const { screenIds } = req.body;
+      const result = await levelManagementService.reorderScreens(
+        req.params.id,
+        screenIds
+      );
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // ==================== ASSETS MANAGEMENT ====================
 
   /**
@@ -319,7 +399,6 @@ class LevelCMSController {
       const stats = {
         total: allLevels.data.length,
         by_difficulty: {},
-        by_type: {},
         by_chapter: {},
         avg_screens: 0,
         avg_play_time: 0
@@ -333,9 +412,7 @@ class LevelCMSController {
         stats.by_difficulty[level.difficulty] =
           (stats.by_difficulty[level.difficulty] || 0) + 1;
 
-        // Count by type
-        stats.by_type[level.type] =
-          (stats.by_type[level.type] || 0) + 1;
+
 
         // Count by chapter
         stats.by_chapter[level.chapter_id] =

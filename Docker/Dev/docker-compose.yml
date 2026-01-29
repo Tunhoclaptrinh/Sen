@@ -29,7 +29,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://sen-ai-fastapi-dev:8000/process_query}
     ports:
-      - "3000:3000"
+      - "3002:3000"
     volumes:
       - ../..:/app
       - /app/node_modules

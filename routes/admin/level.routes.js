@@ -27,6 +27,13 @@ router.post('/', checkPermission('game_content', 'create'), levelCMSController.c
 router.put('/:id', checkPermission('game_content', 'update'), levelCMSController.updateLevel);
 router.delete('/:id', checkPermission('game_content', 'delete'), levelCMSController.deleteLevel);
 
+// ==================== SCREEN MANAGEMENT (GRANULAR) ====================
+router.get('/:id/screens', levelCMSController.getScreens);
+router.post('/:id/screens', checkPermission('game_content', 'update'), levelCMSController.addScreen);
+router.put('/:id/screens/reorder', checkPermission('game_content', 'update'), levelCMSController.reorderScreens);
+router.put('/:id/screens/:screenId', checkPermission('game_content', 'update'), levelCMSController.updateScreen);
+router.delete('/:id/screens/:screenId', checkPermission('game_content', 'update'), levelCMSController.deleteScreen);
+
 // ==================== ADVANCED OPERATIONS ====================
 router.post('/:id/clone', checkPermission('game_content', 'create'), levelCMSController.cloneLevel);
 router.post('/bulk/import', checkPermission('game_content', 'import'), levelCMSController.bulkImport);

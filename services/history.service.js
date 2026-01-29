@@ -13,11 +13,11 @@ class HistoryService extends BaseService {
     if (data.shortDescription && !data.short_description) {
       data.short_description = data.shortDescription;
     }
-    
+
     // Ensure numeric fields
     if (data.category_id) data.category_id = Number(data.category_id);
     if (data.views) data.views = Number(data.views);
-    
+
     return super.beforeCreate(data);
   }
 
@@ -41,7 +41,7 @@ class HistoryService extends BaseService {
    */
   async getStats() {
     const allArticles = await db.findAll('history_articles');
-    
+
     const active = allArticles.filter(a => a.is_active !== false).length;
     const inactive = allArticles.length - active;
 
@@ -52,8 +52,8 @@ class HistoryService extends BaseService {
       totalViews: allArticles.reduce((sum, a) => sum + (a.views || 0), 0),
       avgViews: allArticles.length > 0 ? (allArticles.reduce((sum, a) => sum + (a.views || 0), 0) / allArticles.length).toFixed(0) : 0,
       summary: [
-          { status: 'active', count: active, label: 'Đang hiển thị' },
-          { status: 'inactive', count: inactive, label: 'Đã ẩn' }
+        { status: 'active', count: active, label: 'Đang hiển thị' },
+        { status: 'inactive', count: inactive, label: 'Đã ẩn' }
       ]
     };
 
@@ -82,8 +82,8 @@ class HistoryService extends BaseService {
     // Apply search
     if (q) {
       const lowerQ = q.toLowerCase();
-      items = items.filter(item => 
-        item.title?.toLowerCase().includes(lowerQ) || 
+      items = items.filter(item =>
+        item.title?.toLowerCase().includes(lowerQ) ||
         item.shortDescription?.toLowerCase().includes(lowerQ)
       );
     }
@@ -104,11 +104,11 @@ class HistoryService extends BaseService {
   async findById(id) {
     const article = await db.findById(this.collection, id);
     if (!article) {
-        return {
-            success: false,
-            message: 'History article not found',
-            statusCode: 404
-        };
+      return {
+        success: false,
+        message: 'History article not found',
+        statusCode: 404
+      };
     }
 
     // Populate Related Heritage
@@ -129,15 +129,15 @@ class HistoryService extends BaseService {
       article.related_levels = levels.filter(l => article.related_level_ids.includes(l.id));
     }
 
-     // Populate Related Products
-     if (article.related_product_ids?.length) {
+    // Populate Related Products
+    if (article.related_product_ids?.length) {
       const products = await db.findAll('products');
       article.related_products = products.filter(p => article.related_product_ids.includes(p.id));
     }
 
     return {
-        success: true,
-        data: article
+      success: true,
+      data: article
     };
   }
 
