@@ -38,6 +38,7 @@ class GameService {
       museum_open: false,
       museum_income: 0,
       streak_days: 0,
+      last_reward_claim: null,
       last_login: new Date().toISOString(),
       created_at: new Date().toISOString(),
       completed_modules: [],
@@ -1722,26 +1723,67 @@ class GameService {
     }
 
     const today = new Date().toISOString().split('T')[0];
-    const lastLogin = new Date(progress.last_login).toISOString().split('T')[0];
+    const lastClaim = progress.last_reward_claim 
+      ? new Date(progress.last_reward_claim).toISOString().split('T')[0] 
+      : null;
 
-    // Note: If newly initialized, last_login is 'today', so this correct logic will return "already claimed"
-    // which effectively prevents claiming on the very first day (Registration Day).
-    if (today === lastLogin) {
-      return { success: false, message: 'Daily reward already claimed', statusCode: 400 };
+    if (lastClaim === today) {
+        // Return current status even if already claimed
+        return { 
+            success: false, 
+            message: 'Daily reward already claimed', 
+            statusCode: 400,
+            data: {
+                streak_days: progress.streak_days || 1,
+                claimed_today: true,
+                next_reward: { coins: 50, petals: 1 } // Simplified preview
+            }
+        };
     }
 
-    const reward = { coins: 50, petals: 1 };
+    // Calculate Streak
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+    let streak = (progress.streak_days || 0);
+
+    // If claimed yesterday, increment. If not (and not first time), reset.
+    // Allow first claim to start streak at 1
+    if (lastClaim === yesterdayStr) {
+        streak += 1;
+    } else {
+        streak = 1; // Reset or Start
+    }
+
+    // Cap streak visual at 7 for cycle? Or keep growing?
+    // Let's keep growing but cycle rewards every 7 days
+    const dayInCycle = ((streak - 1) % 7) + 1;
+
+    // Reward Logic
+    let reward = { coins: 50, petals: 1 };
+    
+    // Day 7 Bonus
+    if (dayInCycle === 7) {
+        reward = { coins: 200, petals: 5 };
+    }
 
     await db.update('game_progress', progress.id, {
-      coins: progress.coins + reward.coins,
-      total_sen_petals: progress.total_sen_petals + reward.petals,
-      last_login: new Date().toISOString()
+      coins: (progress.coins || 0) + reward.coins,
+      total_sen_petals: (progress.total_sen_petals || 0) + reward.petals,
+      streak_days: streak,
+      last_reward_claim: new Date().toISOString()
+      // Note: last_login is handled by auth controller
     });
 
     return {
       success: true,
-      message: 'Daily reward claimed',
-      data: reward
+      message: `Daily reward claimed! Day ${dayInCycle} Streak.`,
+      data: {
+          ...reward,
+          streak_days: streak,
+          day_in_cycle: dayInCycle
+      }
     };
   }
 
