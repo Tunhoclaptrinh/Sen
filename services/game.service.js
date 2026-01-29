@@ -520,6 +520,7 @@ class GameService {
           name: level.name,
           description: level.description,
           thumbnail: level.thumbnail,
+          background_music: level.background_music,
           total_screens: level.screens.length,
           ai_character: aiCharacter
         },

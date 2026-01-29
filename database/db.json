@@ -663,6 +663,18 @@
       "petal_image_closed": "https://example.com/c3_closed.png",
       "petal_image_bloom": "https://example.com/c3_bloom.png",
       "petal_image_full": "https://example.com/c3_full.png"
+    },
+    {
+      "id": 4,
+      "name": "Nguyễn Tiến Tuấn",
+      "description": "Nguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến Tuấn",
+      "theme": "Nguyễn Tiến Tuấn",
+      "order": 4,
+      "required_petals": 1,
+      "image": "https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/619660295_2079049926267994_718272744209069642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3SA0uOMwqBZMrjDI8KKotbpAvVtAwZtlukC9W0DBm2ehdIXgd0wTvS8jEtImNZQ-dyy1WV2KHXhXSgzBXoiqj&_nc_ohc=mme38aYJA5EQ7kNvwHsTSrz&_nc_oc=AdmGgdIIkG43gV4rxfXQsZ7Pu38f52Z3i2mF9AXYK_W1dZP28wpjCbA3oCNRCRHo3c4&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=bOkcu5iZ22LScpEpP_CPNg&oh=00_Afq9k6gtnY98aRNhn4kt33rw5UZhmB_x-ajTVR4_RtFNCg&oe=6980CAE0",
+      "is_active": true,
+      "createdAt": "2026-01-29T07:48:42.218Z",
+      "updatedAt": "2026-01-29T07:52:43.627Z"
     }
   ],
   "game_characters": [
@@ -1412,6 +1424,42 @@
       "updatedAt": "2026-01-28T19:12:37.345Z",
       "updated_at": "2026-01-28T17:55:36.698Z",
       "required_level": 1
+    },
+    {
+      "id": 20,
+      "chapter_id": 4,
+      "name": "Màn 1",
+      "description": "Màn 1Màn 1Màn 1Màn 1",
+      "difficulty": "easy",
+      "order": 1,
+      "knowledge_base": "\nhttps://stream.nct.vn/resa/2601/b1/1b/9dw3icyxuo.mp3?st=W--kW1dgUMZe1CF0UNg3dQ&e=1770274460&a=6&p=0&r=6bb1c741771fbb85fb0ee381b637e019",
+      "screens": [
+        {
+          "id": "intro",
+          "type": "DIALOGUE",
+          "content": [
+            {
+              "speaker": "AI",
+              "text": "Chào mừng bạn đến với màn chơi mới!"
+            }
+          ],
+          "is_first": true,
+          "is_last": true,
+          "next_screen_id": null,
+          "skip_allowed": true,
+          "auto_advance": false
+        }
+      ],
+      "rewards": {
+        "petals": 1,
+        "coins": 2
+      },
+      "passing_score": 70,
+      "background_music": " https://stream.nct.vn/resa/2601/b1/1b/9dw3icyxuo.mp3?st=W--kW1dgUMZe1CF0UNg3dQ&e=1770274460&a=6&p=0&r=6bb1c741771fbb85fb0ee381b637e019",
+      "created_by": 1,
+      "createdAt": "2026-01-29T07:55:00.176Z",
+      "updatedAt": "2026-01-29T07:55:18.696Z",
+      "thumbnail": "https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/619660295_2079049926267994_718272744209069642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3SA0uOMwqBZMrjDI8KKotbpAvVtAwZtlukC9W0DBm2ehdIXgd0wTvS8jEtImNZQ-dyy1WV2KHXhXSgzBXoiqj&_nc_ohc=mme38aYJA5EQ7kNvwHsTSrz&_nc_oc=AdmGgdIIkG43gV4rxfXQsZ7Pu38f52Z3i2mF9AXYK_W1dZP28wpjCbA3oCNRCRHo3c4&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=bOkcu5iZ22LScpEpP_CPNg&oh=00_Afq9k6gtnY98aRNhn4kt33rw5UZhmB_x-ajTVR4_RtFNCg&oe=6980CAE0"
     }
   ],
   "history_articles": [
@@ -2213,8 +2261,611 @@
       "created_at": "2024-01-01T00:00:00Z"
     }
   ],
-  "game_progress": [],
-  "game_sessions": [],
+  "game_progress": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "current_chapter": 4,
+      "total_sen_petals": 58,
+      "total_points": 859,
+      "level": 1,
+      "coins": 3973,
+      "unlocked_chapters": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "completed_levels": [
+        1,
+        2,
+        3,
+        4,
+        19,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        20
+      ],
+      "collected_characters": [],
+      "badges": [],
+      "achievements": [],
+      "museum_open": false,
+      "museum_income": 0,
+      "streak_days": 0,
+      "last_login": "2026-01-29T07:48:49.150Z",
+      "created_at": "2026-01-29T07:48:49.150Z",
+      "completed_modules": [],
+      "completed_quests_count": 0,
+      "finished_chapters": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "game_sessions": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "level_id": 1,
+      "status": "completed",
+      "current_screen_id": "intro_q1",
+      "current_screen_index": 3,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "intro_q1",
+          "answer": "100 người con",
+          "is_correct": true,
+          "points": 100,
+          "answered_at": "2026-01-29T07:49:54.456Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 159,
+      "total_screens": 4,
+      "completed_screens": [
+        "intro_d1",
+        "intro_d2",
+        "story_video",
+        "intro_q1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:49:49.843Z",
+      "last_activity": "2026-01-29T07:49:55.164Z",
+      "completed_at": "2026-01-29T07:49:55.177Z"
+    },
+    {
+      "id": 2,
+      "user_id": 3,
+      "level_id": 2,
+      "status": "completed",
+      "current_screen_id": "quiz_drum",
+      "current_screen_index": 3,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "quiz_drum",
+          "answer": "Đồng",
+          "is_correct": true,
+          "points": 40,
+          "answered_at": "2026-01-29T07:50:10.889Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 130,
+      "total_screens": 4,
+      "completed_screens": [
+        "ho_intro",
+        "ho_1",
+        "img_drum_detail",
+        "quiz_drum"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:49:57.261Z",
+      "last_activity": "2026-01-29T07:50:11.454Z",
+      "completed_at": "2026-01-29T07:50:11.475Z"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "level_id": 3,
+      "status": "completed",
+      "current_screen_id": "tl_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "score": 100,
+      "total_screens": 1,
+      "completed_screens": [
+        "tl_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:50:13.640Z",
+      "last_activity": "2026-01-29T07:50:16.533Z",
+      "completed_at": "2026-01-29T07:50:16.547Z"
+    },
+    {
+      "id": 4,
+      "user_id": 3,
+      "level_id": 4,
+      "status": "completed",
+      "current_screen_id": "q_quanho",
+      "current_screen_index": 2,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "q_ha",
+          "answer": "Quảng Nam",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-29T07:50:23.810Z"
+        },
+        {
+          "screen_id": "q_quanho",
+          "answer": "Kinh Bắc (Bắc Ninh, Bắc Giang)",
+          "is_correct": true,
+          "points": 20,
+          "answered_at": "2026-01-29T07:50:26.422Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 50,
+      "total_screens": 3,
+      "completed_screens": [
+        "vid_1",
+        "q_ha",
+        "q_quanho"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:50:21.008Z",
+      "last_activity": "2026-01-29T07:50:26.965Z",
+      "completed_at": "2026-01-29T07:50:26.989Z"
+    },
+    {
+      "id": 5,
+      "user_id": 3,
+      "level_id": 19,
+      "status": "completed",
+      "current_screen_id": "intro",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "intro"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:50:29.922Z",
+      "last_activity": "2026-01-29T07:50:36.990Z",
+      "completed_at": "2026-01-29T07:50:37.016Z"
+    },
+    {
+      "id": 6,
+      "user_id": 3,
+      "level_id": 19,
+      "status": "in_progress",
+      "current_screen_id": "intro",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:50:39.426Z",
+      "last_activity": "2026-01-29T07:50:39.426Z"
+    },
+    {
+      "id": 7,
+      "user_id": 3,
+      "level_id": 7,
+      "status": "completed",
+      "current_screen_id": "s7_1",
+      "current_screen_index": 0,
+      "collected_items": [
+        "lantern"
+      ],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "s7_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:50:45.563Z",
+      "last_activity": "2026-01-29T07:50:51.894Z",
+      "completed_at": "2026-01-29T07:50:51.912Z"
+    },
+    {
+      "id": 8,
+      "user_id": 3,
+      "level_id": 8,
+      "status": "completed",
+      "current_screen_id": "s8_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "s8_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:50:54.521Z",
+      "last_activity": "2026-01-29T07:50:55.682Z",
+      "completed_at": "2026-01-29T07:50:55.706Z"
+    },
+    {
+      "id": 9,
+      "user_id": 3,
+      "level_id": 9,
+      "status": "completed",
+      "current_screen_id": "s9_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "s9_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:50:58.146Z",
+      "last_activity": "2026-01-29T07:50:59.220Z",
+      "completed_at": "2026-01-29T07:50:59.235Z"
+    },
+    {
+      "id": 10,
+      "user_id": 3,
+      "level_id": 10,
+      "status": "completed",
+      "current_screen_id": "s10_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "s10_1",
+          "answer": "Tứ thân phụ mẫu và bản thân",
+          "is_correct": true,
+          "points": 100,
+          "answered_at": "2026-01-29T07:51:05.723Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 100,
+      "total_screens": 1,
+      "completed_screens": [
+        "s10_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:51:01.409Z",
+      "last_activity": "2026-01-29T07:51:06.806Z",
+      "completed_at": "2026-01-29T07:51:06.823Z"
+    },
+    {
+      "id": 11,
+      "user_id": 3,
+      "level_id": 11,
+      "status": "completed",
+      "current_screen_id": "s11_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "s11_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:51:09.247Z",
+      "last_activity": "2026-01-29T07:51:12.862Z",
+      "completed_at": "2026-01-29T07:51:12.878Z"
+    },
+    {
+      "id": 12,
+      "user_id": 3,
+      "level_id": 12,
+      "status": "completed",
+      "current_screen_id": "s12_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "score": 20,
+      "total_screens": 1,
+      "completed_screens": [
+        "s12_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:51:15.820Z",
+      "last_activity": "2026-01-29T07:51:17.766Z",
+      "completed_at": "2026-01-29T07:51:17.781Z"
+    },
+    {
+      "id": 13,
+      "user_id": 3,
+      "level_id": 12,
+      "status": "in_progress",
+      "current_screen_id": "s12_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:51:20.331Z",
+      "last_activity": "2026-01-29T07:51:20.331Z"
+    },
+    {
+      "id": 14,
+      "user_id": 3,
+      "level_id": 13,
+      "status": "completed",
+      "current_screen_id": "s13_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "s13_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:51:29.521Z",
+      "last_activity": "2026-01-29T07:51:30.909Z",
+      "completed_at": "2026-01-29T07:51:30.928Z"
+    },
+    {
+      "id": 15,
+      "user_id": 3,
+      "level_id": 14,
+      "status": "completed",
+      "current_screen_id": "s14_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "s14_1",
+          "answer": "Vinh danh người đỗ đạt",
+          "is_correct": true,
+          "points": 100,
+          "answered_at": "2026-01-29T07:51:37.645Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 100,
+      "total_screens": 1,
+      "completed_screens": [
+        "s14_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:51:34.660Z",
+      "last_activity": "2026-01-29T07:51:38.219Z",
+      "completed_at": "2026-01-29T07:51:38.236Z"
+    },
+    {
+      "id": 16,
+      "user_id": 3,
+      "level_id": 15,
+      "status": "completed",
+      "current_screen_id": "s15_1",
+      "current_screen_index": 0,
+      "collected_items": [
+        "sail"
+      ],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "s15_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:51:51.631Z",
+      "last_activity": "2026-01-29T07:52:17.006Z",
+      "completed_at": "2026-01-29T07:52:17.025Z"
+    },
+    {
+      "id": 17,
+      "user_id": 3,
+      "level_id": 16,
+      "status": "completed",
+      "current_screen_id": "s16_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "s16_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:52:19.970Z",
+      "last_activity": "2026-01-29T07:52:20.934Z",
+      "completed_at": "2026-01-29T07:52:20.958Z"
+    },
+    {
+      "id": 18,
+      "user_id": 3,
+      "level_id": 17,
+      "status": "completed",
+      "current_screen_id": "s17_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [
+        {
+          "screen_id": "s17_1",
+          "answer": "Bản khắc gỗ in sách",
+          "is_correct": true,
+          "points": 100,
+          "answered_at": "2026-01-29T07:52:26.232Z"
+        }
+      ],
+      "timeline_order": [],
+      "score": 100,
+      "total_screens": 1,
+      "completed_screens": [
+        "s17_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:52:23.552Z",
+      "last_activity": "2026-01-29T07:52:26.863Z",
+      "completed_at": "2026-01-29T07:52:26.884Z"
+    },
+    {
+      "id": 19,
+      "user_id": 3,
+      "level_id": 18,
+      "status": "completed",
+      "current_screen_id": "s18_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "s18_1"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:52:30.011Z",
+      "last_activity": "2026-01-29T07:52:31.038Z",
+      "completed_at": "2026-01-29T07:52:31.065Z"
+    },
+    {
+      "id": 20,
+      "user_id": 3,
+      "level_id": 18,
+      "status": "in_progress",
+      "current_screen_id": "s18_1",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 0,
+      "total_screens": 1,
+      "completed_screens": [],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:52:33.408Z",
+      "last_activity": "2026-01-29T07:52:33.408Z"
+    },
+    {
+      "id": 21,
+      "user_id": 3,
+      "level_id": 20,
+      "status": "completed",
+      "current_screen_id": "intro",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "intro"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:55:26.109Z",
+      "last_activity": "2026-01-29T07:55:38.580Z",
+      "completed_at": "2026-01-29T07:55:38.605Z"
+    },
+    {
+      "id": 22,
+      "user_id": 3,
+      "level_id": 20,
+      "status": "completed",
+      "current_screen_id": "intro",
+      "current_screen_index": 0,
+      "collected_items": [],
+      "answered_questions": [],
+      "timeline_order": [],
+      "score": 10,
+      "total_screens": 1,
+      "completed_screens": [
+        "intro"
+      ],
+      "screen_states": {},
+      "time_spent": 0,
+      "hints_used": 0,
+      "started_at": "2026-01-29T07:55:43.049Z",
+      "last_activity": "2026-01-29T08:01:00.205Z",
+      "completed_at": "2026-01-29T08:01:00.228Z"
+    }
+  ],
   "learning_modules": [
     {
       "id": 1,
@@ -2652,7 +3303,35 @@
       "thumbnail": "https://i.pinimg.com/1200x/20/05/52/2005521af7ccf8b74cf4453ec32b62d4.jpg"
     }
   ],
-  "user_quests": [],
+  "user_quests": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "quest_id": 3,
+      "status": "completed",
+      "current_value": 1,
+      "started_at": "2026-01-29T07:49:54.473Z",
+      "completed_at": "2026-01-29T07:49:54.480Z"
+    },
+    {
+      "id": 2,
+      "user_id": 3,
+      "quest_id": 2,
+      "status": "completed",
+      "current_value": 5,
+      "started_at": "2026-01-29T07:50:01.638Z",
+      "completed_at": "2026-01-29T07:52:14.788Z"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "quest_id": 1,
+      "status": "completed",
+      "current_value": 1,
+      "started_at": "2026-01-29T07:50:37.037Z",
+      "completed_at": "2026-01-29T07:50:37.048Z"
+    }
+  ],
   "user_inventory": [],
   "scan_history": []
 }

@@ -56,7 +56,7 @@ router.post('/game/:type/:id',
 router.post('/file',
   protect,
   authorize('admin', 'researcher'),
-  uploadController.getUploadMiddleware('general'),
+  uploadController.getUploadMiddleware('general', 'file'),
   uploadController.uploadGeneralFile
 );
 
