@@ -76,5 +76,11 @@ module.exports = {
     type: 'array',
     required: false,
     description: 'Danh sách ID Sản phẩm liên quan'
+  },
+  created_by: {
+    type: 'number',
+    required: false,
+    foreignKey: 'users',
+    description: 'ID người đóng góp'
   }
 };

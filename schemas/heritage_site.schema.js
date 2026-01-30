@@ -152,6 +152,12 @@ module.exports = {
     default: 0,
     description: "Số lượt khám phá (gamification)",
   },
+  views: {
+    type: "number",
+    required: false,
+    default: 0,
+    description: "Lượt xem",
+  },
   // Related items (admin-managed)
   related_artifact_ids: {
     type: "array",
@@ -170,4 +176,10 @@ module.exports = {
     required: false,
     description: "Dòng thời gian sự kiện",
   },
+  created_by: {
+    type: 'number',
+    required: false,
+    foreignKey: 'users',
+    description: 'ID người đóng góp'
+  }
 };

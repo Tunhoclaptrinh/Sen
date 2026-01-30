@@ -399,6 +399,20 @@ class JsonAdapter {
     return true;
   }
 
+  incrementField(collection, id, field) {
+    const item = this.findById(collection, id);
+    if (!item) return null;
+
+    if (item[field] === undefined) {
+      item[field] = 1;
+    } else {
+      item[field] = (Number(item[field]) || 0) + 1;
+    }
+
+    this.saveData();
+    return item;
+  }
+
   getNextId(collection) {
     const items = this.data[collection] || [];
     if (items.length === 0) return 1;

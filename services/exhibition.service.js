@@ -6,6 +6,11 @@ class ExhibitionService extends BaseService {
     super('exhibitions');
   }
 
+  async beforeCreate(data) {
+    data.visitor_count = 0;
+    return super.beforeCreate(data);
+  }
+
   async getActiveExhibitions(options = {}) {
     const now = new Date();
     const allExhibitions = await db.findAll('exhibitions');

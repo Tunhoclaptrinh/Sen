@@ -42,4 +42,10 @@ module.exports = {
     default: true,
     description: 'Có active không'
   },
+  created_by: {
+    type: 'number',
+    required: false,
+    foreignKey: 'users',
+    description: 'ID người đóng góp'
+  }
 };

@@ -118,6 +118,12 @@ module.exports = {
     required: false,
     description: "Bộ sưu tập hình ảnh",
   },
+  views: {
+    type: "number",
+    required: false,
+    default: 0,
+    description: "Lượt xem",
+  },
   // Related items (admin-managed)
   related_heritage_ids: {
     type: "array",
@@ -131,4 +137,10 @@ module.exports = {
     required: false,
     description: "Danh sách ID bài viết lịch sử liên quan",
   },
+  created_by: {
+    type: 'number',
+    required: false,
+    foreignKey: 'users',
+    description: 'ID người đóng góp'
+  }
 };

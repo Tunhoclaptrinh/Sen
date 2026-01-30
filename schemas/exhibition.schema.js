@@ -51,5 +51,11 @@ module.exports = {
     required: false,
     default: true,
     description: 'Đang diễn ra'
+  },
+  created_by: {
+    type: 'number',
+    required: false,
+    foreignKey: 'users',
+    description: 'ID người đóng góp'
   }
 };
