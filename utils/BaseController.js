@@ -54,6 +54,12 @@ class BaseController {
    */
   create = async (req, res, next) => {
     try {
+      // Autopopulate creator info if user is logged in
+      if (req.user) {
+        if (!req.body.created_by) req.body.created_by = req.user.id;
+        // NOTE: We no longer store author/author_name strings as they are populated dynamically
+      }
+
       const result = await this.service.create(req.body);
 
       if (!result.success) {
@@ -177,6 +183,30 @@ class BaseController {
         count: result.data.length,
         data: result.data,
         pagination: result.pagination
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * POST - Increment view count
+   */
+  incrementView = async (req, res, next) => {
+    try {
+      const result = await this.service.incrementView(req.params.id);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 404).json({
+          success: false,
+          message: result.message
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'View count incremented',
+        data: result.data
       });
     } catch (error) {
       next(error);

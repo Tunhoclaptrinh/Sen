@@ -283,6 +283,12 @@ class BaseService {
   async findAll(options = {}) {
     try {
       const result = await db.findAllAdvanced(this.collection, options);
+
+      // Dynamic Author Population
+      if (result.data && result.data.length > 0) {
+        result.data = await Promise.all(result.data.map(item => this.populateAuthor(item)));
+      }
+
       return {
         success: true,
         data: result.data,
@@ -303,9 +309,59 @@ class BaseService {
           statusCode: 404,
         };
       }
+
+      // Dynamic Author Population
+      const populatedItem = await this.populateAuthor(item);
+
       return {
         success: true,
-        data: item,
+        data: populatedItem,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Populate author_name dynamically if created_by exists
+   */
+  async populateAuthor(data) {
+    if (!data) return data;
+    const enriched = { ...data };
+
+    if (enriched.created_by) {
+      const author = await db.findById('users', enriched.created_by);
+      if (author) {
+        enriched.author_name = author.name;
+        // Also set legacy author field if it exists or is expected
+        enriched.author = author.name;
+      }
+    }
+
+    // Default fallback if no author found but field expected
+    if (!enriched.author_name && (enriched.author || enriched.author_name === undefined)) {
+      enriched.author_name = enriched.author || 'Hệ thống';
+    }
+
+    return enriched;
+  }
+
+  /**
+   * Increment view count
+   */
+  async incrementView(id, fieldName = 'views') {
+    try {
+      const updated = await db.incrementField(this.collection, id, fieldName);
+      if (!updated) {
+        return {
+          success: false,
+          message: `${this.getModelName()} not found`,
+          statusCode: 404,
+        };
+      }
+      return {
+        success: true,
+        data: updated,
       };
     } catch (error) {
       throw error;

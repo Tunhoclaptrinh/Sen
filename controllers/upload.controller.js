@@ -5,9 +5,9 @@ class UploadController {
   /**
    * Get upload middleware based on type
    */
-  getUploadMiddleware(type) {
+  getUploadMiddleware(type, fieldName = 'image') {
     return (req, res, next) => {
-      const middleware = uploadService.getSingleUpload('image', type);
+      const middleware = uploadService.getSingleUpload(fieldName, type);
       middleware(req, res, (err) => {
         if (err) {
           console.error('Upload Metadata Error:', err);

@@ -5,7 +5,7 @@ const artifactController = require('../controllers/artifact.controller');
 const importExportController = require('../controllers/importExport.controller');
 
 // Export/Import (MUST come before /:id)
-router.get('/export', 
+router.get('/export',
     (req, res, next) => {
         req.params.entity = 'artifacts';
         next();
@@ -18,6 +18,7 @@ router.get('/search', artifactController.search);
 router.get('/stats/summary', artifactController.getStats);
 router.get('/:id', artifactController.getById);
 router.get('/:id/related', artifactController.getRelated);
+router.post('/:id/view', artifactController.incrementView);
 
 router.post('/', protect, authorize('admin'), artifactController.create);
 router.put('/:id', protect, authorize('admin'), artifactController.update);

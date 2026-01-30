@@ -13,6 +13,7 @@ class UploadService {
     this.uploadDir = path.join(__dirname, '../database/uploads');
     this.maxFileSize = 5 * 1024 * 1024; // 5MB
     this.allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    this.allowedAudioTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3']; // Add MP3 specific if needed
 
     // Create upload directories
     this.initUploadDirs();
@@ -66,10 +67,10 @@ class UploadService {
    * File filter for multer
    */
   fileFilter(req, file, cb) {
-    if (this.allowedImageTypes.includes(file.mimetype)) {
+    if (this.allowedImageTypes.includes(file.mimetype) || this.allowedAudioTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error(`Invalid file type. Allowed: ${this.allowedImageTypes.join(', ')}`), false);
+      cb(new Error(`Invalid file type. Allowed: Images & Audio`), false);
     }
   }
 
@@ -329,8 +330,22 @@ class UploadService {
     try {
       const generalDir = path.join(this.uploadDir, 'general');
       if (!fs.existsSync(generalDir)) {
-          fs.mkdirSync(generalDir, { recursive: true });
+        fs.mkdirSync(generalDir, { recursive: true });
       }
+
+      // If Audio, just move the file
+      if (file.mimetype.startsWith('audio/')) {
+        const ext = path.extname(file.originalname);
+        const newPath = path.join(generalDir, `audio-${Date.now()}${ext}`);
+        fs.renameSync(file.path, newPath);
+        return {
+          success: true,
+          url: `/uploads/general/${path.basename(newPath)}`,
+          filename: path.basename(newPath)
+        };
+      }
+
+      // Default Image Handling
       const newPath = path.join(generalDir, `file-${Date.now()}.jpeg`);
 
       // General images: resize to reasonable max width, keep ratio
