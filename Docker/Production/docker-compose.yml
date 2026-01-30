@@ -20,7 +20,7 @@ services:
       - LOG_LEVEL=info
       - DB_CONNECTION=${DB_CONNECTION}
       - DATABASE_URL=${DATABASE_URL}
-      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://sen-ai:8000/process_query}
+      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://dev-sen-ai:8000/chat}
     ports:
       - "3000:3000"
     volumes:

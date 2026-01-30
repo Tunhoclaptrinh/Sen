@@ -15,14 +15,14 @@ show_menu() {
     echo "  Select mode:"
     echo ""
     echo "  [1] Build Images   (First time / Rebuild only)"
-    echo "  [2] Start Dev      (docker-compose up)"
+    echo "  [2] Start Dev      (docker compose up)"
     echo "  [3] Seed Database  (Create FULL sample data)"
     echo "  [4] Reset Game     (Clear User Progress)"
     echo "  [5] Query Tool     (Query database)"
     echo "  [6] Test AI        (Test AI chatbot)"
-    echo "  [7] Start Prod     (docker-compose up -d)"
+    echo "  [7] Start Prod     (docker compose up -d)"
     echo "  [8] View Logs"
-    echo "  [9] Stop All      (docker-compose down)"
+    echo "  [9] Stop All      (docker compose down)"
     echo "  [10] Exit"
     echo ""
 }
@@ -75,14 +75,14 @@ start_docker() {
     case $profile in
         build)
             echo "[Docker] Building development images..."
-            docker-compose -f $DOCKER_DEV --profile dev build
+            docker compose -f $DOCKER_DEV --profile dev build
             echo ""
             echo "[Docker] Building production images..."
-            docker-compose -f $DOCKER_PROD build
+            docker compose -f $DOCKER_PROD build
             echo "[OK] All images built successfully"
             ;;
         dev)
-            docker-compose -f $DOCKER_DEV --profile dev up
+            docker compose -f $DOCKER_DEV --profile dev up
             ;;
         seed)
             run_exec "npm run seed" "Full Database Seeding" "true"
@@ -97,7 +97,7 @@ start_docker() {
             run_exec "npm run test-ai" "AI Chatbot Test" "false"
             ;;
         prod)
-            docker-compose -f $DOCKER_PROD up -d
+            docker compose -f $DOCKER_PROD up -d
             echo ""
             echo "[OK] Production server running at http://localhost:3000"
             ;;
@@ -111,8 +111,8 @@ start_docker() {
             fi
             ;;
         down)
-            docker-compose -f $DOCKER_DEV --profile dev down 2>/dev/null
-            docker-compose -f $DOCKER_PROD down 2>/dev/null
+            docker compose -f $DOCKER_DEV --profile dev down 2>/dev/null
+            docker compose -f $DOCKER_PROD down 2>/dev/null
             echo "[OK] All containers stopped"
             ;;
     esac
