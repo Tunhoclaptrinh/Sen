@@ -314,13 +314,13 @@ Menu sẽ hiện ra:
   Select mode:
 
   [1] Build Images   (First time / Rebuild only)
-  [2] Start Dev      (docker-compose up)
+  [2] Start Dev      (docker compose up)
   [3] Seed Database  (Create sample data)
   [4] Query Tool     (Query database)
   [5] Test AI        (Test AI chatbot)
-  [6] Start Prod     (docker-compose up -d)
+  [6] Start Prod     (docker compose up -d)
   [7] View Logs
-  [8] Stop All       (docker-compose down)
+  [8] Stop All       (docker compose down)
   [9] Exit
 
 Select [1-9]:
@@ -367,10 +367,10 @@ bash run.sh help           # Xem hướng dẫn
 Backend/
 ├── Docker/
 │   ├── Dev/
-│   │   ├── docker-compose.yml    # Dev environment
+│   │   ├── docker compose.yml    # Dev environment
 │   │   └── Dockerfile            # Dev image
 │   └── Production/
-│       ├── docker-compose.yml    # Prod environment
+│       ├── docker compose.yml    # Prod environment
 │       └── Dockerfile            # Prod image
 └── run.sh                         # Docker runner script
 ```
@@ -1476,7 +1476,7 @@ router.get("/api/heritage-sites", heritageSiteController.getAll);
 router.get(
   "/api/game/progress",
   protect, // Verify JWT
-  gameController.getProgress
+  gameController.getProgress,
 );
 
 // Admin only route
@@ -1484,7 +1484,7 @@ router.post(
   "/api/admin/levels",
   protect, // Verify JWT
   authorize("admin"), // Check role
-  levelController.create
+  levelController.create,
 );
 
 // Ownership check
@@ -1492,7 +1492,7 @@ router.delete(
   "/api/collections/:id",
   protect, // Verify JWT
   checkOwnership("collections"), // Verify ownership
-  collectionController.delete
+  collectionController.delete,
 );
 ```
 
