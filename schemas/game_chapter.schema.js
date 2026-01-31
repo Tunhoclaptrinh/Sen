@@ -35,6 +35,12 @@ module.exports = {
     required: false,
     description: 'Hình ảnh thumbnail'
   },
+  color: {
+    type: 'string',
+    required: false,
+    default: '#1890ff',
+    description: 'Màu sắc chủ đạo'
+  },
 
   is_active: {
     type: 'boolean',
