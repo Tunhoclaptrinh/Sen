@@ -120,4 +120,7 @@ exports.getUserPermissions = (req, res) => {
   });
 };
 
+exports.PERMISSIONS = PERMISSIONS;
+exports.hasPermission = hasPermission;
+
 module.exports = exports;
