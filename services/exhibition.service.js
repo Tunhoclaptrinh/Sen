@@ -7,7 +7,7 @@ class ExhibitionService extends BaseService {
   }
 
   async beforeCreate(data) {
-    data.visitor_count = 0;
+    data.visitorCount = 0;
     return super.beforeCreate(data);
   }
 
@@ -16,9 +16,9 @@ class ExhibitionService extends BaseService {
     const allExhibitions = await db.findAll('exhibitions');
 
     const activeExhibitions = allExhibitions.filter(ex => {
-      const start = new Date(ex.start_date);
-      const end = new Date(ex.end_date);
-      return start <= now && now <= end && ex.is_active;
+      const start = new Date(ex.startDate);
+      const end = new Date(ex.endDate);
+      return start <= now && now <= end && ex.isActive;
     });
 
     const pagination = this.applyPagination(activeExhibitions, options.page, options.limit);

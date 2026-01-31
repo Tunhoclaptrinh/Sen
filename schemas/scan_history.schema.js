@@ -1,11 +1,11 @@
 module.exports = {
-    user_id: {
+    userId: {
         type: 'number',
         required: true,
         foreignKey: 'users',
         description: 'User ID'
     },
-    object_id: {
+    objectId: {
         type: 'number',
         required: true,
         foreignKey: 'scan_objects',
@@ -16,7 +16,7 @@ module.exports = {
         required: false,
         description: 'Vị trí scan { lat, long }'
     },
-    scanned_at: {
+    scannedAt: {
         type: 'date',
         required: true,
         default: Date.now,

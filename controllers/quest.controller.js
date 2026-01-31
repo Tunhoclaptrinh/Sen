@@ -26,8 +26,8 @@ class QuestController extends BaseController {
 
   updateProgress = async (req, res, next) => {
     try {
-      const { current_value } = req.body;
-      const result = await this.service.updateQuestProgress(req.params.id, req.user.id, current_value);
+      const { currentValue } = req.body;
+      const result = await this.service.updateQuestProgress(req.params.id, req.user.id, currentValue);
       res.json(result);
     } catch (error) {
       next(error);

@@ -1,11 +1,11 @@
 module.exports = {
-    user_id: {
+    userId: {
         type: 'number',
         required: true,
         foreignKey: 'users',
         description: 'User ID'
     },
-    level_id: {
+    levelId: {
         type: 'number',
         required: true,
         foreignKey: 'game_levels',
@@ -18,28 +18,28 @@ module.exports = {
         default: 'in_progress',
         description: 'Trạng thái session'
     },
-    current_screen_id: {
+    currentScreenId: {
         type: 'string', // Can be string id
         required: true,
         description: 'Screen hiện tại'
     },
-    current_screen_index: {
+    currentScreenIndex: {
         type: 'number',
         required: true,
         default: 0,
         description: 'Index screen hiện tại'
     },
-    collected_items: {
+    collectedItems: {
         type: 'array',
         default: [],
         description: 'Items đã thu thập trong session'
     },
-    answered_questions: {
+    answeredQuestions: {
         type: 'array',
         default: [],
         description: 'Câu hỏi đã trả lời'
     },
-    timeline_order: {
+    timelineOrder: {
         type: 'array',
         default: [],
         description: 'Thứ tự timeline user sắp xếp'
@@ -49,54 +49,54 @@ module.exports = {
         default: 0,
         description: 'Điểm số hiện tại của session'
     },
-    total_screens: {
+    totalScreens: {
         type: 'number',
         required: true,
         description: 'Tổng số màn chơi'
     },
-    completed_screens: {
+    completedScreens: {
         type: 'array',
         default: [],
         description: 'Danh sách screen ID đã hoàn thành'
     },
-    screen_states: {
+    screenStates: {
         type: 'object',
         default: {},
         description: 'Lưu trạng thái từng screen (read dialogue, etc)'
     },
-    time_spent: {
+    timeSpent: {
         type: 'number',
         default: 0,
         description: 'Thời gian chơi (seconds)'
     },
-    hints_used: {
+    hintsUsed: {
         type: 'number',
         default: 0,
         description: 'Số hint đã dùng'
     },
-    started_at: {
+    startedAt: {
         type: 'date',
         required: true,
         default: Date.now,
         description: 'Thời gian bắt đầu'
     },
-    last_activity: {
+    lastActivity: {
         type: 'date',
         required: true,
         default: Date.now,
         description: 'Hoạt động cuối'
     },
-    completed_at: {
+    completedAt: {
         type: 'date',
         required: false,
         description: 'Thời gian hoàn thành'
     },
-    expired_at: {
+    expiredAt: {
         type: 'date',
         required: false,
         description: 'Thời gian hết hạn'
     },
-    expired_reason: {
+    expiredReason: {
         type: 'string',
         required: false,
         description: 'Lý do hết hạn'

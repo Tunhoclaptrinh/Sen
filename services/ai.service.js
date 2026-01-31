@@ -107,22 +107,22 @@ class AIService {
         { timeout: 60000 }
       );
 
-      const { answer, rewritten_query, route, score, audio_base64 } = response.data;
+      const { answer, rewritten_query: rewrittenQuery, route, score, audio_base64: audioBase64 } = response.data;
 
       // 4. LƯU VÀO db.json QUA WRAPPER DATABASE CỦA BẠN
       const chatRecord = await db.create("ai_chat_history", {
-        user_id: userId,
-        level_id: context.levelId || null,
-        character_id: context.characterId || (character ? character.id : 1),
+        userId: userId,
+        levelId: context.levelId || null,
+        characterId: context.characterId || (character ? character.id : 1),
         message: cleanMessage,
         response: answer,
-        audio_base64: audio_base64 || null, // Lưu audio nếu có
+        audioBase64: audioBase64 || null, // Lưu audio nếu có
         context: {
           ...context,
-          rewritten: rewritten_query,
+          rewrittenQuery: rewrittenQuery,
           route: route,
         },
-        created_at: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
       });
 
       return {
@@ -130,9 +130,9 @@ class AIService {
         data: {
           message: answer,
           character: character,
-          timestamp: chatRecord.created_at,
+          timestamp: chatRecord.createdAt,
           route: route,
-          audio_base64: audio_base64 // Trả về cho frontend ngay lập tức
+          audioBase64: audioBase64 // Trả về cho frontend ngay lập tức
         },
       };
     } catch (error) {
@@ -151,7 +151,7 @@ class AIService {
   async chatAudio(userId, audioFile, context = {}) {
     try {
       const FormData = require('form-data');
-      
+
       // 1. LẤY NHÂN VẬT (NPC)
       const character = await this.getCharacterContext(context, userId);
 
@@ -173,7 +173,7 @@ class AIService {
       // 4. GỌI SANG PYTHON FASTAPI (/chat-audio)
       // Note: Python endpoint is /chat-audio
       const pythonUrl = PYTHON_SERVICE_URL.replace('/chat', '').replace(/\/+$/, '') + '/chat-audio';
-      
+
       console.log(`🎙️ Forwarding audio to: ${pythonUrl}`);
 
       const response = await axios.post(
@@ -183,55 +183,55 @@ class AIService {
           headers: {
             ...form.getHeaders()
           },
-          timeout: 60000 
+          timeout: 60000
         }
       );
 
       // 5. XỬ LÝ KẾT QUẢ
-      const { 
-        intent, 
-        answer, 
-        transcribed_text, 
+      const {
+        intent,
+        answer,
+        transcribed_text: transcribedText,
         audio, /* base64 TTS response */
-        rewritten_query, 
-        route 
+        rewritten_query: rewrittenQuery,
+        route
       } = response.data;
 
       // 6. LƯU VÀO DB
       const chatRecord = await db.create("ai_chat_history", {
-        user_id: userId,
-        level_id: context.levelId || null,
-        character_id: context.characterId || (character ? character.id : 1),
-        message: transcribed_text || "(Voice)",
+        userId: userId,
+        levelId: context.levelId || null,
+        characterId: context.characterId || (character ? character.id : 1),
+        message: transcribedText || "(Voice)",
         response: answer,
-        audio_base64: audio || null,
+        audioBase64: audio || null,
         context: {
           ...context,
-          rewritten: rewritten_query,
+          rewrittenQuery: rewrittenQuery,
           route: route,
           intent: intent
         },
-        created_at: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
       });
 
       return {
         success: true,
         data: {
           message: answer, // Text response
-          transcribed_text: transcribed_text,
+          transcribedText: transcribedText,
           character: character,
-          timestamp: chatRecord.created_at,
-          audio_base64: audio, // TTS response
+          timestamp: chatRecord.createdAt,
+          audioBase64: audio, // TTS response
           intent: intent
         },
       };
 
     } catch (error) {
-       console.error("AI Voice Chat Error:", error.message);
-       if (error.response) {
-         console.error("Python Service Error:", error.response.data);
-       }
-       return {
+      console.error("AI Voice Chat Error:", error.message);
+      if (error.response) {
+        console.error("Python Service Error:", error.response.data);
+      }
+      return {
         success: false,
         message: "Sen đang bị nghẹt mũi, không nghe rõ lắm...",
         statusCode: 500,
@@ -248,19 +248,19 @@ class AIService {
     // Nếu không có characterId, thử lấy từ level
     if (!characterId && context.levelId) {
       const level = await db.findById("game_levels", context.levelId);
-      if (level) characterId = level.ai_character_id;
+      if (level) characterId = level.aiCharacterId;
     }
 
     if (!characterId) characterId = 1; // Mặc định là Sen
 
     const character = await db.findById("game_characters", characterId);
-    if (!character) return { name: "Sen", speaking_style: "Thân thiện" };
+    if (!character) return { name: "Sen", speakingStyle: "Thân thiện" };
 
     return {
       id: character.id,
       name: character.name,
       persona: character.persona,
-      speaking_style: character.speaking_style,
+      speakingStyle: character.speakingStyle,
       avatar: character.avatar,
     };
   }
@@ -270,13 +270,13 @@ class AIService {
    */
   async _getFormattedHistory(userId, characterId, limit = 5) {
     try {
-      const query = { user_id: userId };
-      if (characterId) query.character_id = characterId;
+      const query = { userId: userId };
+      if (characterId) query.characterId = characterId;
 
       const rawHistory = await db.findMany("ai_chat_history", query);
 
       const formatted = rawHistory
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, limit)
         .reverse()
         .map((h) => [
@@ -295,8 +295,8 @@ class AIService {
    * Lấy lịch sử chat đơn thuần cho UI
    */
   async getHistory(userId, levelId, limit = 20) {
-    const query = { user_id: userId };
-    if (levelId) query.level_id = levelId;
+    const query = { userId: userId };
+    if (levelId) query.levelId = levelId;
     const rawHistory = await db.findMany("ai_chat_history", query);
 
     // Convert to chat message format: [user, assistant, user, assistant, ...]
@@ -305,23 +305,23 @@ class AIService {
       // User message
       history.push({
         id: `${record.id}-user`,
-        character_id: record.character_id,
-        user_id: record.user_id,
+        characterId: record.characterId,
+        userId: record.userId,
         role: "user",
         content: record.message,
-        timestamp: record.created_at,
+        timestamp: record.createdAt,
         context: record.context,
       });
       // Assistant response
       history.push({
         id: `${record.id}-assistant`,
-        character_id: record.character_id,
-        user_id: record.user_id,
+        characterId: record.characterId,
+        userId: record.userId,
         role: "assistant",
         content: record.response,
-        timestamp: record.created_at,
+        timestamp: record.createdAt,
         context: record.context,
-        audio_base64: record.audio_base64 || null, // Map audio
+        audioBase64: record.audioBase64 || null, // Map audio
       });
     });
 
@@ -332,7 +332,7 @@ class AIService {
    * Xóa lịch sử
    */
   async clearHistory(userId) {
-    const history = await db.findMany("ai_chat_history", { user_id: userId });
+    const history = await db.findMany("ai_chat_history", { userId: userId });
     for (const h of history) {
       await db.delete("ai_chat_history", h.id);
     }
@@ -350,46 +350,46 @@ class AIService {
   async getCharacters(userId = null) {
     try {
       const allCharacters = await db.findMany("game_characters", {});
-      
+
       // Lấy danh sách nhân vật user đã sở hữu
       let ownedIds = [];
       if (userId) {
-        const ownedCharacters = await db.findMany("user_characters", { user_id: userId });
-        ownedIds = ownedCharacters.map(uc => uc.character_id);
+        const ownedCharacters = await db.findMany("user_characters", { userId: userId });
+        ownedIds = ownedCharacters.map(uc => uc.characterId);
       }
 
       // Lấy tiến độ game của user (để check unlock requirement)
       let completedLevelIds = [];
       if (userId) {
-        const progress = await db.findOne("game_progress", { user_id: userId });
-        completedLevelIds = progress?.completed_levels || [];
+        const progress = await db.findOne("game_progress", { userId: userId });
+        completedLevelIds = progress?.completedLevels || [];
       }
-      
+
       // Map to frontend format với ownership info
       const mappedCharacters = allCharacters
         .filter(char => {
           // Nhân vật mặc định (Sen) luôn hiển thị
-          if (char.is_default) return true;
+          if (char.isDefault) return true;
           // Các nhân vật khác chỉ hiển thị nếu user sở hữu
           return ownedIds.includes(char.id);
         })
         .map(char => {
           // Check xem có thể unlock (đã hoàn thành level yêu cầu)
-          const canUnlock = !char.unlock_level_id || completedLevelIds.includes(char.unlock_level_id);
-          
+          const canUnlock = !char.unlockLevelId || completedLevelIds.includes(char.unlockLevelId);
+
           return {
             id: char.id,
             name: char.name,
-            avatar: char.avatar || char.avatar_locked || '/images/characters/default.png',
-            personality: char.persona || char.speaking_style || 'Thân thiện',
+            avatar: char.avatar || char.avatarLocked || '/images/characters/default.png',
+            personality: char.persona || char.speakingStyle || 'Thân thiện',
             state: 'restored',
             description: char.description || `Nhân vật ${char.name}`,
-            is_default: char.is_default || false,
-            is_owned: char.is_default || ownedIds.includes(char.id),
+            isDefault: char.isDefault || false,
+            isOwned: char.isDefault || ownedIds.includes(char.id),
             rarity: char.rarity || 'common',
             price: char.price || 0,
-            unlock_level_id: char.unlock_level_id || null,
-            can_unlock: canUnlock,
+            unlockLevelId: char.unlockLevelId || null,
+            canUnlock: canUnlock,
           };
         });
 
@@ -412,44 +412,44 @@ class AIService {
       }
 
       // 2. Check không phải nhân vật mặc định
-      if (character.is_default) {
+      if (character.isDefault) {
         return { success: false, message: "Không thể mua nhân vật mặc định", statusCode: 400 };
       }
 
       // 3. Check đã sở hữu chưa
-      const existingOwnership = await db.findOne("user_characters", { 
-        user_id: userId, 
-        character_id: characterId 
+      const existingOwnership = await db.findOne("user_characters", {
+        userId: userId,
+        characterId: characterId
       });
       if (existingOwnership) {
         return { success: false, message: "Bạn đã sở hữu nhân vật này rồi", statusCode: 400 };
       }
 
       // 4. Check đã unlock chưa (hoàn thành level yêu cầu)
-      if (character.unlock_level_id) {
-        const progress = await db.findOne("game_progress", { user_id: userId });
-        const completedLevels = progress?.completed_levels || [];
-        if (!completedLevels.includes(character.unlock_level_id)) {
-          return { 
-            success: false, 
-            message: `Bạn cần hoàn thành level ${character.unlock_level_id} trước`, 
-            statusCode: 400 
+      if (character.unlockLevelId) {
+        const progress = await db.findOne("game_progress", { userId: userId });
+        const completedLevels = progress?.completedLevels || [];
+        if (!completedLevels.includes(character.unlockLevelId)) {
+          return {
+            success: false,
+            message: `Bạn cần hoàn thành level ${character.unlockLevelId} trước`,
+            statusCode: 400
           };
         }
       }
 
       // 5. Check đủ tiền
-      const progress = await db.findOne("game_progress", { user_id: userId });
+      const progress = await db.findOne("game_progress", { userId: userId });
       if (!progress) {
         return { success: false, message: "Không tìm thấy tiến độ game", statusCode: 404 };
       }
 
       const currentCoins = progress.coins || 0;
       if (currentCoins < character.price) {
-        return { 
-          success: false, 
-          message: `Không đủ xu. Cần ${character.price}, hiện có ${currentCoins}`, 
-          statusCode: 400 
+        return {
+          success: false,
+          message: `Không đủ xu. Cần ${character.price}, hiện có ${currentCoins}`,
+          statusCode: 400
         };
       }
 
@@ -459,10 +459,10 @@ class AIService {
       });
 
       const ownership = await db.create("user_characters", {
-        user_id: userId,
-        character_id: characterId,
-        unlocked_at: new Date().toISOString(),
-        unlock_type: "purchase"
+        userId: userId,
+        characterId: characterId,
+        unlockedAt: new Date().toISOString(),
+        unlockType: "purchase"
       });
 
       return {
@@ -470,7 +470,7 @@ class AIService {
         message: `Đã mua nhân vật ${character.name}!`,
         data: {
           character: character,
-          new_balance: currentCoins - character.price,
+          newBalance: currentCoins - character.price,
           ownership: ownership
         }
       };
@@ -486,25 +486,25 @@ class AIService {
   async getAvailableCharacters(userId) {
     try {
       const allCharacters = await db.findMany("game_characters", {});
-      
+
       // Lấy danh sách đã sở hữu
-      const ownedCharacters = await db.findMany("user_characters", { user_id: userId });
-      const ownedIds = ownedCharacters.map(uc => uc.character_id);
+      const ownedCharacters = await db.findMany("user_characters", { userId: userId });
+      const ownedIds = ownedCharacters.map(uc => uc.characterId);
 
       // Lấy tiến độ để check unlock
-      const progress = await db.findOne("game_progress", { user_id: userId });
-      const completedLevels = progress?.completed_levels || [];
+      const progress = await db.findOne("game_progress", { userId: userId });
+      const completedLevels = progress?.completedLevels || [];
 
       // Filter: chưa sở hữu, không phải mặc định, và đã unlock
       const availableCharacters = allCharacters.filter(char => {
-        if (char.is_default) return false; // Mặc định đã có
+        if (char.isDefault) return false; // Mặc định đã có
         if (ownedIds.includes(char.id)) return false; // Đã sở hữu
-        
+
         // Check unlock condition
-        if (char.unlock_level_id && !completedLevels.includes(char.unlock_level_id)) {
+        if (char.unlockLevelId && !completedLevels.includes(char.unlockLevelId)) {
           return false; // Chưa unlock
         }
-        
+
         return true; // Có thể mua
       }).map(char => ({
         id: char.id,
@@ -513,7 +513,7 @@ class AIService {
         description: char.description,
         rarity: char.rarity,
         price: char.price,
-        unlock_level_id: char.unlock_level_id
+        unlockLevelId: char.unlockLevelId
       }));
 
       return { success: true, data: availableCharacters };

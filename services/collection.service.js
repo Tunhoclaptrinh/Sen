@@ -18,15 +18,15 @@ class CollectionService extends BaseService {
 
         // LEGACY MIGRATION: If items is empty but legacy IDs exist, construct them
         if (items.length === 0) {
-            if (collection.artifact_ids && Array.isArray(collection.artifact_ids)) {
-                items = items.concat(collection.artifact_ids.map(id => ({
+            if (collection.artifactIds && Array.isArray(collection.artifactIds)) {
+                items = items.concat(collection.artifactIds.map(id => ({
                     id: parseInt(id),
                     type: 'artifact',
                     addedAt: collection.createdAt
                 })));
             }
-            if (collection.heritage_site_ids && Array.isArray(collection.heritage_site_ids)) {
-                items = items.concat(collection.heritage_site_ids.map(id => ({
+            if (collection.heritageSiteIds && Array.isArray(collection.heritageSiteIds)) {
+                items = items.concat(collection.heritageSiteIds.map(id => ({
                     id: parseInt(id),
                     type: 'heritage',
                     addedAt: collection.createdAt
@@ -39,7 +39,7 @@ class CollectionService extends BaseService {
         for (const item of items) {
             let details = null;
             const lookupId = Number(item.id);
-            
+
             if (item.type === 'heritage') {
                 details = await db.findById('heritage_sites', lookupId);
             } else if (item.type === 'artifact') {
@@ -53,7 +53,7 @@ class CollectionService extends BaseService {
                         id: details.id,
                         name: details.name,
                         image: details.image || (details.images && details.images[0]) || details.thumbnail,
-                        short_description: details.short_description || details.description
+                        shortDescription: details.shortDescription || details.description
                     }
                 });
             } else {
@@ -101,7 +101,7 @@ class CollectionService extends BaseService {
 
         const updated = await db.update('collections', collectionId, {
             items: [...items, newItem],
-            total_items: items.length + 1,
+            totalItems: items.length + 1,
             updatedAt: new Date().toISOString()
         });
 
@@ -109,7 +109,7 @@ class CollectionService extends BaseService {
         try {
             const questService = require('./quest.service');
             // Assuming 'collect_artifact' is the type
-            await questService.checkAndAdvance(collection.user_id, 'collect_artifact', 1);
+            await questService.checkAndAdvance(collection.userId, 'collect_artifact', 1);
         } catch (e) {
             console.error('Quest trigger failed', e);
         }
@@ -140,7 +140,7 @@ class CollectionService extends BaseService {
 
         const updated = await db.update('collections', collectionId, {
             items: newItems,
-            total_items: newItems.length,
+            totalItems: newItems.length,
             updatedAt: new Date().toISOString()
         });
 

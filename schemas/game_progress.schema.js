@@ -1,24 +1,24 @@
 module.exports = {
-  user_id: {
+  userId: {
     type: 'number',
     required: true,
     unique: true,
     foreignKey: 'users',
     description: 'User ID'
   },
-  current_chapter: {
+  currentChapter: {
     type: 'number',
     required: false,
     default: 1,
     description: 'Chapter đang chơi'
   },
-  total_sen_petals: {
+  totalSenPetals: {
     type: 'number',
     required: false,
     default: 0,
     description: 'Tổng số cánh hoa sen'
   },
-  total_points: {
+  totalPoints: {
     type: 'number',
     required: false,
     default: 0,
@@ -36,23 +36,23 @@ module.exports = {
     default: 1000,
     description: 'Tiền game'
   },
-  unlocked_chapters: {
+  unlockedChapters: {
     type: 'array',
     required: false,
     description: 'Chapters đã mở'
   },
-  finished_chapters: {
+  finishedChapters: {
     type: 'array',
     required: false,
     default: [],
     description: 'Chapters đã hoàn thành (đủ điều kiện mở chương sau)'
   },
-  completed_levels: {
+  completedLevels: {
     type: 'array',
     required: false,
     description: 'Levels đã hoàn thành'
   },
-  collected_characters: {
+  collectedCharacters: {
     type: 'array',
     required: false,
     description: 'Characters đã thu thập'
@@ -67,25 +67,25 @@ module.exports = {
     required: false,
     description: 'Achievements'
   },
-  museum_open: {
+  museumOpen: {
     type: 'boolean',
     required: false,
     default: false,
     description: 'Bảo tàng có mở không'
   },
-  museum_income: {
+  museumIncome: {
     type: 'number',
     required: false,
     default: 0,
     description: 'Thu nhập bảo tàng'
   },
-  streak_days: {
+  streakDays: {
     type: 'number',
     required: false,
     default: 0,
     description: 'Số ngày chơi liên tiếp'
   },
-  last_login: {
+  lastLogin: {
     type: 'date',
     required: false,
     description: 'Lần login cuối'

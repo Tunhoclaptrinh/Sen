@@ -13,7 +13,7 @@ module.exports = {
     maxLength: 2000,
     description: 'Mô tả triển lãm'
   },
-  heritage_site_id: {
+  heritageSiteId: {
     type: 'number',
     required: true,
     foreignKey: 'heritage_sites',
@@ -25,12 +25,12 @@ module.exports = {
     maxLength: 200,
     description: 'Chủ đề'
   },
-  start_date: {
+  startDate: {
     type: 'date',
     required: true,
     description: 'Ngày khai mạc'
   },
-  end_date: {
+  endDate: {
     type: 'date',
     required: true,
     description: 'Ngày đóng'
@@ -46,13 +46,13 @@ module.exports = {
     required: false,
     description: 'Poster'
   },
-  is_active: {
+  isActive: {
     type: 'boolean',
     required: false,
     default: true,
     description: 'Đang diễn ra'
   },
-  created_by: {
+  createdBy: {
     type: 'number',
     required: false,
     foreignKey: 'users',

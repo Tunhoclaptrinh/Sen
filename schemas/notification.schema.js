@@ -19,12 +19,12 @@ module.exports = {
     required: true,
     description: 'Loại thông báo'
   },
-  ref_id: {
+  refId: {
     type: 'number',
     required: false,
     description: 'ID của di sản/cổ vật liên quan'
   },
-  is_read: {
+  isRead: {
     type: 'boolean',
     required: false,
     default: false,

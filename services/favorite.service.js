@@ -11,20 +11,20 @@ class FavoriteService extends BaseService {
       ...options,
       filter: {
         ...options.filter,
-        user_id: userId
+        userId: userId
       }
     });
 
     const enriched = (await Promise.all(result.data.map(async (fav) => {
       let item = null;
       if (fav.type === 'heritage_site') {
-        item = await db.findById('heritage_sites', fav.reference_id);
+        item = await db.findById('heritage_sites', fav.referenceId);
       } else if (fav.type === 'artifact') {
-        item = await db.findById('artifacts', fav.reference_id);
+        item = await db.findById('artifacts', fav.referenceId);
       } else if (fav.type === 'exhibition') {
-        item = await db.findById('exhibitions', fav.reference_id);
+        item = await db.findById('exhibitions', fav.referenceId);
       } else if (fav.type === 'article') {
-        item = await db.findById('history_articles', fav.reference_id);
+        item = await db.findById('history_articles', fav.referenceId);
       }
 
       return {
@@ -50,9 +50,9 @@ class FavoriteService extends BaseService {
     }
 
     const existing = await db.findOne('favorites', {
-      user_id: userId,
+      userId: userId,
       type,
-      reference_id: parseInt(referenceId)
+      referenceId: parseInt(referenceId)
     });
 
     if (existing) {
@@ -64,10 +64,10 @@ class FavoriteService extends BaseService {
     }
 
     const favorite = await db.create('favorites', {
-      user_id: userId,
+      userId: userId,
       type,
-      reference_id: parseInt(referenceId),
-      created_at: new Date().toISOString()
+      referenceId: parseInt(referenceId),
+      createdAt: new Date().toISOString()
     });
 
     return {
@@ -79,9 +79,9 @@ class FavoriteService extends BaseService {
 
   async removeFavorite(userId, type, referenceId) {
     const favorite = await db.findOne('favorites', {
-      user_id: userId,
+      userId: userId,
       type,
-      reference_id: parseInt(referenceId)
+      referenceId: parseInt(referenceId)
     });
 
     if (!favorite) {
@@ -104,9 +104,9 @@ class FavoriteService extends BaseService {
 
   async checkFavorite(userId, type, referenceId) {
     const favorite = await db.findOne('favorites', {
-      user_id: userId,
+      userId: userId,
       type,
-      reference_id: parseInt(referenceId)
+      referenceId: parseInt(referenceId)
     });
 
     return {
@@ -139,7 +139,7 @@ class FavoriteService extends BaseService {
   }
 
   async clearFavorites(userId, type = null) {
-    const query = { user_id: userId };
+    const query = { userId: userId };
     if (type) query.type = type;
 
     const favorites = await db.findMany('favorites', query);
@@ -158,7 +158,7 @@ class FavoriteService extends BaseService {
   }
 
   async getFavoriteStats(userId) {
-    const favorites = await db.findMany('favorites', { user_id: userId });
+    const favorites = await db.findMany('favorites', { userId: userId });
 
     const stats = {
       total: favorites.length,

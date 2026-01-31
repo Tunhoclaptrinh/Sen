@@ -8,20 +8,20 @@ class QuestService extends BaseService {
 
   async getActiveQuests(userId) {
     const allQuests = await db.findAll('game_quests');
-    const activeQuests = allQuests.filter(q => q.is_active);
-    const userQuests = await db.findMany('user_quests', { user_id: userId });
+    const activeQuests = allQuests.filter(q => q.isActive);
+    const userQuests = await db.findMany('user_quests', { userId: userId });
 
     const data = activeQuests.map(quest => {
-      const userQuest = userQuests.find(uq => uq.quest_id == quest.id);
+      const userQuest = userQuests.find(uq => uq.questId == quest.id);
       return {
         ...quest,
         progress: userQuest ? {
-          current_value: userQuest.current_value,
-          is_completed: userQuest.status === 'completed' || userQuest.status === 'claimed',
-          is_claimed: userQuest.status === 'claimed',
+          currentValue: userQuest.currentValue,
+          isCompleted: userQuest.status === 'completed' || userQuest.status === 'claimed',
+          isClaimed: userQuest.status === 'claimed',
           status: userQuest.status,
-          started_at: userQuest.started_at,
-          completed_at: userQuest.completed_at
+          startedAt: userQuest.startedAt,
+          completedAt: userQuest.completedAt
         } : null
       };
     });
@@ -39,17 +39,17 @@ class QuestService extends BaseService {
       return { success: false, message: 'Quest not found', statusCode: 404 };
     }
 
-    const existing = await db.findOne('user_quests', { quest_id: questId, user_id: userId });
+    const existing = await db.findOne('user_quests', { questId: questId, userId: userId });
     if (existing) {
       return { success: false, message: 'Quest already started', statusCode: 400 };
     }
 
     const userQuest = await db.create('user_quests', {
-      user_id: userId,
-      quest_id: questId,
+      userId: userId,
+      questId: questId,
       status: 'in_progress',
-      current_value: 0,
-      started_at: new Date().toISOString()
+      currentValue: 0,
+      startedAt: new Date().toISOString()
     });
 
     return {
@@ -60,7 +60,7 @@ class QuestService extends BaseService {
 
   async updateQuestProgress(questId, userId, currentValue) {
     questId = parseInt(questId);
-    const userQuest = await db.findOne('user_quests', { quest_id: questId, user_id: userId });
+    const userQuest = await db.findOne('user_quests', { questId: questId, userId: userId });
     if (!userQuest) {
       return { success: false, message: 'Quest not started', statusCode: 404 };
     }
@@ -76,9 +76,9 @@ class QuestService extends BaseService {
     const isCompleted = currentValue >= targetValue;
 
     const updated = await db.update('user_quests', userQuest.id, {
-      current_value: currentValue,
+      currentValue: currentValue,
       status: isCompleted ? 'completed' : 'in_progress',
-      completed_at: isCompleted ? new Date().toISOString() : null
+      completedAt: isCompleted ? new Date().toISOString() : null
     });
 
     return {
@@ -97,37 +97,37 @@ class QuestService extends BaseService {
     try {
       // Find all active quests for this user
       const allQuests = await db.findAll('game_quests');
-      const activeQuests = allQuests.filter(q => q.is_active && q.requirements && q.requirements[0]?.type === type);
-      
-      const userQuests = await db.findMany('user_quests', { user_id: userId, status: 'in_progress' });
-      
+      const activeQuests = allQuests.filter(q => q.isActive && q.requirements && q.requirements[0]?.type === type);
+
+      const userQuests = await db.findMany('user_quests', { userId: userId, status: 'in_progress' });
+
       for (const quest of activeQuests) {
         // Check if user has started this quest
-        let userQuest = userQuests.find(uq => uq.quest_id == quest.id);
-        
+        let userQuest = userQuests.find(uq => uq.questId == quest.id);
+
         // If not started, auto-start it (Passive Quest Logic)
         if (!userQuest) {
-             const startResult = await this.startQuest(quest.id, userId);
-             if (startResult.success) {
-                 userQuest = startResult.data;
-                 console.log(`[Quest] Auto-started passive quest ${quest.id} for user ${userId}`);
-             }
+          const startResult = await this.startQuest(quest.id, userId);
+          if (startResult.success) {
+            userQuest = startResult.data;
+            console.log(`[Quest] Auto-started passive quest ${quest.id} for user ${userId}`);
+          }
         }
 
         if (userQuest) {
-           const newValue = (userQuest.current_value || 0) + incrementValue;
-           await this.updateQuestProgress(quest.id, userId, newValue);
-           console.log(`[Quest] Auto-advanced quest ${quest.id} for user ${userId} to ${newValue}`);
+          const newValue = (userQuest.currentValue || 0) + incrementValue;
+          await this.updateQuestProgress(quest.id, userId, newValue);
+          console.log(`[Quest] Auto-advanced quest ${quest.id} for user ${userId} to ${newValue}`);
         }
       }
     } catch (error) {
-       console.error('[Quest] Auto-advance error:', error);
+      console.error('[Quest] Auto-advance error:', error);
     }
   }
 
   async completeQuest(questId, userId) {
     questId = parseInt(questId);
-    const userQuest = await db.findOne('user_quests', { quest_id: questId, user_id: userId });
+    const userQuest = await db.findOne('user_quests', { questId: questId, userId: userId });
     if (!userQuest) {
       return { success: false, message: 'Quest not started', statusCode: 404 };
     }
@@ -138,7 +138,7 @@ class QuestService extends BaseService {
 
     const updated = await db.update('user_quests', userQuest.id, {
       status: 'completed',
-      completed_at: new Date().toISOString()
+      completedAt: new Date().toISOString()
     });
 
     return {
@@ -149,7 +149,7 @@ class QuestService extends BaseService {
 
   async claimReward(questId, userId) {
     questId = parseInt(questId);
-    const userQuest = await db.findOne('user_quests', { quest_id: questId, user_id: userId });
+    const userQuest = await db.findOne('user_quests', { questId: questId, userId: userId });
     if (!userQuest || userQuest.status !== 'completed') {
       return { success: false, message: 'Quest not completed or not found', statusCode: 400 };
     }
@@ -160,31 +160,31 @@ class QuestService extends BaseService {
     // Update user_quests status
     await db.update('user_quests', userQuest.id, {
       status: 'claimed',
-      claimed_at: new Date().toISOString()
+      claimedAt: new Date().toISOString()
     });
 
     // Award rewards in game_progress
-    let gameProgress = await db.findOne('game_progress', { user_id: userId });
+    let gameProgress = await db.findOne('game_progress', { userId: userId });
     // Auto-init if missing (should not happen for active players but safe to have)
     if (!gameProgress) {
       const gameService = require('./game.service');
       gameProgress = await gameService.initializeProgress(userId);
     }
 
-    const newPoints = (gameProgress.total_points || 0) + (quest.rewards.experience || 0);
-    const newLevel = Math.floor(newPoints / 1000) + 1; 
-    const newPetals = (gameProgress.total_sen_petals || 0) + (quest.rewards.petals || 0);
+    const newPoints = (gameProgress.totalPoints || 0) + (quest.rewards.experience || 0);
+    const newLevel = Math.floor(newPoints / 1000) + 1;
+    const newPetals = (gameProgress.totalSenPetals || 0) + (quest.rewards.petals || 0);
     const newCoins = (gameProgress.coins || 0) + (quest.rewards.coins || 0);
     const newBadges = [...new Set([...(gameProgress.badges || []), ...(quest.rewards.badge ? [quest.rewards.badge] : [])])];
-    
+
 
     const updatedProgress = await db.update('game_progress', gameProgress.id, {
-      total_points: newPoints,
+      totalPoints: newPoints,
       level: Math.max(gameProgress.level, newLevel), // Keep max to avoid downgrade
-      total_sen_petals: newPetals,
+      totalSenPetals: newPetals,
       coins: newCoins,
       badges: newBadges,
-      completed_quests_count: (gameProgress.completed_quests_count || 0) + 1
+      completedQuestsCount: (gameProgress.completedQuestsCount || 0) + 1
     });
 
     return {
@@ -192,7 +192,7 @@ class QuestService extends BaseService {
       message: 'Reward claimed successfully',
       data: {
         rewards: quest.rewards,
-        new_progress: updatedProgress
+        newProgress: updatedProgress
       }
     };
   }
@@ -200,19 +200,19 @@ class QuestService extends BaseService {
   async getLeaderboard(limit = 10) {
     // Read from game_progress
     const allProgress = (await db.findAll('game_progress'))
-      .sort((a, b) => (b.total_points || 0) - (a.total_points || 0))
+      .sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0))
       .slice(0, limit);
 
     const leaderboard = await Promise.all(allProgress.map(async (progress, index) => {
-      const user = await db.findById('users', progress.user_id);
+      const user = await db.findById('users', progress.userId);
       return {
         rank: index + 1,
-        user_name: user?.fullName || user?.name || 'Vô danh',
-        user_avatar: user?.avatar,
-        total_points: progress.total_points || 0,
+        userName: user?.fullName || user?.name || 'Vô danh',
+        userAvatar: user?.avatar,
+        totalPoints: progress.totalPoints || 0,
         level: progress.level || 1,
-        badges_count: progress.badges?.length || 0,
-        completed_quests: progress.completed_quests_count || 0
+        badgesCount: progress.badges?.length || 0,
+        completedQuests: progress.completedQuestsCount || 0
       };
     }));
 
