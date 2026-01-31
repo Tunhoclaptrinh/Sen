@@ -338,6 +338,190 @@ class AIService {
     }
     return { success: true, message: "Lịch sử đã được dọn dẹp." };
   }
+
+  /**
+   * Lấy tất cả AI characters (có filter theo ownership)
+   * 
+   * LOGIC CHARACTERS:
+   * - Sen (is_default=true) là nhân vật mặc định, luôn hiển thị
+   * - Các nhân vật khác chỉ hiển thị nếu user đã sở hữu (owned)
+   * - Ownership được track trong bảng user_characters
+   */
+  async getCharacters(userId = null) {
+    try {
+      const allCharacters = await db.findMany("game_characters", {});
+      
+      // Lấy danh sách nhân vật user đã sở hữu
+      let ownedIds = [];
+      if (userId) {
+        const ownedCharacters = await db.findMany("user_characters", { user_id: userId });
+        ownedIds = ownedCharacters.map(uc => uc.character_id);
+      }
+
+      // Lấy tiến độ game của user (để check unlock requirement)
+      let completedLevelIds = [];
+      if (userId) {
+        const progress = await db.findOne("game_progress", { user_id: userId });
+        completedLevelIds = progress?.completed_levels || [];
+      }
+      
+      // Map to frontend format với ownership info
+      const mappedCharacters = allCharacters
+        .filter(char => {
+          // Nhân vật mặc định (Sen) luôn hiển thị
+          if (char.is_default) return true;
+          // Các nhân vật khác chỉ hiển thị nếu user sở hữu
+          return ownedIds.includes(char.id);
+        })
+        .map(char => {
+          // Check xem có thể unlock (đã hoàn thành level yêu cầu)
+          const canUnlock = !char.unlock_level_id || completedLevelIds.includes(char.unlock_level_id);
+          
+          return {
+            id: char.id,
+            name: char.name,
+            avatar: char.avatar || char.avatar_locked || '/images/characters/default.png',
+            personality: char.persona || char.speaking_style || 'Thân thiện',
+            state: 'restored',
+            description: char.description || `Nhân vật ${char.name}`,
+            is_default: char.is_default || false,
+            is_owned: char.is_default || ownedIds.includes(char.id),
+            rarity: char.rarity || 'common',
+            price: char.price || 0,
+            unlock_level_id: char.unlock_level_id || null,
+            can_unlock: canUnlock,
+          };
+        });
+
+      return { success: true, data: mappedCharacters };
+    } catch (error) {
+      console.error("Get Characters Error:", error);
+      return { success: false, data: [], message: error.message };
+    }
+  }
+
+  /**
+   * Mua nhân vật (sau khi đã unlock)
+   */
+  async purchaseCharacter(userId, characterId) {
+    try {
+      // 1. Check nhân vật tồn tại
+      const character = await db.findById("game_characters", characterId);
+      if (!character) {
+        return { success: false, message: "Nhân vật không tồn tại", statusCode: 404 };
+      }
+
+      // 2. Check không phải nhân vật mặc định
+      if (character.is_default) {
+        return { success: false, message: "Không thể mua nhân vật mặc định", statusCode: 400 };
+      }
+
+      // 3. Check đã sở hữu chưa
+      const existingOwnership = await db.findOne("user_characters", { 
+        user_id: userId, 
+        character_id: characterId 
+      });
+      if (existingOwnership) {
+        return { success: false, message: "Bạn đã sở hữu nhân vật này rồi", statusCode: 400 };
+      }
+
+      // 4. Check đã unlock chưa (hoàn thành level yêu cầu)
+      if (character.unlock_level_id) {
+        const progress = await db.findOne("game_progress", { user_id: userId });
+        const completedLevels = progress?.completed_levels || [];
+        if (!completedLevels.includes(character.unlock_level_id)) {
+          return { 
+            success: false, 
+            message: `Bạn cần hoàn thành level ${character.unlock_level_id} trước`, 
+            statusCode: 400 
+          };
+        }
+      }
+
+      // 5. Check đủ tiền
+      const progress = await db.findOne("game_progress", { user_id: userId });
+      if (!progress) {
+        return { success: false, message: "Không tìm thấy tiến độ game", statusCode: 404 };
+      }
+
+      const currentCoins = progress.coins || 0;
+      if (currentCoins < character.price) {
+        return { 
+          success: false, 
+          message: `Không đủ xu. Cần ${character.price}, hiện có ${currentCoins}`, 
+          statusCode: 400 
+        };
+      }
+
+      // 6. Trừ tiền và thêm ownership
+      await db.update("game_progress", progress.id, {
+        coins: currentCoins - character.price
+      });
+
+      const ownership = await db.create("user_characters", {
+        user_id: userId,
+        character_id: characterId,
+        unlocked_at: new Date().toISOString(),
+        unlock_type: "purchase"
+      });
+
+      return {
+        success: true,
+        message: `Đã mua nhân vật ${character.name}!`,
+        data: {
+          character: character,
+          new_balance: currentCoins - character.price,
+          ownership: ownership
+        }
+      };
+    } catch (error) {
+      console.error("Purchase Character Error:", error);
+      return { success: false, message: error.message, statusCode: 500 };
+    }
+  }
+
+  /**
+   * Lấy danh sách nhân vật có thể mua (đã unlock nhưng chưa sở hữu)
+   */
+  async getAvailableCharacters(userId) {
+    try {
+      const allCharacters = await db.findMany("game_characters", {});
+      
+      // Lấy danh sách đã sở hữu
+      const ownedCharacters = await db.findMany("user_characters", { user_id: userId });
+      const ownedIds = ownedCharacters.map(uc => uc.character_id);
+
+      // Lấy tiến độ để check unlock
+      const progress = await db.findOne("game_progress", { user_id: userId });
+      const completedLevels = progress?.completed_levels || [];
+
+      // Filter: chưa sở hữu, không phải mặc định, và đã unlock
+      const availableCharacters = allCharacters.filter(char => {
+        if (char.is_default) return false; // Mặc định đã có
+        if (ownedIds.includes(char.id)) return false; // Đã sở hữu
+        
+        // Check unlock condition
+        if (char.unlock_level_id && !completedLevels.includes(char.unlock_level_id)) {
+          return false; // Chưa unlock
+        }
+        
+        return true; // Có thể mua
+      }).map(char => ({
+        id: char.id,
+        name: char.name,
+        avatar: char.avatar,
+        description: char.description,
+        rarity: char.rarity,
+        price: char.price,
+        unlock_level_id: char.unlock_level_id
+      }));
+
+      return { success: true, data: availableCharacters };
+    } catch (error) {
+      console.error("Get Available Characters Error:", error);
+      return { success: false, data: [], message: error.message };
+    }
+  }
 }
 
 module.exports = new AIService();
