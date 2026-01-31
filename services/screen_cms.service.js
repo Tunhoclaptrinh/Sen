@@ -96,11 +96,11 @@ class ScreenCMSService extends BaseService {
     const newScreen = processed[0];
 
     // Auto-link previous screen to this one
-    // If there was a last screen, and it didn't have a next_screen_id
+    // If there was a last screen, and it didn't have a nextScreenId
     if (currentScreens.length > 0) {
       const lastScreen = currentScreens[currentScreens.length - 1];
-      if (!lastScreen.next_screen_id) {
-        lastScreen.next_screen_id = newScreen.id;
+      if (!lastScreen.nextScreenId) {
+        lastScreen.nextScreenId = newScreen.id;
       }
     }
 
@@ -110,7 +110,7 @@ class ScreenCMSService extends BaseService {
     // Save
     await db.update('game_levels', levelId, {
       screens: currentScreens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
 
     return {
@@ -165,7 +165,7 @@ class ScreenCMSService extends BaseService {
     // Save
     await db.update('game_levels', levelId, {
       screens: screens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
 
     return {
@@ -205,7 +205,7 @@ class ScreenCMSService extends BaseService {
     // Save
     await db.update('game_levels', levelId, {
       screens: screens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
 
     return {
@@ -228,7 +228,7 @@ class ScreenCMSService extends BaseService {
     }
 
     const currentScreens = level.screens || [];
-    
+
     // Verify all IDs exist
     const screenMap = new Map(currentScreens.map(s => [s.id, s]));
     const newScreens = [];
@@ -252,19 +252,19 @@ class ScreenCMSService extends BaseService {
       };
     }
 
-    // Auto-fix next_screen_id based on new order
+    // Auto-fix nextScreenId based on new order
     for (let i = 0; i < newScreens.length; i++) {
-        if (i < newScreens.length - 1) {
-            newScreens[i].next_screen_id = newScreens[i+1].id;
-        } else {
-            delete newScreens[i].next_screen_id; // Last one has no next
-        }
+      if (i < newScreens.length - 1) {
+        newScreens[i].nextScreenId = newScreens[i + 1].id;
+      } else {
+        delete newScreens[i].nextScreenId; // Last one has no next
+      }
     }
 
     // Save
     await db.update('game_levels', levelId, {
       screens: newScreens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
 
     return {

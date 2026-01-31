@@ -28,7 +28,7 @@ class LearningService extends ReviewableService {
 
         // Check if answer is correct
         // Note: answers keys might be strings in JSON
-        if (answers[q.id] !== undefined && parseInt(answers[q.id]) === q.correct_answer) {
+        if (answers[q.id] !== undefined && parseInt(answers[q.id]) === q.correctAnswer) {
           earnedPoints += questionPoint;
         }
       });
@@ -41,7 +41,7 @@ class LearningService extends ReviewableService {
     // 3. User Game Progress Logic
     // ... (rest of game logic)
     // Use game_progress
-    let gameProgress = await db.findOne('game_progress', { user_id: userId });
+    let gameProgress = await db.findOne('game_progress', { userId: userId });
 
     if (!gameProgress) {
       const gameService = require('./game.service');
@@ -49,17 +49,17 @@ class LearningService extends ReviewableService {
     }
 
     // Check if module is already completed
-    const existingCompletionIndex = (gameProgress.completed_modules || []).findIndex(m => parseInt(m.module_id) === moduleIdInt);
+    const existingCompletionIndex = (gameProgress.completedModules || []).findIndex(m => parseInt(m.moduleId) === moduleIdInt);
     const isAlreadyCompleted = existingCompletionIndex !== -1;
 
     const completedModule = {
-      module_id: moduleIdInt,
-      completed_date: new Date().toISOString(),
+      moduleId: moduleIdInt,
+      completedDate: new Date().toISOString(),
       score: finalScore,
-      time_spent: 0
+      timeSpent: 0
     };
 
-    const passingScore = moduleItem.quiz?.passing_score || 70;
+    const passingScore = moduleItem.quiz?.passingScore || 70;
 
     // Points logic:
     // - 50 points for first time completion (if passed or no quiz)
@@ -70,12 +70,12 @@ class LearningService extends ReviewableService {
     }
 
     // Level calculation: Every 200 points = 1 level
-    const newTotalPoints = (gameProgress.total_points || 0) + points;
+    const newTotalPoints = (gameProgress.totalPoints || 0) + points;
     const newLevel = Math.floor(newTotalPoints / 200) + 1;
 
     // Badge logic
     let newBadges = [...(gameProgress.badges || [])];
-    const completedCount = (gameProgress.completed_modules || []).length + 1;
+    const completedCount = (gameProgress.completedModules || []).length + 1;
 
     if (completedCount === 1 && !newBadges.includes('newbie')) {
       newBadges.push('newbie'); // Badge: Người Mới Bắt Đầu
@@ -86,8 +86,8 @@ class LearningService extends ReviewableService {
 
     // Update Progress
     await db.update('game_progress', gameProgress.id, {
-      completed_modules: [...(gameProgress.completed_modules || []), completedModule],
-      total_points: newTotalPoints,
+      completedModules: [...(gameProgress.completedModules || []), completedModule],
+      totalPoints: newTotalPoints,
       level: Math.max(gameProgress.level, newLevel),
       badges: newBadges
     });
@@ -96,46 +96,46 @@ class LearningService extends ReviewableService {
       success: true,
       message: 'Module completed',
       data: {
-        module_title: moduleItem.title,
+        moduleTitle: moduleItem.title,
         score: finalScore,
-        points_earned: points,
+        pointsEarned: points,
         passed: finalScore >= passingScore,
-        current_level: Math.max(gameProgress.level, newLevel),
-        is_level_up: newLevel > gameProgress.level,
-        new_level: newLevel
+        currentLevel: Math.max(gameProgress.level, newLevel),
+        isLevelUp: newLevel > gameProgress.level,
+        newLevel: newLevel
       }
     };
   }
 
   async getLearningPath(userId) {
-    let gameProgress = await db.findOne('game_progress', { user_id: userId });
+    let gameProgress = await db.findOne('game_progress', { userId: userId });
     if (!gameProgress) {
       // Just return empty state if no progress yet
-      gameProgress = { completed_modules: [] };
+      gameProgress = { completedModules: [] };
     }
 
     const allModules = (await db.findAll('learning_modules'))
       .sort((a, b) => a.order - b.order);
 
     const allModuleIds = allModules.map(m => m.id);
-    const rawCompletedIds = gameProgress?.completed_modules?.map(m => m.module_id) || [];
+    const rawCompletedIds = gameProgress?.completedModules?.map(m => m.moduleId) || [];
     // Filter existing modules and deduplicate to prevent > 100% progress
     const completedModuleIds = [...new Set(rawCompletedIds.filter(id => allModuleIds.includes(id)))];
 
     const path = allModules.map(module => {
-      const completedData = gameProgress?.completed_modules?.find(m => m.module_id === module.id);
+      const completedData = gameProgress?.completedModules?.find(m => m.moduleId === module.id);
 
       return {
         id: module.id,
         title: module.title,
         description: module.description, // Added description for UI
         difficulty: module.difficulty,
-        estimated_duration: module.estimated_duration,
-        content_type: module.content_type, // Expose content_type
+        estimatedDuration: module.estimatedDuration,
+        contentType: module.contentType, // Expose content_type
         thumbnail: module.thumbnail,
-        is_completed: completedModuleIds.includes(module.id),
+        isCompleted: completedModuleIds.includes(module.id),
         score: completedData?.score,
-        completed_at: completedData?.completed_date
+        completedAt: completedData?.completedDate
       };
     });
 
@@ -144,7 +144,7 @@ class LearningService extends ReviewableService {
     const percentage = totalModules > 0 ? Math.round((completedCount / totalModules) * 100) : 0;
 
     // Find first incomplete module for "Continue Learning"
-    const nextModule = path.find(m => !m.is_completed);
+    const nextModule = path.find(m => !m.isCompleted);
 
     return {
       success: true,
@@ -153,8 +153,8 @@ class LearningService extends ReviewableService {
         completed: completedCount,
         total: totalModules,
         percentage: percentage,
-        next_module_id: nextModule?.id || null,
-        total_time_spent: gameProgress?.total_learning_time || 0
+        nextModuleId: nextModule?.id || null,
+        totalTimeSpent: gameProgress?.totalLearningTime || 0
       }
     };
   }

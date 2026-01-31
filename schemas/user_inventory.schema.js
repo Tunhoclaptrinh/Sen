@@ -1,5 +1,5 @@
 module.exports = {
-    user_id: {
+    userId: {
         type: 'number',
         required: true,
         unique: true,
@@ -9,6 +9,6 @@ module.exports = {
     items: {
         type: 'array',
         default: [],
-        description: 'Danh sách items: { item_id, quantity, acquired_at }'
+        description: 'Danh sách items: { itemId, quantity, acquiredAt }'
     }
 };

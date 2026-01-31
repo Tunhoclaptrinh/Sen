@@ -11,7 +11,7 @@ class TimelineService extends BaseService {
       ...options,
       filter: {
         ...options.filter,
-        heritage_site_id: parseInt(siteId)
+        heritageSiteId: parseInt(siteId)
       },
       sort: 'year',
       order: 'asc'

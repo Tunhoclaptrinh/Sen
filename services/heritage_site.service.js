@@ -18,20 +18,16 @@ class HeritageSiteService extends ReviewableService {
       if (data.location.longitude) data.longitude = data.location.longitude;
     }
 
-    if (data.period && !data.cultural_period) {
-      data.cultural_period = data.period;
-    }
-
-    if (data.shortDescription && !data.short_description) {
-      data.short_description = data.shortDescription;
+    if (data.period && !data.culturalPeriod) {
+      data.culturalPeriod = data.period;
     }
 
     // Ensure numeric fields are numbers
-    if (data.entrance_fee) data.entrance_fee = Number(data.entrance_fee);
-    if (data.year_established) data.year_established = Number(data.year_established);
+    if (data.entranceFee) data.entranceFee = Number(data.entranceFee);
+    if (data.yearEstablished) data.yearEstablished = Number(data.yearEstablished);
 
     // Debug logging
-    console.log('[HeritageService] Creating:', { name: data.name, short_desc: data.short_description });
+    console.log('[HeritageService] Creating:', { name: data.name, shortDesc: data.shortDescription });
 
     return super.beforeCreate(data);
   }
@@ -47,20 +43,16 @@ class HeritageSiteService extends ReviewableService {
       if (data.location.longitude) data.longitude = data.location.longitude;
     }
 
-    if (data.period && !data.cultural_period) {
-      data.cultural_period = data.period;
-    }
-
-    if (data.shortDescription && !data.short_description) {
-      data.short_description = data.shortDescription;
+    if (data.period && !data.culturalPeriod) {
+      data.culturalPeriod = data.period;
     }
 
     // Ensure numeric fields are numbers
-    if (data.entrance_fee) data.entrance_fee = Number(data.entrance_fee);
-    if (data.year_established) data.year_established = Number(data.year_established);
+    if (data.entranceFee) data.entranceFee = Number(data.entranceFee);
+    if (data.yearEstablished) data.yearEstablished = Number(data.yearEstablished) || null;
 
     // Debug logging
-    console.log('[HeritageService] Updating:', { id, short_desc: data.short_description });
+    console.log('[HeritageService] Updating:', { id, shortDesc: data.shortDescription });
 
     return super.beforeUpdate(id, data);
   }
@@ -103,7 +95,7 @@ class HeritageSiteService extends ReviewableService {
     if (!site) return null;
 
     // No longer auto-populate related items
-    // Frontend will fetch them separately using related_artifact_ids and related_history_ids
+    // Frontend will fetch them separately using relatedArtifactIds and relatedHistoryIds
 
     return {
       success: true,
@@ -131,7 +123,7 @@ class HeritageSiteService extends ReviewableService {
   }
 
   async getArtifacts(siteId) {
-    const artifacts = await db.findMany('artifacts', { heritage_site_id: parseInt(siteId) });
+    const artifacts = await db.findMany('artifacts', { heritageSiteId: parseInt(siteId) });
     return {
       success: true,
       data: artifacts,
@@ -150,7 +142,7 @@ class HeritageSiteService extends ReviewableService {
     }
 
     // 2. Fallback to separate collection if that's where it's stored
-    const timelines = (await db.findMany('timelines', { heritage_site_id: parseInt(siteId) }))
+    const timelines = (await db.findMany('timelines', { heritageSiteId: parseInt(siteId) }))
       .sort((a, b) => a.year - b.year);
 
     return {
@@ -164,7 +156,7 @@ class HeritageSiteService extends ReviewableService {
 
     const stats = {
       total: allSites.length,
-      unesco: allSites.filter(s => s.unesco_listed).length,
+      unesco: allSites.filter(s => s.unescoListed).length,
       topRated: allSites.filter(s => s.rating >= 4).length,
       region: {
         north: allSites.filter(s => s.region === 'Bắc' || s.region === 'North').length,

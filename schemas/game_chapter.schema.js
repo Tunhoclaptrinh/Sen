@@ -24,7 +24,7 @@ module.exports = {
     min: 1,
     description: 'Thứ tự chapter'
   },
-  required_petals: {
+  requiredPetals: {
     type: 'number',
     required: false,
     default: 0,
@@ -42,13 +42,13 @@ module.exports = {
     description: 'Màu sắc chủ đạo'
   },
 
-  is_active: {
+  isActive: {
     type: 'boolean',
     required: false,
     default: true,
     description: 'Có active không'
   },
-  created_by: {
+  createdBy: {
     type: 'number',
     required: false,
     foreignKey: 'users',

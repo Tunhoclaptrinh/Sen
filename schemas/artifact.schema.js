@@ -13,55 +13,49 @@ module.exports = {
     maxLength: 3000,
     description: "Mô tả chi tiết",
   },
-  short_description: {
+  shortDescription: {
     type: "string",
     required: false,
     maxLength: 500,
     description: "Mô tả ngắn gọn",
   },
-  shortDescription: {
-    type: "string",
-    required: false,
-    maxLength: 500,
-    description: "Bí danh cho short_description",
-  },
-  historical_context: {
+  historicalContext: {
     type: "string",
     required: false,
     maxLength: 2000,
     description: "Bối cảnh lịch sử",
   },
-  cultural_significance: {
+  culturalSignificance: {
     type: "string",
     required: false,
     maxLength: 2000,
     description: "Ý nghĩa văn hóa",
   },
-  heritage_site_id: {
+  heritageSiteId: {
     type: "number",
     required: true,
     foreignKey: "heritage_sites",
     description: "Thuộc di sản nào",
   },
-  category_id: {
+  categoryId: {
     type: "number",
     required: true,
     foreignKey: "cultural_categories",
     description: "Phân loại",
   },
-  artifact_type: {
+  artifactType: {
     type: "enum",
     enum: ["sculpture", "painting", "document", "pottery", "textile", "tool", "weapon", "jewelry", "manuscript", "photograph", "other",],
     required: true,
     description: "Loại cổ vật",
 
   },
-  year_created: {
+  yearCreated: {
     type: "number",
     required: false,
     description: "Năm tạo tác",
   },
-  year_discovered: {
+  yearDiscovered: {
     type: "number",
     required: false,
     description: "Năm phát hiện",
@@ -97,7 +91,7 @@ module.exports = {
     description: "Tình trạng",
 
   },
-  location_in_site: {
+  locationInSite: {
     type: "string",
     required: false,
     description: "Vị trí trưng bày",
@@ -107,7 +101,7 @@ module.exports = {
     required: false,
     description: "Hình ảnh",
   },
-  is_on_display: {
+  isOnDisplay: {
     type: "boolean",
     required: false,
     default: true,
@@ -125,19 +119,19 @@ module.exports = {
     description: "Lượt xem",
   },
   // Related items (admin-managed)
-  related_heritage_ids: {
+  relatedHeritageIds: {
     type: "array",
     items: { type: "number" },
     required: false,
     description: "Danh sách ID di sản liên quan",
   },
-  related_history_ids: {
+  relatedHistoryIds: {
     type: "array",
     items: { type: "number" },
     required: false,
     description: "Danh sách ID bài viết lịch sử liên quan",
   },
-  created_by: {
+  createdBy: {
     type: 'number',
     required: false,
     foreignKey: 'users',

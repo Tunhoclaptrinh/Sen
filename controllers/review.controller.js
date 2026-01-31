@@ -5,7 +5,7 @@ class ReviewController {
   getByType = async (req, res, next) => {
     try {
       const { type } = req.params;
-      if (!['heritage_site', 'artifact'].includes(type)) {
+      if (!['heritageSite', 'artifact'].includes(type)) {
         return res.status(400).json({
           success: false,
           message: 'Invalid type'
@@ -27,7 +27,7 @@ class ReviewController {
     try {
       const review = await db.create('reviews', {
         ...req.body,
-        user_id: req.user.id,
+        userId: req.user.id,
         createdAt: new Date().toISOString()
       });
 
@@ -51,7 +51,7 @@ class ReviewController {
         });
       }
 
-      if (review.user_id !== req.user.id && req.user.role !== 'admin') {
+      if (review.userId !== req.user.id && req.user.role !== 'admin') {
         return res.status(403).json({
           success: false,
           message: 'Not authorized'
@@ -83,7 +83,7 @@ class ReviewController {
         });
       }
 
-      if (review.user_id !== req.user.id && req.user.role !== 'admin') {
+      if (review.userId !== req.user.id && req.user.role !== 'admin') {
         return res.status(403).json({
           success: false,
           message: 'Not authorized'

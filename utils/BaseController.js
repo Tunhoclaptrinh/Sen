@@ -78,10 +78,10 @@ class BaseController {
     try {
       // Autopopulate creator info if user is logged in
       if (req.user) {
-        // Force created_by to be current user for non-admins (e.g. researchers)
+        // Force createdBy to be current user for non-admins (e.g. researchers)
         // If admin, they might want to set it on behalf of someone (though rarely used here)
-        if (req.user.role !== 'admin' || !req.body.created_by) {
-          req.body.created_by = req.user.id;
+        if (req.user.role !== 'admin' || !req.body.createdBy) {
+          req.body.createdBy = req.user.id;
         }
       }
 

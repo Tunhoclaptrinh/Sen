@@ -40,8 +40,8 @@ class LevelManagementService extends BaseService {
         ...data,
         screens: processedScreens,
         created_by: creatorId,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       });
 
       return level;
@@ -221,7 +221,7 @@ class LevelManagementService extends BaseService {
     // Update level
     return this.update(levelId, {
       screens: processedScreens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -248,7 +248,7 @@ class LevelManagementService extends BaseService {
 
     return this.update(levelId, {
       screens: processedScreens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -270,7 +270,7 @@ class LevelManagementService extends BaseService {
 
     return this.update(levelId, {
       screens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -301,7 +301,7 @@ class LevelManagementService extends BaseService {
 
     return this.update(levelId, {
       screens: newScreens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -440,8 +440,8 @@ class LevelManagementService extends BaseService {
       ...level,
       id: undefined, // Let DB generate new ID
       name: newName || `${level.name} (Copy)`,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     });
 
     return cloned;
@@ -579,7 +579,7 @@ class LevelManagementService extends BaseService {
       const levelId = levelIdsInOrder[index];
       await db.update('game_levels', levelId, {
         order: index + 1,
-        updated_at: new Date().toISOString()
+        updatedAt: new Date().toISOString()
       });
     }
 
