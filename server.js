@@ -6,7 +6,8 @@ const helmet = require('helmet');
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Force Restart: HISTORY SERVICE FIXEDge: 'Too many login attempts, please try again later'
+  max: 5,
+  message: 'Too many login attempts, please try again later',
 });
 
 
@@ -63,6 +64,8 @@ app.use('/api/auth/register', authLimiter);
 // Mount all routes
 app.use('/api', require('./routes'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/', require('./routes'));
+app.use('/admin', require('./routes/admin'));
 
 // API Documentation
 app.get('/api', (req, res) => {
