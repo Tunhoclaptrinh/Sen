@@ -41,9 +41,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve Static Files (Uploads)
-const uploadDir = path.join(__dirname, 'database/uploads');
-console.log(`📂 Serving static files from: ${uploadDir}`);
-app.use('/uploads', express.static(uploadDir));
+app.use('/uploads', express.static(path.join(__dirname, 'database/uploads')));
 
 // Logging
 app.use(require('./middleware/logger.middleware'));

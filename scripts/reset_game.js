@@ -41,9 +41,6 @@ async function resetGameData() {
     db.data.scan_history = [];
     db.data.user_quests = [];
     
-    // Optional: Clear game-related notifications only? 
-    // For now, let's keep notifications as they might be system-wide.
-    // If you want to clear them too, uncomment:
     // db.data.notifications = []; 
 
     // 4. Save Changes
