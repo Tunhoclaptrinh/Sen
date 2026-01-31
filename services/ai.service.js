@@ -5,7 +5,7 @@ const db = require("../config/database");
 
 const DB_PATH = path.join(__dirname, "../database/db.json");
 const PYTHON_SERVICE_URL =
-  process.env.PYTHON_SERVICE_URL || "http://localhost:8000/process_query";
+  process.env.PYTHON_SERVICE_URL;
 
 class AIService {
   constructor() {
@@ -140,6 +140,100 @@ class AIService {
       return {
         success: false,
         message: "Dịch vụ AI đang bảo trì, Sen sẽ quay lại sớm!",
+        statusCode: 500,
+      };
+    }
+  }
+
+  /**
+   * CHAT AUDIO: Chuyển tiếp file audio sang Python
+   */
+  async chatAudio(userId, audioFile, context = {}) {
+    try {
+      const FormData = require('form-data');
+      
+      // 1. LẤY NHÂN VẬT (NPC)
+      const character = await this.getCharacterContext(context, userId);
+
+      // 2. LẤY LỊCH SỬ
+      const history = await this._getFormattedHistory(
+        userId,
+        context.characterId
+      );
+
+      // 3. CHUẨN BỊ FORM DATA
+      const form = new FormData();
+      // Buffer from multer middleware
+      form.append('audio_file', audioFile.buffer, {
+        filename: audioFile.originalname || 'voice.webm',
+        contentType: audioFile.mimetype || 'audio/webm'
+      });
+      form.append('history', JSON.stringify(history));
+
+      // 4. GỌI SANG PYTHON FASTAPI (/chat-audio)
+      // Note: Python endpoint is /chat-audio
+      const pythonUrl = PYTHON_SERVICE_URL.replace('/chat', '').replace(/\/+$/, '') + '/chat-audio';
+      
+      console.log(`🎙️ Forwarding audio to: ${pythonUrl}`);
+
+      const response = await axios.post(
+        pythonUrl,
+        form,
+        {
+          headers: {
+            ...form.getHeaders()
+          },
+          timeout: 60000 
+        }
+      );
+
+      // 5. XỬ LÝ KẾT QUẢ
+      const { 
+        intent, 
+        answer, 
+        transcribed_text, 
+        audio, /* base64 TTS response */
+        rewritten_query, 
+        route 
+      } = response.data;
+
+      // 6. LƯU VÀO DB
+      const chatRecord = await db.create("ai_chat_history", {
+        user_id: userId,
+        level_id: context.levelId || null,
+        character_id: context.characterId || (character ? character.id : 1),
+        message: transcribed_text || "(Voice)",
+        response: answer,
+        audio_base64: audio || null,
+        context: {
+          ...context,
+          rewritten: rewritten_query,
+          route: route,
+          intent: intent
+        },
+        created_at: new Date().toISOString(),
+      });
+
+      return {
+        success: true,
+        data: {
+          message: answer, // Text response
+          transcribed_text: transcribed_text,
+          character: character,
+          timestamp: chatRecord.created_at,
+          audio_base64: audio, // TTS response
+          intent: intent
+        },
+      };
+
+    } catch (error) {
+       console.error("AI Voice Chat Error:", error.message);
+       if (error.response) {
+         console.error("Python Service Error:", error.response.data);
+       }
+       return {
+        success: false,
+        message: "Sen đang bị nghẹt mũi, không nghe rõ lắm...",
         statusCode: 500,
       };
     }

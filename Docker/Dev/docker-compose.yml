@@ -27,7 +27,7 @@ services:
       - LOG_LEVEL=debug
       - DB_CONNECTION=${DB_CONNECTION}
       - DATABASE_URL=${DATABASE_URL}
-      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://dev-sen-ai:8000/chat}
+      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://sen_ai_dev:8000/chat}
     ports:
       - "3000:3000"
     volumes:
@@ -116,7 +116,7 @@ services:
       - PORT=3000
       - JWT_SECRET=${JWT_SECRET:-dev_secret_key_for_development_only_32chars}
       - JWT_EXPIRE=${JWT_EXPIRE:-7d}
-      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://dev-sen-ai:8000/chat}
+      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://sen_ai_dev:8000/chat}
     volumes:
       - ../..:/app
       - /app/node_modules
