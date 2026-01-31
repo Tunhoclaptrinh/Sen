@@ -13,7 +13,17 @@ class BaseController {
    */
   getAll = async (req, res, next) => {
     try {
-      const result = await this.service.findAll(req.parsedQuery);
+      const options = { ...req.parsedQuery, user: req.user };
+
+      // [RBAC] Researcher: Only see their own resources
+      if (req.user && req.user.role === 'researcher') {
+        options.filter = {
+          ...(options.filter || {}),
+          created_by: req.user.id
+        };
+      }
+
+      const result = await this.service.findAll(options);
 
       res.json({
         success: result.success,
@@ -40,6 +50,18 @@ class BaseController {
         });
       }
 
+      // [RBAC] Researcher: Only access their own resource
+      if (req.user && req.user.role === 'researcher') {
+        const item = result.data;
+        // Check if item has creator (legacy might not)
+        if (item.created_by && String(item.created_by) !== String(req.user.id)) {
+          return res.status(403).json({
+            success: false,
+            message: 'Bạn không có quyền truy cập tài nguyên này.'
+          });
+        }
+      }
+
       res.json({
         success: true,
         data: result.data
@@ -56,8 +78,11 @@ class BaseController {
     try {
       // Autopopulate creator info if user is logged in
       if (req.user) {
-        if (!req.body.created_by) req.body.created_by = req.user.id;
-        // NOTE: We no longer store author/author_name strings as they are populated dynamically
+        // Force created_by to be current user for non-admins (e.g. researchers)
+        // If admin, they might want to set it on behalf of someone (though rarely used here)
+        if (req.user.role !== 'admin' || !req.body.created_by) {
+          req.body.created_by = req.user.id;
+        }
       }
 
       const result = await this.service.create(req.body);
@@ -119,6 +144,20 @@ class BaseController {
    */
   update = async (req, res, next) => {
     try {
+      // [RBAC] Researcher: Check ownership
+      if (req.user && req.user.role === 'researcher') {
+        const itemResult = await this.service.findById(req.params.id);
+        if (itemResult.success) {
+          const item = itemResult.data;
+          if (item.created_by && String(item.created_by) !== String(req.user.id)) {
+            return res.status(403).json({
+              success: false,
+              message: 'Bạn chỉ có quyền chỉnh sửa tài nguyên do chính mình tạo.'
+            });
+          }
+        }
+      }
+
       const result = await this.service.update(req.params.id, req.body);
 
       if (!result.success) {
@@ -144,6 +183,20 @@ class BaseController {
    */
   delete = async (req, res, next) => {
     try {
+      // [RBAC] Researcher: Check ownership
+      if (req.user && req.user.role === 'researcher') {
+        const itemResult = await this.service.findById(req.params.id);
+        if (itemResult.success) {
+          const item = itemResult.data;
+          if (item.created_by && String(item.created_by) !== String(req.user.id)) {
+            return res.status(403).json({
+              success: false,
+              message: 'Bạn chỉ có quyền xóa tài nguyên do chính mình tạo.'
+            });
+          }
+        }
+      }
+
       const result = await this.service.delete(req.params.id);
 
       if (!result.success) {
@@ -212,6 +265,7 @@ class BaseController {
       next(error);
     }
   };
+
 
   // ============= HELPERS =============
 

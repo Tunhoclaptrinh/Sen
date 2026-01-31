@@ -22,5 +22,6 @@ module.exports = {
   game_progress: require('./game_progress.schema'),
   scan_objects: require('./scan_object.schema'),
   shop_items: require('./shop_item.schema'),
-  history_articles: require('./history_article.schema')
+  history_articles: require('./history_article.schema'),
+  learning_modules: require('./learning_module.schema')
 };

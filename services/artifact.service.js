@@ -1,7 +1,7 @@
-const BaseService = require('../utils/BaseService');
+const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
 
-class ArtifactService extends BaseService {
+class ArtifactService extends ReviewableService {
   constructor() {
     super('artifacts');
   }
@@ -13,13 +13,13 @@ class ArtifactService extends BaseService {
     if (data.shortDescription && !data.short_description) {
       data.short_description = data.shortDescription;
     }
-    
+
     // Ensure numeric fields
     if (data.category_id) data.category_id = Number(data.category_id);
     if (data.heritage_site_id) data.heritage_site_id = Number(data.heritage_site_id);
     if (data.year_created) data.year_created = Number(data.year_created);
     if (data.weight) data.weight = Number(data.weight);
-    
+
     return super.beforeCreate(data);
   }
 

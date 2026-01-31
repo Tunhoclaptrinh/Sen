@@ -1,7 +1,7 @@
-const BaseService = require('../utils/BaseService');
+const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
 
-class LearningService extends BaseService {
+class LearningService extends ReviewableService {
   constructor() {
     super('learning_modules');
   }
@@ -19,23 +19,23 @@ class LearningService extends BaseService {
 
     // 2. Server-side score validation (Weighted Scoring)
     if (answers && moduleItem.quiz && moduleItem.quiz.questions) {
-        let totalPoints = 0;
-        let earnedPoints = 0;
+      let totalPoints = 0;
+      let earnedPoints = 0;
 
-        moduleItem.quiz.questions.forEach(q => {
-            const questionPoint = q.point || 10;
-            totalPoints += questionPoint;
-            
-            // Check if answer is correct
-            // Note: answers keys might be strings in JSON
-            if (answers[q.id] !== undefined && parseInt(answers[q.id]) === q.correct_answer) {
-                earnedPoints += questionPoint;
-            }
-        });
+      moduleItem.quiz.questions.forEach(q => {
+        const questionPoint = q.point || 10;
+        totalPoints += questionPoint;
 
-        if (totalPoints > 0) {
-            finalScore = Math.round((earnedPoints / totalPoints) * 100);
+        // Check if answer is correct
+        // Note: answers keys might be strings in JSON
+        if (answers[q.id] !== undefined && parseInt(answers[q.id]) === q.correct_answer) {
+          earnedPoints += questionPoint;
         }
+      });
+
+      if (totalPoints > 0) {
+        finalScore = Math.round((earnedPoints / totalPoints) * 100);
+      }
     }
 
     // 3. User Game Progress Logic
@@ -83,7 +83,7 @@ class LearningService extends BaseService {
     if (finalScore === 100 && !newBadges.includes('perfect_score')) {
       newBadges.push('perfect_score'); // Badge: Điểm Tuyệt Đối
     }
-    
+
     // Update Progress
     await db.update('game_progress', gameProgress.id, {
       completed_modules: [...(gameProgress.completed_modules || []), completedModule],

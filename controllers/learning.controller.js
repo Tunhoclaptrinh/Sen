@@ -1,7 +1,7 @@
-const BaseController = require('../utils/BaseController');
+const ReviewableController = require('../utils/ReviewableController');
 const learningService = require('../services/learning.service');
 
-class LearningController extends BaseController {
+class LearningController extends ReviewableController {
   constructor() {
     super(learningService);
   }

@@ -1,7 +1,7 @@
-const BaseService = require('../utils/BaseService');
+const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
 
-class HistoryService extends BaseService {
+class HistoryService extends ReviewableService {
   constructor() {
     super('history_articles');
   }

@@ -1,7 +1,7 @@
-const BaseController = require('../utils/BaseController');
+const ReviewableController = require('../utils/ReviewableController');
 const artifactService = require('../services/artifact.service');
 
-class ArtifactController extends BaseController {
+class ArtifactController extends ReviewableController {
   constructor() {
     super(artifactService);
   }

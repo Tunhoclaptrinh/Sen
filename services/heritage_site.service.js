@@ -1,8 +1,8 @@
-const BaseService = require('../utils/BaseService');
+const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
 const { calculateDistance } = require('../utils/helpers');
 
-class HeritageSiteService extends BaseService {
+class HeritageSiteService extends ReviewableService {
   constructor() {
     super('heritage_sites');
   }

@@ -4,10 +4,10 @@ const { protect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const exhibitionController = require('../controllers/exhibition.controller');
 
-// Public
-router.get('/', exhibitionController.getAll);
-router.get('/active', exhibitionController.getActive);
-router.get('/:id', exhibitionController.getById);
+// Public (protected for RBAC filtering)
+router.get('/', protect, exhibitionController.getAll);
+router.get('/active', protect, exhibitionController.getActive);
+router.get('/:id', protect, exhibitionController.getById);
 
 // Protected
 router.post('/',

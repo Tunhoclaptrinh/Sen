@@ -40,6 +40,11 @@ router.delete('/:id',
   historyController.delete
 );
 
+// Review Routes
+router.patch('/:id/submit', protect, checkPermission('history_articles', 'update'), historyController.submitReview);
+router.patch('/:id/approve', protect, checkPermission('history_articles', 'publish'), historyController.approveReview);
+router.patch('/:id/reject', protect, checkPermission('history_articles', 'publish'), historyController.rejectReview);
+
 module.exports = router;
 
 // Trigger restart for data reload
