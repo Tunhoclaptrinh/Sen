@@ -6,7 +6,8 @@ const helmet = require('helmet');
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Force Restart: HISTORY SERVICE FIXEDge: 'Too many login attempts, please try again later'
+  max: 5,
+  message: 'Too many login attempts, please try again later',
 });
 
 
@@ -63,6 +64,8 @@ app.use('/api/auth/register', authLimiter);
 // Mount all routes
 app.use('/api', require('./routes'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/', require('./routes'));
+app.use('/admin', require('./routes/admin'));
 
 // API Documentation
 app.get('/api', (req, res) => {
@@ -351,7 +354,7 @@ function getNetworkIp() {
   const interfaces = os.networkInterfaces();
   for (const name of Object.keys(interfaces)) {
     for (const interface of interfaces[name]) {
-      const {address, family, internal} = interface;
+      const { address, family, internal } = interface;
       if (family === 'IPv4' && !internal) {
         return address;
       }
@@ -367,7 +370,7 @@ const KEEPALIVE_INTERVAL = 14 * 60 * 1000; // 14 minutes
 function startKeepAlive() {
   const serviceUrl = process.env.PYTHON_SERVICE_URL;
   if (!serviceUrl || serviceUrl.includes('localhost') || serviceUrl.includes('127.0.0.1')) {
-     return;
+    return;
   }
 
   // Extract base URL (e.g., https://npc-sen.onrender.com) from /process_query
@@ -382,11 +385,11 @@ function startKeepAlive() {
 
     // Periodic ping
     setInterval(() => {
-        pingService(targetUrl);
+      pingService(targetUrl);
     }, KEEPALIVE_INTERVAL);
 
   } catch (err) {
-      console.error(err.message);
+    console.error(err.message);
   }
 }
 
@@ -399,9 +402,9 @@ async function pingService(url) {
     // If root doesn't exist but we got a response, that's still a wake-up success (e.g. 404)
     // But 405 means method not allowed, which is what we want to avoid.
     if (error.response) {
-         console.log(`[${new Date().toISOString()}] 💓 Wake up successful (Status: ${error.response.status})`);
+      console.log(`[${new Date().toISOString()}] 💓 Wake up successful (Status: ${error.response.status})`);
     } else {
-         console.error(`[${new Date().toISOString()}] ⚠️ Wake up failed: ${error.message}`);
+      console.error(`[${new Date().toISOString()}] ⚠️ Wake up failed: ${error.message}`);
     }
   }
 }
@@ -421,7 +424,7 @@ app.listen(PORT, () => {
 ║   ❤️  Health: http://localhost:${PORT}/api/health                    ║
 ╚══════════════════════════════════════════════════════════════════╝
   `);
-  
+
   // Start Keep Alive
   startKeepAlive();
 });
