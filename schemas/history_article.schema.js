@@ -4,15 +4,10 @@ module.exports = {
     required: true,
     description: 'Tiêu đề bài viết'
   },
-  short_description: {
-    type: 'string',
-    required: false,
-    description: 'Mô tả ngắn'
-  },
   shortDescription: {
     type: 'string',
     required: false,
-    description: 'Mô tả ngắn (alias)'
+    description: 'Mô tả ngắn'
   },
   content: {
     type: 'string',
@@ -39,7 +34,7 @@ module.exports = {
     required: false,
     description: 'Ngày đăng'
   },
-  is_active: {
+  isActive: {
     type: 'boolean',
     required: false,
     default: true,
@@ -51,33 +46,33 @@ module.exports = {
     default: 0,
     description: 'Lượt xem'
   },
-  category_id: {
+  categoryId: {
     type: 'number',
     required: false,
     description: 'ID danh mục'
   },
   // Related items
-  related_heritage_ids: {
+  relatedHeritageIds: {
     type: 'array',
     required: false,
     description: 'Danh sách ID Di sản liên quan'
   },
-  related_artifact_ids: {
+  relatedArtifactIds: {
     type: 'array',
     required: false,
     description: 'Danh sách ID Hiện vật liên quan'
   },
-  related_level_ids: {
+  relatedLevelIds: {
     type: 'array',
     required: false,
     description: 'Danh sách ID Màn chơi liên quan'
   },
-  related_product_ids: {
+  relatedProductIds: {
     type: 'array',
     required: false,
     description: 'Danh sách ID Sản phẩm liên quan'
   },
-  created_by: {
+  createdBy: {
     type: 'number',
     required: false,
     foreignKey: 'users',

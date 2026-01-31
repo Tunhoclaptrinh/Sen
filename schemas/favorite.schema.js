@@ -5,7 +5,7 @@ module.exports = {
     required: true,
     description: 'Loại yêu thích'
   },
-  reference_id: {
+  referenceId: {
     type: 'number',
     required: true,
     description: 'ID tài liệu'

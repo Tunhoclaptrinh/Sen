@@ -10,16 +10,12 @@ class ArtifactService extends BaseService {
    * Transform data before create
    */
   async beforeCreate(data) {
-    if (data.shortDescription && !data.short_description) {
-      data.short_description = data.shortDescription;
-    }
-    
     // Ensure numeric fields
-    if (data.category_id) data.category_id = Number(data.category_id);
-    if (data.heritage_site_id) data.heritage_site_id = Number(data.heritage_site_id);
-    if (data.year_created) data.year_created = Number(data.year_created);
+    if (data.categoryId) data.categoryId = Number(data.categoryId);
+    if (data.heritageSiteId) data.heritageSiteId = Number(data.heritageSiteId);
+    if (data.yearCreated) data.yearCreated = Number(data.yearCreated);
     if (data.weight) data.weight = Number(data.weight);
-    
+
     return super.beforeCreate(data);
   }
 
@@ -27,21 +23,17 @@ class ArtifactService extends BaseService {
    * Transform data before update
    */
   async beforeUpdate(id, data) {
-    if (data.shortDescription && !data.short_description) {
-      data.short_description = data.shortDescription;
-    }
-
     // Ensure numeric fields
-    if (data.category_id) data.category_id = Number(data.category_id);
-    if (data.heritage_site_id) data.heritage_site_id = Number(data.heritage_site_id);
-    if (data.year_created) data.year_created = Number(data.year_created);
+    if (data.categoryId) data.categoryId = Number(data.categoryId);
+    if (data.heritageSiteId) data.heritageSiteId = Number(data.heritageSiteId);
+    if (data.yearCreated) data.yearCreated = Number(data.yearCreated);
     if (data.weight) data.weight = Number(data.weight);
 
     return super.beforeUpdate(id, data);
   }
 
   async getByType(type) {
-    const artifacts = await db.findMany('artifacts', { artifact_type: type });
+    const artifacts = await db.findMany('artifacts', { artifactType: type });
     return {
       success: true,
       data: artifacts
@@ -58,8 +50,8 @@ class ArtifactService extends BaseService {
     const related = allArtifacts
       .filter(a =>
         a.id !== artifactId &&
-        (a.heritage_site_id === artifact.heritage_site_id ||
-          a.cultural_category_id === artifact.cultural_category_id)
+        (a.heritageSiteId === artifact.heritageSiteId ||
+          a.culturalCategoryId === artifact.culturalCategoryId)
       )
       .slice(0, 5);
 
@@ -85,21 +77,21 @@ class ArtifactService extends BaseService {
 
     const stats = {
       total: allArtifacts.length,
-      onDisplay: allArtifacts.filter(a => a.is_on_display !== false).length,
+      onDisplay: allArtifacts.filter(a => a.isOnDisplay !== false).length,
       goodCondition: allArtifacts.filter(a => ['excellent', 'good'].includes(a.condition)).length,
       avgRating: avgRating,
-      unesco: allArtifacts.filter(a => siteMap[a.heritage_site_id]?.unesco_listed).length,
+      unesco: allArtifacts.filter(a => siteMap[a.heritageSiteId]?.unescoListed).length,
       region: {
         north: allArtifacts.filter(a => {
-          const region = siteMap[a.heritage_site_id]?.region;
+          const region = siteMap[a.heritageSiteId]?.region;
           return region === 'Bắc' || region === 'North';
         }).length,
         center: allArtifacts.filter(a => {
-          const region = siteMap[a.heritage_site_id]?.region;
+          const region = siteMap[a.heritageSiteId]?.region;
           return region === 'Trung' || region === 'Center';
         }).length,
         south: allArtifacts.filter(a => {
-          const region = siteMap[a.heritage_site_id]?.region;
+          const region = siteMap[a.heritageSiteId]?.region;
           return region === 'Nam' || region === 'South';
         }).length
       }

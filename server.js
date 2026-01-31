@@ -6,7 +6,8 @@ const helmet = require('helmet');
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Force Restart: HISTORY SERVICE FIXEDge: 'Too many login attempts, please try again later'
+  max: 5,
+  message: 'Too many login attempts, please try again later'
 });
 
 

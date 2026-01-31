@@ -116,7 +116,7 @@ class FavoriteController extends BaseController {
     try {
       const { type } = req.params;
       const result = await this.service.getFavorites(req.user.id, { filter: { type } });
-      const ids = result.data.map(f => f.reference_id);
+      const ids = result.data.map(f => f.referenceId);
       res.json({ success: true, data: ids });
     } catch (error) {
       next(error);

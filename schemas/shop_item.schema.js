@@ -43,19 +43,19 @@ module.exports = {
     required: false,
     description: 'Hiệu ứng khi dùng (JSON/Key)'
   },
-  is_consumable: {
+  isConsumable: {
     type: 'boolean',
     required: false,
     default: true,
     description: 'Có tiêu hao không'
   },
-  max_stack: {
+  maxStack: {
     type: 'number',
     required: false,
     default: 99,
     description: 'Số lượng tối đa trong inventory'
   },
-  is_active: {
+  isActive: {
     type: 'boolean',
     required: false,
     default: true,

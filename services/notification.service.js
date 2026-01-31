@@ -11,13 +11,13 @@ class NotificationService extends BaseService {
       ...options,
       filter: {
         ...options.filter,
-        user_id: userId
+        userId: userId
       },
-      sort: 'created_at',
+      sort: 'createdAt',
       order: 'desc'
     });
 
-    const unreadCount = result.data.filter(n => !n.is_read).length;
+    const unreadCount = result.data.filter(n => !n.isRead).length;
 
     return {
       success: true,
@@ -30,7 +30,7 @@ class NotificationService extends BaseService {
   async markAsRead(notificationId, userId) {
     const notification = await db.findById('notifications', notificationId);
 
-    if (!notification || notification.user_id !== userId) {
+    if (!notification || notification.userId !== userId) {
       return {
         success: false,
         message: 'Notification not found',
@@ -39,7 +39,7 @@ class NotificationService extends BaseService {
     }
 
     const updated = await db.update('notifications', notificationId, {
-      is_read: true
+      isRead: true
     });
 
     return {
@@ -52,10 +52,10 @@ class NotificationService extends BaseService {
   async markAllAsRead(userId) {
     // This is a bit inefficient with JSON DB but works for now
     const notifications = await db.findAll('notifications');
-    const userNotifications = notifications.filter(n => n.user_id === userId && !n.is_read);
+    const userNotifications = notifications.filter(n => n.userId === userId && !n.isRead);
 
     for (const notif of userNotifications) {
-      await db.update('notifications', notif.id, { is_read: true });
+      await db.update('notifications', notif.id, { isRead: true });
     }
 
     return {
@@ -68,7 +68,7 @@ class NotificationService extends BaseService {
   async deleteAll(userId) {
     const notifications = await db.findAll('notifications');
     const userNotificationIds = notifications
-      .filter(n => n.user_id === userId)
+      .filter(n => n.userId === userId)
       .map(n => n.id);
 
     // Since JSON DB might not support bulk delete properly, we do loop or simple filter rewrite

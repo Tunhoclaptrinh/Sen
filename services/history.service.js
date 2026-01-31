@@ -10,12 +10,8 @@ class HistoryService extends BaseService {
    * Transform data before create
    */
   async beforeCreate(data) {
-    if (data.shortDescription && !data.short_description) {
-      data.short_description = data.shortDescription;
-    }
-
     // Ensure numeric fields
-    if (data.category_id) data.category_id = Number(data.category_id);
+    if (data.categoryId) data.categoryId = Number(data.categoryId);
     if (data.views) data.views = Number(data.views);
 
     return super.beforeCreate(data);
@@ -25,12 +21,8 @@ class HistoryService extends BaseService {
    * Transform data before update
    */
   async beforeUpdate(id, data) {
-    if (data.shortDescription && !data.short_description) {
-      data.short_description = data.shortDescription;
-    }
-
     // Ensure numeric fields
-    if (data.category_id) data.category_id = Number(data.category_id);
+    if (data.categoryId) data.categoryId = Number(data.categoryId);
     if (data.views) data.views = Number(data.views);
 
     return super.beforeUpdate(id, data);
@@ -42,7 +34,7 @@ class HistoryService extends BaseService {
   async getStats() {
     const allArticles = await db.findAll('history_articles');
 
-    const active = allArticles.filter(a => a.is_active !== false).length;
+    const active = allArticles.filter(a => a.isActive !== false).length;
     const inactive = allArticles.length - active;
 
     const stats = {
@@ -112,27 +104,27 @@ class HistoryService extends BaseService {
     }
 
     // Populate Related Heritage
-    if (article.related_heritage_ids?.length) {
+    if (article.relatedHeritageIds?.length) {
       const heritageSites = await db.findAll('heritage_sites');
-      article.related_heritage = heritageSites.filter(h => article.related_heritage_ids.includes(h.id));
+      article.relatedHeritage = heritageSites.filter(h => article.relatedHeritageIds.includes(h.id));
     }
 
     // Populate Related Artifacts
-    if (article.related_artifact_ids?.length) {
+    if (article.relatedArtifactIds?.length) {
       const artifacts = await db.findAll('artifacts');
-      article.related_artifacts = artifacts.filter(a => article.related_artifact_ids.includes(a.id));
+      article.relatedArtifacts = artifacts.filter(a => article.relatedArtifactIds.includes(a.id));
     }
 
     // Populate Related Game Levels
-    if (article.related_level_ids?.length) {
+    if (article.relatedLevelIds?.length) {
       const levels = await db.findAll('game_levels');
-      article.related_levels = levels.filter(l => article.related_level_ids.includes(l.id));
+      article.relatedLevels = levels.filter(l => article.relatedLevelIds.includes(l.id));
     }
 
     // Populate Related Products
-    if (article.related_product_ids?.length) {
+    if (article.relatedProductIds?.length) {
       const products = await db.findAll('products');
-      article.related_products = products.filter(p => article.related_product_ids.includes(p.id));
+      article.relatedProducts = products.filter(p => article.relatedProductIds.includes(p.id));
     }
 
     return {

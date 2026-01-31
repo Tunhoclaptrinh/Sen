@@ -18,7 +18,7 @@ module.exports = {
     required: true,
     description: 'Năm'
   },
-  heritage_site_id: {
+  heritageSiteId: {
     type: 'number',
     required: true,
     foreignKey: 'heritage_sites',

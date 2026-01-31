@@ -7,7 +7,7 @@ class CategoryService extends BaseService {
   }
 
   async validateDelete(id) {
-    const artifacts = await db.findMany('artifacts', { category_id: parseInt(id) });
+    const artifacts = await db.findMany('artifacts', { categoryId: parseInt(id) });
 
     if (artifacts.length > 0) {
       return {
@@ -15,7 +15,7 @@ class CategoryService extends BaseService {
         message: 'Cannot delete category in use',
         statusCode: 400,
         details: {
-          artifacts_count: artifacts.length
+          artifactsCount: artifacts.length
         }
       };
     }
@@ -34,7 +34,7 @@ class CategoryService extends BaseService {
       ...queryOptions,
       filter: {
         ...(queryOptions.filter || {}),
-        category_id: parseInt(categoryId)
+        categoryId: parseInt(categoryId)
       }
     };
 

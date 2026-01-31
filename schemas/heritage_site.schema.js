@@ -7,17 +7,11 @@ module.exports = {
     maxLength: 200,
     description: "Tên di sản văn hóa",
   },
-  short_description: {
-    type: "string",
-    required: false,
-    maxLength: 500,
-    description: "Mô tả ngắn gọn về di sản",
-  },
   shortDescription: {
     type: "string",
     required: false,
     maxLength: 500,
-    description: "Bí danh cho short_description",
+    description: "Mô tả ngắn gọn về di sản",
   },
   description: {
     type: "string",
@@ -35,7 +29,7 @@ module.exports = {
     description: "Loại di sản",
 
   },
-  cultural_period: {
+  culturalPeriod: {
     type: "string",
     required: false,
     description: "Thời kỳ văn hóa (VD: Triều Nguyễn, Thời Lý, ...)",
@@ -71,12 +65,12 @@ module.exports = {
     maxLength: 300,
     description: "Địa chỉ cụ thể",
   },
-  year_established: {
+  yearEstablished: {
     type: "number",
     required: false,
     description: "Năm thành lập/xây dựng",
   },
-  year_restored: {
+  yearRestored: {
     type: "number",
     required: false,
     description: "Năm tu bổ gần nhất",
@@ -99,30 +93,30 @@ module.exports = {
     default: 0,
     description: "Đánh giá trung bình",
   },
-  total_reviews: {
+  totalReviews: {
     type: "number",
     required: false,
     default: 0,
     description: "Tổng số đánh giá",
   },
-  visit_hours: {
+  visitHours: {
     type: "string",
     required: false,
     description: "Giờ mở cửa (VD: 8:00 - 17:00)",
   },
-  entrance_fee: {
+  entranceFee: {
     type: "number",
     required: false,
     default: 0,
     description: "Phí vào cửa (VNĐ)",
   },
-  is_active: {
+  isActive: {
     type: "boolean",
     required: false,
     default: true,
     description: "Đang hoạt động",
   },
-  unesco_listed: {
+  unescoListed: {
     type: "boolean",
     required: false,
     default: false,
@@ -136,7 +130,7 @@ module.exports = {
     description: "Tầm quan trọng",
 
   },
-  historical_events: {
+  historicalEvents: {
     type: "array",
     required: false,
     description: "Các sự kiện lịch sử liên quan",
@@ -146,7 +140,7 @@ module.exports = {
     required: false,
     description: "Các câu chuyện dã sử, truyền thuyết",
   },
-  visit_count: {
+  visitCount: {
     type: "number",
     required: false,
     default: 0,
@@ -159,13 +153,13 @@ module.exports = {
     description: "Lượt xem",
   },
   // Related items (admin-managed)
-  related_artifact_ids: {
+  relatedArtifactIds: {
     type: "array",
     items: { type: "number" },
     required: false,
     description: "Danh sách ID hiện vật liên quan",
   },
-  related_history_ids: {
+  relatedHistoryIds: {
     type: "array",
     items: { type: "number" },
     required: false,
@@ -176,7 +170,7 @@ module.exports = {
     required: false,
     description: "Dòng thời gian sự kiện",
   },
-  created_by: {
+  createdBy: {
     type: 'number',
     required: false,
     foreignKey: 'users',

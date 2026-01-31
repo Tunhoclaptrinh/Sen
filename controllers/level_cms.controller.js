@@ -247,9 +247,9 @@ class LevelCMSController {
           original: screens,
           processed: processed,
           metadata: {
-            total_screens: processed.length,
-            screen_types: levelManagementService.countScreenTypes(processed),
-            estimated_time: levelManagementService.estimatePlayTime(processed)
+            totalScreens: processed.length,
+            screenTypes: levelManagementService.countScreenTypes(processed),
+            estimatedTime: levelManagementService.estimatePlayTime(processed)
           }
         }
       });
@@ -360,8 +360,8 @@ class LevelCMSController {
 
       // Extract từ screens
       level.data.screens?.forEach(screen => {
-        if (screen.background_image) assets.images.add(screen.background_image);
-        if (screen.background_music) assets.audio.add(screen.background_music);
+        if (screen.backgroundImage) assets.images.add(screen.backgroundImage);
+        if (screen.backgroundMusic) assets.audio.add(screen.backgroundMusic);
         if (screen.image) assets.images.add(screen.image);
         if (screen.video) assets.video.add(screen.video);
 
@@ -398,10 +398,10 @@ class LevelCMSController {
 
       const stats = {
         total: allLevels.data.length,
-        by_difficulty: {},
-        by_chapter: {},
-        avg_screens: 0,
-        avg_play_time: 0
+        byDifficulty: {},
+        byChapter: {},
+        avgScreens: 0,
+        avgPlayTime: 0
       };
 
       let totalScreens = 0;
@@ -409,22 +409,22 @@ class LevelCMSController {
 
       allLevels.data.forEach(level => {
         // Count by difficulty
-        stats.by_difficulty[level.difficulty] =
-          (stats.by_difficulty[level.difficulty] || 0) + 1;
+        stats.byDifficulty[level.difficulty] =
+          (stats.byDifficulty[level.difficulty] || 0) + 1;
 
 
 
         // Count by chapter
-        stats.by_chapter[level.chapter_id] =
-          (stats.by_chapter[level.chapter_id] || 0) + 1;
+        stats.byChapter[level.chapterId] =
+          (stats.byChapter[level.chapterId] || 0) + 1;
 
         // Calculate averages
         totalScreens += level.screens?.length || 0;
         totalTime += levelManagementService.estimatePlayTime(level.screens);
       });
 
-      stats.avg_screens = Math.round(totalScreens / allLevels.data.length);
-      stats.avg_play_time = Math.round(totalTime / allLevels.data.length);
+      stats.avgScreens = Math.round(totalScreens / allLevels.data.length);
+      stats.avgPlayTime = Math.round(totalTime / allLevels.data.length);
 
       res.json({
         success: true,
