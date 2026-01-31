@@ -8,8 +8,6 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install nodemon globally for hot-reload
-RUN npm install -g nodemon
 
 # Copy package files FIRST (cached if unchanged)
 COPY package*.json ./

@@ -41,6 +41,48 @@ class AIController {
   };
 
   /**
+   * POST /api/ai/chat-audio
+   * Chat bằng giọng nói (Audio -> STT -> AI -> TTS)
+   */
+  chatAudio = async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: 'Audio file is required'
+        });
+      }
+
+      // context is passed as JSON string in form-data
+      let context = {};
+      if (req.body.context) {
+        try {
+          context = JSON.parse(req.body.context);
+        } catch (e) {
+          console.error('Error parsing context:', e);
+        }
+      }
+
+      const result = await aiService.chatAudio(
+        req.user.id,
+        req.file,
+        context
+      );
+
+      if (!result.success) {
+        return res.status(result.statusCode || 500).json({
+          success: false,
+          message: result.message
+        });
+      }
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
    * GET /api/ai/history
    * Lấy lịch sử chat
    */
@@ -168,6 +210,54 @@ class AIController {
   clearHistory = async (req, res, next) => {
     try {
       const result = await aiService.clearHistory(req.user.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * GET /api/ai/characters
+   * Lấy danh sách AI characters mà user sở hữu
+   */
+  getCharacters = async (req, res, next) => {
+    try {
+      const result = await aiService.getCharacters(req.user.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * GET /api/ai/characters/available
+   * Lấy danh sách nhân vật có thể mua (đã unlock nhưng chưa sở hữu)
+   */
+  getAvailableCharacters = async (req, res, next) => {
+    try {
+      const result = await aiService.getAvailableCharacters(req.user.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * POST /api/ai/characters/:id/purchase
+   * Mua nhân vật
+   */
+  purchaseCharacter = async (req, res, next) => {
+    try {
+      const characterId = parseInt(req.params.id);
+      const result = await aiService.purchaseCharacter(req.user.id, characterId);
+      
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message
+        });
+      }
+
       res.json(result);
     } catch (error) {
       next(error);

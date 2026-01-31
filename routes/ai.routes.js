@@ -7,7 +7,14 @@ const aiController = require('../controllers/ai.controller');
 router.use(protect);
 
 router.post('/chat', aiController.chat);
+router.post('/chat-audio', require('multer')({ storage: require('multer').memoryStorage() }).single('audio'), aiController.chatAudio);
 router.get('/history', aiController.getHistory);
+
+// Character routes (order matters: specific routes before parameterized routes)
+router.get('/characters/available', aiController.getAvailableCharacters);
+router.get('/characters', aiController.getCharacters);
+router.post('/characters/:id/purchase', aiController.purchaseCharacter);
+
 router.post('/ask-hint', aiController.askHint);
 router.post('/explain', aiController.explain);
 router.post('/quiz', aiController.generateQuiz);

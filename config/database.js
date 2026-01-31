@@ -59,6 +59,7 @@ class JsonAdapter {
       scan_history: [],
       shop_items: [],
       user_inventory: [],
+      user_characters: [],
       ai_chat_history: [],
 
       // Learning
