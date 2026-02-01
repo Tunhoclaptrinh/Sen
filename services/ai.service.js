@@ -438,25 +438,25 @@ class AIService {
         }
       }
 
-      // 5. Check đủ tiền
-      const progress = await db.findOne("game_progress", { user_id: userId });
-      if (!progress) {
-        return { success: false, message: "Không tìm thấy tiến độ game", statusCode: 404 };
-      }
+      // 5. Check đủ tiền (Cánh Sen)
+    const progress = await db.findOne("game_progress", { user_id: userId });
+    if (!progress) {
+      return { success: false, message: "Không tìm thấy tiến độ game", statusCode: 404 };
+    }
 
-      const currentCoins = progress.coins || 0;
-      if (currentCoins < character.price) {
-        return { 
-          success: false, 
-          message: `Không đủ xu. Cần ${character.price}, hiện có ${currentCoins}`, 
-          statusCode: 400 
-        };
-      }
+    const currentPetals = progress.total_sen_petals || 0;
+    if (currentPetals < character.price) {
+      return { 
+        success: false, 
+        message: `Không đủ Cánh Sen. Cần ${character.price}, hiện có ${currentPetals}`, 
+        statusCode: 400 
+      };
+    }
 
-      // 6. Trừ tiền và thêm ownership
-      await db.update("game_progress", progress.id, {
-        coins: currentCoins - character.price
-      });
+    // 6. Trừ Cánh Sen và thêm ownership
+    await db.update("game_progress", progress.id, {
+      total_sen_petals: currentPetals - character.price
+    });
 
       const ownership = await db.create("user_characters", {
         user_id: userId,
@@ -470,7 +470,7 @@ class AIService {
         message: `Đã mua nhân vật ${character.name}!`,
         data: {
           character: character,
-          new_balance: currentCoins - character.price,
+          new_balance: currentPetals - character.price,
           ownership: ownership
         }
       };
@@ -495,26 +495,31 @@ class AIService {
       const progress = await db.findOne("game_progress", { user_id: userId });
       const completedLevels = progress?.completed_levels || [];
 
-      // Filter: chưa sở hữu, không phải mặc định, và đã unlock
-      const availableCharacters = allCharacters.filter(char => {
-        if (char.is_default) return false; // Mặc định đã có
-        if (ownedIds.includes(char.id)) return false; // Đã sở hữu
-        
-        // Check unlock condition
-        if (char.unlock_level_id && !completedLevels.includes(char.unlock_level_id)) {
-          return false; // Chưa unlock
-        }
-        
-        return true; // Có thể mua
-      }).map(char => ({
-        id: char.id,
-        name: char.name,
-        avatar: char.avatar,
-        description: char.description,
-        rarity: char.rarity,
-        price: char.price,
-        unlock_level_id: char.unlock_level_id
-      }));
+      // Filter: không phải mặc định VÀ đã unlock
+      // Bao gồm cả đã sở hữu (với flag is_owned)
+      const availableCharacters = allCharacters
+        .filter(char => {
+          if (char.is_default) return false; // Mặc định đã có
+          
+          // Check unlock condition - phải hoàn thành level để unlock
+          if (char.unlock_level_id && !completedLevels.includes(char.unlock_level_id)) {
+            return false; // Chưa unlock
+          }
+          
+          return true; // Đã unlock (có thể mua hoặc đã sở hữu)
+        })
+        .map(char => ({
+          id: char.id,
+          name: char.name,
+          avatar: char.avatar,
+          description: char.description,
+          rarity: char.rarity,
+          price: char.price,
+          unlock_level_id: char.unlock_level_id,
+          is_owned: ownedIds.includes(char.id) // Flag đã sở hữu
+        }))
+        // Sort: chưa sở hữu trước, đã sở hữu sau
+        .sort((a, b) => (a.is_owned === b.is_owned ? 0 : a.is_owned ? 1 : -1));
 
       return { success: true, data: availableCharacters };
     } catch (error) {
