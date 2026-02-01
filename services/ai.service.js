@@ -109,18 +109,44 @@ class AIService {
 
       const { answer, rewritten_query, route, score, audio_base64 } = response.data;
 
+      // [FEATURE] Extract Link from Answer to return as Recommendation Card (Rich Response)
+      let finalAnswer = answer;
+      let recommendation = null;
+      
+      // Regex to find [Title](URL) and optional preceding text like "cậu vui lòng truy cập trang chủ tại đây: 👉"
+      // Captures: 0: Full match including prefix, 1: Title, 2: URL
+      const linkMatch = answer.match(/(?:(?:cậu|bạn|mình|anh|chị|em)\s+(?:vui\s+lòng|làm\s+ơn|hãy|có\s+thể|muốn)?\s+)?(?:xem|truy\s+cập|tham\s+khảo|nhấn|bấm|click)(?:[\s\wàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*?)(?:vào|tại\s+)?(?:đây|link|đường\s+dẫn|website|trang\s+chủ)?\s*[:.,]?\s*(?:👉|👇|🔗)?\s*\[([^\]]+)\]\(([^)]+)\)/i);
+      
+      if (linkMatch) {
+          // Note: linkMatch[1] is Title, linkMatch[2] is URL (if prefix matched, otherwise indices might shift if groups added)
+          // Actually with non-capturing groups (?:), indices 1 and 2 are stable for Title and URL.
+          const title = linkMatch[1];
+          const url = linkMatch[2];
+          
+          // 1. Fixed Button Title as requested
+          recommendation = { 
+              title: "👉 Thông tin chi tiết tại đây", 
+              url: url 
+          };
+          
+          // 2. Replace the ENTIRE matched phrase (including "xem tại đây: 👉") 
+          // with clean phrase "cậu có thể xem ở dưới đây"
+          finalAnswer = answer.replace(linkMatch[0], "cậu có thể xem ở dưới đây");
+      }
+
       // 4. LƯU VÀO db.json QUA WRAPPER DATABASE CỦA BẠN
       const chatRecord = await db.create("ai_chat_history", {
         user_id: userId,
         level_id: context.levelId || null,
         character_id: context.characterId || (character ? character.id : 1),
         message: cleanMessage,
-        response: answer,
+        response: finalAnswer, // Save clean text
         audio_base64: audio_base64 || null, // Lưu audio nếu có
         context: {
           ...context,
           rewritten: rewritten_query,
           route: route,
+          recommendation: recommendation // Save recommendation in context
         },
         created_at: new Date().toISOString(),
       });
@@ -128,11 +154,12 @@ class AIService {
       return {
         success: true,
         data: {
-          message: answer,
+          message: finalAnswer,
           character: character,
           timestamp: chatRecord.created_at,
           route: route,
-          audio_base64: audio_base64 // Trả về cho frontend ngay lập tức
+          audio_base64: audio_base64, // Trả về cho frontend ngay lập tức
+          recommendation: recommendation // Trả về recommendation riêng
         },
       };
     } catch (error) {
