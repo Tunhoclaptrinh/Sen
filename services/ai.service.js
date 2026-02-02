@@ -135,10 +135,11 @@ class AIService {
       }
 
       // 4. LƯU VÀO db.json QUA WRAPPER DATABASE CỦA BẠN
+      // 4. LƯU VÀO db.json QUA WRAPPER DATABASE CỦA BẠN
       const chatRecord = await db.create("ai_chat_history", {
         userId: userId,
         levelId: context.levelId || null,
-        characterId: context.characterId || (character ? character.id : 1),
+        characterId: context.characterId !== undefined ? context.characterId : (character ? character.id : 1),
         message: cleanMessage,
         response: finalAnswer, // Save clean text
         audioBase64: audioBase64 || null, // Lưu audio nếu có
@@ -228,7 +229,7 @@ class AIService {
       const chatRecord = await db.create("ai_chat_history", {
         userId: userId,
         levelId: context.levelId || null,
-        characterId: context.characterId || (character ? character.id : 1),
+        characterId: context.characterId !== undefined ? context.characterId : (character ? character.id : 1),
         message: transcribedText || "(Voice)",
         response: answer,
         audioBase64: audio || null,
@@ -271,23 +272,43 @@ class AIService {
    */
   async getCharacterContext(context, userId) {
     let characterId = context.characterId;
+    let character = null;
 
-    // Nếu không có characterId, thử lấy từ level
-    if (!characterId && context.levelId) {
+    // 1. Nếu có characterId, tìm theo ID (check strict undefined/null)
+    if (characterId !== undefined && characterId !== null) {
+      character = await db.findById("game_characters", characterId);
+    }
+    
+    // 2. Nếu không có (hoặc tìm không thấy), thử lấy từ Level settings
+    if (!character && context.levelId) {
       const level = await db.findById("game_levels", context.levelId);
-      if (level) characterId = level.aiCharacterId;
+      if (level && level.aiCharacterId) {
+        character = await db.findById("game_characters", level.aiCharacterId);
+      }
     }
 
-    if (!characterId) characterId = 1; // Mặc định là Sen
+    // 3. Nếu vẫn chưa có, lấy nhân vật mặc định (isDefault = true)
+    if (!character) {
+      const allCharacters = await db.findMany("game_characters", {});
+      character = allCharacters.find(c => c.isDefault === true || c.is_default === true);
+    }
 
-    const character = await db.findById("game_characters", characterId);
-    if (!character) return { name: "Sen", speakingStyle: "Thân thiện" };
+    // 4. Fallback cuối cùng nếu DB hỏng (Sen ID 0)
+    if (!character) {
+        return { 
+            id: 0, 
+            name: "Sen", 
+            speakingStyle: "Thân thiện", 
+            persona: "Trợ lý ảo",
+            avatar: "/images/characters/sen_avatar.png"
+        };
+    }
 
     return {
       id: character.id,
       name: character.name,
       persona: character.persona,
-      speakingStyle: character.speakingStyle,
+      speakingStyle: character.speakingStyle || character.speaking_style,
       avatar: character.avatar,
     };
   }
@@ -298,7 +319,9 @@ class AIService {
   async _getFormattedHistory(userId, characterId, limit = 5) {
     try {
       const query = { userId: userId };
-      if (characterId) query.characterId = characterId;
+      if (characterId !== undefined && characterId !== null) {
+        query.characterId = characterId;
+      }
 
       const rawHistory = await db.findMany("ai_chat_history", query);
 
@@ -324,11 +347,16 @@ class AIService {
   async getHistory(userId, levelId, limit = 20) {
     const query = { userId: userId };
     if (levelId) query.levelId = levelId;
+    
     const rawHistory = await db.findMany("ai_chat_history", query);
 
     // Convert to chat message format: [user, assistant, user, assistant, ...]
+    // Convert to chat message format: [user, assistant, user, assistant, ...]
     const history = [];
-    rawHistory.slice(-limit).forEach((record) => {
+    rawHistory
+      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+      .slice(-limit) // Take last N
+      .forEach((record) => {
       // User message
       history.push({
         id: `${record.id}-user`,
@@ -348,7 +376,7 @@ class AIService {
         content: record.response,
         timestamp: record.createdAt,
         context: record.context,
-        audioBase64: record.audioBase64 || null, // Map audio
+        audioBase64: record.audioBase64 || null,
       });
     });
 
@@ -396,26 +424,29 @@ class AIService {
       const mappedCharacters = allCharacters
         .filter(char => {
           // Nhân vật mặc định (Sen) luôn hiển thị
-          if (char.isDefault) return true;
+          const isDefault = char.isDefault === true || char.is_default === true;
+          if (isDefault) return true;
           // Các nhân vật khác chỉ hiển thị nếu user sở hữu
           return ownedIds.includes(char.id);
         })
         .map(char => {
           // Check xem có thể unlock (đã hoàn thành level yêu cầu)
-          const canUnlock = !char.unlockLevelId || completedLevelIds.includes(char.unlockLevelId);
+          const unlockLevelId = char.unlockLevelId || char.unlock_level_id;
+          const canUnlock = !unlockLevelId || completedLevelIds.includes(unlockLevelId);
+          const isDefault = char.isDefault === true || char.is_default === true;
 
           return {
             id: char.id,
             name: char.name,
             avatar: char.avatar || char.avatarLocked || '/images/characters/default.png',
-            personality: char.persona || char.speakingStyle || 'Thân thiện',
+            personality: char.persona || char.speakingStyle || char.speaking_style || 'Thân thiện',
             state: 'restored',
             description: char.description || `Nhân vật ${char.name}`,
-            isDefault: char.isDefault || false,
-            isOwned: char.isDefault || ownedIds.includes(char.id),
+            isDefault: isDefault,
+            isOwned: isDefault || ownedIds.includes(char.id),
             rarity: char.rarity || 'common',
             price: char.price || 0,
-            unlockLevelId: char.unlockLevelId || null,
+            unlockLevelId: unlockLevelId || null,
             canUnlock: canUnlock,
           };
         });
@@ -453,37 +484,43 @@ class AIService {
       }
 
       // 4. Check đã unlock chưa (hoàn thành level yêu cầu)
-      if (character.unlockLevelId) {
+      const unlockLevelId = character.unlockLevelId || character.unlock_level_id;
+      if (unlockLevelId) {
         const progress = await db.findOne("game_progress", { userId: userId });
         const completedLevels = progress?.completedLevels || [];
-        if (!completedLevels.includes(character.unlockLevelId)) {
+        if (!completedLevels.includes(unlockLevelId)) {
           return {
             success: false,
-            message: `Bạn cần hoàn thành level ${character.unlockLevelId} trước`,
+            message: `Bạn cần hoàn thành level ${unlockLevelId} trước`,
             statusCode: 400
           };
         }
       }
 
-      // 5. Check đủ tiền
+      // 5. Check đủ tiền (Coins)
       const progress = await db.findOne("game_progress", { userId: userId });
       if (!progress) {
         return { success: false, message: "Không tìm thấy tiến độ game", statusCode: 404 };
       }
 
+      // Use COINS instead of SEN PETALS
       const currentCoins = progress.coins || 0;
-      if (currentCoins < character.price) {
+      const price = character.price || 0;
+
+      if (currentCoins < price) {
         return {
           success: false,
-          message: `Không đủ xu. Cần ${character.price}, hiện có ${currentCoins}`,
+          message: `Không đủ Coins. Cần ${price}, hiện có ${currentCoins}`,
           statusCode: 400
         };
       }
 
-    // 6. Trừ Cánh Sen và thêm ownership
-    await db.update("game_progress", progress.id, {
-      total_sen_petals: currentPetals - character.price
-    });
+      // 6. Trừ Coins và thêm ownership
+      const updateData = {
+        coins: currentCoins - price
+      };
+
+      await db.update("game_progress", progress.id, updateData);
 
       const ownership = await db.create("user_characters", {
         userId: userId,
@@ -497,7 +534,7 @@ class AIService {
         message: `Đã mua nhân vật ${character.name}!`,
         data: {
           character: character,
-          newBalance: currentCoins - character.price,
+          newBalance: currentCoins - price,
           ownership: ownership
         }
       };
@@ -525,15 +562,17 @@ class AIService {
       // Filter: chưa sở hữu, không phải mặc định, và đã unlock
       const availableCharacters = allCharacters
       .filter(char => {
-        if (char.isDefault) return false; // Mặc định đã có
-        if (ownedIds.includes(char.id)) return false; // Đã sở hữu
+        const isDefault = char.isDefault === true || char.is_default === true;
+        if (isDefault) return false; // Mặc định đã có (handled elsewhere or implied)
+        // if (ownedIds.includes(char.id)) return false; // REMOVED: Keep owned characters
 
         // Check unlock condition
-        if (char.unlockLevelId && !completedLevels.includes(char.unlockLevelId)) {
+        const unlockLevelId = char.unlockLevelId || char.unlock_level_id;
+        if (unlockLevelId && !completedLevels.includes(unlockLevelId)) {
           return false; // Chưa unlock
         }
 
-        return true; // Có thể mua
+        return true; // Có thể mua hoặc đã sở hữu
       }).map(char => ({
         id: char.id,
         name: char.name,
@@ -542,7 +581,7 @@ class AIService {
         rarity: char.rarity,
         price: char.price,
         unlockLevelId: char.unlockLevelId,
-        isOwned: ownedIds.includes(char.id)
+        isOwned: ownedIds.includes(char.id) // Correctly mark ownership
       }))
       .sort((a, b) => (a.isOwned === b.isOwned ? 0 : a.isOwned ? 1 : -1));
 
