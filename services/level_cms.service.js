@@ -29,8 +29,8 @@ class LevelManagementService extends BaseService {
       const processedScreens = this.processScreens(data.screens);
 
       // Auto-assign order if not provided
-      if (!data.order && data.chapter_id) {
-        const existingLevels = await db.findMany('game_levels', { chapter_id: data.chapter_id });
+      if (!data.order && data.chapterId) {
+        const existingLevels = await db.findMany('game_levels', { chapterId: data.chapterId });
         const maxOrder = existingLevels.reduce((max, lvl) => Math.max(max, lvl.order || 0), 0);
         data.order = maxOrder + 1;
       }
@@ -39,9 +39,9 @@ class LevelManagementService extends BaseService {
       const level = await this.create({
         ...data,
         screens: processedScreens,
-        created_by: creatorId,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        createdBy: creatorId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       });
 
       return level;
@@ -141,35 +141,35 @@ class LevelManagementService extends BaseService {
       }
 
       // Workflow and Flow Linking
-      screen.is_first = index === 0;
+      screen.isFirst = index === 0;
 
       if (index < screens.length - 1) {
         // Not the last screen: auto-link to next unless already linked
-        if (!screen.next_screen_id) {
-          screen.next_screen_id = screens[index + 1].id;
+        if (!screen.nextScreenId) {
+          screen.nextScreenId = screens[index + 1].id;
         }
-        screen.is_last = false;
+        screen.isLast = false;
       } else {
         // Last screen in array
-        screen.next_screen_id = null;
-        screen.is_last = true;
+        screen.nextScreenId = null;
+        screen.isLast = true;
       }
 
       // Add defaults based on type
       switch (screen.type) {
         case 'HIDDEN_OBJECT':
-          screen.ai_hints_enabled = screen.ai_hints_enabled !== false;
-          screen.required_items = screen.required_items || screen.items?.length || 0;
+          screen.aiHintsEnabled = screen.aiHintsEnabled !== false;
+          screen.requiredItems = screen.requiredItems || screen.items?.length || 0;
           break;
 
         case 'QUIZ':
-          screen.time_limit = screen.time_limit || 60;
-          screen.show_hint_after = screen.show_hint_after || 30;
+          screen.timeLimit = screen.timeLimit || 60;
+          screen.showHintAfter = screen.showHintAfter || 30;
           break;
 
         case 'DIALOGUE':
-          screen.skip_allowed = screen.skip_allowed !== false;
-          screen.auto_advance = screen.auto_advance || false;
+          screen.skipAllowed = screen.skipAllowed !== false;
+          screen.autoAdvance = screen.autoAdvance || false;
           break;
       }
 
@@ -221,7 +221,7 @@ class LevelManagementService extends BaseService {
     // Update level
     return this.update(levelId, {
       screens: processedScreens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -248,7 +248,7 @@ class LevelManagementService extends BaseService {
 
     return this.update(levelId, {
       screens: processedScreens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -270,7 +270,7 @@ class LevelManagementService extends BaseService {
 
     return this.update(levelId, {
       screens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -301,7 +301,7 @@ class LevelManagementService extends BaseService {
 
     return this.update(levelId, {
       screens: newScreens,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -323,22 +323,22 @@ class LevelManagementService extends BaseService {
             content: [
               { speaker: 'AI', text: 'Hãy tìm các vật phẩm ẩn trong bức tranh!' }
             ],
-            next_screen_id: 'gameplay'
+            nextScreenId: 'gameplay'
           },
           {
             id: 'gameplay',
             type: 'HIDDEN_OBJECT',
-            guide_text: 'Tìm {required_items} vật phẩm',
+            guideText: 'Tìm {requiredItems} vật phẩm',
             items: [
               {
                 id: 'item1',
                 name: 'Vật phẩm 1',
                 coordinates: { x: 10, y: 10, width: 5, height: 5 },
-                fact_popup: 'Mô tả về vật phẩm',
+                factPopup: 'Mô tả về vật phẩm',
                 points: 10
               }
             ],
-            next_screen_id: 'completion'
+            nextScreenId: 'completion'
           },
           {
             id: 'completion',
@@ -360,25 +360,25 @@ class LevelManagementService extends BaseService {
             content: [
               { speaker: 'AI', text: 'Hãy trả lời các câu hỏi!' }
             ],
-            next_screen_id: 'quiz1'
+            nextScreenId: 'quiz1'
           },
           {
             id: 'quiz1',
             type: 'QUIZ',
             question: 'Câu hỏi 1?',
             options: [
-              { text: 'Đáp án A', is_correct: false },
-              { text: 'Đáp án B', is_correct: true }
+              { text: 'Đáp án A', isCorrect: false },
+              { text: 'Đáp án B', isCorrect: true }
             ],
-            next_screen_id: 'quiz2'
+            nextScreenId: 'quiz2'
           },
           {
             id: 'quiz2',
             type: 'QUIZ',
             question: 'Câu hỏi 2?',
             options: [
-              { text: 'Đáp án A', is_correct: true },
-              { text: 'Đáp án B', is_correct: false }
+              { text: 'Đáp án A', isCorrect: true },
+              { text: 'Đáp án B', isCorrect: false }
             ]
           }
         ]
@@ -391,26 +391,26 @@ class LevelManagementService extends BaseService {
           {
             id: 'scene1',
             type: 'DIALOGUE',
-            background_image: 'scene1.jpg',
+            backgroundImage: 'scene1.jpg',
             content: [
               { speaker: 'AI', text: 'Ngày xửa ngày xưa...' }
             ],
-            next_screen_id: 'scene2'
+            nextScreenId: 'scene2'
           },
           {
             id: 'scene2',
             type: 'IMAGE_VIEWER',
             image: 'artifact.jpg',
             caption: 'Đây là cổ vật quý',
-            next_screen_id: 'quiz'
+            nextScreenId: 'quiz'
           },
           {
             id: 'quiz',
             type: 'QUIZ',
             question: 'Cổ vật này có ý nghĩa gì?',
             options: [
-              { text: 'Ý nghĩa 1', is_correct: true },
-              { text: 'Ý nghĩa 2', is_correct: false }
+              { text: 'Ý nghĩa 1', isCorrect: true },
+              { text: 'Ý nghĩa 2', isCorrect: false }
             ]
           }
         ]
@@ -440,8 +440,8 @@ class LevelManagementService extends BaseService {
       ...level,
       id: undefined, // Let DB generate new ID
       name: newName || `${level.name} (Copy)`,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     });
 
     return cloned;
@@ -466,10 +466,10 @@ class LevelManagementService extends BaseService {
     const preview = {
       ...level,
       metadata: {
-        total_screens: level.screens?.length || 0,
-        screen_types: this.countScreenTypes(level.screens),
-        estimated_time: this.estimatePlayTime(level.screens),
-        difficulty_score: this.calculateDifficultyScore(level)
+        totalScreens: level.screens?.length || 0,
+        screenTypes: this.countScreenTypes(level.screens),
+        estimatedTime: this.estimatePlayTime(level.screens),
+        difficultyScore: this.calculateDifficultyScore(level)
       }
     };
 
@@ -552,7 +552,7 @@ class LevelManagementService extends BaseService {
       try {
         await this.createLevel({
           ...levelData,
-          chapter_id: chapterId
+          chapterId: chapterId
         });
         results.success++;
       } catch (error) {
@@ -579,7 +579,7 @@ class LevelManagementService extends BaseService {
       const levelId = levelIdsInOrder[index];
       await db.update('game_levels', levelId, {
         order: index + 1,
-        updated_at: new Date().toISOString()
+        updatedAt: new Date().toISOString()
       });
     }
 

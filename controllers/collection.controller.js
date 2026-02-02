@@ -7,8 +7,8 @@ class CollectionController {
 
   getAll = async (req, res, next) => {
     try {
-      // Use findMany to filter by user_id
-      const result = await this.service.findMany({ user_id: req.user.id });
+      // Use findMany to filter by userId
+      const result = await this.service.findMany({ userId: req.user.id });
 
       if (!result.success) {
         return res.status(400).json(result);
@@ -36,7 +36,7 @@ class CollectionController {
       const collection = result.data;
 
       // Check ownership
-      if (collection.user_id !== req.user.id && req.user.role !== 'admin') {
+      if (collection.userId !== req.user.id && req.user.role !== 'admin') {
         return res.status(403).json({
           success: false,
           message: 'Not authorized'
@@ -53,9 +53,9 @@ class CollectionController {
     try {
       const collectionData = {
         ...req.body,
-        user_id: req.user.id,
+        userId: req.user.id,
         items: [], // Initialize empty items array
-        total_items: 0
+        totalItems: 0
       };
 
       const result = await this.service.create(collectionData);
@@ -78,7 +78,7 @@ class CollectionController {
         return res.status(check.statusCode || 404).json(check);
       }
 
-      if (check.data.user_id !== req.user.id && req.user.role !== 'admin') {
+      if (check.data.userId !== req.user.id && req.user.role !== 'admin') {
         return res.status(403).json({
           success: false,
           message: 'Not authorized'
@@ -105,7 +105,7 @@ class CollectionController {
         return res.status(check.statusCode || 404).json(check);
       }
 
-      if (check.data.user_id !== req.user.id && req.user.role !== 'admin') {
+      if (check.data.userId !== req.user.id && req.user.role !== 'admin') {
         return res.status(403).json({
           success: false,
           message: 'Not authorized'
@@ -130,7 +130,7 @@ class CollectionController {
       const check = await this.service.findById(req.params.id);
       if (!check.success) return res.status(404).json(check);
 
-      if (check.data.user_id !== req.user.id) return res.status(403).json({ success: false, message: 'Not authorized' });
+      if (check.data.userId !== req.user.id) return res.status(403).json({ success: false, message: 'Not authorized' });
 
       // req.body: { id: number, type: 'heritage'|'artifact' }
       const itemData = req.body;

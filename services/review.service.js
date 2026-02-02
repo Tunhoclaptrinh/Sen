@@ -7,7 +7,7 @@ class ReviewService extends BaseService {
   }
 
   async findByType(type, options = {}) {
-    if (!['heritage_site', 'artifact'].includes(type)) {
+    if (!['heritageSite', 'artifact'].includes(type)) {
       return {
         success: false,
         message: 'Invalid type',
@@ -21,7 +21,7 @@ class ReviewService extends BaseService {
         ...options.filter,
         type
       },
-      sort: 'created_at',
+      sort: 'createdAt',
       order: 'desc'
     });
 
@@ -38,7 +38,7 @@ class ReviewService extends BaseService {
       total: allReviews.length,
       avgRating: parseFloat(avgRating),
       types: {
-        heritage_site: allReviews.filter(r => r.type === 'heritage_site').length,
+        heritageSite: allReviews.filter(r => r.type === 'heritage_site').length,
         artifact: allReviews.filter(r => r.type === 'artifact').length
       },
       ratings: {

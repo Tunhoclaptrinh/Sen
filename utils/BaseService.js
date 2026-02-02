@@ -176,7 +176,7 @@ class BaseService {
         if (options.excludeId) {
           query.id = { $ne: Number(options.excludeId) };
         }
-        
+
         const existing = await db.findOne(this.collection, query);
         if (existing) {
           errors[field] = `${field} '${value}' already exists`;
@@ -329,18 +329,18 @@ class BaseService {
     if (!data) return data;
     const enriched = { ...data };
 
-    if (enriched.created_by) {
-      const author = await db.findById('users', enriched.created_by);
+    if (enriched.createdBy) {
+      const author = await db.findById('users', enriched.createdBy);
       if (author) {
-        enriched.author_name = author.name;
+        enriched.authorName = author.name;
         // Also set legacy author field if it exists or is expected
         enriched.author = author.name;
       }
     }
 
     // Default fallback if no author found but field expected
-    if (!enriched.author_name && (enriched.author || enriched.author_name === undefined)) {
-      enriched.author_name = enriched.author || 'Hệ thống';
+    if (!enriched.authorName && (enriched.author || enriched.authorName === undefined)) {
+      enriched.authorName = enriched.author || 'Hệ thống';
     }
 
     return enriched;
@@ -704,9 +704,22 @@ class BaseService {
           // Expand foreign keys
           for (const [field, rule] of Object.entries(this.schema)) {
             if (rule.foreignKey && item[field]) {
+              // Priority naming: createdBy -> authorName, chapterId -> chapterName
+              let nameField;
+              if (field === 'createdBy') {
+                nameField = 'authorName';
+              } else if (field.endsWith('Id')) {
+                nameField = field.replace(/Id$/, 'Name');
+              } else {
+                nameField = `${field}Name`;
+              }
+
+              // Skip if already populated (like authorName from findAll)
+              if (enriched[nameField]) continue;
+
               const related = await db.findById(rule.foreignKey, item[field]);
               if (related) {
-                enriched[`${field}_name`] =
+                enriched[nameField] =
                   related.name || related.email || related.code;
               }
             }
@@ -724,8 +737,17 @@ class BaseService {
         options.columns.forEach((col) => {
           selected[col] = item[col];
           // Include relation names if available
-          if (item[`${col}_name`]) {
-            selected[`${col}_name`] = item[`${col}_name`];
+          let nameField;
+          if (col === 'createdBy') {
+            nameField = 'authorName';
+          } else if (col.endsWith('Id')) {
+            nameField = col.replace(/Id$/, 'Name');
+          } else {
+            nameField = `${col}Name`;
+          }
+
+          if (item[nameField]) {
+            selected[nameField] = item[nameField];
           }
         });
         return selected;

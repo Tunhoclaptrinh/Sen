@@ -93,7 +93,7 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-01-28T08:49:42.474Z"
+      "lastLogin": "2026-01-31T20:01:33.110Z"
     },
     {
       "id": 2,
@@ -103,7 +103,8 @@
       "phone": "0987654321",
       "role": "researcher",
       "isActive": true,
-      "createdAt": "2024-02-20T14:20:00Z"
+      "createdAt": "2024-02-20T14:20:00Z",
+      "lastLogin": "2026-01-31T20:02:18.122Z"
     },
     {
       "id": 3,
@@ -207,27 +208,26 @@
       "id": 1,
       "name": "Phố Cổ Hội An",
       "type": "historic_building",
-      "cultural_period": "",
+      "culturalPeriod": "",
       "region": "Trung",
       "latitude": 15.8801,
       "longitude": 108.3288,
       "address": "Thành phố Hội An, Quảng Nam",
-      "year_established": null,
-      "year_restored": 1999,
+      "yearEstablished": null,
+      "yearRestored": 1999,
       "image": "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/10/6/1101769/Hoi-An-22.jpeg",
       "rating": 4.9,
-      "total_reviews": 523,
-      "visit_hours": "8:00 - 17:00",
-      "entrance_fee": 120000,
-      "is_active": true,
-      "unesco_listed": true,
+      "totalReviews": 523,
+      "visitHours": "8:00 - 17:00",
+      "entranceFee": 120000,
+      "isActive": true,
+      "unescoListed": true,
       "significance": "international",
-      "author": "Admin",
+      "createdBy": 1,
       "publishDate": "2024-08-01T10:00:00Z",
       "shortDescription": "Phố cổ Hội An là di sản văn hóa thế giới được UNESCO công nhận, nổi tiếng với kiến trúc cổ kính và lồng đèn rực rỡ.",
       "commentCount": 128,
-      "short_description": "Phố cổ Hội An là di sản văn hóa thế giới được UNESCO công nhận, nổi tiếng với kiến trúc cổ kính và lồng đèn rực rỡ.",
-      "related_artifact_ids": [
+      "relatedArtifactIds": [
         1
       ],
       "timeline": [
@@ -236,7 +236,7 @@
           "title": "Tu bổ Phố cổ",
           "description": "Bắt đầu công trình tu bổ toàn diện phố cổ Hội An",
           "year": 1999,
-          "heritage_site_id": 1,
+          "heritageSiteId": 1,
           "category": "restored",
           "image": "https://images.unsplash.com/photo-1578107982254-eb158fc3a0e7?w=600"
         },
@@ -245,13 +245,13 @@
           "title": "UNESCO công nhận",
           "description": "Phố cổ Hội An được UNESCO công nhận là Di sản Thế giới",
           "year": 1999,
-          "heritage_site_id": 1,
+          "heritageSiteId": 1,
           "category": "recognition",
           "image": "https://images.unsplash.com/photo-1579722821273-8a36ae95db51?w=600"
         }
       ],
       "updatedAt": "2026-01-23T10:48:28.169Z",
-      "related_history_ids": [
+      "relatedHistoryIds": [
         1
       ],
       "description": "<p>Thương cảng Hội An được h&igrave;nh th&agrave;nh khoảng khoảng thế kỷ XV - XVI, thịnh đạt trong thế kỷ XVII - XVIII, nhưng trước đ&oacute; rất l&acirc;u, v&ugrave;ng đất Hội An đ&atilde; nằm trong địa b&agrave;n ph&acirc;n bố của văn h&oacute;a tiền Sa Huỳnh, Sa Huỳnh v&agrave; c&ograve;n l&agrave; một cảng thị trọng yếu của Chămpa (từ thế kỷ II - XV). Từ khoảng cuối thế kỷ XV, khu vực Hội An đ&atilde; c&oacute; d&acirc;n cư Đại Việt tới sinh sống, lập l&agrave;ng, người Việt đ&atilde; s&aacute;ng tạo ra nhiều ng&agrave;nh nghề ph&ugrave; hợp với điều kiện tự nhi&ecirc;n v&agrave; x&atilde; hội nơi đ&acirc;y. Cuối thế kỷ XVI - XVII, người Hoa v&agrave; người Nhật đ&atilde; đến đ&acirc;y định cư, gi&uacute;p cho hoạt động thương nghiệp ở Hội An ph&aacute;t triển mạnh. Với vị tr&iacute; địa l&yacute; thuận lợi cũng như bối cảnh kinh tế, x&atilde; hội, văn h&oacute;a Đ&agrave;ng Trong ph&aacute;t triển tương đối ổn định, Hội An nhanh ch&oacute;ng trở th&agrave;nh đ&ocirc; thị/thương cảng phồn thịnh trong nhiều thế kỷ.</p>\n<p>Những di t&iacute;ch kiến tr&uacute;c trong phố cổ Hội An đều mang đậm dấu ấn xưa cũ vốn c&oacute;. Kiểu nh&agrave; ở phổ biến nhất trong khu vực n&agrave;y thường c&oacute; mặt bằng dạng h&igrave;nh ống, c&aacute;c nếp nh&agrave; li&ecirc;n tiếp nối nhau bởi nh&agrave; cầu v&agrave; s&acirc;n trời, theo một thứ tự gần như thống nhất, gồm: nh&agrave; - s&acirc;n - nh&agrave;. C&aacute;c nh&agrave; đều được l&agrave;m khung gỗ, xung quanh c&oacute; tường gạch (một số nếp nh&agrave; c&oacute; v&aacute;ch gỗ). Kết cấu đỡ m&aacute;i kh&aacute; đa dạng, như chồng rường - giả thủ, cột trốn - kẻ chuyền, k&egrave;o cầu - c&aacute;nh &aacute;c, chồng đấu - con son,&nbsp; đặc biệt c&oacute; kết cấu &ldquo;v&igrave; vỏ cua&rdquo; ở hi&ecirc;n, m&aacute;i thường lợp ng&oacute;i m&aacute;ng (kiểu &acirc;m dương), tường hồi b&iacute;t đốc c&oacute; bờ dải uốn lượn mềm mại (kiểu long đ&igrave;nh). Tr&ecirc;n kiến tr&uacute;c thường được chạm khắc trang tr&iacute; c&aacute;c đề t&agrave;i truyền thống, với c&aacute;c thủ ph&aacute;p tạo h&igrave;nh như chạm nổi, chạm thủng, k&ecirc;nh bong. Đặc biệt, trước nh&agrave; c&oacute; hai mắt cửa gỗ, được gắn tr&ecirc;n bạo cửa ra v&agrave;o ch&iacute;nh.</p>\n<p>Hiện nay, phố cổ Hội An - một di sản thế giới ở Việt Nam đ&atilde; thực sự trở th&agrave;nh nguồn lực của sự ph&aacute;t triển kinh tế - x&atilde; hội ở Hội An, c&oacute; đ&oacute;ng g&oacute;p t&iacute;ch cực v&agrave;o sự ph&aacute;t triển kinh tế - du lịch dịch vụ, n&acirc;ng cao thu nhập, cải thiện đời sống của nh&acirc;n d&acirc;n địa phương, qua đ&oacute; cũng tạo ra những điều kiện thuận lợi để t&aacute;i đầu tư bảo tồn v&agrave; ph&aacute;t huy gi&aacute; trị di t&iacute;ch một c&aacute;ch bền vững&hellip;</p>\n<p>Với những gi&aacute; trị lịch sử, văn ho&aacute; v&agrave; khoa học đặc biệt của di t&iacute;ch,&nbsp; Thủ tướng Ch&iacute;nh phủ đ&atilde; quyết định xếp hạng Di t&iacute;ch kiến tr&uacute;c nghệ thuật Đ&ocirc; thị cổ Hội An l&agrave; di t&iacute;ch quốc gia đặc biệt (Quyết định số 1272/QĐ-TTg, ng&agrave;y 12/8/2009).</p>\n<p style=\"text-align: right;\"><strong>Ho&agrave;ng Ph&uacute;c (Theo Hồ sơ xếp hạng di t&iacute;ch, tư liệu Cục Di sản văn h&oacute;a)</strong></p>",
@@ -263,33 +263,32 @@
       "id": 2,
       "name": "Hoàng Thành Thăng Long",
       "type": "monument",
-      "cultural_period": "Triều Lý",
+      "culturalPeriod": "Triều Lý",
       "region": "Bắc",
       "latitude": 21.0341,
       "longitude": 105.8372,
       "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
-      "year_established": 1010,
+      "yearEstablished": 1010,
       "image": "/uploads/general/file-1769165335029.jpeg",
       "rating": 4.7,
-      "total_reviews": 892,
-      "visit_hours": "8:00 - 17:00",
-      "entrance_fee": 30000,
-      "is_active": true,
-      "unesco_listed": true,
+      "totalReviews": 892,
+      "visitHours": "8:00 - 17:00",
+      "entranceFee": 30000,
+      "isActive": true,
+      "unescoListed": true,
       "significance": "international",
-      "author": "Admin",
+      "createdBy": 1,
       "publishDate": "2024-08-05T09:30:00Z",
       "description": "<p>Ho&agrave;ng th&agrave;nh Thăng Long l&agrave; quần thể di t&iacute;ch lịch sử gắn b&oacute; mật thiết với sự ph&aacute;t triển của Thăng Long &ndash; H&agrave; Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII &ndash; IX), khu di t&iacute;ch tiếp tục ph&aacute;t triển qua c&aacute;c triều đại Đinh &ndash; Tiền L&ecirc; (thế kỷ XI) v&agrave; đạt đến đỉnh cao dưới thời L&yacute; &ndash; Trần &ndash; L&ecirc; (thế kỷ XI &ndash; XVIII). Dưới triều Nguyễn (thế kỷ XIX &ndash; XX), mặc d&ugrave; kinh đ&ocirc; được dời v&agrave;o Ph&uacute; Xu&acirc;n (Huế), nhưng Ho&agrave;ng th&agrave;nh Thăng Long vẫn giữ vai tr&ograve; quan trọng.</p>\n<p>Năm 1010, khi vua L&yacute; Th&aacute;i Tổ dời đ&ocirc; từ Hoa Lư ra Thăng Long, &ocirc;ng đ&atilde; quy hoạch kinh th&agrave;nh theo m&ocirc; h&igrave;nh &ldquo;tam tr&ugrave;ng th&agrave;nh qu&aacute;ch&rdquo;, gồm ba v&ograve;ng th&agrave;nh: Kinh th&agrave;nh (nơi cư d&acirc;n sinh sống), Ho&agrave;ng th&agrave;nh (khu vực d&agrave;nh cho quan lại l&agrave;m việc) v&agrave; Cấm th&agrave;nh (khu vực chỉ d&agrave;nh ri&ecirc;ng cho ho&agrave;ng gia). Từ thế kỷ XI đến XVIII, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n l&agrave; trung t&acirc;m ch&iacute;nh trị, h&agrave;nh ch&iacute;nh của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đ&ocirc; v&agrave;o Ph&uacute; Xu&acirc;n, Thăng Long bị hạ cấp th&agrave;nh Bắc Th&agrave;nh (th&agrave;nh H&agrave; Nội). D&ugrave; vậy, điện K&iacute;nh Thi&ecirc;n v&agrave; Hậu L&acirc;u trong Cấm th&agrave;nh vẫn được duy tr&igrave; l&agrave;m h&agrave;nh cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p>\n<p>Sang thời kỳ Ph&aacute;p thuộc, H&agrave; Nội trở th&agrave;nh trung t&acirc;m h&agrave;nh ch&iacute;nh của Li&ecirc;n bang Đ&ocirc;ng Dương, v&agrave; Th&agrave;nh cổ H&agrave; Nội được sử dụng l&agrave;m Sở chỉ huy qu&acirc;n sự của Ph&aacute;p. L&uacute;c n&agrave;y, hầu hết c&aacute;c c&ocirc;ng tr&igrave;nh cung điện, đền đ&agrave;i trong Ho&agrave;ng th&agrave;nh đều bị ph&aacute; hủy, chỉ c&ograve;n Bắc M&ocirc;n v&agrave; Kỳ Đ&agrave;i được bảo tồn. Tr&ecirc;n nền điện K&iacute;nh Thi&ecirc;n v&agrave; s&acirc;n Long Tr&igrave;, người Ph&aacute;p x&acirc;y dựng c&aacute;c c&ocirc;ng tr&igrave;nh kiến tr&uacute;c mới theo phong c&aacute;ch ch&acirc;u &Acirc;u. Đến năm 1954, sau khi Thủ đ&ocirc; được giải ph&oacute;ng, Th&agrave;nh H&agrave; Nội trở th&agrave;nh Tổng h&agrave;nh dinh của Qu&acirc;n đội nh&acirc;n d&acirc;n Việt Nam v&agrave; duy tr&igrave; vai tr&ograve; n&agrave;y đến năm 2004.</p>\n<p>Ng&agrave;y nay, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long, gồm di t&iacute;ch khảo cổ học 18 Ho&agrave;ng Diệu v&agrave; Th&agrave;nh cổ H&agrave; Nội, nằm trong khu vực trung t&acirc;m ch&iacute;nh trị Ba Đ&igrave;nh &ndash; nơi đặt trụ sở của c&aacute;c cơ quan l&atilde;nh đạo cao nhất của Đảng v&agrave; Nh&agrave; nước. Đ&acirc;y kh&ocirc;ng chỉ l&agrave; một khu di t&iacute;ch lịch sử &ndash; văn h&oacute;a quan trọng m&agrave; c&ograve;n l&agrave; kh&ocirc;ng gian kiến tr&uacute;c mang gi&aacute; trị đặc biệt, gắn liền chặc chẽ với qu&aacute; tr&igrave;nh ph&aacute;t triển của đất nước. Đ&acirc;y cũng l&agrave; nơi tổ chức c&aacute;c sự kiện ch&iacute;nh trị, văn h&oacute;a trọng đại của quốc gia.</p>\n<h3>Vị thế v&agrave; tầm v&oacute;c</h3>\n<p>Trải qua 13 thế kỷ, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n giữ vị thế trung t&acirc;m ch&iacute;nh trị v&agrave; l&agrave; một trong những di t&iacute;ch quan trọng nhất của Việt Nam. Ng&agrave;y 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long &ndash; H&agrave; Nội ch&iacute;nh thức được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a thế giới. Gi&aacute; trị nổi bật của di sản n&agrave;y thể hiện qua chiều d&agrave;i lịch sử li&ecirc;n tục suốt 13 thế kỷ, vai tr&ograve; l&agrave; trung t&acirc;m quyền lực trong nhiều thời kỳ v&agrave; hệ thống di t&iacute;ch, di vật phong ph&uacute;. Đ&acirc;y cũng l&agrave; nơi lưu giữ những dấu ấn văn h&oacute;a quan trọng v&agrave; chứng kiến nhiều sự kiện mang tầm v&oacute;c lớn lao trong lịch sử d&acirc;n tộc.</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://i.pinimg.com/1200x/ea/42/15/ea4215828ac658b735472adfddf13132.jpg\"></p>\n<h3>C&aacute;c di vật được khảo cổ, khai quật trong Ho&agrave;ng Th&agrave;nh Thăng Long</h3>\n<p>C&aacute;c di vật được khai quật v&agrave; hiện đang trưng b&agrave;y ở Khu khảo cổ 18 Ho&agrave;ng Diệu.</p>\n<p>Thềm chia l&agrave;m 3 lối l&ecirc;n xuống đều nhau, lối giữa ngăn c&aacute;ch với 2 lối b&ecirc;n bằng đ&ocirc;i rồng đ&aacute; được x&acirc;y dựng năm 1467 ( đời vua L&ecirc; Th&aacute;nh T&ocirc;ng ). Rồng được tạo t&aacute;c kh&aacute; đẹp v&agrave; trau chuốt, tạo khối kiểu tượng tr&ograve;n c&oacute; d&aacute;ng mập, khỏe, đầu vươn cao ph&iacute;a ch&acirc;n thềm bậc, th&acirc;n uốn kh&uacute;c nhịp nh&agrave;ng v&agrave; chạy d&agrave;i theo 9 bậc l&ecirc;n. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, r&acirc;u v&agrave; t&oacute;c kết th&agrave;nh đao bay về sau.</p>\n<p>Tai rồng lớn kiểu tai tr&acirc;u, sừng đơn vươn d&agrave;i ra ph&iacute;a sau v&agrave; &aacute;p s&aacute;t th&acirc;n rồng. Dọc sống lưng đục chạm h&agrave;ng v&acirc;y c&aacute; to, mập. B&ecirc;n ngo&agrave;i bậc thềm c&oacute; 2 lan can h&igrave;nh rồng c&aacute;ch điệu dạng ph&ugrave; đi&ecirc;u ( gọi l&agrave; v&acirc;n h&oacute;a rồng ), mặt trong trang tr&iacute; v&acirc;n m&acirc;y, b&ecirc;n ngo&agrave;i thể hiện hoa c&uacute;c d&acirc;y. C&aacute;c hoa văn n&agrave;y được phủ k&iacute;n mặt ngo&agrave;i của th&acirc;n rồng đ&aacute; c&aacute;ch điệu.</p>\n<p>Ph&iacute;a ngo&agrave;i l&agrave; hai đ&aacute;m m&acirc;y h&oacute;a rồng. Đ&acirc;y l&agrave; hai tảng đ&aacute; nguy&ecirc;n khối d&agrave;y 36 &ndash; 39 cm, phần đầu thấp d&agrave;y hơn, c&oacute; những đường cuốn cắt ngang c&ugrave;ng những đường gờ nổi nối tiếp nhau chạy hết chiều d&agrave;i phiến đ&aacute; 5,3 m, những đường gờ nổi kh&ocirc;ng theo quy luật.</p>\n<p>Mặt trong v&agrave; ngo&agrave;i của hai con rồng c&aacute;ch điệu n&agrave;y trang tr&iacute; hoa văn, họa tiết khắc ch&igrave;m v&agrave;o đ&aacute;. Ph&iacute;a ngo&agrave;i, c&oacute; hai đường thẳng chạy dọc theo th&acirc;n rồng c&aacute;ch nhau 10 cm, chia đ&ocirc;i th&agrave;nh hai nửa tr&ecirc;n dưới, b&ecirc;n trong l&agrave; những b&ocirc;ng hoa bốn c&aacute;nh xếp liền nhau. Nửa tr&ecirc;n l&agrave; những cuộn m&acirc;y, đao lửa &iacute;t theo quy luật r&otilde; rang, nửa dưới l&agrave; những h&igrave;nh ảnh mặt trời c&aacute;ch điệu, đao lửa, m&acirc;y vờn. Ph&iacute;a mặt trong của phiến đ&aacute; do c&oacute; bậc thềm cao n&ecirc;n diện t&iacute;ch trạm khắc &iacute;t hơn, một đường thẳng b&ecirc;n tr&ecirc;n l&agrave; những cuộn m&acirc;y nhỏ dẫn từ dưới thấp l&ecirc;n cao.</p>\n<p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
       "commentCount": 85,
-      "related_artifact_ids": [
+      "relatedArtifactIds": [
         7,
         8,
         9
       ],
-      "related_history_ids": [
+      "relatedHistoryIds": [
         1
       ],
-      "short_description": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
       "shortDescription": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
       "province": "Hà Nội",
       "gallery": [],
@@ -299,7 +298,7 @@
           "title": "Lý Thái Tổ dời đô",
           "description": "Vua Lý Thái Tổ ban chiếu Thiên đô, dời đô từ Hoa Lư về Thăng Long",
           "year": 1010,
-          "heritage_site_id": 2,
+          "heritageSiteId": 2,
           "category": "founded",
           "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600"
         },
@@ -308,7 +307,7 @@
           "title": "Xây dựng điện Kính Thiên",
           "description": "Vua Lê Thái Tổ cho xây dựng điện Kính Thiên làm nơi triều chính",
           "year": 1428,
-          "heritage_site_id": 2,
+          "heritageSiteId": 2,
           "category": "construction",
           "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600"
         },
@@ -317,7 +316,7 @@
           "title": "Khai quật khảo cổ",
           "description": "Bắt đầu khai quật khảo cổ học tại khu vực 18 Hoàng Diệu, phát hiện nhiều di vật quý",
           "year": 2002,
-          "heritage_site_id": 2,
+          "heritageSiteId": 2,
           "category": "discovery",
           "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600"
         },
@@ -326,7 +325,7 @@
           "title": "UNESCO công nhận Hoàng Thành",
           "description": "Hoàng Thành Thăng Long được UNESCO công nhận",
           "year": 2010,
-          "heritage_site_id": 2,
+          "heritageSiteId": 2,
           "category": "recognition",
           "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600"
         }
@@ -338,28 +337,27 @@
       "id": 3,
       "name": "Bảo tàng Thành phố Hồ Chí Minh",
       "type": "museum",
-      "cultural_period": "Hiện đại",
+      "culturalPeriod": "Hiện đại",
       "region": "TP. Hồ Chí Minh",
       "latitude": 10.7929,
       "longitude": 106.6955,
       "address": "65 Lý Tự Trọng, Q. 1, TP. Hồ Chí Minh",
-      "year_established": 1956,
+      "yearEstablished": 1956,
       "image": "/uploads/general/file-1769165693020.jpeg",
       "rating": 4.5,
-      "total_reviews": 234,
-      "visit_hours": "8:00 - 17:00",
-      "entrance_fee": 50000,
-      "is_active": true,
-      "unesco_listed": false,
+      "totalReviews": 234,
+      "visitHours": "8:00 - 17:00",
+      "entranceFee": 50000,
+      "isActive": true,
+      "unescoListed": false,
       "significance": "national",
-      "author": "Admin",
+      "createdBy": 1,
       "publishDate": "2024-08-10T14:45:00Z",
       "shortDescription": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
       "commentCount": 42,
-      "short_description": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
       "gallery": [],
-      "related_artifact_ids": [],
-      "related_history_ids": [],
+      "relatedArtifactIds": [],
+      "relatedHistoryIds": [],
       "timeline": [],
       "updatedAt": "2026-01-23T10:54:56.058Z"
     },
@@ -367,30 +365,29 @@
       "id": 4,
       "name": "Khu khảo cổ Óc Eo",
       "type": "archaeological_site",
-      "cultural_period": "Thời kỳ Óc Eo",
+      "culturalPeriod": "Thời kỳ Óc Eo",
       "region": "Nam",
       "latitude": 10.1333,
       "longitude": 104.7667,
       "address": "Xã Tân Trung, huyện Tịnh Biên, An Giang",
-      "year_established": 150,
-      "year_restored": 2000,
+      "yearEstablished": 150,
+      "yearRestored": 2000,
       "image": "/uploads/general/file-1769165730295.jpeg",
       "rating": 4.3,
-      "total_reviews": 145,
-      "visit_hours": "8:00 - 16:30",
-      "entrance_fee": 30000,
-      "is_active": true,
-      "unesco_listed": false,
+      "totalReviews": 145,
+      "visitHours": "8:00 - 16:30",
+      "entranceFee": 30000,
+      "isActive": true,
+      "unescoListed": false,
       "significance": "national",
-      "author": "Admin",
+      "createdBy": 1,
       "publishDate": "2024-08-15T08:20:00Z",
       "shortDescription": "Di tích khảo cổ học quan trọng thuộc nền văn hóa Óc Eo, một nền văn hóa cổ ở Nam Bộ.",
       "commentCount": 19,
-      "short_description": "Di tích khảo cổ học quan trọng thuộc nền văn hóa Óc Eo, một nền văn hóa cổ ở Nam Bộ.",
       "province": "An Giang",
       "gallery": [],
-      "related_artifact_ids": [],
-      "related_history_ids": [],
+      "relatedArtifactIds": [],
+      "relatedHistoryIds": [],
       "timeline": [],
       "updatedAt": "2026-01-23T10:55:52.011Z"
     }
@@ -400,24 +397,24 @@
       "id": 1,
       "name": "Thiếu nữ bên hoa huệ",
       "description": "<p>Một t&aacute;c phẩm sơn dầu nổi tiếng của họa sĩ T&ocirc; Ngọc V&acirc;n, vẽ năm 1943, mi&ecirc;u tả thiếu nữ mặc &aacute;o d&agrave;i trắng b&ecirc;n b&igrave;nh hoa huệ. Đ&acirc;y l&agrave; một trong những bức tranh ti&ecirc;u biểu của mỹ thuật Việt Nam cận đại.</p>",
-      "heritage_site_id": 1,
-      "category_id": 2,
-      "artifact_type": "painting",
-      "year_created": 1943,
+      "heritageSiteId": 1,
+      "categoryId": 2,
+      "artifactType": "painting",
+      "yearCreated": 1943,
       "creator": "Tô Ngọc Vân",
       "material": "Sơn dầu trên toan",
       "dimensions": "60 x 45 cm",
       "weight": null,
       "condition": "excellent",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/To_Ngoc_Van_thieu_nu_ben_hoa_hue.jpg/450px-To_Ngoc_Van_thieu_nu_ben_hoa_hue.jpg",
-      "is_on_display": true,
-      "location_in_site": "Bảo tàng Mỹ thuật Việt Nam",
+      "isOnDisplay": true,
+      "locationInSite": "Bảo tàng Mỹ thuật Việt Nam",
       "updatedAt": "2026-01-13T13:35:29.407Z",
-      "author": "Admin",
+      "createdBy": 1,
       "publishDate": "2024-09-01T11:00:00Z",
       "shortDescription": "Kiệt tác sơn dầu của Tô Ngọc Vân, biểu tượng của vẻ đẹp thiếu nữ Hà Nội xưa.",
       "commentCount": 56,
-      "related_heritage_ids": [
+      "relatedHeritageIds": [
         1,
         5
       ]
@@ -426,76 +423,73 @@
       "id": 2,
       "name": "Trống đồng Ngọc Lũ",
       "description": "<p>Trống đồng Ngọc Lũ l&agrave; một trong những hiện vật điển h&igrave;nh nhất của văn h&oacute;a Đ&ocirc;ng Sơn, thuộc thời kỳ đồ đồng khoảng thế kỷ 3&ndash;2 trước C&ocirc;ng Nguy&ecirc;n. Đ&acirc;y l&agrave; điển h&igrave;nh cho nghệ thuật đ&uacute;c đồng tinh xảo của người Đ&ocirc;ng Sơn, với c&aacute;c họa tiết trang tr&iacute; tinh tế.</p>",
-      "heritage_site_id": 4,
-      "category_id": 4,
-      "artifact_type": "sculpture",
-      "year_created": null,
+      "heritageSiteId": 4,
+      "categoryId": 4,
+      "artifactType": "sculpture",
+      "yearCreated": null,
       "creator": "Người văn hóa Đông Sơn",
       "material": "Đồng",
       "dimensions": "cao khoảng 62 cm, đường kính mặt 89 cm",
       "condition": "good",
       "image": "/uploads/general/file-1769165881586.jpeg",
-      "is_on_display": true,
-      "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
+      "isOnDisplay": true,
+      "locationInSite": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
       "updatedAt": "2026-01-23T11:12:23.233Z",
-      "author": "Admin",
+      "createdBy": 1,
       "publishDate": "2024-09-05T15:30:00Z",
       "shortDescription": "Bảo vật quốc gia, biểu tượng rực rỡ nhất của nền văn hóa Đông Sơn.",
       "commentCount": 34,
       "gallery": [],
-      "short_description": "Bảo vật quốc gia, biểu tượng rực rỡ nhất của nền văn hóa Đông Sơn.",
-      "related_heritage_ids": [],
-      "related_history_ids": []
+      "relatedHeritageIds": [],
+      "relatedHistoryIds": []
     },
     {
       "id": 3,
       "name": "Đồ gốm Đông Sơn",
       "description": "Một loại đồ gốm sớm từ văn hóa Đông Sơn, dùng để hấp/đun nấu thức ăn, thể hiện kỹ thuật gốm tinh xảo của cư dân Đông Sơn hơn 2000 năm trước.",
-      "heritage_site_id": 4,
-      "category_id": 4,
-      "artifact_type": "pottery",
-      "year_created": null,
+      "heritageSiteId": 4,
+      "categoryId": 4,
+      "artifactType": "pottery",
+      "yearCreated": null,
       "creator": "Người văn hóa Đông Sơn",
       "material": "Gốm nung",
       "dimensions": "cao khoảng 40 cm",
       "condition": "fair",
       "image": "/uploads/general/file-1769166521698.jpeg",
-      "is_on_display": true,
-      "location_in_site": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
+      "isOnDisplay": true,
+      "locationInSite": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
       "updatedAt": "2026-01-23T11:08:57.177Z",
-      "author": "Admin",
+      "createdBy": 1,
       "publishDate": "2024-09-10T10:15:00Z",
       "shortDescription": "Hiện vật gốm độc đáo phản ánh đời sống sinh hoạt của cư dân Việt cổ.",
       "commentCount": 12,
       "gallery": [],
-      "short_description": "Hiện vật gốm độc đáo phản ánh đời sống sinh hoạt của cư dân Việt cổ.",
-      "related_heritage_ids": [],
-      "related_history_ids": []
+      "relatedHeritageIds": [],
+      "relatedHistoryIds": []
     },
     {
       "id": 4,
       "name": "Mộc bản triều Nguyễn",
       "description": "<p>Một bộ sưu tập c&aacute;c bản khắc gỗ in ấn triều Nguyễn, gồm hơn 34,000 bản khắc được d&ugrave;ng để in c&aacute;c văn bản lịch sử v&agrave; văn h&oacute;a, được UNESCO đưa v&agrave;o danh s&aacute;ch K&yacute; ức Thế giới.</p>",
-      "heritage_site_id": 6,
-      "category_id": 3,
-      "artifact_type": "sculpture",
-      "year_created": 1800,
+      "heritageSiteId": 6,
+      "categoryId": 3,
+      "artifactType": "sculpture",
+      "yearCreated": 1800,
       "creator": "Thợ khắc gỗ triều Nguyễn",
       "material": "Gỗ",
       "dimensions": null,
       "condition": "good",
       "image": "/uploads/general/file-1769166625428.jpeg",
-      "is_on_display": true,
-      "location_in_site": "Bảo tàng Cổ vật Cung đình Huế",
+      "isOnDisplay": true,
+      "locationInSite": "Bảo tàng Cổ vật Cung đình Huế",
       "updatedAt": "2026-01-23T11:10:35.340Z",
-      "author": "Admin",
+      "createdBy": 1,
       "publishDate": "2024-09-15T09:45:00Z",
       "shortDescription": "Kho tàng tư liệu lịch sử vô giá của triều Nguyễn, Di sản tư liệu thế giới.",
       "commentCount": 28,
       "gallery": [],
-      "short_description": "Kho tàng tư liệu lịch sử vô giá của triều Nguyễn, Di sản tư liệu thế giới.",
-      "related_heritage_ids": [],
-      "related_history_ids": []
+      "relatedHeritageIds": [],
+      "relatedHistoryIds": []
     }
   ],
   "timelines": [
@@ -504,7 +498,7 @@
       "title": "Thành lập Hội An",
       "description": "Hội An được thành lập như một cảng thương mại quan trọng",
       "year": 1624,
-      "heritage_site_id": 1,
+      "heritageSiteId": 1,
       "category": "founded",
       "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600"
     },
@@ -513,7 +507,7 @@
       "title": "Tu bổ Phố cổ",
       "description": "Bắt đầu công trình tu bổ toàn diện phố cổ Hội An",
       "year": 1999,
-      "heritage_site_id": 1,
+      "heritageSiteId": 1,
       "category": "restored",
       "image": "https://images.unsplash.com/photo-1578107982254-eb158fc3a0e7?w=600"
     },
@@ -522,7 +516,7 @@
       "title": "UNESCO công nhận",
       "description": "Phố cổ Hội An được UNESCO công nhận là Di sản Thế giới",
       "year": 1999,
-      "heritage_site_id": 1,
+      "heritageSiteId": 1,
       "category": "recognition",
       "image": "https://images.unsplash.com/photo-1579722821273-8a36ae95db51?w=600"
     },
@@ -531,7 +525,7 @@
       "title": "Xây dựng Hoàng Thành",
       "description": "Vua Lý Thái Tổ dời đô về Thăng Long và xây Hoàng Thành",
       "year": 1010,
-      "heritage_site_id": 2,
+      "heritageSiteId": 2,
       "category": "founded",
       "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600"
     },
@@ -540,7 +534,7 @@
       "title": "UNESCO công nhận Hoàng Thành",
       "description": "Hoàng Thành Thăng Long được UNESCO công nhận",
       "year": 2010,
-      "heritage_site_id": 2,
+      "heritageSiteId": 2,
       "category": "recognition",
       "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600"
     },
@@ -549,7 +543,7 @@
       "title": "Lý Thái Tổ dời đô",
       "description": "Vua Lý Thái Tổ ban chiếu Thiên đô, dời đô từ Hoa Lư về Thăng Long",
       "year": 1010,
-      "heritage_site_id": 2,
+      "heritageSiteId": 2,
       "category": "founded",
       "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600"
     },
@@ -558,7 +552,7 @@
       "title": "Xây dựng điện Kính Thiên",
       "description": "Vua Lê Thái Tổ cho xây dựng điện Kính Thiên làm nơi triều chính",
       "year": 1428,
-      "heritage_site_id": 2,
+      "heritageSiteId": 2,
       "category": "construction",
       "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600"
     },
@@ -567,7 +561,7 @@
       "title": "Khai quật khảo cổ",
       "description": "Bắt đầu khai quật khảo cổ học tại khu vực 18 Hoàng Diệu, phát hiện nhiều di vật quý",
       "year": 2002,
-      "heritage_site_id": 2,
+      "heritageSiteId": 2,
       "category": "discovery",
       "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600"
     }
@@ -577,7 +571,7 @@
       "id": 1,
       "name": "Hành trình Hội An qua 400 năm",
       "description": "Triển lãm lịch sử toàn diện về Hội An từ thế kỷ 17 đến nay",
-      "heritage_site_id": 1,
+      "heritageSiteId": 1,
       "theme": "Lịch sử & Văn hóa Hội An",
       "start_date": "2024-01-01T00:00:00Z",
       "end_date": "2026-12-31T23:59:59Z",
@@ -587,13 +581,14 @@
         1,
         2
       ],
-      "is_active": true
+      "isActive": true,
+      "createdBy": 1
     },
     {
       "id": 2,
       "name": "Văn minh Óc Eo bí ẩn",
       "description": "Khám phá nền văn minh Óc Eo cổ đại",
-      "heritage_site_id": 4,
+      "heritageSiteId": 4,
       "theme": "Khảo cổ học",
       "start_date": "2024-03-01T00:00:00Z",
       "end_date": "2026-08-31T23:59:59Z",
@@ -602,7 +597,8 @@
       "artifact_ids": [
         3
       ],
-      "is_active": true
+      "isActive": true,
+      "createdBy": 1
     }
   ],
   "favorites": [
@@ -636,31 +632,31 @@
     },
     {
       "id": 5,
-      "user_id": 1,
+      "userId": 1,
       "type": "heritage_site",
       "reference_id": 8,
-      "created_at": "2026-01-18T01:38:38.221Z"
+      "createdAt": "2026-01-18T01:38:38.221Z"
     },
     {
       "id": 6,
-      "user_id": 1,
+      "userId": 1,
       "type": "artifact",
       "reference_id": 1,
-      "created_at": "2026-01-18T02:54:01.916Z"
+      "createdAt": "2026-01-18T02:54:01.916Z"
     },
     {
       "id": 7,
-      "user_id": 1,
+      "userId": 1,
       "type": "heritage_site",
       "reference_id": 5,
-      "created_at": "2026-01-18T03:58:33.855Z"
+      "createdAt": "2026-01-18T03:58:33.855Z"
     },
     {
       "id": 8,
-      "user_id": 1,
+      "userId": 1,
       "type": "article",
       "reference_id": 2,
-      "created_at": "2026-01-18T04:49:08.047Z"
+      "createdAt": "2026-01-18T04:49:08.047Z"
     }
   ],
   "reviews": [
@@ -668,7 +664,7 @@
       "id": 1,
       "userId": 2,
       "type": "heritage_site",
-      "heritage_site_id": 1,
+      "heritageSiteId": 1,
       "rating": 5,
       "comment": "Hội An thật tuyệt vời! Di sản văn hóa được bảo tồn rất tốt. Rất đáng ghé thăm!",
       "createdAt": "2024-10-20T14:00:00Z"
@@ -677,7 +673,7 @@
       "id": 2,
       "userId": 3,
       "type": "artifact",
-      "heritage_site_id": 1,
+      "heritageSiteId": 1,
       "rating": 4,
       "comment": "Những tư liệu gốm rất quý hiếm và được trưng bày cẩn thận.",
       "createdAt": "2024-10-22T16:30:00Z"
@@ -686,7 +682,7 @@
       "id": 3,
       "userId": 4,
       "type": "heritage_site",
-      "heritage_site_id": 2,
+      "heritageSiteId": 2,
       "rating": 5,
       "comment": "Hoàng Thành Thăng Long mang đậm dấu ấn lịch sử ngàn năm văn hiến!",
       "createdAt": "2024-11-06T10:15:00Z"
@@ -695,7 +691,7 @@
       "id": 4,
       "userId": 5,
       "type": "heritage_site",
-      "heritage_site_id": 6,
+      "heritageSiteId": 6,
       "rating": 5,
       "comment": "Văn Miếu rất thanh tịnh và giàu giá trị văn hóa.",
       "createdAt": "2024-11-12T09:30:00Z"
@@ -706,49 +702,65 @@
       "id": 1,
       "name": "Hào Khí Lạc Hồng",
       "description": "Hành trình trở về cội nguồn dân tộc, từ truyền thuyết Rồng Tiên đến nền văn minh lúa nước rực rỡ.",
-      "layer_index": 1,
-      "petal_state": "blooming",
+      "layerIndex": 1,
+      "petalState": "blooming",
       "required_petals": 0,
-      "is_active": true,
+      "isActive": true,
       "theme": "Văn Minh Sông Hồng",
       "order": 1,
       "color": "#D35400",
       "image": "https://i.pinimg.com/736x/d6/b5/a2/d6b5a2ba77792b55385e1877e5070391.jpg",
       "petal_image_closed": "https://example.com/c1_closed.png",
       "petal_image_bloom": "https://example.com/c1_bloom.png",
-      "petal_image_full": "https://example.com/c1_full.png"
+      "petal_image_full": "https://example.com/c1_full.png",
+      "createdBy": 1
     },
     {
       "id": 2,
       "name": "Dấu Ấn Vàng Son",
       "description": "Khám phá những tinh hoa văn hóa và nghệ thuật kiến trúc độc đáo qua các triều đại lịch sử.",
-      "layer_index": 2,
-      "petal_state": "locked",
+      "layerIndex": 2,
+      "petalState": "locked",
       "required_petals": 0,
-      "is_active": true,
+      "isActive": true,
       "theme": "Giao Thoa Văn Hóa",
       "order": 2,
       "color": "#F1C40F",
       "image": "https://i.pinimg.com/736x/fb/94/28/fb942896ca8ad7ea9f815ba78faf1978.jpg",
       "petal_image_closed": "https://example.com/c2_closed.png",
       "petal_image_bloom": "https://example.com/c2_bloom.png",
-      "petal_image_full": "https://example.com/c2_full.png"
+      "petal_image_full": "https://example.com/c2_full.png",
+      "createdBy": 1
     },
     {
       "id": 3,
       "name": "Tuyệt Tác Di Sản",
       "description": "Chiêm ngưỡng những di sản thiên nhiên và văn hóa thế giới, niềm tự hào vĩnh cửu của non sông Việt Nam.",
-      "layer_index": 3,
-      "petal_state": "locked",
+      "layerIndex": 3,
+      "petalState": "locked",
       "required_petals": 0,
-      "is_active": true,
+      "isActive": true,
       "theme": "Di Sản Bất Tử",
       "order": 3,
       "color": "#ECF0F1",
       "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600",
       "petal_image_closed": "https://example.com/c3_closed.png",
       "petal_image_bloom": "https://example.com/c3_bloom.png",
-      "petal_image_full": "https://example.com/c3_full.png"
+      "petal_image_full": "https://example.com/c3_full.png",
+      "createdBy": 1
+    },
+    {
+      "id": 4,
+      "name": "Nguyễn Tiến Tuấn",
+      "description": "Nguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến Tuấn",
+      "theme": "Nguyễn Tiến Tuấn",
+      "order": 4,
+      "required_petals": 1,
+      "image": "https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/619660295_2079049926267994_718272744209069642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3SA0uOMwqBZMrjDI8KKotbpAvVtAwZtlukC9W0DBm2ehdIXgd0wTvS8jEtImNZQ-dyy1WV2KHXhXSgzBXoiqj&_nc_ohc=mme38aYJA5EQ7kNvwHsTSrz&_nc_oc=AdmGgdIIkG43gV4rxfXQsZ7Pu38f52Z3i2mF9AXYK_W1dZP28wpjCbA3oCNRCRHo3c4&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=bOkcu5iZ22LScpEpP_CPNg&oh=00_Afq9k6gtnY98aRNhn4kt33rw5UZhmB_x-ajTVR4_RtFNCg&oe=6980CAE0",
+      "isActive": true,
+      "createdAt": "2026-01-29T07:48:42.218Z",
+      "updatedAt": "2026-01-29T07:52:43.627Z",
+      "createdBy": 1
     }
   ],
   "game_characters": [
@@ -762,8 +774,8 @@
       "avatar_uncolored": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu&backgroundColor=b6b6b6",
       "rarity": "rare",
       "origin": "Múa rối nước",
-      "is_collectible": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "isCollectible": true,
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 2,
@@ -774,8 +786,8 @@
       "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=Kinh",
       "rarity": "epic",
       "origin": "Truyền thuyết dân gian",
-      "is_collectible": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "isCollectible": true,
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 3,
@@ -786,29 +798,29 @@
       "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=Giong",
       "rarity": "legendary",
       "origin": "Truyền thuyết Thánh Gióng",
-      "is_collectible": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "isCollectible": true,
+      "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
   "game_levels": [
     {
       "id": 1,
-      "chapter_id": 1,
+      "chapterId": 1,
       "name": "Huyền thoại Rồng Tiên",
       "description": "Câu chuyện về cội nguồn dân tộc Việt Nam qua truyền thuyết Lạc Long Quân và Âu Cơ.",
       "type": "story",
       "difficulty": "easy",
       "order": 1,
-      "required_level": null,
-      "is_locked": false,
+      "requiredLevel": null,
+      "isLocked": false,
       "thumbnail": "https://quantri.longbien.shieldixcloud.com/uploadfoldernew/sgdlongbien/image/mntuoihoa/2022_5_image/tai-xuong-7_09052022.jpg",
-      "passing_score": 0,
-      "time_limit": 300,
+      "passingScore": 0,
+      "timeLimit": 300,
       "screens": [
         {
           "id": "intro_d1",
           "type": "DIALOGUE",
-          "background_image": "https://bcp.cdnchinhphu.vn/Uploaded/nguyenthikimlien/2017_11_06/phh-con-rong-chau-tien-14-1509867509529.jpg",
+          "backgroundImage": "https://bcp.cdnchinhphu.vn/Uploaded/nguyenthikimlien/2017_11_06/phh-con-rong-chau-tien-14-1509867509529.jpg",
           "content": [
             {
               "speaker": "AI",
@@ -827,7 +839,7 @@
         {
           "id": "intro_d2",
           "type": "DIALOGUE",
-          "background_image": "https://i.pinimg.com/736x/3c/2c/9b/3c2c9b551163446c3c1781bbd518a805.jpg",
+          "backgroundImage": "https://i.pinimg.com/736x/3c/2c/9b/3c2c9b551163446c3c1781bbd518a805.jpg",
           "content": [
             {
               "speaker": "AI",
@@ -852,7 +864,7 @@
           "content": {
             "title": "Truyền thuyết Con Rồng Cháu Tiên",
             "description": "Xem đoạn phim ngắn về sự tích bọc trăm trứng.",
-            "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
           }
         },
         {
@@ -862,17 +874,17 @@
           "options": [
             {
               "text": "50 người con",
-              "is_correct": false,
+              "isCorrect": false,
               "explanation": "Chưa chính xác. 50 người con theo cha xuống biển, 50 theo mẹ lên non."
             },
             {
               "text": "100 người con",
-              "is_correct": true,
+              "isCorrect": true,
               "explanation": "Chính xác! Bọc trăm trứng nở trăm con."
             },
             {
               "text": "10 người con",
-              "is_correct": false,
+              "isCorrect": false,
               "explanation": "Sai rồi."
             }
           ],
@@ -883,20 +895,21 @@
         "coins": 100,
         "petals": 1
       },
-      "updated_at": "2026-01-28T17:55:36.665Z"
+      "updatedAt": "2026-01-28T17:55:36.665Z",
+      "createdBy": 1
     },
     {
       "id": 2,
-      "chapter_id": 1,
+      "chapterId": 1,
       "name": "Âm vang Trống Đồng",
       "description": "Khám phá các họa tiết bí ẩn trên mặt trống đồng Đông Sơn.",
       "type": "hidden_object",
       "difficulty": "medium",
       "order": 2,
-      "required_level": 1,
-      "is_locked": false,
-      "passing_score": 60,
-      "time_limit": 120,
+      "requiredLevel": 1,
+      "isLocked": false,
+      "passingScore": 60,
+      "timeLimit": 120,
       "thumbnail": "https://luocsutocviet.com/wp-content/uploads/2021/12/vszvdsvds.png?w=768&h=351&crop=1",
       "screens": [
         {
@@ -912,7 +925,7 @@
         {
           "id": "ho_1",
           "type": "HIDDEN_OBJECT",
-          "background_image": "https://i.pinimg.com/1200x/49/4e/46/494e46b67a7691c07a2853ebd4552e9d.jpg",
+          "backgroundImage": "https://i.pinimg.com/1200x/49/4e/46/494e46b67a7691c07a2853ebd4552e9d.jpg",
           "guide_text": "Tìm: Ngôi Sao, Chim Lạc, Nhà Sàn",
           "items": [
             {
@@ -941,7 +954,7 @@
               "fact_popup": "Kiến trúc nhà ở truyền thống tránh thú dữ và ngập lụt."
             }
           ],
-          "required_items": 3
+          "requiredItems": 3
         },
         {
           "id": "img_drum_detail",
@@ -959,15 +972,15 @@
           "options": [
             {
               "text": "Sắt",
-              "is_correct": false
+              "isCorrect": false
             },
             {
               "text": "Đồng",
-              "is_correct": true
+              "isCorrect": true
             },
             {
               "text": "Gốm",
-              "is_correct": false
+              "isCorrect": false
             }
           ],
           "points": 40
@@ -977,19 +990,20 @@
         "coins": 150,
         "petals": 2
       },
-      "updated_at": "2026-01-28T17:55:36.674Z"
+      "updatedAt": "2026-01-28T17:55:36.674Z",
+      "createdBy": 1
     },
     {
       "id": 3,
-      "chapter_id": 1,
+      "chapterId": 1,
       "name": "Lịch Sử Dựng Nước",
       "description": "Sắp xếp các sự kiện lịch sử theo đúng trình tự thời gian.",
       "type": "timeline",
       "difficulty": "medium",
       "order": 3,
-      "required_level": 2,
-      "is_locked": false,
-      "passing_score": 50,
+      "requiredLevel": 2,
+      "isLocked": false,
+      "passingScore": 50,
       "thumbnail": "https://i.pinimg.com/1200x/67/c1/b7/67c1b787d37eaa39a1b1df7e1e31fcf1.jpg",
       "screens": [
         {
@@ -1016,7 +1030,7 @@
               "description": "Lê Lợi khởi nghĩa Lam Sơn"
             }
           ],
-          "correct_order": [
+          "correctOrder": [
             "e1",
             "e2",
             "e3"
@@ -1028,19 +1042,20 @@
         "coins": 120,
         "petals": 1
       },
-      "updated_at": "2026-01-28T17:55:36.683Z"
+      "updatedAt": "2026-01-28T17:55:36.683Z",
+      "createdBy": 1
     },
     {
       "id": 4,
-      "chapter_id": 1,
+      "chapterId": 1,
       "name": "Văn Hóa Làng Xã",
       "description": "Kiểm tra kiến thức về văn hóa làng xã Bắc Bộ.",
       "type": "quiz",
       "difficulty": "hard",
       "order": 4,
-      "required_level": 3,
-      "is_locked": false,
-      "passing_score": 40,
+      "requiredLevel": 3,
+      "isLocked": false,
+      "passingScore": 40,
       "thumbnail": "https://dulichbacgiang.gov.vn/uploads/dulichbacgiang/Bai-viet/292/1.jpg",
       "screens": [
         {
@@ -1049,7 +1064,7 @@
           "content": {
             "title": "Cây Đa Bến Nước",
             "description": "Biểu tượng của làng quê Việt Nam.",
-            "video_url": "https://www.youtube.com/embed/CD8sKixEDsI"
+            "videoUrl": "https://www.youtube.com/embed/CD8sKixEDsI"
           }
         },
         {
@@ -1059,15 +1074,15 @@
           "options": [
             {
               "text": "Thừa Thiên Huế",
-              "is_correct": false
+              "isCorrect": false
             },
             {
               "text": "Quảng Nam",
-              "is_correct": true
+              "isCorrect": true
             },
             {
               "text": "Đà Nẵng",
-              "is_correct": false
+              "isCorrect": false
             }
           ],
           "points": 20
@@ -1079,15 +1094,15 @@
           "options": [
             {
               "text": "Kinh Bắc (Bắc Ninh, Bắc Giang)",
-              "is_correct": true
+              "isCorrect": true
             },
             {
               "text": "Xứ Đoài (Sơn Tây)",
-              "is_correct": false
+              "isCorrect": false
             },
             {
               "text": "Phố Hiến (Hưng Yên)",
-              "is_correct": false
+              "isCorrect": false
             }
           ],
           "points": 20
@@ -1097,19 +1112,18 @@
         "coins": 200,
         "petals": 3
       },
-      "updated_at": "2026-01-28T17:55:36.691Z",
-      "updatedAt": "2026-01-28T12:26:40.462Z"
+      "updatedAt": "2026-01-28T17:55:36.691Z"
     },
     {
       "id": 7,
-      "chapter_id": 2,
+      "chapterId": 2,
       "name": "Phố Cổ Hội An",
       "description": "Nơi hội tụ văn hóa Nhật - Hoa - Việt.",
       "type": "hidden_object",
       "difficulty": "medium",
       "order": 1,
-      "required_level": null,
-      "is_locked": false,
+      "requiredLevel": null,
+      "isLocked": false,
       "thumbnail": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=400",
       "screens": [
         {
@@ -1123,7 +1137,7 @@
               "y": 20
             }
           ],
-          "required_items": 1
+          "requiredItems": 1
         }
       ],
       "rewards": {
@@ -1133,14 +1147,14 @@
     },
     {
       "id": 8,
-      "chapter_id": 2,
+      "chapterId": 2,
       "name": "Nhã nhạc Cung đình Huế",
       "description": "Âm nhạc bác học của triều Nguyễn.",
       "type": "story",
       "difficulty": "medium",
       "order": 2,
-      "required_level": 7,
-      "is_locked": false,
+      "requiredLevel": 7,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Nha_nhac.jpg/600px-Nha_nhac.jpg",
       "screens": [
         {
@@ -1161,14 +1175,14 @@
     },
     {
       "id": 9,
-      "chapter_id": 2,
+      "chapterId": 2,
       "name": "Nghệ thuật Chăm Pa",
       "description": "Vẻ đẹp huyền bí của tháp Chàm.",
       "type": "image_viewer",
       "difficulty": "medium",
       "order": 3,
-      "required_level": 8,
-      "is_locked": false,
+      "requiredLevel": 8,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/My_Son_Sanctuary.jpg/600px-My_Son_Sanctuary.jpg",
       "screens": [
         {
@@ -1185,14 +1199,14 @@
     },
     {
       "id": 10,
-      "chapter_id": 2,
+      "chapterId": 2,
       "name": "Áo Dài Năm Thân",
       "description": "Tiền thân của tà áo dài hiện đại.",
       "type": "quiz",
       "difficulty": "easy",
       "order": 4,
-      "required_level": 9,
-      "is_locked": false,
+      "requiredLevel": 9,
+      "isLocked": false,
       "thumbnail": "https://images.unsplash.com/photo-1617379893213-912dc34dfb7c?w=400",
       "screens": [
         {
@@ -1202,11 +1216,11 @@
           "options": [
             {
               "text": "Tứ thân phụ mẫu và bản thân",
-              "is_correct": true
+              "isCorrect": true
             },
             {
               "text": "Năm châu bốn biển",
-              "is_correct": false
+              "isCorrect": false
             }
           ],
           "points": 100
@@ -1219,14 +1233,14 @@
     },
     {
       "id": 11,
-      "chapter_id": 2,
+      "chapterId": 2,
       "name": "Kiến trúc thuộc địa",
       "description": "Dấu ấn Pháp giữa lòng Hà Nội.",
       "type": "image_viewer",
       "difficulty": "medium",
       "order": 5,
-      "required_level": 10,
-      "is_locked": false,
+      "requiredLevel": 10,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hanoi_Opera_House.jpg/600px-Hanoi_Opera_House.jpg",
       "screens": [
         {
@@ -1243,14 +1257,14 @@
     },
     {
       "id": 12,
-      "chapter_id": 2,
+      "chapterId": 2,
       "name": "Sự ra đời chữ Quốc Ngữ",
       "description": "Bước ngoặt văn hóa lớn của Việt Nam.",
       "type": "timeline",
       "difficulty": "hard",
       "order": 6,
-      "required_level": 11,
-      "is_locked": false,
+      "requiredLevel": 11,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Alexandre_de_Rhodes_dictionary.jpg/400px-Alexandre_de_Rhodes_dictionary.jpg",
       "screens": [
         {
@@ -1273,7 +1287,7 @@
               "title": "Chữ Quốc Ngữ phổ cập"
             }
           ],
-          "correct_order": [
+          "correctOrder": [
             "e1",
             "e2",
             "e3"
@@ -1288,14 +1302,14 @@
     },
     {
       "id": 13,
-      "chapter_id": 3,
+      "chapterId": 3,
       "name": "Kinh thành Huế",
       "description": "Vẻ đẹp uy nghi của kinh đô cuối cùng.",
       "type": "image_viewer",
       "difficulty": "medium",
       "order": 1,
-      "required_level": null,
-      "is_locked": false,
+      "requiredLevel": null,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Hue_Citadel.jpg/600px-Hue_Citadel.jpg",
       "screens": [
         {
@@ -1312,14 +1326,14 @@
     },
     {
       "id": 14,
-      "chapter_id": 3,
+      "chapterId": 3,
       "name": "Văn Miếu - Quốc Tử Giám",
       "description": "Trường đại học đầu tiên của Việt Nam.",
       "type": "quiz",
       "difficulty": "medium",
       "order": 2,
-      "required_level": 13,
-      "is_locked": false,
+      "requiredLevel": 13,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Khue_Van_Cac.jpg/400px-Khue_Van_Cac.jpg",
       "screens": [
         {
@@ -1329,11 +1343,11 @@
           "options": [
             {
               "text": "Vinh danh người đỗ đạt",
-              "is_correct": true
+              "isCorrect": true
             },
             {
               "text": "Ghi chép lịch sử",
-              "is_correct": false
+              "isCorrect": false
             }
           ],
           "points": 100
@@ -1346,14 +1360,14 @@
     },
     {
       "id": 15,
-      "chapter_id": 3,
+      "chapterId": 3,
       "name": "Vịnh Hạ Long",
       "description": "Kỳ quan thiên nhiên thế giới.",
       "type": "hidden_object",
       "difficulty": "easy",
       "order": 3,
-      "required_level": 14,
-      "is_locked": false,
+      "requiredLevel": 14,
+      "isLocked": false,
       "thumbnail": "https://images.unsplash.com/photo-1554625299-47050307ee06?w=400",
       "screens": [
         {
@@ -1367,7 +1381,7 @@
               "y": 40
             }
           ],
-          "required_items": 1
+          "requiredItems": 1
         }
       ],
       "rewards": {
@@ -1377,14 +1391,14 @@
     },
     {
       "id": 16,
-      "chapter_id": 3,
+      "chapterId": 3,
       "name": "Thánh địa Mỹ Sơn",
       "description": "Di sản văn hóa Chăm Pa độc đáo.",
       "type": "story",
       "difficulty": "hard",
       "order": 4,
-      "required_level": 15,
-      "is_locked": false,
+      "requiredLevel": 15,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/My_Son_Sanctuary.jpg/600px-My_Son_Sanctuary.jpg",
       "screens": [
         {
@@ -1405,14 +1419,14 @@
     },
     {
       "id": 17,
-      "chapter_id": 3,
+      "chapterId": 3,
       "name": "Mộc bản triều Nguyễn",
       "description": "Di sản tư liệu thế giới đầu tiên của Việt Nam.",
       "type": "quiz",
       "difficulty": "hard",
       "order": 5,
-      "required_level": 16,
-      "is_locked": false,
+      "requiredLevel": 16,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Moc_ban.jpg/400px-Moc_ban.jpg",
       "screens": [
         {
@@ -1422,11 +1436,11 @@
           "options": [
             {
               "text": "Bản khắc gỗ in sách",
-              "is_correct": true
+              "isCorrect": true
             },
             {
               "text": "Tranh khắc gỗ",
-              "is_correct": false
+              "isCorrect": false
             }
           ],
           "points": 100
@@ -1439,14 +1453,14 @@
     },
     {
       "id": 18,
-      "chapter_id": 3,
+      "chapterId": 3,
       "name": "Truyện Kiều - Nguyễn Du",
       "description": "Kiệt tác văn học vĩ đại.",
       "type": "mixed",
       "difficulty": "hard",
       "order": 6,
-      "required_level": 17,
-      "is_locked": false,
+      "requiredLevel": 17,
+      "isLocked": false,
       "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Truyen_Kieu_cover.jpg/400px-Truyen_Kieu_cover.jpg",
       "screens": [
         {
@@ -1468,7 +1482,7 @@
     },
     {
       "id": 19,
-      "chapter_id": 1,
+      "chapterId": 1,
       "name": "Nguyễn Tiến Tuấn",
       "description": "https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/619660295_2079049926267994_718272744209069642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3SA0uOMwqBZMrjDI8KKotbpAvVtAwZtlukC9W0DBm2ehdIXg",
       "difficulty": "easy",
@@ -1483,22 +1497,187 @@
               "text": "Chào mừng bạn đến với màn chơi mới!"
             }
           ],
-          "is_last": true,
-          "skip_allowed": true,
-          "auto_advance": false
+          "isLast": true,
+          "skipAllowed": true,
+          "autoAdvance": false
         }
       ],
       "rewards": {
         "petals": 1,
         "coins": 1
       },
-      "passing_score": 70,
+      "passingScore": 70,
       "thumbnail": "https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/619660295_2079049926267994_718272744209069642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3SA0uOMwqBZMrjDI8KKotbpAvVtAwZtlukC9W0DBm2ehdIXgd0wTvS8jEtImNZQ-dyy1WV2KHXhXSgzBXoiqj&_nc_ohc=mme38aYJA5EQ7kNvwHsTSrz&_nc_oc=AdmGgdIIkG43gV4rxfXQsZ7Pu38f52Z3i2mF9AXYK_W1dZP28wpjCbA3oCNRCRHo3c4&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=QoQ5hfZhEz21WDNTakkzEg&oh=00_Afpxle6ie6npPvIXgDj2oA0q26iB78kLg9hIuGBDMDBIbw&oe=697FE9E0",
-      "created_by": 1,
+      "createdBy": 1,
       "createdAt": "2026-01-28T14:21:37.978Z",
       "updatedAt": "2026-01-28T19:12:37.345Z",
-      "updated_at": "2026-01-28T17:55:36.698Z",
-      "required_level": 1
+      "requiredLevel": 1
+    },
+    {
+      "id": 20,
+      "chapterId": 4,
+      "name": "Màn 1",
+      "description": "Màn 1Màn 1Màn 1Màn 1",
+      "difficulty": "easy",
+      "order": 1,
+      "knowledgeBase": "\nhttps://stream.nct.vn/resa/2601/b1/1b/9dw3icyxuo.mp3?st=W--kW1dgUMZe1CF0UNg3dQ&e=1770274460&a=6&p=0&r=6bb1c741771fbb85fb0ee381b637e019",
+      "screens": [
+        {
+          "id": "intro",
+          "type": "DIALOGUE",
+          "content": [
+            {
+              "speaker": "AI",
+              "text": "Chào mừng bạn đến với màn chơi mới!"
+            }
+          ],
+          "isFirst": true,
+          "isLast": false,
+          "next_screen_id": "NTT_M1_S2",
+          "skipAllowed": true,
+          "autoAdvance": false,
+          "backgroundImage": "https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/617645291_122105908041215151_8104760439991432343_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHdTKQksHGdBZu0zGKrGZKTD6T4Y-OzrBIPpPhj47OsEqOlAY5gm9gaAE3qfWvZDToofwxFT3iG0PwVOeFcqG05&_nc_ohc=ETvLdd-Gq4UQ7kNvwHeFwWN&_nc_oc=AdmCPXnP6iBqFidmrx4tkPI-vAOjsV-X-BPqRIjCN3x1XiTJKWcmm0BkeIWSXX3Q4Sg&_nc_zt=23&_nc_ht=scontent.fhan2-5.fna&_nc_gid=FegLMdNn8cfOYKTbZM86NQ&oh=00_AfrXoYbJwsUgAPuLBiAx39KOplc6KeLX__D1TboHmPTXrw&oe=6980D912"
+        },
+        {
+          "id": "NTT_M1_S2",
+          "type": "HIDDEN_OBJECT",
+          "skipAllowed": true,
+          "backgroundImage": "https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/617645291_122105908041215151_8104760439991432343_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHdTKQksHGdBZu0zGKrGZKTD6T4Y-OzrBIPpPhj47OsEqOlAY5gm9gaAE3qfWvZDToofwxFT3iG0PwVOeFcqG05&_nc_ohc=ETvLdd-Gq4UQ7kNvwHeFwWN&_nc_oc=AdmCPXnP6iBqFidmrx4tkPI-vAOjsV-X-BPqRIjCN3x1XiTJKWcmm0BkeIWSXX3Q4Sg&_nc_zt=23&_nc_ht=scontent.fhan2-5.fna&_nc_gid=yBdEjX6s3TnZPxV75ULWsg&oh=00_Afo1hWONlNy4UVTT9G2CkC0HUmGpN0NgUiq3Qun42i1Uew&oe=69814992",
+          "requiredItems": 1,
+          "guide_text": "Bấm vào chính giữa",
+          "items": [
+            {
+              "id": "hihi",
+              "name": "Bé SEN",
+              "fact_popup": "Tìm Sen nào",
+              "coordinates": {
+                "x": 53.87,
+                "y": 27.71,
+                "width": 14,
+                "height": 44.03
+              }
+            }
+          ],
+          "isFirst": false,
+          "next_screen_id": "NTT_M1_S3",
+          "isLast": false,
+          "ai_hints_enabled": true
+        },
+        {
+          "id": "NTT_M1_S3",
+          "type": "QUIZ",
+          "skipAllowed": true,
+          "backgroundImage": "https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/617645291_122105908041215151_8104760439991432343_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHdTKQksHGdBZu0zGKrGZKTD6T4Y-OzrBIPpPhj47OsEqOlAY5gm9gaAE3qfWvZDToofwxFT3iG0PwVOeFcqG05&_nc_ohc=ETvLdd-Gq4UQ7kNvwHeFwWN&_nc_oc=AdmCPXnP6iBqFidmrx4tkPI-vAOjsV-X-BPqRIjCN3x1XiTJKWcmm0BkeIWSXX3Q4Sg&_nc_zt=23&_nc_ht=scontent.fhan2-5.fna&_nc_gid=yBdEjX6s3TnZPxV75ULWsg&oh=00_Afo1hWONlNy4UVTT9G2CkC0HUmGpN0NgUiq3Qun42i1Uew&oe=69814992",
+          "question": "Bạn có iu bé Sen không nào ?",
+          "reward": {},
+          "options": [
+            {
+              "isCorrect": true,
+              "text": "Có"
+            },
+            {
+              "isCorrect": true,
+              "text": "Rất iu"
+            },
+            {
+              "isCorrect": true,
+              "text": "Rất rất iu"
+            },
+            {
+              "isCorrect": true,
+              "text": "Ghét thì iu thôi"
+            }
+          ],
+          "isFirst": false,
+          "next_screen_id": "NTT_M1_S4",
+          "isLast": false,
+          "timeLimit": 60,
+          "show_hint_after": 30
+        },
+        {
+          "id": "NTT_M1_S4",
+          "type": "TIMELINE",
+          "skipAllowed": true,
+          "instruction": "Sắp xếp các sự kiện theo đúng thứ tự thời gian",
+          "events": [
+            {
+              "year": 1,
+              "text": "HiHI",
+              "id": "o"
+            },
+            {
+              "year": 2,
+              "text": "123",
+              "id": "123"
+            },
+            {
+              "year": 3,
+              "text": "1231231",
+              "id": "1231223"
+            }
+          ],
+          "isFirst": false,
+          "next_screen_id": "NTT_M1_S5",
+          "isLast": false
+        },
+        {
+          "id": "NTT_M1_S5",
+          "type": "IMAGE_VIEWER",
+          "skipAllowed": true,
+          "backgroundImage": "",
+          "image": "https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/617645291_122105908041215151_8104760439991432343_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHdTKQksHGdBZu0zGKrGZKTD6T4Y-OzrBIPpPhj47OsEqOlAY5gm9gaAE3qfWvZDToofwxFT3iG0PwVOeFcqG05&_nc_ohc=ETvLdd-Gq4UQ7kNvwHeFwWN&_nc_oc=AdmCPXnP6iBqFidmrx4tkPI-vAOjsV-X-BPqRIjCN3x1XiTJKWcmm0BkeIWSXX3Q4Sg&_nc_zt=23&_nc_ht=scontent.fhan2-5.fna&_nc_gid=yBdEjX6s3TnZPxV75ULWsg&oh=00_Afo1hWONlNy4UVTT9G2CkC0HUmGpN0NgUiq3Qun42i1Uew&oe=69814992",
+          "caption": "Hehe",
+          "description": "https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/617645291_122105908041215151_8104760439991432343_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHdTKQksHGdBZu0zGKrGZKTD6T4Y-OzrBIPpPhj47OsEqOlAY5gm9gaAE3qfWvZDToofwxFT3iG0PwVOeFcqG05&_nc_ohc=ETvLdd-Gq4UQ7kNvwHeFwWN&_nc_oc=AdmCPXnP6iBqFidmrx4tkPI-vAOjsV-X-BPqRIjCN3x1XiTJKWcmm0BkeIWSXX3Q4Sg&_nc_zt=23&_nc_ht=scontent.fhan2-5.fna&_nc_gid=yBdEjX6s3TnZPxV75ULWsg&oh=00_Afo1hWONlNy4UVTT9G2CkC0HUmGpN0NgUiq3Qun42i1Uew&oe=69814992",
+          "isFirst": false,
+          "next_screen_id": "NTT_M1_S6",
+          "isLast": false
+        },
+        {
+          "id": "NTT_M1_S6",
+          "type": "VIDEO",
+          "skipAllowed": true,
+          "videoUrl": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/UXts9WVGuYM?si=HtfK3FRO0culXGGf\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+          "caption": "Hehe",
+          "description": "https://www.youtube.com/watch?v=LxXlnvIbq6M",
+          "isFirst": false,
+          "next_screen_id": "NTT_M1_S7",
+          "isLast": false
+        },
+        {
+          "id": "NTT_M1_S7",
+          "type": "HIDDEN_OBJECT",
+          "skipAllowed": true,
+          "backgroundImage": "/uploads/general/file-1769760542630.jpeg",
+          "items": [
+            {
+              "id": "hihi",
+              "name": "Chính giữa",
+              "fact_popup": "a",
+              "coordinates": {
+                "x": 35.71,
+                "y": 31.43,
+                "width": 2,
+                "height": 34.29
+              }
+            }
+          ],
+          "isFirst": false,
+          "next_screen_id": null,
+          "isLast": true,
+          "ai_hints_enabled": true,
+          "requiredItems": 1
+        }
+      ],
+      "rewards": {
+        "petals": 1,
+        "coins": 2
+      },
+      "passingScore": 70,
+      "backgroundMusic": "/uploads/general/audio-1769674874159.mp3",
+      "createdBy": 1,
+      "createdAt": "2026-01-29T07:55:00.176Z",
+      "updatedAt": "2026-01-30T08:09:20.142Z",
+      "thumbnail": "https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/619660295_2079049926267994_718272744209069642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3SA0uOMwqBZMrjDI8KKotbpAvVtAwZtlukC9W0DBm2ehdIXgd0wTvS8jEtImNZQ-dyy1WV2KHXhXSgzBXoiqj&_nc_ohc=mme38aYJA5EQ7kNvwHsTSrz&_nc_oc=AdmGgdIIkG43gV4rxfXQsZ7Pu38f52Z3i2mF9AXYK_W1dZP28wpjCbA3oCNRCRHo3c4&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=bOkcu5iZ22LScpEpP_CPNg&oh=00_Afq9k6gtnY98aRNhn4kt33rw5UZhmB_x-ajTVR4_RtFNCg&oe=6980CAE0"
     }
   ],
   "history_articles": [
@@ -1510,22 +1689,16 @@
       "image": "https://media.vov.vn/sites/default/files/styles/large/public/2023-05/images1139304_6810aa9d609525dimages941103_media_thumb1382169701.jpg",
       "author": "Ban Biên Tập Lịch Sử",
       "publishDate": "2024-05-07T00:00:00Z",
-      "is_active": true,
-      "views": 2540,
-      "related_heritage_ids": [
+      "createdBy": 2,
+      "isActive": true,
+      "views": 1,
+      "relatedHeritageIds": [
         2
       ],
-      "related_artifact_ids": [
+      "relatedArtifactIds": [
         2
       ],
-      "related_level_ids": [
-        99
-      ],
-      "related_product_ids": [
-        1,
-        2
-      ],
-      "timeline_events": [
+      "timelineEvents": [
         {
           "year": "1953",
           "title": "Kế hoạch Navarre",
@@ -1546,6 +1719,126 @@
           "title": "Toàn thắng",
           "description": "Tướng De Castries đầu hàng. Chiến dịch toàn thắng."
         }
+      ],
+      "related_heritage": [
+        {
+          "id": 2,
+          "name": "Hoàng Thành Thăng Long",
+          "type": "monument",
+          "culturalPeriod": "Triều Lý",
+          "region": "Bắc",
+          "latitude": 21.0341,
+          "longitude": 105.8372,
+          "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
+          "yearEstablished": 1010,
+          "image": "/uploads/general/file-1769165335029.jpeg",
+          "rating": 4.7,
+          "totalReviews": 892,
+          "visitHours": "8:00 - 17:00",
+          "entranceFee": 30000,
+          "isActive": true,
+          "unescoListed": true,
+          "significance": "international",
+          "createdBy": 1,
+          "publishDate": "2024-08-05T09:30:00Z",
+          "description": "<p>Ho&agrave;ng th&agrave;nh Thăng Long l&agrave; quần thể di t&iacute;ch lịch sử gắn b&oacute; mật thiết với sự ph&aacute;t triển của Thăng Long &ndash; H&agrave; Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII &ndash; IX), khu di t&iacute;ch tiếp tục ph&aacute;t triển qua c&aacute;c triều đại Đinh &ndash; Tiền L&ecirc; (thế kỷ XI) v&agrave; đạt đến đỉnh cao dưới thời L&yacute; &ndash; Trần &ndash; L&ecirc; (thế kỷ XI &ndash; XVIII). Dưới triều Nguyễn (thế kỷ XIX &ndash; XX), mặc d&ugrave; kinh đ&ocirc; được dời v&agrave;o Ph&uacute; Xu&acirc;n (Huế), nhưng Ho&agrave;ng th&agrave;nh Thăng Long vẫn giữ vai tr&ograve; quan trọng.</p>\n<p>Năm 1010, khi vua L&yacute; Th&aacute;i Tổ dời đ&ocirc; từ Hoa Lư ra Thăng Long, &ocirc;ng đ&atilde; quy hoạch kinh th&agrave;nh theo m&ocirc; h&igrave;nh &ldquo;tam tr&ugrave;ng th&agrave;nh qu&aacute;ch&rdquo;, gồm ba v&ograve;ng th&agrave;nh: Kinh th&agrave;nh (nơi cư d&acirc;n sinh sống), Ho&agrave;ng th&agrave;nh (khu vực d&agrave;nh cho quan lại l&agrave;m việc) v&agrave; Cấm th&agrave;nh (khu vực chỉ d&agrave;nh ri&ecirc;ng cho ho&agrave;ng gia). Từ thế kỷ XI đến XVIII, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n l&agrave; trung t&acirc;m ch&iacute;nh trị, h&agrave;nh ch&iacute;nh của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đ&ocirc; v&agrave;o Ph&uacute; Xu&acirc;n, Thăng Long bị hạ cấp th&agrave;nh Bắc Th&agrave;nh (th&agrave;nh H&agrave; Nội). D&ugrave; vậy, điện K&iacute;nh Thi&ecirc;n v&agrave; Hậu L&acirc;u trong Cấm th&agrave;nh vẫn được duy tr&igrave; l&agrave;m h&agrave;nh cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p>\n<p>Sang thời kỳ Ph&aacute;p thuộc, H&agrave; Nội trở th&agrave;nh trung t&acirc;m h&agrave;nh ch&iacute;nh của Li&ecirc;n bang Đ&ocirc;ng Dương, v&agrave; Th&agrave;nh cổ H&agrave; Nội được sử dụng l&agrave;m Sở chỉ huy qu&acirc;n sự của Ph&aacute;p. L&uacute;c n&agrave;y, hầu hết c&aacute;c c&ocirc;ng tr&igrave;nh cung điện, đền đ&agrave;i trong Ho&agrave;ng th&agrave;nh đều bị ph&aacute; hủy, chỉ c&ograve;n Bắc M&ocirc;n v&agrave; Kỳ Đ&agrave;i được bảo tồn. Tr&ecirc;n nền điện K&iacute;nh Thi&ecirc;n v&agrave; s&acirc;n Long Tr&igrave;, người Ph&aacute;p x&acirc;y dựng c&aacute;c c&ocirc;ng tr&igrave;nh kiến tr&uacute;c mới theo phong c&aacute;ch ch&acirc;u &Acirc;u. Đến năm 1954, sau khi Thủ đ&ocirc; được giải ph&oacute;ng, Th&agrave;nh H&agrave; Nội trở th&agrave;nh Tổng h&agrave;nh dinh của Qu&acirc;n đội nh&acirc;n d&acirc;n Việt Nam v&agrave; duy tr&igrave; vai tr&ograve; n&agrave;y đến năm 2004.</p>\n<p>Ng&agrave;y nay, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long, gồm di t&iacute;ch khảo cổ học 18 Ho&agrave;ng Diệu v&agrave; Th&agrave;nh cổ H&agrave; Nội, nằm trong khu vực trung t&acirc;m ch&iacute;nh trị Ba Đ&igrave;nh &ndash; nơi đặt trụ sở của c&aacute;c cơ quan l&atilde;nh đạo cao nhất của Đảng v&agrave; Nh&agrave; nước. Đ&acirc;y kh&ocirc;ng chỉ l&agrave; một khu di t&iacute;ch lịch sử &ndash; văn h&oacute;a quan trọng m&agrave; c&ograve;n l&agrave; kh&ocirc;ng gian kiến tr&uacute;c mang gi&aacute; trị đặc biệt, gắn liền chặc chẽ với qu&aacute; tr&igrave;nh ph&aacute;t triển của đất nước. Đ&acirc;y cũng l&agrave; nơi tổ chức c&aacute;c sự kiện ch&iacute;nh trị, văn h&oacute;a trọng đại của quốc gia.</p>\n<h3>Vị thế v&agrave; tầm v&oacute;c</h3>\n<p>Trải qua 13 thế kỷ, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n giữ vị thế trung t&acirc;m ch&iacute;nh trị v&agrave; l&agrave; một trong những di t&iacute;ch quan trọng nhất của Việt Nam. Ng&agrave;y 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long &ndash; H&agrave; Nội ch&iacute;nh thức được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a thế giới. Gi&aacute; trị nổi bật của di sản n&agrave;y thể hiện qua chiều d&agrave;i lịch sử li&ecirc;n tục suốt 13 thế kỷ, vai tr&ograve; l&agrave; trung t&acirc;m quyền lực trong nhiều thời kỳ v&agrave; hệ thống di t&iacute;ch, di vật phong ph&uacute;. Đ&acirc;y cũng l&agrave; nơi lưu giữ những dấu ấn văn h&oacute;a quan trọng v&agrave; chứng kiến nhiều sự kiện mang tầm v&oacute;c lớn lao trong lịch sử d&acirc;n tộc.</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://i.pinimg.com/1200x/ea/42/15/ea4215828ac658b735472adfddf13132.jpg\"></p>\n<h3>C&aacute;c di vật được khảo cổ, khai quật trong Ho&agrave;ng Th&agrave;nh Thăng Long</h3>\n<p>C&aacute;c di vật được khai quật v&agrave; hiện đang trưng b&agrave;y ở Khu khảo cổ 18 Ho&agrave;ng Diệu.</p>\n<p>Thềm chia l&agrave;m 3 lối l&ecirc;n xuống đều nhau, lối giữa ngăn c&aacute;ch với 2 lối b&ecirc;n bằng đ&ocirc;i rồng đ&aacute; được x&acirc;y dựng năm 1467 ( đời vua L&ecirc; Th&aacute;nh T&ocirc;ng ). Rồng được tạo t&aacute;c kh&aacute; đẹp v&agrave; trau chuốt, tạo khối kiểu tượng tr&ograve;n c&oacute; d&aacute;ng mập, khỏe, đầu vươn cao ph&iacute;a ch&acirc;n thềm bậc, th&acirc;n uốn kh&uacute;c nhịp nh&agrave;ng v&agrave; chạy d&agrave;i theo 9 bậc l&ecirc;n. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, r&acirc;u v&agrave; t&oacute;c kết th&agrave;nh đao bay về sau.</p>\n<p>Tai rồng lớn kiểu tai tr&acirc;u, sừng đơn vươn d&agrave;i ra ph&iacute;a sau v&agrave; &aacute;p s&aacute;t th&acirc;n rồng. Dọc sống lưng đục chạm h&agrave;ng v&acirc;y c&aacute; to, mập. B&ecirc;n ngo&agrave;i bậc thềm c&oacute; 2 lan can h&igrave;nh rồng c&aacute;ch điệu dạng ph&ugrave; đi&ecirc;u ( gọi l&agrave; v&acirc;n h&oacute;a rồng ), mặt trong trang tr&iacute; v&acirc;n m&acirc;y, b&ecirc;n ngo&agrave;i thể hiện hoa c&uacute;c d&acirc;y. C&aacute;c hoa văn n&agrave;y được phủ k&iacute;n mặt ngo&agrave;i của th&acirc;n rồng đ&aacute; c&aacute;ch điệu.</p>\n<p>Ph&iacute;a ngo&agrave;i l&agrave; hai đ&aacute;m m&acirc;y h&oacute;a rồng. Đ&acirc;y l&agrave; hai tảng đ&aacute; nguy&ecirc;n khối d&agrave;y 36 &ndash; 39 cm, phần đầu thấp d&agrave;y hơn, c&oacute; những đường cuốn cắt ngang c&ugrave;ng những đường gờ nổi nối tiếp nhau chạy hết chiều d&agrave;i phiến đ&aacute; 5,3 m, những đường gờ nổi kh&ocirc;ng theo quy luật.</p>\n<p>Mặt trong v&agrave; ngo&agrave;i của hai con rồng c&aacute;ch điệu n&agrave;y trang tr&iacute; hoa văn, họa tiết khắc ch&igrave;m v&agrave;o đ&aacute;. Ph&iacute;a ngo&agrave;i, c&oacute; hai đường thẳng chạy dọc theo th&acirc;n rồng c&aacute;ch nhau 10 cm, chia đ&ocirc;i th&agrave;nh hai nửa tr&ecirc;n dưới, b&ecirc;n trong l&agrave; những b&ocirc;ng hoa bốn c&aacute;nh xếp liền nhau. Nửa tr&ecirc;n l&agrave; những cuộn m&acirc;y, đao lửa &iacute;t theo quy luật r&otilde; rang, nửa dưới l&agrave; những h&igrave;nh ảnh mặt trời c&aacute;ch điệu, đao lửa, m&acirc;y vờn. Ph&iacute;a mặt trong của phiến đ&aacute; do c&oacute; bậc thềm cao n&ecirc;n diện t&iacute;ch trạm khắc &iacute;t hơn, một đường thẳng b&ecirc;n tr&ecirc;n l&agrave; những cuộn m&acirc;y nhỏ dẫn từ dưới thấp l&ecirc;n cao.</p>\n<p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
+          "commentCount": 85,
+          "relatedArtifactIds": [
+            7,
+            8,
+            9
+          ],
+          "relatedHistoryIds": [
+            1
+          ],
+          "shortDescription": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
+          "province": "Hà Nội",
+          "gallery": [],
+          "timeline": [
+            {
+              "id": 6,
+              "title": "Lý Thái Tổ dời đô",
+              "description": "Vua Lý Thái Tổ ban chiếu Thiên đô, dời đô từ Hoa Lư về Thăng Long",
+              "year": 1010,
+              "heritageSiteId": 2,
+              "category": "founded",
+              "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600"
+            },
+            {
+              "id": 7,
+              "title": "Xây dựng điện Kính Thiên",
+              "description": "Vua Lê Thái Tổ cho xây dựng điện Kính Thiên làm nơi triều chính",
+              "year": 1428,
+              "heritageSiteId": 2,
+              "category": "construction",
+              "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600"
+            },
+            {
+              "id": 8,
+              "title": "Khai quật khảo cổ",
+              "description": "Bắt đầu khai quật khảo cổ học tại khu vực 18 Hoàng Diệu, phát hiện nhiều di vật quý",
+              "year": 2002,
+              "heritageSiteId": 2,
+              "category": "discovery",
+              "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600"
+            },
+            {
+              "id": 5,
+              "title": "UNESCO công nhận Hoàng Thành",
+              "description": "Hoàng Thành Thăng Long được UNESCO công nhận",
+              "year": 2010,
+              "heritageSiteId": 2,
+              "category": "recognition",
+              "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600"
+            }
+          ],
+          "updatedAt": "2026-01-23T10:52:01.619Z"
+        }
+      ],
+      "relatedArtifacts": [
+        {
+          "id": 2,
+          "name": "Trống đồng Ngọc Lũ",
+          "description": "<p>Trống đồng Ngọc Lũ l&agrave; một trong những hiện vật điển h&igrave;nh nhất của văn h&oacute;a Đ&ocirc;ng Sơn, thuộc thời kỳ đồ đồng khoảng thế kỷ 3&ndash;2 trước C&ocirc;ng Nguy&ecirc;n. Đ&acirc;y l&agrave; điển h&igrave;nh cho nghệ thuật đ&uacute;c đồng tinh xảo của người Đ&ocirc;ng Sơn, với c&aacute;c họa tiết trang tr&iacute; tinh tế.</p>",
+          "heritageSiteId": 4,
+          "categoryId": 4,
+          "artifactType": "sculpture",
+          "yearCreated": null,
+          "creator": "Người văn hóa Đông Sơn",
+          "material": "Đồng",
+          "dimensions": "cao khoảng 62 cm, đường kính mặt 89 cm",
+          "condition": "good",
+          "image": "/uploads/general/file-1769165881586.jpeg",
+          "isOnDisplay": true,
+          "locationInSite": "Bảo tàng Lịch sử Quốc gia (Hà Nội)",
+          "updatedAt": "2026-01-23T11:12:23.233Z",
+          "createdBy": 1,
+          "publishDate": "2024-09-05T15:30:00Z",
+          "shortDescription": "Bảo vật quốc gia, biểu tượng rực rỡ nhất của nền văn hóa Đông Sơn.",
+          "commentCount": 34,
+          "gallery": [],
+          "relatedHeritageIds": [],
+          "relatedHistoryIds": []
+        }
+      ],
+      "relatedLevels": [],
+      "related_products": [
+        {
+          "id": 1,
+          "name": "Sách: Việt Nam Sử Lược",
+          "price": 180000,
+          "type": "book",
+          "image": "https://salt.tikicdn.com/cache/w1200/ts/product/23/67/68/73919242d992953284346028887e3871.jpg",
+          "url": "#"
+        },
+        {
+          "id": 2,
+          "name": "Mô hình xe tăng 390",
+          "price": 250000,
+          "type": "souvenir",
+          "image": "https://bizweb.dktcdn.net/100/356/472/products/1-11a364be-ae3a-4496-ae58-f9479361ad38.jpg",
+          "url": "#"
+        }
       ]
     },
     {
@@ -1556,18 +1849,12 @@
       "image": "/uploads/general/file-1769167164956.jpeg",
       "author": "Nguyễn Văn Sử",
       "publishDate": "2024-04-30T00:00:00Z",
-      "is_active": true,
-      "views": 3100,
-      "related_heritage_ids": [],
-      "related_artifact_ids": [],
-      "related_level_ids": [
-        99
-      ],
-      "related_product_ids": [
-        2,
-        4
-      ],
-      "timeline_events": [
+      "createdBy": 2,
+      "isActive": true,
+      "views": 0,
+      "relatedHeritageIds": [],
+      "relatedArtifactIds": [],
+      "timelineEvents": [
         {
           "year": "04/03/1975",
           "title": "Chiến dịch Tây Nguyên",
@@ -1589,57 +1876,56 @@
           "id": 3,
           "name": "Bảo tàng Thành phố Hồ Chí Minh",
           "type": "museum",
-          "cultural_period": "Hiện đại",
+          "culturalPeriod": "Hiện đại",
           "region": "TP. Hồ Chí Minh",
           "latitude": 10.7929,
           "longitude": 106.6955,
           "address": "65 Lý Tự Trọng, Q. 1, TP. Hồ Chí Minh",
-          "year_established": 1956,
+          "yearEstablished": 1956,
           "image": "/uploads/general/file-1769165693020.jpeg",
           "rating": 4.5,
-          "total_reviews": 234,
-          "visit_hours": "8:00 - 17:00",
-          "entrance_fee": 50000,
-          "is_active": true,
-          "unesco_listed": false,
+          "totalReviews": 234,
+          "visitHours": "8:00 - 17:00",
+          "entranceFee": 50000,
+          "isActive": true,
+          "unescoListed": false,
           "significance": "national",
-          "author": "Admin",
+          "createdBy": 1,
           "publishDate": "2024-08-10T14:45:00Z",
           "shortDescription": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
           "commentCount": 42,
-          "short_description": "Bảo tàng lưu giữ và trưng bày các hiện vật phản ánh lịch sử hình thành và phát triển của Sài Gòn - TP.HCM.",
           "gallery": [],
-          "related_artifact_ids": [],
-          "related_history_ids": [],
+          "relatedArtifactIds": [],
+          "relatedHistoryIds": [],
           "timeline": [],
           "updatedAt": "2026-01-23T10:54:56.058Z"
         }
       ],
-      "related_artifacts": [],
-      "related_levels": [
+      "relatedArtifacts": [],
+      "relatedLevels": [
         {
           "id": 99,
-          "chapter_id": 1,
+          "chapterId": 1,
           "name": "[DEMO] Test All Screens",
           "description": "Level demo đầy đủ tính năng: Đối thoại, Tìm vật, Trắc nghiệm, Dòng thời gian, Xem ảnh, Video.",
           "type": "mixed",
           "difficulty": "easy",
           "order": 0,
-          "required_level": null,
-          "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
-          "background_music": null,
-          "ai_character_id": 1,
-          "knowledge_base": "Level demo cho tất cả screen types",
+          "requiredLevel": null,
+          "backgroundImage": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+          "backgroundMusic": null,
+          "aiCharacterId": 1,
+          "knowledgeBase": "Level demo cho tất cả screen types",
           "screens": [
             {
               "id": "demo_dialogue",
               "index": 0,
               "name": "1. Dialogue Screen",
-              "background_image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
+              "backgroundImage": "https://images.unsplash.com/photo-1555169062-013468b47731?w=800",
               "type": "DIALOGUE",
               "description": "Demo màn hình hội thoại",
-              "is_first": true,
-              "is_last": false,
+              "isFirst": true,
+              "isLast": false,
               "content": [
                 {
                   "speaker": "AI",
@@ -1659,12 +1945,12 @@
               "id": "demo_hidden",
               "index": 1,
               "name": "2. Hidden Object Screen",
-              "background_image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+              "backgroundImage": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
               "type": "HIDDEN_OBJECT",
               "description": "Hãy tìm 3 vật phẩm: Cái Quạt, Cờ Hội và Đàn Nguyệt.",
-              "is_first": false,
-              "is_last": false,
-              "required_items": 3,
+              "isFirst": false,
+              "isLast": false,
+              "requiredItems": 3,
               "items": [
                 {
                   "id": "fan",
@@ -1693,26 +1979,26 @@
               "id": "demo_quiz",
               "index": 2,
               "name": "3. Quiz Screen",
-              "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+              "backgroundImage": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
               "type": "QUIZ",
               "description": "Câu hỏi trắc nghiệm kiến thức",
-              "is_first": false,
-              "is_last": false,
+              "isFirst": false,
+              "isLast": false,
               "question": "Tính năng nào sau đây KHÔNG có trong demo này?",
               "options": [
                 {
                   "text": "Xem ảnh 360 độ",
-                  "is_correct": true,
+                  "isCorrect": true,
                   "explanation": "Chính xác! Hiện tại Web chưa hỗ trợ 360 viewer."
                 },
                 {
                   "text": "Dòng thời gian",
-                  "is_correct": false,
+                  "isCorrect": false,
                   "explanation": "Sai rồi, lát nữa sẽ có timeline."
                 },
                 {
                   "text": "Video Player",
-                  "is_correct": false,
+                  "isCorrect": false,
                   "explanation": "Sai rồi, video ở cuối level."
                 }
               ],
@@ -1722,11 +2008,11 @@
               "id": "demo_timeline",
               "index": 3,
               "name": "4. Timeline Screen",
-              "background_image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
+              "backgroundImage": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800",
               "type": "TIMELINE",
               "description": "Sắp xếp các triều đại Việt Nam theo thứ tự thời gian.",
-              "is_first": false,
-              "is_last": false,
+              "isFirst": false,
+              "isLast": false,
               "events": [
                 {
                   "id": "e1",
@@ -1747,7 +2033,7 @@
                   "description": "Lê Lợi khởi nghĩa Lam Sơn thành công."
                 }
               ],
-              "correct_order": [
+              "correctOrder": [
                 "e1",
                 "e2",
                 "e3"
@@ -1757,11 +2043,11 @@
               "id": "demo_image",
               "index": 4,
               "name": "5. Image Viewer Screen",
-              "background_image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
+              "backgroundImage": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800",
               "type": "IMAGE_VIEWER",
               "description": "Demo màn hình xem ảnh",
-              "is_first": false,
-              "is_last": false,
+              "isFirst": false,
+              "isLast": false,
               "content": {
                 "title": "Chùa Một Cột",
                 "description": "Biểu tượng văn hóa tâm linh độc đáo của Hà Nội, được xây dựng từ thời Lý.",
@@ -1772,15 +2058,15 @@
               "id": "demo_video",
               "index": 5,
               "name": "6. Video Screen",
-              "background_image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=800",
+              "backgroundImage": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=800",
               "type": "VIDEO",
               "description": "Demo màn hình video",
-              "is_first": false,
-              "is_last": true,
+              "isFirst": false,
+              "isLast": true,
               "content": {
                 "title": "Giới thiệu Sen Hoa",
                 "description": "Trailer giới thiệu dự án game lịch sử Sen Hoa. Hãy cùng thưởng thức!",
-                "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
               }
             }
           ]
@@ -1804,7 +2090,6 @@
           "url": "#"
         }
       ],
-      "short_description": "Chiến dịch Hồ Chí Minh lịch sử, giải phóng hoàn toàn miền Nam, thống nhất đất nước.",
       "gallery": [],
       "updatedAt": "2026-01-23T11:19:26.010Z"
     },
@@ -1816,17 +2101,12 @@
       "image": "/uploads/general/file-1769167157139.jpeg",
       "author": "Sử Gia",
       "publishDate": "2024-01-10T00:00:00Z",
-      "is_active": true,
-      "views": 5000,
-      "related_heritage_ids": [],
-      "related_artifact_ids": [],
-      "related_level_ids": [
-        101
-      ],
-      "related_product_ids": [
-        1
-      ],
-      "timeline_events": [
+      "createdBy": 2,
+      "isActive": true,
+      "views": 0,
+      "relatedHeritageIds": [],
+      "relatedArtifactIds": [],
+      "timelineEvents": [
         {
           "year": "938",
           "title": "Trận Đại Chiến",
@@ -1838,33 +2118,32 @@
           "id": 2,
           "name": "Hoàng Thành Thăng Long",
           "type": "monument",
-          "cultural_period": "Triều Lý",
+          "culturalPeriod": "Triều Lý",
           "region": "Bắc",
           "latitude": 21.0341,
           "longitude": 105.8372,
           "address": "19C Hoàng Diệu, Ba Đình, Hà Nội",
-          "year_established": 1010,
+          "yearEstablished": 1010,
           "image": "/uploads/general/file-1769165335029.jpeg",
           "rating": 4.7,
-          "total_reviews": 892,
-          "visit_hours": "8:00 - 17:00",
-          "entrance_fee": 30000,
-          "is_active": true,
-          "unesco_listed": true,
+          "totalReviews": 892,
+          "visitHours": "8:00 - 17:00",
+          "entranceFee": 30000,
+          "isActive": true,
+          "unescoListed": true,
           "significance": "international",
-          "author": "Admin",
+          "createdBy": 1,
           "publishDate": "2024-08-05T09:30:00Z",
           "description": "<p>Ho&agrave;ng th&agrave;nh Thăng Long l&agrave; quần thể di t&iacute;ch lịch sử gắn b&oacute; mật thiết với sự ph&aacute;t triển của Thăng Long &ndash; H&agrave; Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII &ndash; IX), khu di t&iacute;ch tiếp tục ph&aacute;t triển qua c&aacute;c triều đại Đinh &ndash; Tiền L&ecirc; (thế kỷ XI) v&agrave; đạt đến đỉnh cao dưới thời L&yacute; &ndash; Trần &ndash; L&ecirc; (thế kỷ XI &ndash; XVIII). Dưới triều Nguyễn (thế kỷ XIX &ndash; XX), mặc d&ugrave; kinh đ&ocirc; được dời v&agrave;o Ph&uacute; Xu&acirc;n (Huế), nhưng Ho&agrave;ng th&agrave;nh Thăng Long vẫn giữ vai tr&ograve; quan trọng.</p>\n<p>Năm 1010, khi vua L&yacute; Th&aacute;i Tổ dời đ&ocirc; từ Hoa Lư ra Thăng Long, &ocirc;ng đ&atilde; quy hoạch kinh th&agrave;nh theo m&ocirc; h&igrave;nh &ldquo;tam tr&ugrave;ng th&agrave;nh qu&aacute;ch&rdquo;, gồm ba v&ograve;ng th&agrave;nh: Kinh th&agrave;nh (nơi cư d&acirc;n sinh sống), Ho&agrave;ng th&agrave;nh (khu vực d&agrave;nh cho quan lại l&agrave;m việc) v&agrave; Cấm th&agrave;nh (khu vực chỉ d&agrave;nh ri&ecirc;ng cho ho&agrave;ng gia). Từ thế kỷ XI đến XVIII, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n l&agrave; trung t&acirc;m ch&iacute;nh trị, h&agrave;nh ch&iacute;nh của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đ&ocirc; v&agrave;o Ph&uacute; Xu&acirc;n, Thăng Long bị hạ cấp th&agrave;nh Bắc Th&agrave;nh (th&agrave;nh H&agrave; Nội). D&ugrave; vậy, điện K&iacute;nh Thi&ecirc;n v&agrave; Hậu L&acirc;u trong Cấm th&agrave;nh vẫn được duy tr&igrave; l&agrave;m h&agrave;nh cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p>\n<p>Sang thời kỳ Ph&aacute;p thuộc, H&agrave; Nội trở th&agrave;nh trung t&acirc;m h&agrave;nh ch&iacute;nh của Li&ecirc;n bang Đ&ocirc;ng Dương, v&agrave; Th&agrave;nh cổ H&agrave; Nội được sử dụng l&agrave;m Sở chỉ huy qu&acirc;n sự của Ph&aacute;p. L&uacute;c n&agrave;y, hầu hết c&aacute;c c&ocirc;ng tr&igrave;nh cung điện, đền đ&agrave;i trong Ho&agrave;ng th&agrave;nh đều bị ph&aacute; hủy, chỉ c&ograve;n Bắc M&ocirc;n v&agrave; Kỳ Đ&agrave;i được bảo tồn. Tr&ecirc;n nền điện K&iacute;nh Thi&ecirc;n v&agrave; s&acirc;n Long Tr&igrave;, người Ph&aacute;p x&acirc;y dựng c&aacute;c c&ocirc;ng tr&igrave;nh kiến tr&uacute;c mới theo phong c&aacute;ch ch&acirc;u &Acirc;u. Đến năm 1954, sau khi Thủ đ&ocirc; được giải ph&oacute;ng, Th&agrave;nh H&agrave; Nội trở th&agrave;nh Tổng h&agrave;nh dinh của Qu&acirc;n đội nh&acirc;n d&acirc;n Việt Nam v&agrave; duy tr&igrave; vai tr&ograve; n&agrave;y đến năm 2004.</p>\n<p>Ng&agrave;y nay, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long, gồm di t&iacute;ch khảo cổ học 18 Ho&agrave;ng Diệu v&agrave; Th&agrave;nh cổ H&agrave; Nội, nằm trong khu vực trung t&acirc;m ch&iacute;nh trị Ba Đ&igrave;nh &ndash; nơi đặt trụ sở của c&aacute;c cơ quan l&atilde;nh đạo cao nhất của Đảng v&agrave; Nh&agrave; nước. Đ&acirc;y kh&ocirc;ng chỉ l&agrave; một khu di t&iacute;ch lịch sử &ndash; văn h&oacute;a quan trọng m&agrave; c&ograve;n l&agrave; kh&ocirc;ng gian kiến tr&uacute;c mang gi&aacute; trị đặc biệt, gắn liền chặc chẽ với qu&aacute; tr&igrave;nh ph&aacute;t triển của đất nước. Đ&acirc;y cũng l&agrave; nơi tổ chức c&aacute;c sự kiện ch&iacute;nh trị, văn h&oacute;a trọng đại của quốc gia.</p>\n<h3>Vị thế v&agrave; tầm v&oacute;c</h3>\n<p>Trải qua 13 thế kỷ, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n giữ vị thế trung t&acirc;m ch&iacute;nh trị v&agrave; l&agrave; một trong những di t&iacute;ch quan trọng nhất của Việt Nam. Ng&agrave;y 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long &ndash; H&agrave; Nội ch&iacute;nh thức được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a thế giới. Gi&aacute; trị nổi bật của di sản n&agrave;y thể hiện qua chiều d&agrave;i lịch sử li&ecirc;n tục suốt 13 thế kỷ, vai tr&ograve; l&agrave; trung t&acirc;m quyền lực trong nhiều thời kỳ v&agrave; hệ thống di t&iacute;ch, di vật phong ph&uacute;. Đ&acirc;y cũng l&agrave; nơi lưu giữ những dấu ấn văn h&oacute;a quan trọng v&agrave; chứng kiến nhiều sự kiện mang tầm v&oacute;c lớn lao trong lịch sử d&acirc;n tộc.</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://i.pinimg.com/1200x/ea/42/15/ea4215828ac658b735472adfddf13132.jpg\"></p>\n<h3>C&aacute;c di vật được khảo cổ, khai quật trong Ho&agrave;ng Th&agrave;nh Thăng Long</h3>\n<p>C&aacute;c di vật được khai quật v&agrave; hiện đang trưng b&agrave;y ở Khu khảo cổ 18 Ho&agrave;ng Diệu.</p>\n<p>Thềm chia l&agrave;m 3 lối l&ecirc;n xuống đều nhau, lối giữa ngăn c&aacute;ch với 2 lối b&ecirc;n bằng đ&ocirc;i rồng đ&aacute; được x&acirc;y dựng năm 1467 ( đời vua L&ecirc; Th&aacute;nh T&ocirc;ng ). Rồng được tạo t&aacute;c kh&aacute; đẹp v&agrave; trau chuốt, tạo khối kiểu tượng tr&ograve;n c&oacute; d&aacute;ng mập, khỏe, đầu vươn cao ph&iacute;a ch&acirc;n thềm bậc, th&acirc;n uốn kh&uacute;c nhịp nh&agrave;ng v&agrave; chạy d&agrave;i theo 9 bậc l&ecirc;n. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, r&acirc;u v&agrave; t&oacute;c kết th&agrave;nh đao bay về sau.</p>\n<p>Tai rồng lớn kiểu tai tr&acirc;u, sừng đơn vươn d&agrave;i ra ph&iacute;a sau v&agrave; &aacute;p s&aacute;t th&acirc;n rồng. Dọc sống lưng đục chạm h&agrave;ng v&acirc;y c&aacute; to, mập. B&ecirc;n ngo&agrave;i bậc thềm c&oacute; 2 lan can h&igrave;nh rồng c&aacute;ch điệu dạng ph&ugrave; đi&ecirc;u ( gọi l&agrave; v&acirc;n h&oacute;a rồng ), mặt trong trang tr&iacute; v&acirc;n m&acirc;y, b&ecirc;n ngo&agrave;i thể hiện hoa c&uacute;c d&acirc;y. C&aacute;c hoa văn n&agrave;y được phủ k&iacute;n mặt ngo&agrave;i của th&acirc;n rồng đ&aacute; c&aacute;ch điệu.</p>\n<p>Ph&iacute;a ngo&agrave;i l&agrave; hai đ&aacute;m m&acirc;y h&oacute;a rồng. Đ&acirc;y l&agrave; hai tảng đ&aacute; nguy&ecirc;n khối d&agrave;y 36 &ndash; 39 cm, phần đầu thấp d&agrave;y hơn, c&oacute; những đường cuốn cắt ngang c&ugrave;ng những đường gờ nổi nối tiếp nhau chạy hết chiều d&agrave;i phiến đ&aacute; 5,3 m, những đường gờ nổi kh&ocirc;ng theo quy luật.</p>\n<p>Mặt trong v&agrave; ngo&agrave;i của hai con rồng c&aacute;ch điệu n&agrave;y trang tr&iacute; hoa văn, họa tiết khắc ch&igrave;m v&agrave;o đ&aacute;. Ph&iacute;a ngo&agrave;i, c&oacute; hai đường thẳng chạy dọc theo th&acirc;n rồng c&aacute;ch nhau 10 cm, chia đ&ocirc;i th&agrave;nh hai nửa tr&ecirc;n dưới, b&ecirc;n trong l&agrave; những b&ocirc;ng hoa bốn c&aacute;nh xếp liền nhau. Nửa tr&ecirc;n l&agrave; những cuộn m&acirc;y, đao lửa &iacute;t theo quy luật r&otilde; rang, nửa dưới l&agrave; những h&igrave;nh ảnh mặt trời c&aacute;ch điệu, đao lửa, m&acirc;y vờn. Ph&iacute;a mặt trong của phiến đ&aacute; do c&oacute; bậc thềm cao n&ecirc;n diện t&iacute;ch trạm khắc &iacute;t hơn, một đường thẳng b&ecirc;n tr&ecirc;n l&agrave; những cuộn m&acirc;y nhỏ dẫn từ dưới thấp l&ecirc;n cao.</p>\n<p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
           "commentCount": 85,
-          "related_artifact_ids": [
+          "relatedArtifactIds": [
             7,
             8,
             9
           ],
-          "related_history_ids": [
+          "relatedHistoryIds": [
             1
           ],
-          "short_description": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
           "shortDescription": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
           "province": "Hà Nội",
           "gallery": [],
@@ -1874,7 +2153,7 @@
               "title": "Lý Thái Tổ dời đô",
               "description": "Vua Lý Thái Tổ ban chiếu Thiên đô, dời đô từ Hoa Lư về Thăng Long",
               "year": 1010,
-              "heritage_site_id": 2,
+              "heritageSiteId": 2,
               "category": "founded",
               "image": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=600"
             },
@@ -1883,7 +2162,7 @@
               "title": "Xây dựng điện Kính Thiên",
               "description": "Vua Lê Thái Tổ cho xây dựng điện Kính Thiên làm nơi triều chính",
               "year": 1428,
-              "heritage_site_id": 2,
+              "heritageSiteId": 2,
               "category": "construction",
               "image": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=600"
             },
@@ -1892,7 +2171,7 @@
               "title": "Khai quật khảo cổ",
               "description": "Bắt đầu khai quật khảo cổ học tại khu vực 18 Hoàng Diệu, phát hiện nhiều di vật quý",
               "year": 2002,
-              "heritage_site_id": 2,
+              "heritageSiteId": 2,
               "category": "discovery",
               "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600"
             },
@@ -1901,7 +2180,7 @@
               "title": "UNESCO công nhận Hoàng Thành",
               "description": "Hoàng Thành Thăng Long được UNESCO công nhận",
               "year": 2010,
-              "heritage_site_id": 2,
+              "heritageSiteId": 2,
               "category": "recognition",
               "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=600"
             }
@@ -1909,7 +2188,7 @@
           "updatedAt": "2026-01-23T10:52:01.619Z"
         }
       ],
-      "related_levels": [],
+      "relatedLevels": [],
       "related_products": [
         {
           "id": 1,
@@ -1920,7 +2199,6 @@
           "url": "#"
         }
       ],
-      "short_description": "Trận thủy chiến lừng lẫy chấm dứt 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập.",
       "gallery": [],
       "updatedAt": "2026-01-23T11:19:18.153Z"
     },
@@ -1932,22 +2210,19 @@
       "image": "/uploads/general/file-1769167302173.jpeg",
       "author": "Nữ Sử",
       "publishDate": "2024-03-08T00:00:00Z",
-      "is_active": true,
-      "views": 4200,
-      "related_heritage_ids": [],
-      "related_artifact_ids": [],
-      "related_level_ids": [],
-      "related_product_ids": [
-        3
-      ],
-      "timeline_events": [
+      "createdBy": 2,
+      "isActive": true,
+      "views": 0,
+      "relatedHeritageIds": [],
+      "relatedArtifactIds": [],
+      "timelineEvents": [
         {
           "year": "40",
           "title": "Phất cờ khởi nghĩa",
           "description": "Hai Bà Trưng dựng cờ khởi nghĩa tại Hát Môn."
         }
       ],
-      "related_artifacts": [],
+      "relatedArtifacts": [],
       "related_products": [
         {
           "id": 3,
@@ -1958,7 +2233,6 @@
           "url": "#"
         }
       ],
-      "short_description": "Cuộc khởi nghĩa đầu tiên chống lại ách đô hộ phương Bắc do hai nữ tướng lãnh đạo.",
       "gallery": [],
       "updatedAt": "2026-01-23T11:21:43.101Z"
     }
@@ -2002,14 +2276,14 @@
       "price": 150000,
       "type": "souvenir",
       "image": "https://images.unsplash.com/photo-1596525164222-297eb0c878f8?w=600",
-      "heritage_site_id": 1,
+      "heritageSiteId": 1,
       "url": "#"
     }
   ],
   "collections": [
     {
       "id": 1,
-      "user_id": 1,
+      "userId": 1,
       "name": "Cổ vật thời Lý",
       "description": "Bộ sưu tập các cổ vật đặc sắc thời Lý",
       "visibility": "public",
@@ -2039,7 +2313,7 @@
     },
     {
       "id": 2,
-      "user_id": 1,
+      "userId": 1,
       "name": "Nghiên cứu Lịch sử",
       "description": "Tài liệu và hiện vật cho bài luận văn.",
       "items": [
@@ -2050,7 +2324,7 @@
         }
       ],
       "is_public": false,
-      "created_at": "2026-01-19T01:46:49.856Z",
+      "createdAt": "2026-01-19T01:46:49.856Z",
       "total_items": 1,
       "updatedAt": "2026-01-19T02:12:52.563Z"
     }
@@ -2067,8 +2341,8 @@
       "reward_coins": 200,
       "reward_petals": 2,
       "reward_character": "guardian_hoian",
-      "is_active": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 2,
@@ -2081,8 +2355,8 @@
       "reward_coins": 150,
       "reward_petals": 1,
       "reward_character": null,
-      "is_active": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 3,
@@ -2095,8 +2369,8 @@
       "reward_coins": 180,
       "reward_petals": 2,
       "reward_character": null,
-      "is_active": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 4,
@@ -2109,18 +2383,85 @@
       "reward_coins": 250,
       "reward_petals": 3,
       "reward_character": "oceo_archaeologist",
-      "is_active": true,
-      "created_at": "2024-01-01T00:00:00Z"
+      "isActive": true,
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 201,
       "name": "Hành Trình Phố Cổ",
       "description": "Khám phá vẻ đẹp vượt thời gian của Hội An qua các thử thách.",
       "type": "mixed",
-      "heritage_site_id": 1,
-      "background_image": "https://images.unsplash.com/photo-1557750255-c76072a7bb12?w=800",
+      "heritageSiteId": 1,
+      "backgroundImage": "https://images.unsplash.com/photo-1557750255-c76072a7bb12?w=800",
       "screens": [],
-      "is_active": true
+      "isActive": true
+    }
+  ],
+  "shop_items": [
+    {
+      "id": 1,
+      "name": "Gợi ý thông minh",
+      "description": "Nhận gợi ý từ AI về manh mối đang tìm",
+      "type": "hint",
+      "price": 10,
+      "icon": "💡",
+      "effect": "reveal_hint",
+      "is_consumable": true,
+      "max_stack": 99,
+      "is_available": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Tăng tốc 2x",
+      "description": "Tăng gấp đôi điểm trong 5 phút",
+      "type": "boost",
+      "price": 50,
+      "icon": "⚡",
+      "effect": "double_points_5min",
+      "is_consumable": true,
+      "max_stack": 10,
+      "is_available": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Trang phục chú Tễu vàng",
+      "description": "Skin đặc biệt cho chú Tễu",
+      "type": "character_skin",
+      "price": 500,
+      "icon": "👘",
+      "effect": "change_skin_teu_gold",
+      "is_consumable": false,
+      "max_stack": 1,
+      "is_available": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Đèn lồng trang trí",
+      "description": "Trang trí bảo tàng của bạn",
+      "type": "decoration",
+      "price": 200,
+      "icon": "🏮",
+      "effect": "museum_decoration",
+      "is_consumable": false,
+      "max_stack": 10,
+      "is_available": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Bùa may mắn",
+      "description": "Tăng tỷ lệ tìm thấy vật phẩm hiếm",
+      "type": "boost",
+      "price": 100,
+      "icon": "🍀",
+      "effect": "increase_rare_drop",
+      "is_consumable": true,
+      "max_stack": 5,
+      "is_available": true,
+      "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
   "game_badges": [
@@ -2131,7 +2472,7 @@
       "icon": "🗺️",
       "requirement": "complete_chapter_1",
       "rarity": "common",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 2,
@@ -2140,7 +2481,7 @@
       "icon": "📜",
       "requirement": "complete_all_history_levels",
       "rarity": "rare",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 3,
@@ -2149,7 +2490,7 @@
       "icon": "🎭",
       "requirement": "collect_10_characters",
       "rarity": "epic",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 4,
@@ -2158,7 +2499,7 @@
       "icon": "🔍",
       "requirement": "find_all_clues_no_hints",
       "rarity": "epic",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 5,
@@ -2167,7 +2508,7 @@
       "icon": "🎓",
       "requirement": "answer_50_questions",
       "rarity": "rare",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
   "game_achievements": [
@@ -2181,7 +2522,7 @@
       },
       "reward_coins": 50,
       "icon": "🌟",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 2,
@@ -2193,7 +2534,7 @@
       },
       "reward_coins": 200,
       "icon": "🌸",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 3,
@@ -2206,7 +2547,7 @@
       "reward_coins": 300,
       "reward_character": "scanner_master",
       "icon": "📱",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 4,
@@ -2218,7 +2559,7 @@
       },
       "reward_coins": 500,
       "icon": "🏆",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 5,
@@ -2230,7 +2571,7 @@
       },
       "reward_coins": 1000,
       "icon": "💰",
-      "created_at": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
   "game_progress": [
@@ -2274,7 +2615,7 @@
       "estimated_duration": 10,
       "quiz": {
         "id": 101,
-        "passing_score": 60,
+        "passingScore": 60,
         "questions": [
           {
             "id": 1,
@@ -2285,7 +2626,7 @@
               "Thánh Gióng",
               "Vua Hùng"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 20
           },
           {
@@ -2297,7 +2638,7 @@
               "10",
               "2"
             ],
-            "correct_answer": 1,
+            "correctAnswer": 1,
             "point": 20
           },
           {
@@ -2309,7 +2650,7 @@
               "Về trời",
               "Ở lại đất liền"
             ],
-            "correct_answer": 1,
+            "correctAnswer": 1,
             "point": 20
           },
           {
@@ -2321,7 +2662,7 @@
               "Về trời",
               "Ở lại đất liền"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 20
           },
           {
@@ -2333,7 +2674,7 @@
               "Đại Việt",
               "Đại Cồ Việt"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 20
           }
         ]
@@ -2352,7 +2693,7 @@
       "estimated_duration": 15,
       "quiz": {
         "id": 102,
-        "passing_score": 70,
+        "passingScore": 70,
         "questions": [
           {
             "id": 1,
@@ -2363,7 +2704,7 @@
               "Vạn Xuân",
               "Đại Việt"
             ],
-            "correct_answer": 1,
+            "correctAnswer": 1,
             "point": 30
           },
           {
@@ -2375,7 +2716,7 @@
               "Bia đá",
               "Cung điện"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 40
           },
           {
@@ -2387,7 +2728,7 @@
               "Thăng Long",
               "Huế"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 30
           }
         ]
@@ -2406,7 +2747,7 @@
       "estimated_duration": 12,
       "quiz": {
         "id": 103,
-        "passing_score": 80,
+        "passingScore": 80,
         "questions": [
           {
             "id": 1,
@@ -2417,7 +2758,7 @@
               "Lê Hoàn",
               "Lý Thường Kiệt"
             ],
-            "correct_answer": 1,
+            "correctAnswer": 1,
             "point": 50
           },
           {
@@ -2429,7 +2770,7 @@
               "Sông Cầu",
               "Sông Như Nguyệt"
             ],
-            "correct_answer": 1,
+            "correctAnswer": 1,
             "point": 25
           },
           {
@@ -2441,7 +2782,7 @@
               "Du kích",
               "Dùng voi chiến"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 25
           }
         ]
@@ -2460,7 +2801,7 @@
       "estimated_duration": 20,
       "quiz": {
         "id": 104,
-        "passing_score": 80,
+        "passingScore": 80,
         "questions": [
           {
             "id": 1,
@@ -2471,7 +2812,7 @@
               "Lê",
               "Nguyễn"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 25
           },
           {
@@ -2483,7 +2824,7 @@
               "Chùa Một Cột",
               "Ngọ Môn"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 25
           },
           {
@@ -2495,7 +2836,7 @@
               "Chuông đồng",
               "Sách cổ"
             ],
-            "correct_answer": 0,
+            "correctAnswer": 0,
             "point": 50
           }
         ]
@@ -2505,10 +2846,10 @@
   "user_progress": [
     {
       "id": 1,
-      "user_id": 3,
-      "completed_modules": [],
+      "userId": 3,
+      "completedModules": [],
       "completed_quests": [],
-      "total_points": 800,
+      "totalPoints": 800,
       "level": 5,
       "badges": [],
       "achievements": [],
@@ -2519,17 +2860,17 @@
     },
     {
       "id": 1769167111754,
-      "user_id": 1,
-      "completed_modules": [],
-      "total_points": 0,
+      "userId": 1,
+      "completedModules": [],
+      "totalPoints": 0,
       "level": 1,
       "badges": []
     },
     {
       "id": 1769167111756,
-      "user_id": 2,
-      "completed_modules": [],
-      "total_points": 300,
+      "userId": 2,
+      "completedModules": [],
+      "totalPoints": 300,
       "level": 2,
       "badges": [
         "hard_worker"
@@ -2539,7 +2880,7 @@
   "ai_chat_history": [
     {
       "id": 1,
-      "user_id": 3,
+      "userId": 3,
       "level_id": null,
       "character_id": 1,
       "message": "Hello",
@@ -2549,11 +2890,11 @@
         "rewritten": "Hello",
         "route": "chitchat"
       },
-      "created_at": "2026-01-10T13:46:41.048Z"
+      "createdAt": "2026-01-10T13:46:41.048Z"
     },
     {
       "id": 8,
-      "user_id": 3,
+      "userId": 3,
       "level_id": null,
       "character_id": 1,
       "message": "Ok",
@@ -2563,11 +2904,11 @@
         "rewritten": "Hoàng thành Thăng Long có những công trình kiến trúc tiêu biểu nào?",
         "route": "hoang_thanh"
       },
-      "created_at": "2026-01-10T16:48:05.027Z"
+      "createdAt": "2026-01-10T16:48:05.027Z"
     },
     {
       "id": 9,
-      "user_id": 3,
+      "userId": 3,
       "level_id": null,
       "character_id": 1,
       "message": "Kích thước Hoàng thành thăng long",
@@ -2577,11 +2918,11 @@
         "rewritten": "Kích thước Hoàng thành Thăng Long là bao nhiêu?",
         "route": "hoang_thanh"
       },
-      "created_at": "2026-01-11T03:19:27.598Z"
+      "createdAt": "2026-01-11T03:19:27.598Z"
     },
     {
       "id": 20,
-      "user_id": 3,
+      "userId": 3,
       "level_id": null,
       "character_id": 1,
       "message": "xin chào",
@@ -2592,11 +2933,11 @@
         "rewritten": "Hôm nay tôi nên học cái gì?",
         "route": "uncertain"
       },
-      "created_at": "2026-01-19T09:24:33.914Z"
+      "createdAt": "2026-01-19T09:24:33.914Z"
     },
     {
       "id": 21,
-      "user_id": 3,
+      "userId": 3,
       "level_id": null,
       "character_id": 1,
       "message": "thanh hóa ở đâu",
@@ -2607,7 +2948,7 @@
         "rewritten": "Thanh Hóa ở đâu?",
         "route": "uncertain"
       },
-      "created_at": "2026-01-19T09:28:40.457Z"
+      "createdAt": "2026-01-19T09:28:40.457Z"
     }
   ],
   "game_quests": [
@@ -2618,7 +2959,7 @@
       "type": "achievement",
       "category": "story",
       "difficulty": "easy",
-      "is_active": true,
+      "isActive": true,
       "requirements": [
         {
           "type": "complete_chapter",
@@ -2640,7 +2981,7 @@
       "type": "daily",
       "category": "collection",
       "difficulty": "medium",
-      "is_active": true,
+      "isActive": true,
       "requirements": [
         {
           "type": "collect_artifact",
@@ -2661,7 +3002,7 @@
       "type": "daily",
       "category": "quiz",
       "difficulty": "hard",
-      "is_active": true,
+      "isActive": true,
       "requirements": [
         {
           "type": "perfect_quiz",
@@ -2693,10 +3034,41 @@
       "rewards": {
         "coins": 50
       },
-      "is_active": true,
+      "isActive": true,
       "thumbnail": "https://i.pinimg.com/1200x/20/05/52/2005521af7ccf8b74cf4453ec32b62d4.jpg"
     }
   ],
-  "user_quests": [],
+  "user_quests": [
+    {
+      "id": 1,
+      "userId": 3,
+      "quest_id": 3,
+      "status": "claimed",
+      "current_value": 1,
+      "startedAt": "2026-01-29T07:49:54.473Z",
+      "completed_at": "2026-01-29T07:49:54.480Z",
+      "claimed_at": "2026-01-29T10:12:42.451Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "quest_id": 2,
+      "status": "claimed",
+      "current_value": 5,
+      "startedAt": "2026-01-29T07:50:01.638Z",
+      "completed_at": "2026-01-29T07:52:14.788Z",
+      "claimed_at": "2026-01-29T10:12:43.418Z"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "quest_id": 1,
+      "status": "claimed",
+      "current_value": 1,
+      "startedAt": "2026-01-29T07:50:37.037Z",
+      "completed_at": "2026-01-29T07:50:37.048Z",
+      "claimed_at": "2026-01-29T10:12:41.093Z"
+    }
+  ],
   "scan_history": []
 }

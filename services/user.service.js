@@ -86,7 +86,7 @@ class UserService extends BaseService {
         researcher: users.filter(u => u.role === 'researcher').length
       },
       activePlayers: progress.filter(p => {
-        const lastLogin = new Date(p.last_login);
+        const lastLogin = new Date(p.lastLogin);
         return lastLogin >= weekAgo;
       }).length,
       recentSignups: users.filter(u => {
@@ -112,33 +112,33 @@ class UserService extends BaseService {
       };
     }
 
-    const progress = await db.findOne('game_progress', { user_id: userId });
-    const sessions = await db.findMany('game_sessions', { user_id: userId });
-    const scans = await db.findMany('scan_history', { user_id: userId });
-    const favorites = await db.findMany('favorites', { user_id: userId });
-    const reviews = await db.findMany('reviews', { user_id: userId });
+    const progress = await db.findOne('game_progress', { userId: userId });
+    const sessions = await db.findMany('game_sessions', { userId: userId });
+    const scans = await db.findMany('scan_history', { userId: userId });
+    const favorites = await db.findMany('favorites', { userId: userId });
+    const reviews = await db.findMany('reviews', { userId: userId });
 
     const activity = {
       user: sanitizeUser(user),
       gameStats: progress ? {
         level: progress.level,
         coins: progress.coins,
-        petals: progress.total_sen_petals,
-        characters: progress.collected_characters?.length || 0,
+        petals: progress.totalSenPetals,
+        characters: progress.collectedCharacters?.length || 0,
         badges: progress.badges?.length || 0,
-        streak: progress.streak_days,
-        lastLogin: progress.last_login
+        streak: progress.streakDays,
+        lastLogin: progress.lastLogin
       } : null,
       recentSessions: sessions
-        .sort((a, b) => new Date(b.started_at) - new Date(a.started_at))
+        .sort((a, b) => new Date(b.startedAt) - new Date(a.startedAt))
         .slice(0, 5),
       recentScans: scans
-        .sort((a, b) => new Date(b.scanned_at) - new Date(a.scanned_at))
+        .sort((a, b) => new Date(b.scannedAt) - new Date(a.scannedAt))
         .slice(0, 5),
       totalFavorites: favorites.length,
-      totalCollections: await db.count('collections', { user_id: userId }),
+      totalCollections: await db.count('collections', { userId: userId }),
       totalReviews: reviews.length,
-      avgRating: reviews.length > 0 
+      avgRating: reviews.length > 0
         ? (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(1)
         : 0
     };
@@ -185,10 +185,10 @@ class UserService extends BaseService {
 
     const deleted = {
       user: 1,
-      game_progress: 0,
-      game_sessions: 0,
-      user_inventory: 0,
-      scan_history: 0,
+      gameProgress: 0,
+      gameSessions: 0,
+      userInventory: 0,
+      scanHistory: 0,
       favorites: 0,
       collections: 0,
       notifications: 0
@@ -199,18 +199,19 @@ class UserService extends BaseService {
       const items = await db.findMany(collection, filter);
       for (const item of items) {
         await db.delete(collection, item.id);
-        if (deleted[collection] !== undefined) deleted[collection]++;
+        const camelCollection = collection.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
+        if (deleted[camelCollection] !== undefined) deleted[camelCollection]++;
       }
     };
 
     // Delete all related data
-    await deleteRelated('game_progress', { user_id: userId });
-    await deleteRelated('game_sessions', { user_id: userId });
-    await deleteRelated('user_inventory', { user_id: userId });
-    await deleteRelated('scan_history', { user_id: userId });
-    await deleteRelated('favorites', { user_id: userId });
-    await deleteRelated('collections', { user_id: userId });
-    await deleteRelated('notifications', { user_id: userId });
+    await deleteRelated('game_progress', { userId: userId });
+    await deleteRelated('game_sessions', { userId: userId });
+    await deleteRelated('user_inventory', { userId: userId });
+    await deleteRelated('scan_history', { userId: userId });
+    await deleteRelated('favorites', { userId: userId });
+    await deleteRelated('collections', { userId: userId });
+    await deleteRelated('notifications', { userId: userId });
 
     // Finally delete user
     await db.delete('users', userId);

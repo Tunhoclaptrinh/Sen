@@ -20,29 +20,29 @@ class GameService {
    * Khởi tạo game progress cho user mới
    */
   async initializeProgress(userId) {
-    const existing = await db.findOne('game_progress', { user_id: userId });
+    const existing = await db.findOne('game_progress', { userId: userId });
     if (existing) return existing;
 
     return await db.create('game_progress', {
-      user_id: userId,
-      current_chapter: 1,
-      total_sen_petals: 0,
-      total_points: 0,
+      userId: userId,
+      currentChapter: 1,
+      totalSenPetals: 0,
+      totalPoints: 0,
       level: 1,
       coins: 1000,
-      unlocked_chapters: [1],
-      completed_levels: [],
-      collected_characters: [],
+      unlockedChapters: [1],
+      completedLevels: [],
+      collectedCharacters: [],
       badges: [],
       achievements: [],
-      museum_open: false,
-      museum_income: 0,
-      streak_days: 0,
-      last_reward_claim: null,
-      last_login: new Date().toISOString(),
-      created_at: new Date().toISOString(),
-      completed_modules: [],
-      completed_quests_count: 0
+      museumOpen: false,
+      museumIncome: 0,
+      streakDays: 0,
+      lastRewardClaim: null,
+      lastLogin: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      completedModules: [],
+      completedQuestsCount: 0
     });
   }
 
@@ -84,17 +84,17 @@ class GameService {
         // Chỉ cleanup sessions đang in_progress
         if (session.status !== 'in_progress') continue;
 
-        const startTime = new Date(session.started_at).getTime();
-        const lastActivity = session.last_activity
-          ? new Date(session.last_activity).getTime()
+        const startTime = new Date(session.startedAt).getTime();
+        const lastActivity = session.lastActivity
+          ? new Date(session.lastActivity).getTime()
           : startTime;
 
-        // Check theo last_activity (quan trọng hơn started_at)
+        // Check theo lastActivity (quan trọng hơn startedAt)
         if (now - lastActivity > timeout) {
           await db.update('game_sessions', session.id, {
             status: 'expired',
-            expired_at: new Date().toISOString(),
-            expired_reason: 'Session timeout (24 hours inactive)'
+            expiredAt: new Date().toISOString(),
+            expiredReason: 'Session timeout (24 hours inactive)'
           });
           expiredCount++;
         }
@@ -113,8 +113,8 @@ class GameService {
    */
   async getActiveSession(levelId, userId) {
     const session = await db.findOne('game_sessions', {
-      level_id: levelId,
-      user_id: userId,
+      levelId: levelId,
+      userId: userId,
       status: 'in_progress'
     });
 
@@ -122,15 +122,15 @@ class GameService {
 
     // Check timeout
     const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
-    const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+    const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
     const now = Date.now();
 
     if (now - lastActivity > SESSION_TIMEOUT) {
       // Auto-expire
       await db.update('game_sessions', session.id, {
         status: 'expired',
-        expired_at: new Date().toISOString(),
-        expired_reason: 'Session timeout'
+        expiredAt: new Date().toISOString(),
+        expiredReason: 'Session timeout'
       });
       return null;
     }
@@ -143,17 +143,15 @@ class GameService {
   // ==================== PROGRESS & STATS ====================
 
   /**
- * Lấy tiến độ game của user
- */
+  * Lấy tiến độ game của user
+  */
   async getProgress(userId) {
-    let progress = await db.findOne('game_progress', { user_id: userId });
+    let progress = await db.findOne('game_progress', { userId: userId });
     if (!progress) {
       progress = await this.initializeProgress(userId);
     }
 
     // Tính toán thống kê - using countDocuments via findMany/findAll if direct count not available
-    // Optimization: In MongoAdapter, findAll returns expected array but efficiently countDocuments is better.
-    // However, keeping consistent with db interface
     const allChapters = await db.findAll('game_chapters');
     const totalChapters = allChapters.length;
 
@@ -165,11 +163,11 @@ class GameService {
       data: {
         ...progress,
         stats: {
-          completion_rate: totalLevels > 0 ? Math.round((progress.completed_levels.length / totalLevels) * 100) : 0,
-          chapters_unlocked: progress.unlocked_chapters.length,
-          total_chapters: totalChapters,
-          characters_collected: progress.collected_characters.length,
-          total_badges: progress.badges.length
+          completionRate: totalLevels > 0 ? Math.round((progress.completedLevels.length / totalLevels) * 100) : 0,
+          chaptersUnlocked: progress.unlockedChapters.length,
+          totalChapters: totalChapters,
+          charactersCollected: progress.collectedCharacters.length,
+          totalBadges: progress.badges.length
         }
       }
     };
@@ -187,18 +185,18 @@ class GameService {
     const progress = await this.getProgress(userId);
     const chaptersData = await db.findAll('game_chapters');
     // Filter active chapters
-    const activeChapters = chaptersData.filter(c => c.is_active !== false);
+    const activeChapters = chaptersData.filter(c => c.isActive !== false);
     const chapters = activeChapters.sort((a, b) => a.order - b.order);
 
     // const enriched = await Promise.all(chapters.map(async (chapter, index) => {
     const enriched = await Promise.all(chapters.map(async (chapter) => {
       // RESPECT DB OVERRIDE (For testing/seeding)
-      const isUnlocked = (progress.data.unlocked_chapters || []).includes(chapter.id) || ['blooming', 'full'].includes(chapter.petal_state);
-      const isFinished = (progress.data.finished_chapters || []).includes(chapter.id) || chapter.petal_state === 'full';
-      
-      const levels = await db.findMany('game_levels', { chapter_id: chapter.id });
+      const isUnlocked = (progress.data.unlockedChapters || []).includes(chapter.id) || ['blooming', 'full'].includes(chapter.petalState);
+      const isFinished = (progress.data.finishedChapters || []).includes(chapter.id) || chapter.petalState === 'full';
+
+      const levels = await db.findMany('game_levels', { chapterId: chapter.id });
       const completedCount = levels.filter(l =>
-        progress.data.completed_levels.includes(l.id)
+        progress.data.completedLevels.includes(l.id)
       ).length;
 
       // Sequential Check:
@@ -211,9 +209,9 @@ class GameService {
         } else {
           // Find previous chapter by order
           const prevChapter = chapters.find(c => c.order === chapter.order - 1);
-          if (prevChapter && (progress.data.finished_chapters || []).includes(prevChapter.id)) {
+          if (prevChapter && (progress.data.finishedChapters || []).includes(prevChapter.id)) {
             // Check currency (Petals)
-            if (progress.data.total_sen_petals >= chapter.required_petals) {
+            if (progress.data.totalSenPetals >= chapter.requiredPetals) {
               canUnlock = true;
             }
           }
@@ -237,27 +235,30 @@ class GameService {
         theme: chapter.theme || "Không có",
         order: chapter.order,
         color: chapter.color || "#D35400",
-        image: chapter.image || "", 
-        layer_index: chapter.layer_index || 1,
-        petal_state: calculatedPetalState,
-        petal_image_closed: chapter.petal_image_closed || "",
-        petal_image_bloom: chapter.petal_image_bloom || "",
-        petal_image_full: chapter.petal_image_full || "",
-        required_petals: chapter.required_petals || 0,
-        is_unlocked: isUnlocked,
-        is_finished: isFinished,
-        total_levels: levels.length,
-        completed_levels: completedCount,
-        completion_rate: levels.length > 0
+        image: chapter.image || "",
+        layerIndex: chapter.layerIndex || 1,
+        petalState: calculatedPetalState,
+        petalImageClosed: chapter.petalImageClosed || "",
+        petalImageBloom: chapter.petalImageBloom || "",
+        petalImageFull: chapter.petalImageFull || "",
+        requiredPetals: chapter.requiredPetals || 0,
+        isUnlocked: isUnlocked,
+        isFinished: isFinished,
+        totalLevels: levels.length,
+        completedLevels: completedCount,
+        completionRate: levels.length > 0
           ? Math.round((completedCount / levels.length) * 100)
           : 0,
-        can_unlock: canUnlock
+        canUnlock: canUnlock
       };
     }));
 
     return { success: true, data: enriched };
   }
 
+  /**
+   * Chi tiết một chapter
+   */
   /**
    * Chi tiết một chapter
    */
@@ -268,15 +269,15 @@ class GameService {
     }
 
     const progress = await this.getProgress(userId);
-    const levels = await db.findMany('game_levels', { chapter_id: parseInt(chapterId) });
+    const levels = await db.findMany('game_levels', { chapterId: parseInt(chapterId) });
     // Sort levels
     levels.sort((a, b) => a.order - b.order);
 
     const enrichedLevels = await Promise.all(levels.map(async (level) => ({
       ...level,
-      is_completed: progress.data.completed_levels.includes(level.id),
-      is_locked: !this.canPlayLevel(level, progress.data),
-      player_best_score: await this.getBestScore(level.id, userId)
+      isCompleted: progress.data.completedLevels.includes(level.id),
+      isLocked: !this.canPlayLevel(level, progress.data),
+      playerBestScore: await this.getBestScore(level.id, userId)
     })));
 
     return {
@@ -284,7 +285,7 @@ class GameService {
       data: {
         ...chapter,
         levels: enrichedLevels,
-        is_unlocked: progress.data.unlocked_chapters.includes(chapter.id)
+        isUnlocked: progress.data.unlockedChapters.includes(chapter.id)
       }
     };
   }
@@ -298,10 +299,10 @@ class GameService {
       return { success: false, message: 'Chapter not found', statusCode: 404 };
     }
 
-    const progress = await db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { userId: userId });
 
     // 1. Check if already unlocked
-    if (progress.unlocked_chapters.includes(parseInt(chapterId))) {
+    if (progress.unlockedChapters.includes(parseInt(chapterId))) {
       return { success: false, message: 'Chapter already unlocked', statusCode: 400 };
     }
 
@@ -314,7 +315,7 @@ class GameService {
       }
 
       // Check if previous chapter is finished
-      if (!progress.finished_chapters.includes(prevChapter.id)) {
+      if (!progress.finishedChapters.includes(prevChapter.id)) {
         return {
           success: false,
           message: `You must finish Chapter ${prevChapter.order}: ${prevChapter.name} first!`,
@@ -324,31 +325,31 @@ class GameService {
     }
 
     // 3. Currency Check (Sen Petals)
-    if (progress.total_sen_petals < chapter.required_petals) {
+    if (progress.totalSenPetals < chapter.requiredPetals) {
       return {
         success: false,
-        message: `Need ${chapter.required_petals} Sen Petals to unlock`,
+        message: `Need ${chapter.requiredPetals} Sen Petals to unlock`,
         statusCode: 400
       };
     }
 
     // 4. Deduct Petals and Unlock
-    const newPetalsCount = progress.total_sen_petals - chapter.required_petals;
+    const newPetalsCount = progress.totalSenPetals - chapter.requiredPetals;
 
     await db.update('game_progress', progress.id, {
-      unlocked_chapters: [...progress.unlocked_chapters, parseInt(chapterId)],
-      current_chapter: parseInt(chapterId),
-      total_sen_petals: newPetalsCount
+      unlockedChapters: [...progress.unlockedChapters, parseInt(chapterId)],
+      currentChapter: parseInt(chapterId),
+      totalSenPetals: newPetalsCount
     });
 
     return {
       success: true,
       message: 'Chapter unlocked successfully',
-      data: { 
-        chapter_id: parseInt(chapterId), 
-        chapter_name: chapter.name,
-        petals_spent: chapter.required_petals,
-        petals_remaining: newPetalsCount
+      data: {
+        chapterId: parseInt(chapterId),
+        chapterName: chapter.name,
+        petalsSpent: chapter.requiredPetals,
+        petalsRemaining: newPetalsCount
       }
     };
   }
@@ -358,9 +359,12 @@ class GameService {
   /**
  * Lấy danh sách levels trong chapter
  */
+  /**
+  * Lấy danh sách levels trong chapter
+  */
   async getLevels(chapterId, userId) {
     const progress = await this.getProgress(userId);
-    const levels = await db.findMany('game_levels', { chapter_id: parseInt(chapterId) });
+    const levels = await db.findMany('game_levels', { chapterId: parseInt(chapterId) });
     // Sort levels
     levels.sort((a, b) => a.order - b.order);
 
@@ -372,11 +376,11 @@ class GameService {
       order: level.order,
       image: level.image,
       thumbnail: level.thumbnail,
-      background_image: level.background_image,
-      is_completed: progress.data.completed_levels.includes(level.id),
-      is_locked: !this.canPlayLevel(level, progress.data),
+      backgroundImage: level.backgroundImage,
+      isCompleted: progress.data.completedLevels.includes(level.id),
+      isLocked: !this.canPlayLevel(level, progress.data),
       rewards: level.rewards,
-      required_level: level.required_level
+      requiredLevel: level.requiredLevel
     }));
 
     return { success: true, data: enriched };
@@ -388,8 +392,8 @@ class GameService {
   canPlayLevel(level, progress) {
     // Level đầu luôn chơi được
     if (level.order === 1) return true;
-    if (level.required_level) {
-      return progress.completed_levels.includes(level.required_level);
+    if (level.requiredLevel) {
+      return progress.completedLevels.includes(level.requiredLevel);
     }
 
     return true;
@@ -400,8 +404,8 @@ class GameService {
    */
   async getBestScore(levelId, userId) {
     const sessions = await db.findMany('game_sessions', {
-      level_id: levelId,
-      user_id: userId,
+      levelId: levelId,
+      userId: userId,
       status: 'completed'
     });
 
@@ -426,17 +430,17 @@ class GameService {
     }
 
     const playCountData = await db.findMany('game_sessions', {
-      level_id: level.id,
-      user_id: userId
+      levelId: level.id,
+      userId: userId
     });
 
     return {
       success: true,
       data: {
         ...level,
-        is_completed: progress.data.completed_levels.includes(level.id),
-        best_score: await this.getBestScore(level.id, userId),
-        play_count: playCountData.length
+        isCompleted: progress.data.completedLevels.includes(level.id),
+        bestScore: await this.getBestScore(level.id, userId),
+        playCount: playCountData.length
       }
     };
   }
@@ -450,16 +454,16 @@ class GameService {
 
     // Close ALL existing in_progress sessions for this level/user (not just expired ones)
     const existingSessions = await db.findMany('game_sessions', {
-      level_id: levelId,
-      user_id: userId,
+      levelId: levelId,
+      userId: userId,
       status: 'in_progress'
     });
 
     for (const session of existingSessions) {
       await db.update('game_sessions', session.id, {
         status: 'abandoned',
-        expired_at: new Date().toISOString(),
-        expired_reason: 'New session started'
+        expiredAt: new Date().toISOString(),
+        expiredReason: 'New session started'
       });
     }
 
@@ -468,7 +472,7 @@ class GameService {
       return { success: false, message: 'Level not found', statusCode: 404 };
     }
 
-    const progress = await db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { userId: userId });
     if (!this.canPlayLevel(level, progress)) {
       return { success: false, message: 'Level is locked', statusCode: 403 };
     }
@@ -484,48 +488,48 @@ class GameService {
     }
 
     const session = await db.create('game_sessions', {
-      user_id: userId,
-      level_id: levelId,
+      userId: userId,
+      levelId: levelId,
       status: 'in_progress',
-      current_screen_id: level.screens[0].id,
-      current_screen_index: 0,
-      collected_items: [],
-      answered_questions: [],
-      timeline_order: [],
+      currentScreenId: level.screens[0].id,
+      currentScreenIndex: 0,
+      collectedItems: [],
+      answeredQuestions: [],
+      timelineOrder: [],
       score: 0,
-      total_screens: level.screens.length,
-      completed_screens: [],
-      screen_states: {},
-      time_spent: 0,
-      hints_used: 0,
-      started_at: new Date().toISOString(),
-      last_activity: new Date().toISOString()
+      totalScreens: level.screens.length,
+      completedScreens: [],
+      screenStates: {},
+      timeSpent: 0,
+      hintsUsed: 0,
+      startedAt: new Date().toISOString(),
+      lastActivity: new Date().toISOString()
     });
 
     const firstScreen = this.enrichScreen(level.screens[0], session, 0, level.screens.length, level);
 
     // Fetch AI character if exists
     let aiCharacter = null;
-    if (level.ai_character_id) {
-      aiCharacter = await db.findById('game_characters', level.ai_character_id);
+    if (level.aiCharacterId) {
+      aiCharacter = await db.findById('game_characters', level.aiCharacterId);
     }
 
     return {
       success: true,
       message: 'Level started',
       data: {
-        session_id: session.id,
+        sessionId: session.id,
         level: {
           id: level.id,
-          chapter_id: level.chapter_id,
+          chapterId: level.chapterId,
           name: level.name,
           description: level.description,
           thumbnail: level.thumbnail,
-          background_music: level.background_music,
-          total_screens: level.screens.length,
-          ai_character: aiCharacter
+          backgroundMusic: level.backgroundMusic,
+          totalScreens: level.screens.length,
+          aiCharacter: aiCharacter
         },
-        current_screen: firstScreen
+        currentScreen: firstScreen
       }
     };
   }
@@ -541,7 +545,7 @@ class GameService {
     }
 
     const level = await db.findById('game_levels', levelId);
-    const currentScreen = level.screens[session.current_screen_index];
+    const currentScreen = level.screens[session.currentScreenIndex];
 
     if (currentScreen.type !== 'HIDDEN_OBJECT') {
       return { success: false, message: 'Not a hidden object screen', statusCode: 400 };
@@ -552,25 +556,25 @@ class GameService {
     if (!item && level.clues) {
       item = level.clues.find(i => i.id === clueId);
     }
-    
+
     if (!item) {
       return { success: false, message: 'Item not found', statusCode: 404 };
     }
 
-    if (session.collected_items.includes(clueId)) {
+    if (session.collectedItems.includes(clueId)) {
       return { success: false, message: 'Item already collected', statusCode: 400 };
     }
 
     const updatedSession = await db.update('game_sessions', session.id, {
-      collected_items: [...session.collected_items, clueId],
+      collectedItems: [...session.collectedItems, clueId],
       score: session.score + (item.points || 10),
-      last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
+      lastActivity: new Date().toISOString() // UPDATE LAST ACTIVITY
     });
 
     // Calculate required items from screen.items or level.clues
     const allItems = currentScreen.items || level.clues || [];
-    const requiredItems = currentScreen.required_items || allItems.length;
-    const allCollected = updatedSession.collected_items.length >= requiredItems;
+    const requiredItems = currentScreen.requiredItems || allItems.length;
+    const allCollected = updatedSession.collectedItems.length >= requiredItems;
 
     // TRIGGER QUEST UPDATE
     try {
@@ -581,21 +585,21 @@ class GameService {
     }
 
     // TRIGGER MUSEUM ARTIFACT UNLOCK
-    if (item.artifact_id) {
+    if (item.artifactId) {
       try {
         const existingScan = await db.findOne('scan_history', {
-          user_id: userId,
-          object_id: item.artifact_id
+          userId: userId,
+          objectId: item.artifactId
         });
 
         if (!existingScan) {
           await db.create('scan_history', {
-            user_id: userId,
-            object_id: item.artifact_id,
-            scanned_at: new Date().toISOString(),
-            scan_code: 'HO_REWARD_' + item.id
+            userId: userId,
+            objectId: item.artifactId,
+            scannedAt: new Date().toISOString(),
+            scanCode: 'HO_REWARD_' + item.id
           });
-          console.log(`[GameService] Added artifact ${item.artifact_id} to museum for user ${userId}`);
+          console.log(`[GameService] Added artifact ${item.artifactId} to museum for user ${userId}`);
         }
       } catch (e) {
         console.error('Museum artifact unlock failed', e);
@@ -609,14 +613,14 @@ class GameService {
         item: {
           id: item.id,
           name: item.name,
-          fact_popup: item.fact_popup || item.content || item.description || ''
+          factPopup: item.factPopup || item.content || item.description || ''
         },
-        points_earned: item.points || 10,
-        total_score: updatedSession.score,
+        pointsEarned: item.points || 10,
+        totalScore: updatedSession.score,
         progress: {
-          collected: updatedSession.collected_items.length,
+          collected: updatedSession.collectedItems.length,
           required: requiredItems,
-          all_collected: allCollected
+          allCollected: allCollected
         }
       }
     };
@@ -628,7 +632,7 @@ class GameService {
   async submitAnswer(sessionId, userId, answerId) {
     const session = await db.findOne('game_sessions', {
       id: parseInt(sessionId),
-      user_id: userId,
+      userId: userId,
       status: 'in_progress'
     });
 
@@ -638,24 +642,24 @@ class GameService {
 
     // Check timeout
     const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
-    const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+    const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
     if (Date.now() - lastActivity > SESSION_TIMEOUT) {
       await db.update('game_sessions', session.id, {
         status: 'expired',
-        expired_at: new Date().toISOString()
+        expiredAt: new Date().toISOString()
       });
       return { success: false, message: 'Session expired', statusCode: 404 };
     }
 
-    const level = await db.findById('game_levels', session.level_id);
-    const currentScreen = level.screens[session.current_screen_index];
+    const level = await db.findById('game_levels', session.levelId);
+    const currentScreen = level.screens[session.currentScreenIndex];
 
     if (currentScreen.type !== 'QUIZ') {
       return { success: false, message: 'Current screen is not a quiz', statusCode: 400 };
     }
 
-    const hasAnswered = session.answered_questions.some(
-      q => q.screen_id === currentScreen.id
+    const hasAnswered = session.answeredQuestions.some(
+      q => q.screenId === currentScreen.id
     );
 
     if (hasAnswered) {
@@ -667,22 +671,22 @@ class GameService {
       return { success: false, message: 'Invalid answer', statusCode: 400 };
     }
 
-    const isCorrect = selectedOption.is_correct;
+    const isCorrect = selectedOption.isCorrect;
     const pointsEarned = isCorrect ? (currentScreen.reward?.points || currentScreen.points || 20) : 0;
 
     const updatedSession = await db.update('game_sessions', sessionId, {
-      answered_questions: [
-        ...session.answered_questions,
+      answeredQuestions: [
+        ...session.answeredQuestions,
         {
-          screen_id: currentScreen.id,
+          screenId: currentScreen.id,
           answer: answerId,
-          is_correct: isCorrect,
+          isCorrect: isCorrect,
           points: pointsEarned,
-          answered_at: new Date().toISOString()
+          answeredAt: new Date().toISOString()
         }
       ],
       score: session.score + pointsEarned,
-      last_activity: new Date().toISOString() // UPDATE LAST ACTIVITY
+      lastActivity: new Date().toISOString() // UPDATE LAST ACTIVITY
     });
 
     // TRIGGER QUEST CHECK (Quiz Success)
@@ -703,11 +707,11 @@ class GameService {
       success: true,
       message: isCorrect ? 'Correct answer!' : 'Wrong answer',
       data: {
-        is_correct: isCorrect,
-        points_earned: pointsEarned,
-        total_score: updatedSession.score,
+        isCorrect: isCorrect,
+        pointsEarned: pointsEarned,
+        totalScore: updatedSession.score,
         explanation: selectedOption.explanation,
-        correct_answer: isCorrect ? null : currentScreen.options.find(o => o.is_correct)?.text
+        correctAnswer: isCorrect ? null : currentScreen.options.find(o => o.isCorrect)?.text
       }
     };
   }
@@ -715,7 +719,7 @@ class GameService {
   async submitTimelineOrder(sessionId, userId, eventOrder) {
     const session = await db.findOne('game_sessions', {
       id: parseInt(sessionId),
-      user_id: userId,
+      userId: userId,
       status: 'in_progress'
     });
 
@@ -729,11 +733,11 @@ class GameService {
 
     // CHECK SESSION TIMEOUT
     const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
-    const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+    const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
     if (Date.now() - lastActivity > SESSION_TIMEOUT) {
       await db.update('game_sessions', session.id, {
         status: 'expired',
-        expired_at: new Date().toISOString()
+        expiredAt: new Date().toISOString()
       });
       return {
         success: false,
@@ -742,8 +746,8 @@ class GameService {
       };
     }
 
-    const level = await db.findById('game_levels', session.level_id);
-    const currentScreen = level.screens[session.current_screen_index];
+    const level = await db.findById('game_levels', session.levelId);
+    const currentScreen = level.screens[session.currentScreenIndex];
 
     // CHECK SCREEN TYPE
     if (currentScreen.type !== 'TIMELINE') {
@@ -786,8 +790,8 @@ class GameService {
 
     // SAVE ORDER (even if wrong for retry)
     await db.update('game_sessions', session.id, {
-      timeline_order: eventOrder,
-      last_activity: new Date().toISOString()
+      timelineOrder: eventOrder,
+      lastActivity: new Date().toISOString()
     });
 
     if (!isCorrect) {
@@ -827,7 +831,7 @@ class GameService {
   async navigateToNextScreen(sessionId, userId) {
     const session = await db.findOne('game_sessions', {
       id: parseInt(sessionId),
-      user_id: userId,
+      userId: userId,
       status: 'in_progress'
     });
 
@@ -841,11 +845,11 @@ class GameService {
 
     // CHECK SESSION TIMEOUT
     const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
-    const lastActivity = new Date(session.last_activity || session.started_at).getTime();
+    const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
     if (Date.now() - lastActivity > SESSION_TIMEOUT) {
       await db.update('game_sessions', session.id, {
         status: 'expired',
-        expired_at: new Date().toISOString()
+        expiredAt: new Date().toISOString()
       });
       return {
         success: false,
@@ -854,8 +858,8 @@ class GameService {
       };
     }
 
-    const level = await db.findById('game_levels', session.level_id);
-    const currentScreen = level.screens[session.current_screen_index];
+    const level = await db.findById('game_levels', session.levelId);
+    const currentScreen = level.screens[session.currentScreenIndex];
 
     // Validate screen completion - Check if can proceed (completed current screen requirements)
     const canProceed = this.validateScreenCompletion(currentScreen, session, level);
@@ -864,11 +868,11 @@ class GameService {
     }
 
     // Find next screen
-    let nextScreenIndex = session.current_screen_index + 1;
+    let nextScreenIndex = session.currentScreenIndex + 1;
 
-    // Check if has custom next_screen_id
-    if (currentScreen.next_screen_id) {
-      nextScreenIndex = level.screens.findIndex(s => s.id === currentScreen.next_screen_id);
+    // Check if has custom nextScreenId
+    if (currentScreen.nextScreenId) {
+      nextScreenIndex = level.screens.findIndex(s => s.id === currentScreen.nextScreenId);
       if (nextScreenIndex === -1) {
         return {
           success: false,
@@ -885,8 +889,8 @@ class GameService {
       // Default 10 points for watching/reading if not specified
       pointsToAdd = currentScreen.reward?.points || currentScreen.points || 10;
 
-      // Prevent farming: Check if screen already in completed_screens
-      if (session.completed_screens.includes(currentScreen.id)) {
+      // Prevent farming: Check if screen already in completedScreens
+      if (session.completedScreens.includes(currentScreen.id)) {
         pointsToAdd = 0;
       }
     }
@@ -897,8 +901,8 @@ class GameService {
       // Ensure we add the current screen to completed_screens too
       await db.update('game_sessions', session.id, {
         score: session.score + pointsToAdd,
-        completed_screens: [...session.completed_screens, currentScreen.id],
-        last_activity: new Date().toISOString()
+        completedScreens: [...session.completedScreens, currentScreen.id],
+        lastActivity: new Date().toISOString()
       });
 
       // Auto complete level
@@ -906,31 +910,31 @@ class GameService {
         success: true,
         message: 'Level completed. Please call completeLevel endpoint.',
         data: {
-          level_finished: true,
-          final_score: session.score + pointsToAdd,
-          points_earned: pointsToAdd
+          levelFinished: true,
+          finalScore: session.score + pointsToAdd,
+          pointsEarned: pointsToAdd
         }
       };
     }
 
     const nextScreen = level.screens[nextScreenIndex];
 
-    // Update session - reset collected_items for new screen
+    // Update session - reset collectedItems for new screen
     const updatedSession = await db.update('game_sessions', session.id, {
-      current_screen_id: nextScreen.id,
-      current_screen_index: nextScreenIndex,
-      completed_screens: [...session.completed_screens, currentScreen.id],
+      currentScreenId: nextScreen.id,
+      currentScreenIndex: nextScreenIndex,
+      completedScreens: [...session.completedScreens, currentScreen.id],
       score: session.score + pointsToAdd,
-      collected_items: [], // Reset for new screen
-      last_activity: new Date().toISOString() // ⚡ UPDATE LAST ACTIVITY
+      collectedItems: [], // Reset for new screen
+      lastActivity: new Date().toISOString() // ⚡ UPDATE LAST ACTIVITY
     });
 
     return {
       success: true,
       message: 'Navigated to next screen',
       data: {
-        session_id: session.id,
-        current_screen: this.enrichScreen(
+        sessionId: session.id,
+        currentScreen: this.enrichScreen(
           nextScreen,
           updatedSession,
           nextScreenIndex,
@@ -938,13 +942,13 @@ class GameService {
           level
         ),
         progress: {
-          completed_screens: updatedSession.completed_screens.length,
-          total_screens: level.screens.length,
+          completedScreens: updatedSession.completedScreens.length,
+          totalScreens: level.screens.length,
           percentage: Math.round(
-            (updatedSession.completed_screens.length / level.screens.length) * 100
+            (updatedSession.completedScreens.length / level.screens.length) * 100
           )
         },
-        points_earned: pointsToAdd
+        pointsEarned: pointsToAdd
       }
     };
   }
@@ -956,8 +960,8 @@ class GameService {
     switch (screen.type) {
       case 'HIDDEN_OBJECT':
         const items = screen.items || level?.clues || [];
-        const requiredItems = screen.required_items || items.length || 0;
-        const collectedCount = session.collected_items.filter(
+        const requiredItems = screen.requiredItems || items.length || 0;
+        const collectedCount = session.collectedItems.filter(
           item => items.some(i => i.id === item)
         ).length;
 
@@ -971,8 +975,8 @@ class GameService {
         break;
 
       case 'QUIZ':
-        const hasAnswered = session.answered_questions.some(
-          q => q.screen_id === screen.id
+        const hasAnswered = session.answeredQuestions.some(
+          q => q.screenId === screen.id
         );
         if (!hasAnswered) {
           return {
@@ -989,7 +993,7 @@ class GameService {
 
       case 'TIMELINE':
 
-        const userOrder = session.timeline_order;
+        const userOrder = session.timelineOrder;
 
         if (!userOrder || userOrder.length === 0) {
           return {
@@ -1045,8 +1049,8 @@ class GameService {
 
 
     const session = await db.findOne('game_sessions', {
-      level_id: levelId,
-      user_id: userId,
+      levelId: levelId,
+      userId: userId,
       status: 'in_progress'
     });
 
@@ -1055,23 +1059,23 @@ class GameService {
     }
 
     const level = await db.findById('game_levels', levelId);
-    const progress = await db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { userId: userId });
 
     // ✅ SHARED SCORE CALCULATION
-    const timeBonus = this.calculateTimeBonus(timeSpent || session.time_spent, level.time_limit);
-    const hintPenalty = session.hints_used * 5;
+    const timeBonus = this.calculateTimeBonus(timeSpent || session.timeSpent, level.timeLimit);
+    const hintPenalty = session.hintsUsed * 5;
     const finalScore = Math.max(0, session.score + timeBonus - hintPenalty);
 
     // Calculate passing threshold based on percentage
     const maxPotentialScore = this.calculateMaxPotentialScore(level);
-    const passingThreshold = Math.ceil((maxPotentialScore * (level.passing_score || 70)) / 100);
+    const passingThreshold = Math.ceil((maxPotentialScore * (level.passingScore || 70)) / 100);
     const passed = finalScore >= passingThreshold;
 
     // ✅ UPDATE SESSION STATUS
     await db.update('game_sessions', session.id, {
       status: 'completed',
       score: finalScore,
-      completed_at: new Date().toISOString()
+      completedAt: new Date().toISOString()
     });
 
     if (!passed) {
@@ -1082,14 +1086,14 @@ class GameService {
           passed: false,
           score: finalScore,
           breakdown: {
-            base_score: session.score,
-            time_bonus: timeBonus,
-            hint_penalty: hintPenalty
+            baseScore: session.score,
+            timeBonus: timeBonus,
+            hintPenalty: hintPenalty
           },
-          required_score: passingThreshold,
-          max_potential_score: maxPotentialScore,
-          passing_percentage: level.passing_score || 70,
-          can_retry: true
+          requiredScore: passingThreshold,
+          maxPotentialScore: maxPotentialScore,
+          passingPercentage: level.passingScore || 70,
+          canRetry: true
         }
       };
     }
@@ -1101,7 +1105,7 @@ class GameService {
       const currentLevel = allLevels.find(l => l.id === parseInt(levelId));
 
       if (currentLevel) {
-        const sameChapterLevels = allLevels.filter(l => l.chapter_id === currentLevel.chapter_id)
+        const sameChapterLevels = allLevels.filter(l => l.chapterId === currentLevel.chapterId)
           .sort((a, b) => a.order - b.order);
         const currentIndex = sameChapterLevels.findIndex(l => l.id === parseInt(levelId));
 
@@ -1111,11 +1115,11 @@ class GameService {
           // Check next chapter
           const allChapters = await db.findAll('game_chapters');
           allChapters.sort((a, b) => a.order - b.order);
-          const currentChapterIndex = allChapters.findIndex(c => c.id === currentLevel.chapter_id);
+          const currentChapterIndex = allChapters.findIndex(c => c.id === currentLevel.chapterId);
 
           if (currentChapterIndex !== -1 && currentChapterIndex < allChapters.length - 1) {
             const nextChapter = allChapters[currentChapterIndex + 1];
-            const nextChapterLevels = allLevels.filter(l => l.chapter_id === nextChapter.id)
+            const nextChapterLevels = allLevels.filter(l => l.chapterId === nextChapter.id)
               .sort((a, b) => a.order - b.order);
             if (nextChapterLevels.length > 0) {
               nextLevelId = nextChapterLevels[0].id;
@@ -1128,38 +1132,38 @@ class GameService {
     }
 
     // ✅ CHECK REWARDS (Only for first time)
-    const alreadyCompleted = progress.completed_levels.includes(parseInt(levelId));
+    const alreadyCompleted = progress.completedLevels.includes(parseInt(levelId));
     let rewardsData = null;
     let newTotals = null;
 
     if (!alreadyCompleted) {
       const rewards = level.rewards || {};
-      const newPetals = progress.total_sen_petals + (rewards.petals || 1);
+      const newPetals = progress.totalSenPetals + (rewards.petals || 1);
       const newCoins = progress.coins + (rewards.coins || 50);
       const levelIdInt = parseInt(levelId);
-      const newCompleted = [...progress.completed_levels, levelIdInt];
-      let newCharacters = [...progress.collected_characters];
+      const newCompleted = [...progress.completedLevels, levelIdInt];
+      let newCharacters = [...progress.collectedCharacters];
       if (rewards.character && !newCharacters.includes(rewards.character)) {
         newCharacters.push(rewards.character);
       }
 
-      const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
+      const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
       // Kiểm tra xem tất cả level trong chapter đã có trong danh sách hoàn thành chưa
       const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
 
-      let finishedChapters = [...(progress.finished_chapters || [])];
-      if (allCompleted && !finishedChapters.includes(level.chapter_id)) {
-        finishedChapters.push(level.chapter_id);
+      let finishedChapters = [...(progress.finishedChapters || [])];
+      if (allCompleted && !finishedChapters.includes(level.chapterId)) {
+        finishedChapters.push(level.chapterId);
       }
 
       // Update Progress
       await db.update('game_progress', progress.id, {
-        completed_levels: newCompleted,
-        total_sen_petals: newPetals,
-        total_points: progress.total_points + finalScore,
+        completedLevels: newCompleted,
+        totalSenPetals: newPetals,
+        totalPoints: progress.totalPoints + finalScore,
         coins: newCoins,
-        collected_characters: newCharacters,
-        finished_chapters: finishedChapters
+        collectedCharacters: newCharacters,
+        finishedChapters: finishedChapters
       });
 
       rewardsData = {
@@ -1170,7 +1174,7 @@ class GameService {
 
       newTotals = {
         petals: newPetals,
-        points: progress.total_points + finalScore,
+        points: progress.totalPoints + finalScore,
         coins: newCoins
       };
     }
@@ -1183,7 +1187,7 @@ class GameService {
       await questService.checkAndAdvance(userId, 'complete_level', 1);
 
       // 2. Trigger Chapter Complete Quest
-      const chapterLevels = await db.findMany('game_levels', { chapter_id: level.chapter_id });
+      const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
 
       // Use the potentially updated list from above if available, otherwise fetch
       // Note: 'newCompleted' is only defined inside the if (!alreadyCompleted) block above.
@@ -1194,21 +1198,21 @@ class GameService {
         // If we just completed it, we calculated newCompleted above but it's scoped.
         // Re-calculate or fetch and append.
         // Better: Use currentProgress fetch but FORCE add the current level if missing.
-        const currentProgress = await db.findOne('game_progress', { user_id: userId });
-        effectiveCompletedIds = currentProgress?.completed_levels || [];
+        const currentProgress = await db.findOne('game_progress', { userId: userId });
+        effectiveCompletedIds = currentProgress?.completedLevels || [];
         if (!effectiveCompletedIds.includes(parseInt(levelId))) {
           effectiveCompletedIds.push(parseInt(levelId));
         }
       } else {
         // Already completed, just verify
-        const currentProgress = await db.findOne('game_progress', { user_id: userId });
-        effectiveCompletedIds = currentProgress?.completed_levels || [];
+        const currentProgress = await db.findOne('game_progress', { userId: userId });
+        effectiveCompletedIds = currentProgress?.completedLevels || [];
       }
 
       const isChapterDone = chapterLevels.every(l => effectiveCompletedIds.includes(l.id));
 
       if (isChapterDone) {
-        console.log(`[GameService] Chapter ${level.chapter_id} complete for user ${userId}. Triggering quest.`);
+        console.log(`[GameService] Chapter ${level.chapterId} complete for user ${userId}. Triggering quest.`);
         await questService.checkAndAdvance(userId, 'complete_chapter', 1);
       }
     } catch (e) {
@@ -1222,17 +1226,17 @@ class GameService {
         passed: true,
         score: finalScore,
         breakdown: {
-          base_score: session.score,
-          time_bonus: timeBonus,
-          hint_penalty: hintPenalty
+          baseScore: session.score,
+          timeBonus: timeBonus,
+          hintPenalty: hintPenalty
         },
-        required_score: passingThreshold,
-        max_potential_score: maxPotentialScore,
-        passing_percentage: level.passing_score || 70,
-        next_level_id: nextLevelId,
+        requiredScore: passingThreshold,
+        maxPotentialScore: maxPotentialScore,
+        passingPercentage: level.passingScore || 70,
+        nextLevelId: nextLevelId,
         rewards: rewardsData, // null if revision
-        new_totals: newTotals, // null if revision
-        alreadyCompleted: alreadyCompleted
+        newTotals: newTotals, // null if revision
+        isCompleted: alreadyCompleted
       }
     };
   }
@@ -1266,7 +1270,7 @@ class GameService {
           case 'HIDDEN_OBJECT':
             // HIDDEN_OBJECT awards points per item
             const itemCount = screen.items?.length || 0;
-            const requiredCount = screen.required_items || itemCount;
+            const requiredCount = screen.requiredItems || itemCount;
             // Assuming 10 points per required item as a default if not specified
             screenPoints = requiredCount * 10;
             break;
@@ -1327,10 +1331,10 @@ class GameService {
     const enriched = {
       ...screen,
       index,
-      is_first: index === 0,
-      is_last: index === totalScreens - 1,
-      is_completed: session.completed_screens.includes(screen.id),
-      state: session.screen_states?.[screen.id] || {}
+      isFirst: index === 0,
+      isLast: index === totalScreens - 1,
+      isCompleted: session.completedScreens.includes(screen.id),
+      state: session.screenStates?.[screen.id] || {}
     };
 
     // For HIDDEN_OBJECT screens, merge level.clues into items if items is empty
@@ -1342,10 +1346,10 @@ class GameService {
           name: clue.name,
           x: clue.coordinates?.x ?? 50,
           y: clue.coordinates?.y ?? 50,
-          fact_popup: clue.content || clue.description || 'Thông tin thú vị!',
+          factPopup: clue.content || clue.description || 'Thông tin thú vị!',
           points: clue.points || 10
         }));
-        enriched.required_items = enriched.items.length;
+        enriched.requiredItems = enriched.items.length;
       }
     }
 
@@ -1362,8 +1366,8 @@ class GameService {
             description: clue.hint || ''
           };
         });
-        // correct_order is sorted by year
-        enriched.correct_order = [...enriched.events]
+        // correctOrder is sorted by year
+        enriched.correctOrder = [...enriched.events]
           .sort((a, b) => a.year - b.year)
           .map(e => e.id);
       }
@@ -1389,7 +1393,7 @@ class GameService {
         potentialScore = 0;
     }
 
-    return { ...enriched, potential_score: potentialScore };;
+    return { ...enriched, potentialScore: potentialScore };;
   }
 
   // ==================== MUSEUM ====================
@@ -1401,26 +1405,26 @@ class GameService {
     let artifacts = [];
     try {
       const scanHistory = await db.findAll('scan_history');
-      const userScans = scanHistory.filter(h => h.user_id === parseInt(userId));
+      const userScans = scanHistory.filter(h => h.userId === parseInt(userId));
       const allArtifacts = await db.findAll('artifacts');
 
       artifacts = userScans.map(scan => {
-        const artifact = allArtifacts.find(a => a.id === scan.object_id);
+        const artifact = allArtifacts.find(a => a.id === scan.objectId);
         if (!artifact) return null;
         return {
-          artifact_id: artifact.id,
+          artifactId: artifact.id,
           name: artifact.name,
           image: artifact.image,
           description: artifact.description,
-          acquired_at: scan.scanned_at,
-          type: artifact.artifact_type
+          acquiredAt: scan.scannedAt,
+          type: artifact.artifactType
         };
       }).filter(a => a !== null);
     } catch (e) {
       console.error("Error fetching museum artifacts:", e);
     }
 
-    const lastCollection = progress.data.last_museum_collection || progress.data.created_at;
+    const lastCollection = progress.data.lastMuseumCollection || progress.data.createdAt;
 
     // Tính thu nhập tích lũy (bao gồm cả Artifacts)
     const incomeInfo = this.calculatePendingIncome(progress.data, lastCollection, artifacts.length);
@@ -1428,21 +1432,21 @@ class GameService {
     return {
       success: true,
       data: {
-        is_open: progress.data.museum_open,
-        income_per_hour: incomeInfo.rate,
-        total_income_generated: progress.data.museum_income || 0,
-        pending_income: incomeInfo.pending,
-        hours_accumulated: incomeInfo.hours_accumulated,
+        isOpen: progress.data.museumOpen,
+        incomePerHour: incomeInfo.rate,
+        totalIncomeGenerated: progress.data.museumIncome || 0,
+        pendingIncome: incomeInfo.pending,
+        hoursAccumulated: incomeInfo.hoursAccumulated,
         capped: incomeInfo.capped || false,
-        characters: progress.data.collected_characters,
+        characters: progress.data.collectedCharacters,
         artifacts: artifacts,
-        visitor_count: (progress.data.collected_characters.length * 50) + (artifacts.length * 20), // More visitors!
-        can_collect: incomeInfo.pending > 0,
-        next_collection_in: this.getNextCollectionTime(incomeInfo.rate),
+        visitorCount: (progress.data.collectedCharacters.length * 50) + (artifacts.length * 20), // More visitors!
+        canCollect: incomeInfo.pending > 0,
+        nextCollectionIn: this.getNextCollectionTime(incomeInfo.rate),
 
         // ✅ WARNING MESSAGE
         ...(incomeInfo.capped && {
-          cap_notice: `Income capped at ${incomeInfo.pending} coins. Please collect regularly to maximize earnings!`
+          capNotice: `Income capped at ${incomeInfo.pending} coins. Please collect regularly to maximize earnings!`
         })
       }
     };
@@ -1452,13 +1456,13 @@ class GameService {
    * Tính toán thu nhập đang chờ
    */
   calculatePendingIncome(progressData, lastCollectionTime, artifactCount = 0) {
-    if (!progressData.museum_open) {
-      return { rate: 0, pending: 0, hours_accumulated: 0, capped: false };
+    if (!progressData.museumOpen) {
+      return { rate: 0, pending: 0, hoursAccumulated: 0, capped: false };
     }
 
-    const charCount = progressData.collected_characters.length;
+    const charCount = progressData.collectedCharacters.length;
     if (charCount === 0 && artifactCount === 0) {
-      return { rate: 0, pending: 0, hours_accumulated: 0, capped: false };
+      return { rate: 0, pending: 0, hoursAccumulated: 0, capped: false };
     }
 
     // FORMULA: 10 coins/char/hour + 5 coins/artifact/hour
@@ -1479,15 +1483,15 @@ class GameService {
     // ✅ LOG WARNING IF HIT CAP
     const hitCap = rawPending > MAX_PENDING_INCOME;
     if (hitCap) {
-      console.log(`⚠️ User ${progressData.user_id} hit max pending income cap (${rawPending} → ${MAX_PENDING_INCOME})`);
+      console.log(`⚠️ User ${progressData.userId} hit max pending income cap (${rawPending} → ${MAX_PENDING_INCOME})`);
     }
 
     return {
       rate: ratePerHour,
       pending: pending,
-      hours_accumulated: cappedHours.toFixed(1),
+      hoursAccumulated: cappedHours.toFixed(1),
       capped: hitCap,
-      would_be_without_cap: hitCap ? rawPending : null
+      wouldBeWithoutCap: hitCap ? rawPending : null
     };
   }
 
@@ -1495,18 +1499,18 @@ class GameService {
    * Mở/đóng bảo tàng
    */
   async toggleMuseum(userId, isOpen) {
-    const progress = await db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { userId: userId });
 
     await db.update('game_progress', progress.id, {
-      museum_open: isOpen
+      museumOpen: isOpen
     });
 
     return {
       success: true,
       message: `Museum ${isOpen ? 'opened' : 'closed'}`,
       data: {
-        is_open: isOpen,
-        income_per_hour: this.calculateMuseumIncome(progress)
+        isOpen: isOpen,
+        incomePerHour: this.calculateMuseumIncome(progress)
       }
     };
   }
@@ -1534,7 +1538,7 @@ class GameService {
     try {
       // === STEP 3: BUSINESS LOGIC (TRONG TRY BLOCK) ===
 
-      const progress = await db.findOne('game_progress', { user_id: userId });
+      const progress = await db.findOne('game_progress', { userId: userId });
 
       if (!progress) {
         return {
@@ -1544,7 +1548,7 @@ class GameService {
         };
       }
 
-      if (!progress.museum_open) {
+      if (!progress.museumOpen) {
         return {
           success: false,
           message: 'Museum is closed',
@@ -1552,13 +1556,13 @@ class GameService {
         };
       }
 
-      const lastCollection = progress.last_museum_collection || progress.created_at;
+      const lastCollection = progress.lastMuseumCollection || progress.createdAt;
 
       // Fetch artifact count for calculation
       let artifactCount = 0;
       try {
         const scanHistory = await db.findAll('scan_history');
-        artifactCount = scanHistory.filter(h => h.user_id === parseInt(userId)).length;
+        artifactCount = scanHistory.filter(h => h.userId === parseInt(userId)).length;
       } catch (e) {
         console.error("Error counting artifacts for collection:", e);
       }
@@ -1575,13 +1579,13 @@ class GameService {
 
       // === CRITICAL SECTION: UPDATE DB ===
       const newCoins = (progress.coins || 0) + incomeInfo.pending;
-      const newTotalMuseumIncome = (progress.museum_income || 0) + incomeInfo.pending;
+      const newTotalMuseumIncome = (progress.museumIncome || 0) + incomeInfo.pending;
 
       // Single atomic update để tránh partial updates
       const updatedProgress = await db.update('game_progress', progress.id, {
         coins: newCoins,
-        museum_income: newTotalMuseumIncome,
-        last_museum_collection: new Date().toISOString()
+        museumIncome: newTotalMuseumIncome,
+        lastMuseumCollection: new Date().toISOString()
       });
 
       console.log(`✅ User ${userId} collected ${incomeInfo.pending} coins from museum`);
@@ -1591,9 +1595,9 @@ class GameService {
         message: `Collected ${incomeInfo.pending} coins from Museum!`,
         data: {
           collected: incomeInfo.pending,
-          total_coins: newCoins,
-          total_museum_income: newTotalMuseumIncome,
-          next_collection_in: this.getNextCollectionTime(incomeInfo.rate)
+          totalCoins: newCoins,
+          totalMuseumIncome: newTotalMuseumIncome,
+          nextCollectionIn: this.getNextCollectionTime(incomeInfo.rate)
         }
       };
 
@@ -1613,6 +1617,8 @@ class GameService {
       console.log(`🔓 Lock released for user ${userId} museum collection`);
     }
   }
+
+
 
   /**
    * Helper: Tính thời gian có thể collect tiếp theo
@@ -1641,8 +1647,8 @@ class GameService {
 
     // ✅ CHECK DUPLICATE SCAN - Prevent farming
     const existingScan = await db.findOne('scan_history', {
-      user_id: userId,
-      object_id: artifact.id
+      userId: userId,
+      objectId: artifact.id
     });
 
     if (existingScan) {
@@ -1651,7 +1657,7 @@ class GameService {
         message: 'You have already scanned this object',
         statusCode: 400,
         data: {
-          scanned_at: existingScan.scanned_at,
+          scannedAt: existingScan.scannedAt,
           artifact: artifact
         }
       };
@@ -1671,31 +1677,31 @@ class GameService {
       }
     }
 
-    const progress = await db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { userId: userId });
 
     const reward = {
-      coins: artifact.reward_coins || 100,
-      petals: artifact.reward_petals || 1,
-      character: artifact.reward_character || null
+      coins: artifact.rewardCoins || 100,
+      petals: artifact.rewardPetals || 1,
+      character: artifact.rewardCharacter || null
     };
 
-    let newCharacters = [...progress.collected_characters];
+    let newCharacters = [...progress.collectedCharacters];
     if (reward.character && !newCharacters.includes(reward.character)) {
       newCharacters.push(reward.character);
     }
 
     await db.update('game_progress', progress.id, {
       coins: progress.coins + reward.coins,
-      total_sen_petals: progress.total_sen_petals + reward.petals,
-      collected_characters: newCharacters
+      totalSenPetals: progress.totalSenPetals + reward.petals,
+      collectedCharacters: newCharacters
     });
 
     // Lưu scan history
     await db.create('scan_history', {
-      user_id: userId,
-      object_id: artifact.id,
+      userId: userId,
+      objectId: artifact.id,
       location: location,
-      scanned_at: new Date().toISOString()
+      scannedAt: new Date().toISOString()
     });
 
     return {
@@ -1717,7 +1723,7 @@ class GameService {
 
     const enriched = allBadges.map(badge => ({
       ...badge,
-      is_unlocked: progress.data.badges.includes(badge.id)
+      isUnlocked: progress.data.badges.includes(badge.id)
     }));
 
     return { success: true, data: enriched };
@@ -1729,7 +1735,7 @@ class GameService {
 
     const enriched = allAchievements.map(achievement => ({
       ...achievement,
-      is_completed: progress.data.achievements.includes(achievement.id)
+      isCompleted: progress.data.achievements.includes(achievement.id)
     }));
 
     return { success: true, data: enriched };
@@ -1743,23 +1749,23 @@ class GameService {
   async getLeaderboard(type = 'global', limit = 20) {
     // Optimized: Use findAllAdvanced directly with sort
     const result = await db.findAllAdvanced('game_progress', {
-      sort: 'total_points',
+      sort: 'totalPoints',
       order: 'desc',
       limit: limit,
       page: 1
     });
 
     const leaderboard = await Promise.all(result.data.map(async (prog, index) => {
-      const user = await db.findById('users', prog.user_id);
+      const user = await db.findById('users', prog.userId);
       return {
         rank: index + 1,
-        user_id: prog.user_id,
-        user_name: user?.name || 'Unknown',
-        user_avatar: user?.avatar,
-        total_points: prog.total_points,
+        userId: prog.userId,
+        userName: user?.name || 'Unknown',
+        userAvatar: user?.avatar,
+        totalPoints: prog.totalPoints,
         level: prog.level,
-        sen_petals: prog.total_sen_petals,
-        characters_count: prog.collected_characters?.length || 0
+        senPetals: prog.totalSenPetals,
+        charactersCount: prog.collectedCharacters?.length || 0
       };
     }));
 
@@ -1770,7 +1776,7 @@ class GameService {
    * Phần thưởng hàng ngày
    */
   async getDailyReward(userId) {
-    let progress = await db.findOne('game_progress', { user_id: userId });
+    let progress = await db.findOne('game_progress', { userId: userId });
 
     // Fix: Auto-initialize if not exists
     if (!progress) {
@@ -1778,22 +1784,22 @@ class GameService {
     }
 
     const today = new Date().toISOString().split('T')[0];
-    const lastClaim = progress.last_reward_claim 
-      ? new Date(progress.last_reward_claim).toISOString().split('T')[0] 
+    const lastClaim = progress.lastRewardClaim
+      ? new Date(progress.lastRewardClaim).toISOString().split('T')[0]
       : null;
 
     if (lastClaim === today) {
-        // Return current status even if already claimed
-        return { 
-            success: false, 
-            message: 'Daily reward already claimed', 
-            statusCode: 400,
-            data: {
-                streak_days: progress.streak_days || 1,
-                claimed_today: true,
-                next_reward: { coins: 50, petals: 1 } // Simplified preview
-            }
-        };
+      // Return current status even if already claimed
+      return {
+        success: false,
+        message: 'Daily reward already claimed',
+        statusCode: 400,
+        data: {
+          streakDays: progress.streakDays || 1,
+          claimedToday: true,
+          nextReward: { coins: 50, petals: 1 } // Simplified preview
+        }
+      };
     }
 
     // Calculate Streak
@@ -1801,14 +1807,14 @@ class GameService {
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = yesterday.toISOString().split('T')[0];
 
-    let streak = (progress.streak_days || 0);
+    let streak = (progress.streakDays || 0);
 
     // If claimed yesterday, increment. If not (and not first time), reset.
     // Allow first claim to start streak at 1
     if (lastClaim === yesterdayStr) {
-        streak += 1;
+      streak += 1;
     } else {
-        streak = 1; // Reset or Start
+      streak = 1; // Reset or Start
     }
 
     // Cap streak visual at 7 for cycle? Or keep growing?
@@ -1817,17 +1823,17 @@ class GameService {
 
     // Reward Logic
     let reward = { coins: 50, petals: 1 };
-    
+
     // Day 7 Bonus
     if (dayInCycle === 7) {
-        reward = { coins: 200, petals: 5 };
+      reward = { coins: 200, petals: 5 };
     }
 
     await db.update('game_progress', progress.id, {
       coins: (progress.coins || 0) + reward.coins,
-      total_sen_petals: (progress.total_sen_petals || 0) + reward.petals,
-      streak_days: streak,
-      last_reward_claim: new Date().toISOString()
+      totalSenPetals: (progress.totalSenPetals || 0) + reward.petals,
+      streakDays: streak,
+      lastRewardClaim: new Date().toISOString()
       // Note: last_login is handled by auth controller
     });
 
@@ -1835,9 +1841,9 @@ class GameService {
       success: true,
       message: `Daily reward claimed! Day ${dayInCycle} Streak.`,
       data: {
-          ...reward,
-          streak_days: streak,
-          day_in_cycle: dayInCycle
+        ...reward,
+        streakDays: streak,
+        dayInCycle: dayInCycle
       }
     };
   }
@@ -1853,7 +1859,7 @@ class GameService {
       return { success: false, message: 'Item not found', statusCode: 404 };
     }
 
-    const progress = await db.findOne('game_progress', { user_id: userId });
+    const progress = await db.findOne('game_progress', { userId: userId });
     const totalCost = item.price * quantity;
 
     if (progress.coins < totalCost) {
@@ -1871,22 +1877,22 @@ class GameService {
       });
 
       // Step 2: Update inventory
-      let inventory = await db.findOne('user_inventory', { user_id: userId });
+      let inventory = await db.findOne('user_inventory', { userId: userId });
       if (!inventory) {
-        inventory = await db.create('user_inventory', { user_id: userId, items: [] });
+        inventory = await db.create('user_inventory', { userId: userId, items: [] });
       }
 
       // Backup inventory state
       inventoryBackup = { ...inventory, items: [...inventory.items] };
 
-      const existingItem = inventory.items.find(i => i.item_id === itemId);
+      const existingItem = inventory.items.find(i => i.itemId === itemId);
       if (existingItem) {
         existingItem.quantity += quantity;
       } else {
         inventory.items.push({
-          item_id: itemId,
+          itemId: itemId,
           quantity: quantity,
-          acquired_at: new Date().toISOString()
+          acquiredAt: new Date().toISOString()
         });
       }
 
@@ -1899,8 +1905,8 @@ class GameService {
         data: {
           item,
           quantity,
-          total_cost: totalCost,
-          remaining_coins: progress.coins - totalCost
+          totalCost: totalCost,
+          remainingCoins: progress.coins - totalCost
         }
       };
 
@@ -1932,14 +1938,14 @@ class GameService {
    * Lấy inventory
    */
   async getInventory(userId) {
-    const inventory = await db.findOne('user_inventory', { user_id: userId });
+    const inventory = await db.findOne('user_inventory', { userId: userId });
 
     if (!inventory) {
       return { success: true, data: { items: [] } };
     }
 
     const enriched = await Promise.all(inventory.items.map(async (item) => {
-      const itemData = await db.findById('shop_items', item.item_id);
+      const itemData = await db.findById('shop_items', item.itemId);
       return { ...item, ...itemData };
     }));
 
@@ -1950,13 +1956,13 @@ class GameService {
    * Sử dụng item
    */
   async useItem(userId, itemId, targetId) {
-    const inventory = await db.findOne('user_inventory', { user_id: userId });
+    const inventory = await db.findOne('user_inventory', { userId: userId });
 
     if (!inventory) {
       return { success: false, message: 'No inventory found', statusCode: 404 };
     }
 
-    const item = inventory.items.find(i => i.item_id === itemId);
+    const item = inventory.items.find(i => i.itemId === itemId);
     if (!item || item.quantity <= 0) {
       return { success: false, message: 'Item not found or quantity is 0', statusCode: 400 };
     }

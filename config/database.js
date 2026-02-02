@@ -114,37 +114,37 @@ class JsonAdapter {
   getForeignKey(collection, relation) {
     const keyMap = {
       heritage_sites: {
-        artifacts: 'heritage_site_id',
-        reviews: 'heritage_site_id',
-        timelines: 'heritage_site_id',
-        exhibitions: 'heritage_site_id'
+        artifacts: 'heritageSiteId',
+        reviews: 'heritageSiteId',
+        timelines: 'heritageSiteId',
+        exhibitions: 'heritageSiteId'
       },
       artifacts: {
-        heritage_site: 'heritage_site_id',
-        category: 'category_id'
+        heritage_site: 'heritageSiteId',
+        category: 'categoryId'
       },
       users: {
-        collections: 'user_id',
-        reviews: 'user_id',
-        favorites: 'user_id',
-        game_progress: 'user_id',
-        notifications: 'user_id'
+        collections: 'userId',
+        reviews: 'userId',
+        favorites: 'userId',
+        game_progress: 'userId',
+        notifications: 'userId'
       },
       game_chapters: {
-        levels: 'chapter_id'
+        levels: 'chapterId'
       },
       game_levels: {
-        chapter: 'chapter_id',
-        sessions: 'level_id',
-        artifacts: 'artifact_ids',
-        heritage_site: 'heritage_site_id'
+        chapter: 'chapterId',
+        sessions: 'levelId',
+        artifacts: 'artifactIds',
+        heritage_site: 'heritageSiteId'
       },
       game_sessions: {
-        level: 'level_id',
-        user: 'user_id'
+        level: 'levelId',
+        user: 'userId'
       },
       collections: {
-        user: 'user_id'
+        user: 'userId'
       }
     };
     return keyMap[collection]?.[relation];

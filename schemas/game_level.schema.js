@@ -1,6 +1,6 @@
 // schemas/game_level.schema.js
 module.exports = {
-  chapter_id: {
+  chapterId: {
     type: 'number',
     required: true,
     foreignKey: 'game_chapters',
@@ -34,7 +34,7 @@ module.exports = {
     min: 1,
     description: 'Thứ tự trong chapter'
   },
-  required_level: {
+  requiredLevel: {
     type: 'number',
     required: false,
     foreignKey: 'game_levels',
@@ -42,13 +42,13 @@ module.exports = {
   },
 
   // === AI CHARACTER CONFIG ===
-  ai_character_id: {
+  aiCharacterId: {
     type: 'number',
     required: false,
     foreignKey: 'game_characters',
     description: 'AI character hướng dẫn'
   },
-  knowledge_base: {
+  knowledgeBase: {
     type: 'string',
     required: false,
     description: 'Kiến thức cho AI (plain text hoặc markdown)'
@@ -63,43 +63,43 @@ module.exports = {
       {
         id: 'screen_01',
         type: 'DIALOGUE',
-        background_image: 'url',
-        background_music: 'url',
+        backgroundImage: 'url',
+        backgroundMusic: 'url',
         content: [
           { speaker: 'AI', text: 'Chào bạn!', avatar: 'url', audio: 'base64_string' }
         ],
-        next_screen_id: 'screen_02',
-        skip_allowed: true
+        nextScreenId: 'screen_02',
+        skipAllowed: true
       },
       {
         id: 'screen_02',
         type: 'HIDDEN_OBJECT',
-        background_image: 'url',
-        guide_text: 'Tìm 3 vật phẩm...',
+        backgroundImage: 'url',
+        guideText: 'Tìm 3 vật phẩm...',
         items: [
           {
             id: 'item1',
             name: 'Cái quạt',
             coordinates: { x: 15, y: 45, width: 10, height: 10 },
-            fact_popup: 'Đây là cái quạt mo',
-            on_collect_effect: 'play_sound_fan',
+            factPopup: 'Đây là cái quạt mo',
+            onCollectEffect: 'play_sound_fan',
             points: 10
           }
         ],
-        required_items: 3,
-        next_screen_id: 'screen_03',
-        ai_hints_enabled: true
+        requiredItems: 3,
+        nextScreenId: 'screen_03',
+        aiHintsEnabled: true
       },
       {
         id: 'screen_03',
         type: 'QUIZ',
         question: 'Câu hỏi về vật phẩm vừa tìm?',
         options: [
-          { text: 'Đáp án A', is_correct: false },
-          { text: 'Đáp án B', is_correct: true }
+          { text: 'Đáp án A', isCorrect: false },
+          { text: 'Đáp án B', isCorrect: true }
         ],
-        time_limit: 60,
-        next_screen_id: 'screen_04',
+        timeLimit: 60,
+        nextScreenId: 'screen_04',
         reward: {
           points: 50,
           coins: 20
@@ -151,12 +151,12 @@ module.exports = {
       badges: ['badge_01']
     }
   },
-  time_limit: {
+  timeLimit: {
     type: 'number',
     required: false,
     description: 'Giới hạn thời gian toàn bộ level (giây)'
   },
-  passing_score: {
+  passingScore: {
     type: 'number',
     required: false,
     default: 70,
@@ -170,30 +170,30 @@ module.exports = {
     description: 'Thumbnail cho level'
   },
 
-  background_music: {
+  backgroundMusic: {
     type: 'string',
     required: false,
     description: 'Nhạc nền mặc định'
   },
 
-  artifact_ids: {
+  artifactIds: {
     type: 'array',
     required: false,
     description: 'Artifacts liên quan'
   },
-  heritage_site_id: {
+  heritageSiteId: {
     type: 'number',
     required: false,
     foreignKey: 'heritage_sites',
     description: 'Di sản liên quan'
   },
-  is_active: {
+  isActive: {
     type: 'boolean',
     required: false,
     default: true,
     description: 'Active'
   },
-  created_by: {
+  createdBy: {
     type: 'number',
     required: false,
     foreignKey: 'users',

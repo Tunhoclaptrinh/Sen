@@ -9,38 +9,38 @@ class MongoAdapter {
     // foreignField MUST BE 'id' (the numeric public ID), not '_id' (internal ObjectId)
     this.relations = {
       heritage_sites: {
-        artifacts: { ref: 'artifacts', localField: 'id', foreignField: 'heritage_site_id' },
-        reviews: { ref: 'reviews', localField: 'id', foreignField: 'heritage_site_id' },
-        timelines: { ref: 'timelines', localField: 'id', foreignField: 'heritage_site_id' },
-        exhibitions: { ref: 'exhibitions', localField: 'id', foreignField: 'heritage_site_id' }
+        artifacts: { ref: 'artifacts', localField: 'id', foreignField: 'heritageSiteId' },
+        reviews: { ref: 'reviews', localField: 'id', foreignField: 'heritageSiteId' },
+        timelines: { ref: 'timelines', localField: 'id', foreignField: 'heritageSiteId' },
+        exhibitions: { ref: 'exhibitions', localField: 'id', foreignField: 'heritageSiteId' }
       },
       users: {
-        collections: { ref: 'collections', localField: 'id', foreignField: 'user_id' },
-        reviews: { ref: 'reviews', localField: 'id', foreignField: 'user_id' },
-        favorites: { ref: 'favorites', localField: 'id', foreignField: 'user_id' },
-        game_progress: { ref: 'game_progress', localField: 'id', foreignField: 'user_id' },
-        notifications: { ref: 'notifications', localField: 'id', foreignField: 'user_id' }
+        collections: { ref: 'collections', localField: 'id', foreignField: 'userId' },
+        reviews: { ref: 'reviews', localField: 'id', foreignField: 'userId' },
+        favorites: { ref: 'favorites', localField: 'id', foreignField: 'userId' },
+        game_progress: { ref: 'game_progress', localField: 'id', foreignField: 'userId' },
+        notifications: { ref: 'notifications', localField: 'id', foreignField: 'userId' }
       },
       artifacts: {
-        heritage_site: { ref: 'heritage_sites', localField: 'heritage_site_id', foreignField: 'id', justOne: true },
-        category: { ref: 'cultural_categories', localField: 'category_id', foreignField: 'id', justOne: true }
+        heritage_site: { ref: 'heritage_sites', localField: 'heritageSiteId', foreignField: 'id', justOne: true },
+        category: { ref: 'cultural_categories', localField: 'categoryId', foreignField: 'id', justOne: true }
       },
       game_chapters: {
-        levels: { ref: 'game_levels', localField: 'id', foreignField: 'chapter_id' }
+        levels: { ref: 'game_levels', localField: 'id', foreignField: 'chapterId' }
       },
       game_levels: {
-        chapter: { ref: 'game_chapters', localField: 'chapter_id', foreignField: 'id', justOne: true },
-        sessions: { ref: 'game_sessions', localField: 'id', foreignField: 'level_id' },
-        artifacts: { ref: 'artifacts', localField: 'artifact_ids', foreignField: 'id' },
-        heritage_site: { ref: 'heritage_sites', localField: 'heritage_site_id', foreignField: 'id', justOne: true }
+        chapter: { ref: 'game_chapters', localField: 'chapterId', foreignField: 'id', justOne: true },
+        sessions: { ref: 'game_sessions', localField: 'id', foreignField: 'levelId' },
+        artifacts: { ref: 'artifacts', localField: 'artifactIds', foreignField: 'id' },
+        heritageSite: { ref: 'heritage_sites', localField: 'heritageSiteId', foreignField: 'id', justOne: true }
       },
       game_sessions: {
-        level: { ref: 'game_levels', localField: 'level_id', foreignField: 'id', justOne: true },
-        user: { ref: 'users', localField: 'user_id', foreignField: 'id', justOne: true }
+        level: { ref: 'game_levels', localField: 'levelId', foreignField: 'id', justOne: true },
+        user: { ref: 'users', localField: 'userId', foreignField: 'id', justOne: true }
       },
       collections: {
-        user: { ref: 'users', localField: 'user_id', foreignField: 'id', justOne: true },
-        artifacts: { ref: 'artifacts', localField: 'artifact_ids', foreignField: 'id' }
+        user: { ref: 'users', localField: 'userId', foreignField: 'id', justOne: true },
+        artifacts: { ref: 'artifacts', localField: 'artifactIds', foreignField: 'id' }
       }
     };
 

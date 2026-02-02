@@ -56,8 +56,8 @@ class BaseController {
     try {
       // Autopopulate creator info if user is logged in
       if (req.user) {
-        if (!req.body.created_by) req.body.created_by = req.user.id;
-        // NOTE: We no longer store author/author_name strings as they are populated dynamically
+        if (!req.body.createdBy) req.body.createdBy = req.user.id;
+        // NOTE: We no longer store author/authorName strings as they are populated dynamically
       }
 
       const result = await this.service.create(req.body);
