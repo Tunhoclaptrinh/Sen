@@ -933,8 +933,8 @@ class GameService {
       success: true,
       message: 'Navigated to next screen',
       data: {
-        session_id: session.id,
-        current_screen: this.enrichScreen(
+        sessionId: session.id,
+        currentScreen: this.enrichScreen(
           nextScreen,
           updatedSession,
           nextScreenIndex,
@@ -1093,7 +1093,7 @@ class GameService {
           requiredScore: passingThreshold,
           maxPotentialScore: maxPotentialScore,
           passingPercentage: level.passingScore || 70,
-          can_retry: true
+          canRetry: true
         }
       };
     }
@@ -1226,17 +1226,17 @@ class GameService {
         passed: true,
         score: finalScore,
         breakdown: {
-          base_score: session.score,
-          time_bonus: timeBonus,
-          hint_penalty: hintPenalty
+          baseScore: session.score,
+          timeBonus: timeBonus,
+          hintPenalty: hintPenalty
         },
-        required_score: passingThreshold,
-        max_potential_score: maxPotentialScore,
-        passing_percentage: level.passing_score || 70,
-        next_level_id: nextLevelId,
+        requiredScore: passingThreshold,
+        maxPotentialScore: maxPotentialScore,
+        passingPercentage: level.passingScore || 70,
+        nextLevelId: nextLevelId,
         rewards: rewardsData, // null if revision
-        new_totals: newTotals, // null if revision
-        alreadyCompleted: alreadyCompleted
+        newTotals: newTotals, // null if revision
+        isCompleted: alreadyCompleted
       }
     };
   }

@@ -18,7 +18,7 @@ module.exports = {
     required: true,
     description: 'Loại'
   },
-  reference_id: {
+  referenceId: {
     type: 'number',
     required: true,
     description: 'ID artifact/site'
@@ -33,24 +33,24 @@ module.exports = {
     required: false,
     description: 'GPS longitude'
   },
-  reward_coins: {
+  rewardCoins: {
     type: 'number',
     required: false,
     default: 100,
     description: 'Coins thưởng'
   },
-  reward_petals: {
+  rewardPetals: {
     type: 'number',
     required: false,
     default: 1,
     description: 'Petals thưởng'
   },
-  reward_character: {
+  rewardCharacter: {
     type: 'string',
     required: false,
     description: 'Character thưởng'
   },
-  is_active: {
+  isActive: {
     type: 'boolean',
     required: false,
     default: true,
