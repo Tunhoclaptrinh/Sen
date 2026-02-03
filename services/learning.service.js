@@ -127,11 +127,13 @@ class LearningService extends ReviewableService {
 
       return {
         id: module.id,
+        pathId: module.pathId || module.path_id,
         title: module.title,
-        description: module.description, // Added description for UI
+        description: module.description,
         difficulty: module.difficulty,
         estimatedDuration: module.estimatedDuration,
-        contentType: module.contentType, // Expose content_type
+        contentType: module.contentType,
+        contentUrl: module.contentUrl,
         thumbnail: module.thumbnail,
         isCompleted: completedModuleIds.includes(module.id),
         score: completedData?.score,
@@ -153,7 +155,7 @@ class LearningService extends ReviewableService {
         completed: completedCount,
         total: totalModules,
         percentage: percentage,
-        nextModuleId: nextModule?.id || null,
+        nextModuleId: nextModule?.id || null, // Renamed nextModuleId for clarity, check usage in FE
         totalTimeSpent: gameProgress?.totalLearningTime || 0
       }
     };
