@@ -176,7 +176,7 @@ class AIService {
   /**
    * CHAT AUDIO: Chuyển tiếp file audio sang Python
    */
-  async chatAudio(userId, audioFile, context = {}) {
+  async chatAudio(userId, audioFile, context = {}, transcribeOnly = false) {
     try {
       const FormData = require('form-data');
 
@@ -197,12 +197,13 @@ class AIService {
         contentType: audioFile.mimetype || 'audio/webm'
       });
       form.append('history', JSON.stringify(history));
+      form.append('transcribe_only', transcribeOnly.toString());
 
       // 4. GỌI SANG PYTHON FASTAPI (/chat-audio)
       // Note: Python endpoint is /chat-audio
       const pythonUrl = PYTHON_SERVICE_URL.replace('/chat', '').replace(/\/+$/, '') + '/chat-audio';
 
-      console.log(`🎙️ Forwarding audio to: ${pythonUrl}`);
+      // console.log(`🎙️ Forwarding audio to: ${pythonUrl}`);
 
       const response = await axios.post(
         pythonUrl,
@@ -224,6 +225,16 @@ class AIService {
         rewritten_query: rewrittenQuery,
         route
       } = response.data;
+
+      // [FEATURE] Transcribe Only Mode (Voice Dictation)
+      if (transcribeOnly) {
+          return {
+              success: true,
+              data: {
+                  transcribedText: transcribedText || ""
+              }
+          };
+      }
 
       // 6. LƯU VÀO DB
       const chatRecord = await db.create("ai_chat_history", {
@@ -344,9 +355,10 @@ class AIService {
   /**
    * Lấy lịch sử chat đơn thuần cho UI
    */
-  async getHistory(userId, levelId, limit = 20) {
+  async getHistory(userId, levelId, characterId, limit = 20) {
     const query = { userId: userId };
     if (levelId) query.levelId = levelId;
+    if (characterId) query.characterId = characterId;
     
     const rawHistory = await db.findMany("ai_chat_history", query);
 
@@ -386,8 +398,11 @@ class AIService {
   /**
    * Xóa lịch sử
    */
-  async clearHistory(userId) {
-    const history = await db.findMany("ai_chat_history", { userId: userId });
+  async clearHistory(userId, characterId) {
+    const query = { userId: userId };
+    if (characterId) query.characterId = characterId;
+
+    const history = await db.findMany("ai_chat_history", query);
     for (const h of history) {
       await db.delete("ai_chat_history", h.id);
     }
@@ -448,6 +463,9 @@ class AIService {
             price: char.price || 0,
             unlockLevelId: unlockLevelId || null,
             canUnlock: canUnlock,
+            // Các trường bổ sung theo yêu cầu chuẩn hóa
+            origin: char.origin || 'Văn hóa Việt Nam', // Mặc định là Văn hóa VN nếu thiếu
+            isCollectible: typeof char.isCollectible === 'boolean' ? char.isCollectible : true, // Mặc định là có thể sưu tầm
           };
         });
 

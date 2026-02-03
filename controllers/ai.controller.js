@@ -63,10 +63,13 @@ class AIController {
         }
       }
 
+      const transcribeOnly = req.body.transcribeOnly === 'true' || req.body.transcribeOnly === true;
+
       const result = await aiService.chatAudio(
         req.user.id,
         req.file,
-        context
+        context,
+        transcribeOnly
       );
 
       if (!result.success) {
@@ -88,11 +91,12 @@ class AIController {
    */
   getHistory = async (req, res, next) => {
     try {
-      const { levelId, limit = 20 } = req.query;
+      const { levelId, characterId, limit = 20 } = req.query;
 
       const result = await aiService.getHistory(
         req.user.id,
         levelId ? parseInt(levelId) : null,
+        characterId ? parseInt(characterId) : null,
         parseInt(limit)
       );
 
@@ -209,7 +213,8 @@ class AIController {
    */
   clearHistory = async (req, res, next) => {
     try {
-      const result = await aiService.clearHistory(req.user.id);
+      const { characterId } = req.query;
+      const result = await aiService.clearHistory(req.user.id, characterId ? parseInt(characterId) : null);
       res.json(result);
     } catch (error) {
       next(error);
