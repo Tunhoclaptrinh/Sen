@@ -411,7 +411,13 @@ function startKeepAlive() {
 async function pingService(url) {
   try {
     // GET request to root should return 200 OK
-    await axios.get(url, { timeout: 10000 });
+    // Increased timeout to 60s because HF Spaces can take a long time to cold boot.
+    await axios.get(url, { 
+      timeout: 60000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      }
+    });
     console.log(`[${new Date().toISOString()}] 💓 Wake up successful (Status: 200)`);
   } catch (error) {
     // If root doesn't exist but we got a response, that's still a wake-up success (e.g. 404)

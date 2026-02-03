@@ -14,7 +14,7 @@ module.exports = {
     maxLength: 1000,
     description: 'Mô tả bộ sưu tập'
   },
-  user_id: {
+  userId: {
     type: 'number',
     required: true,
     foreignKey: 'users',
@@ -27,7 +27,7 @@ module.exports = {
     description: 'Danh sách mục trong bộ sưu tập (Di sản/Cổ vật)',
     // Structure of each item: { id, type, note, addedAt }
   },
-  is_public: {
+  isPublic: {
     type: 'boolean',
     required: false,
     default: false,
