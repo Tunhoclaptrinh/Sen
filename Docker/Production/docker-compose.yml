@@ -20,7 +20,7 @@ services:
       - LOG_LEVEL=info
       - DB_CONNECTION=${DB_CONNECTION}
       - DATABASE_URL=${DATABASE_URL}
-      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://sen_ai_prod:8000/chat}
+      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-https://itzmedandelion-sen-ai.hf.space/chat}
     ports:
       - "3000:3000"
     volumes:

@@ -27,9 +27,9 @@ services:
       - LOG_LEVEL=debug
       - DB_CONNECTION=${DB_CONNECTION}
       - DATABASE_URL=${DATABASE_URL}
-      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://sen_ai_dev:8000/chat}
+      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-https://itzmedandelion-sen-ai.hf.space/chat}
     ports:
-      - "3000:3000"
+      - "3002:3000"
     volumes:
       - ../..:/app
       - /app/node_modules
@@ -116,7 +116,7 @@ services:
       - PORT=3000
       - JWT_SECRET=${JWT_SECRET:-dev_secret_key_for_development_only_32chars}
       - JWT_EXPIRE=${JWT_EXPIRE:-7d}
-      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-http://sen_ai_dev:8000/chat}
+      - PYTHON_SERVICE_URL=${PYTHON_SERVICE_URL:-https://itzmedandelion-sen-ai.hf.space/chat}
     volumes:
       - ../..:/app
       - /app/node_modules
