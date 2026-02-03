@@ -227,7 +227,8 @@ class AIController {
    */
   getCharacters = async (req, res, next) => {
     try {
-      const result = await aiService.getCharacters(req.user.id);
+      const userId = req.user ? req.user.id : null;
+      const result = await aiService.getCharacters(userId);
       res.json(result);
     } catch (error) {
       next(error);
@@ -240,7 +241,8 @@ class AIController {
    */
   getAvailableCharacters = async (req, res, next) => {
     try {
-      const result = await aiService.getAvailableCharacters(req.user.id);
+      const userId = req.user ? req.user.id : null;
+      const result = await aiService.getAvailableCharacters(userId);
       res.json(result);
     } catch (error) {
       next(error);
