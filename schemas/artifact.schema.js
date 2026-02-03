@@ -10,7 +10,7 @@ module.exports = {
     type: "string",
     required: true,
     minLength: 20,
-    maxLength: 3000,
+    maxLength: 15000,
     description: "Mô tả chi tiết",
   },
   shortDescription: {
@@ -22,14 +22,20 @@ module.exports = {
   historicalContext: {
     type: "string",
     required: false,
-    maxLength: 2000,
+    maxLength: 10000,
     description: "Bối cảnh lịch sử",
   },
   culturalSignificance: {
     type: "string",
     required: false,
-    maxLength: 2000,
+    maxLength: 10000,
     description: "Ý nghĩa văn hóa",
+  },
+  references: {
+    type: "string",
+    required: false,
+    maxLength: 30000,
+    description: "Nguồn tham khảo",
   },
   heritageSiteId: {
     type: "number",

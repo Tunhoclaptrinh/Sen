@@ -18,7 +18,7 @@ module.exports = {
     required: true,
     minLength: 10,
     // tạm thời
-    // maxLength: 10000,
+    maxLength: 30000,
     description: "Mô tả chi tiết về di sản",
   },
   type: {
@@ -139,6 +139,12 @@ module.exports = {
     type: "array",
     required: false,
     description: "Các câu chuyện dã sử, truyền thuyết",
+  },
+  references: {
+    type: "string",
+    required: false,
+    maxLength: 30000,
+    description: "Nguồn tham khảo",
   },
   visitCount: {
     type: "number",
