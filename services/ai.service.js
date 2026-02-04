@@ -107,7 +107,7 @@ class AIService {
         { timeout: 60000 }
       );
 
-      const { answer, rewritten_query: rewrittenQuery, route, score, audio_base64: audioBase64 } = response.data;
+      const { answer, rewritten_query: rewrittenQuery, route, score, audio_base64: audioBase64, emotion } = response.data;
 
       // [FEATURE] Extract Link from Answer to return as Recommendation Card (Rich Response)
       let finalAnswer = answer;
@@ -160,7 +160,8 @@ class AIService {
           timestamp: chatRecord.createdAt,
           route: route,
           recommendation: recommendation, // Trả về recommendation riêng
-          audioBase64: audioBase64 // Trả về cho frontend ngay lập tức
+          audioBase64: audioBase64, // Trả về cho frontend ngay lập tức
+          emotion: emotion // 🎭 Trả về emotion metadata từ Sen-AI
         },
       };
     } catch (error) {
