@@ -1,7 +1,7 @@
-const BaseController = require('../utils/BaseController');
+const ReviewableController = require('../utils/ReviewableController');
 const exhibitionService = require('../services/exhibition.service');
 
-class ExhibitionController extends BaseController {
+class ExhibitionController extends ReviewableController {
   constructor() {
     super(exhibitionService);
   }
@@ -9,6 +9,15 @@ class ExhibitionController extends BaseController {
   getActive = async (req, res, next) => {
     try {
       const result = await this.service.getActiveExhibitions(req.parsedQuery);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getStats = async (req, res, next) => {
+    try {
+      const result = await this.service.getStats();
       res.json(result);
     } catch (error) {
       next(error);
