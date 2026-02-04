@@ -4,6 +4,7 @@
 
 const db = require('../config/database');
 const { calculateDistance } = require('../utils/helpers');
+const badgeService = require('./badge.service');
 
 class GameService {
   constructor() {
@@ -606,6 +607,16 @@ class GameService {
       }
     }
 
+    // TRIGGER BADGE CHECK (Artifacts Scanned)
+    let newBadges = [];
+    try {
+      const scanHistory = await db.findMany('scan_history', { userId: userId });
+      const badgeResult = await badgeService.checkAndUnlock(userId, 'artifacts_scanned', scanHistory.length);
+      newBadges = badgeResult;
+    } catch (e) {
+      console.error('Badge check failed', e);
+    }
+
     return {
       success: true,
       message: 'Item collected',
@@ -621,7 +632,8 @@ class GameService {
           collected: updatedSession.collectedItems.length,
           required: requiredItems,
           allCollected: allCollected
-        }
+        },
+        newBadges // Return new badges
       }
     };
   }
@@ -703,6 +715,26 @@ class GameService {
       }
     }
 
+    // TRIGGER BADGE CHECK (Quizzes Completed - Approximate as correct answers)
+    let newBadges = [];
+    if (isCorrect) {
+      try {
+        const allSessions = await db.findMany('game_sessions', { userId: userId });
+        let correctCount = 0;
+        allSessions.forEach(s => {
+          if (s.answeredQuestions) {
+            correctCount += s.answeredQuestions.filter(q => q.isCorrect).length;
+          }
+        });
+        // Add current one if not yet saved/reflected (it is saved above)
+        // Actually it is saved in updatedSession, but we iterate all sessions.
+        // Simplified: just query DB.
+        const badgeResult = await badgeService.checkAndUnlock(userId, 'perfect_quiz', correctCount);
+        // Reuse 'perfect_quiz' for 'Correct Answers' count condition for now.
+        newBadges = badgeResult;
+      } catch (e) { console.error('Badge check failed', e); }
+    }
+
     return {
       success: true,
       message: isCorrect ? 'Correct answer!' : 'Wrong answer',
@@ -711,7 +743,8 @@ class GameService {
         pointsEarned: pointsEarned,
         totalScore: updatedSession.score,
         explanation: selectedOption.explanation,
-        correctAnswer: isCorrect ? null : currentScreen.options.find(o => o.isCorrect)?.text
+        correctAnswer: isCorrect ? null : currentScreen.options.find(o => o.isCorrect)?.text,
+        newBadges
       }
     };
   }
@@ -1166,6 +1199,21 @@ class GameService {
         finishedChapters: finishedChapters
       });
 
+      // TRIGGER BADGE CHECK (Level Reached & Level Up)
+      // Calculate Level based on Total Points (e.g. 1000 points = 1 level)
+      const newTotalPoints = progress.totalPoints + finalScore;
+      const calculatedLevel = Math.floor(newTotalPoints / 1000) + 1;
+
+      let newBadges = [];
+      if (calculatedLevel > progress.level) {
+        // Level Up!
+        await db.update('game_progress', progress.id, { level: calculatedLevel });
+        try {
+          const badgeResult = await badgeService.checkAndUnlock(userId, 'level_reached', calculatedLevel);
+          newBadges = badgeResult;
+        } catch (e) { console.error('Badge check failed', e); }
+      }
+
       rewardsData = {
         petals: rewards.petals || 1,
         coins: rewards.coins || 50,
@@ -1236,7 +1284,9 @@ class GameService {
         nextLevelId: nextLevelId,
         rewards: rewardsData, // null if revision
         newTotals: newTotals, // null if revision
-        isCompleted: alreadyCompleted
+        newTotals: newTotals, // null if revision
+        isCompleted: alreadyCompleted,
+        newBadges: newBadges || []
       }
     };
   }

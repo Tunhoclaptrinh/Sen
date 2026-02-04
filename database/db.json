@@ -481,7 +481,7 @@
       "gallery": [],
       "relatedHeritageIds": [],
       "relatedHistoryIds": [],
-      "views": 1
+      "views": 2
     },
     {
       "id": 3,
@@ -2641,6 +2641,30 @@
       "lastRewardClaim": "2026-02-01T17:30:06.126Z",
       "lastLogin": "2026-02-01T17:30:03.415Z",
       "createdAt": "2026-02-01T17:30:03.415Z",
+      "completedModules": [],
+      "completedQuestsCount": 0
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "currentChapter": 1,
+      "totalSenPetals": 0,
+      "totalPoints": 0,
+      "level": 1,
+      "coins": 1000,
+      "unlockedChapters": [
+        1
+      ],
+      "completedLevels": [],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": false,
+      "museumIncome": 0,
+      "streakDays": 0,
+      "lastRewardClaim": null,
+      "lastLogin": "2026-02-04T15:23:38.338Z",
+      "createdAt": "2026-02-04T15:23:38.338Z",
       "completedModules": [],
       "completedQuestsCount": 0
     }
