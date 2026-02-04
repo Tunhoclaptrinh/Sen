@@ -15,15 +15,6 @@ class BaseController {
     try {
       const options = { ...req.parsedQuery, user: req.user };
 
-      // [RBAC] Researcher: Only see their own resources
-      if (req.user && req.user.role === 'researcher') {
-        options.filter = {
-          ...(options.filter || {}),
-          created_by: req.user.id,
-          // Support for camelCase createdBy
-          createdBy: req.user.id
-        };
-      }
 
       const result = await this.service.findAll(options);
 
@@ -52,18 +43,6 @@ class BaseController {
         });
       }
 
-      // [RBAC] Researcher: Only access their own resource
-      if (req.user && req.user.role === 'researcher') {
-        const item = result.data;
-        // Check if item has creator (legacy might not)
-        const ownerId = item.createdBy || item.created_by;
-        if (ownerId && String(ownerId) !== String(req.user.id)) {
-          return res.status(403).json({
-            success: false,
-            message: 'Bạn không có quyền truy cập tài nguyên này.'
-          });
-        }
-      }
 
       res.json({
         success: true,
