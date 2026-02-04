@@ -1,16 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth.middleware');
+const { protect, optionalProtect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const heritageSiteController = require('../controllers/heritage_site.controller');
 const importExportController = require('../controllers/importExport.controller');
 
 // Public Routes
-router.get('/', heritageSiteController.getAll);
+router.get('/', optionalProtect, heritageSiteController.getAll);
 router.get('/search', heritageSiteController.search);
 router.get('/nearby', heritageSiteController.getNearby);
 // Export/Import
 router.get('/export',
+  protect,
+  checkPermission('heritage_sites', 'list'), // Or import/export specific permission if available, list is good enough for now as it reads data
   (req, res, next) => {
     req.params.entity = 'heritage_sites';
     next();

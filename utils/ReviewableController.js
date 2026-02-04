@@ -23,7 +23,8 @@ class ReviewableController extends BaseController {
         const itemResult = await this.service.findById(req.params.id);
         if (itemResult.success) {
           const item = itemResult.data;
-          if (item.created_by && String(item.created_by) !== String(req.user.id)) {
+          const ownerId = item.createdBy || item.created_by;
+          if (ownerId && String(ownerId) !== String(req.user.id)) {
             return res.status(403).json({
               success: false,
               message: 'Bạn chỉ có quyền gửi duyệt tài nguyên do chính mình tạo.'

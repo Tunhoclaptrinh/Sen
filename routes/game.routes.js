@@ -11,6 +11,7 @@ const requireGamePlay = checkPermission('game_play', 'play');
 
 router.get('/progress', requireGamePlay, gameController.getProgress);
 router.get('/leaderboard', requireGamePlay, gameController.getLeaderboard);
+router.post('/leaderboard/reset', checkPermission('game_content', 'update'), gameController.resetUserScore);
 router.get('/daily-reward', checkPermission('game_play', 'earn_rewards'), gameController.getDailyReward);
 
 // ==================== CHAPTERS (SEN FLOWERS) ====================

@@ -17,6 +17,7 @@ class ReviewableService extends BaseService {
   async findAll(options = {}) {
     try {
       // Content Approval Logic: Default to 'published' for public users
+      // Content Approval Logic: Default to 'published' for public users
       if (this.schema && this.schema.status) {
         if (!options.user || (options.user.role !== 'admin' && options.user.role !== 'researcher')) {
           if (!options.filter) options.filter = {};

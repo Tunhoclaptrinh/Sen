@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth.middleware');
+const { protect, optionalProtect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const learningController = require('../controllers/learning.controller');
 
 // Public routes protected to ensure user context is available for RBAC
-router.get('/', protect, learningController.getAll);
+router.get('/', optionalProtect, learningController.getAll);
 router.get('/path', protect, learningController.getLearningPath);
 router.get('/:id', protect, learningController.getById);
 

@@ -329,8 +329,10 @@ class BaseService {
     if (!data) return data;
     const enriched = { ...data };
 
-    if (enriched.createdBy) {
-      const author = await db.findById('users', enriched.createdBy);
+    const creatorId = enriched.createdBy || enriched.created_by;
+
+    if (creatorId) {
+      const author = await db.findById('users', creatorId);
       if (author) {
         enriched.authorName = author.name;
         // Also set legacy author field if it exists or is expected

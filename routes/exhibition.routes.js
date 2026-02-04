@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth.middleware');
+const { protect, optionalProtect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const exhibitionController = require('../controllers/exhibition.controller');
 
 // Public (protected for RBAC filtering)
-router.get('/', protect, exhibitionController.getAll);
-router.get('/active', protect, exhibitionController.getActive);
-router.get('/:id', protect, exhibitionController.getById);
+router.get('/', optionalProtect, exhibitionController.getAll);
+router.get('/active', optionalProtect, exhibitionController.getActive);
+router.get('/:id', optionalProtect, exhibitionController.getById);
 
 // Protected
 router.post('/',

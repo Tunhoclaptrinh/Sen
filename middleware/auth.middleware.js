@@ -69,6 +69,52 @@ exports.protect = async (req, res, next) => {
 };
 
 /**
+ * Optional authentication
+ * - If token exists & valid: populates req.user
+ * - If no token: continues without req.user
+ * - If invalid token: returns 401 (client should know token is bad)
+ */
+exports.optionalProtect = async (req, res, next) => {
+  try {
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+      return next();
+    }
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await db.findById('users', decoded.id);
+
+      if (user && user.isActive) {
+        // Version check
+        if (decoded.loginTime && user.lastLogin) {
+          const tokenTime = new Date(decoded.loginTime).getTime();
+          const lastLoginTime = new Date(user.lastLogin).getTime();
+          if (tokenTime >= lastLoginTime) {
+            req.user = user;
+          }
+        } else {
+          req.user = user;
+        }
+      }
+      next();
+    } catch (err) {
+      // If token is invalid, we can either:
+      // 1. Return 401 (Strict)
+      // 2. Treat as guest (Loose) -> next()
+      // Usually better to return 401 so client knows to refresh
+      return res.status(401).json({ success: false, message: 'Invalid token' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * Authorize roles - Check if user has required role
  * Usage: authorize('admin', 'researcher')
  */

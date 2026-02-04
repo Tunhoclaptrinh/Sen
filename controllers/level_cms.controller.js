@@ -80,7 +80,17 @@ class LevelCMSController {
    */
   getAllLevels = async (req, res, next) => {
     try {
-      const result = await levelManagementService.findAll(req.parsedQuery);
+      const options = { ...req.parsedQuery };
+
+      // [RBAC] Researcher: Only see their own levels
+      if (req.user && req.user.role === 'researcher') {
+        options.filter = {
+          ...(options.filter || {}),
+          createdBy: req.user.id
+        };
+      }
+
+      const result = await levelManagementService.findAll(options);
 
       res.json({
         success: true,

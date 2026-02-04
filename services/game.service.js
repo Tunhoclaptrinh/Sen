@@ -1773,6 +1773,31 @@ class GameService {
   }
 
   /**
+   * Reset điểm người chơi (Admin Action)
+   */
+  async resetUserScore(userId) {
+    const progress = await db.findOne('game_progress', { userId: userId });
+
+    if (!progress) {
+      return { success: false, message: 'User progress not found', statusCode: 404 };
+    }
+
+    await db.update('game_progress', progress.id, {
+      totalPoints: 0,
+      completedLevels: [], // Optional: Reset progress too? No, just score as requested "Reset Điểm"
+      // If we only reset points, we keep levels unlocked. 
+      // But totalPoints is usually cumulative. 
+      // Let's stick to strict "Reset Score" (totalPoints = 0).
+    });
+
+    return {
+      success: true,
+      message: 'Successfully reset user score to 0',
+      data: { userId, totalPoints: 0 }
+    };
+  }
+
+  /**
    * Phần thưởng hàng ngày
    */
   async getDailyReward(userId) {

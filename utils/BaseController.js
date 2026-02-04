@@ -19,7 +19,9 @@ class BaseController {
       if (req.user && req.user.role === 'researcher') {
         options.filter = {
           ...(options.filter || {}),
-          created_by: req.user.id
+          created_by: req.user.id,
+          // Support for camelCase createdBy
+          createdBy: req.user.id
         };
       }
 
@@ -54,7 +56,8 @@ class BaseController {
       if (req.user && req.user.role === 'researcher') {
         const item = result.data;
         // Check if item has creator (legacy might not)
-        if (item.created_by && String(item.created_by) !== String(req.user.id)) {
+        const ownerId = item.createdBy || item.created_by;
+        if (ownerId && String(ownerId) !== String(req.user.id)) {
           return res.status(403).json({
             success: false,
             message: 'Bạn không có quyền truy cập tài nguyên này.'
@@ -149,7 +152,8 @@ class BaseController {
         const itemResult = await this.service.findById(req.params.id);
         if (itemResult.success) {
           const item = itemResult.data;
-          if (item.created_by && String(item.created_by) !== String(req.user.id)) {
+          const ownerId = item.createdBy || item.created_by;
+          if (ownerId && String(ownerId) !== String(req.user.id)) {
             return res.status(403).json({
               success: false,
               message: 'Bạn chỉ có quyền chỉnh sửa tài nguyên do chính mình tạo.'
@@ -188,7 +192,8 @@ class BaseController {
         const itemResult = await this.service.findById(req.params.id);
         if (itemResult.success) {
           const item = itemResult.data;
-          if (item.created_by && String(item.created_by) !== String(req.user.id)) {
+          const ownerId = item.createdBy || item.created_by;
+          if (ownerId && String(ownerId) !== String(req.user.id)) {
             return res.status(403).json({
               success: false,
               message: 'Bạn chỉ có quyền xóa tài nguyên do chính mình tạo.'

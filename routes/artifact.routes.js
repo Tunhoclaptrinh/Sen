@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth.middleware');
+const { protect, optionalProtect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const artifactController = require('../controllers/artifact.controller');
 const importExportController = require('../controllers/importExport.controller');
 
 // Export/Import (MUST come before /:id)
+// Export/Import (MUST come before /:id)
 router.get('/export',
+    protect,
+    checkPermission('artifacts', 'list'),
     (req, res, next) => {
         req.params.entity = 'artifacts';
         next();
@@ -14,7 +17,7 @@ router.get('/export',
     importExportController.exportData
 );
 
-router.get('/', artifactController.getAll);
+router.get('/', optionalProtect, artifactController.getAll);
 router.get('/search', artifactController.search);
 router.get('/stats/summary', artifactController.getStats);
 router.get('/:id', artifactController.getById);
