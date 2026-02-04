@@ -6,6 +6,7 @@ const badgeController = require('../controllers/badge.controller');
 
 // Public read (or authenticated user read)
 router.get('/', badgeController.getAll);
+router.get('/stats/summary', badgeController.getStats);
 router.get('/:id', badgeController.getById);
 
 // Admin only write
