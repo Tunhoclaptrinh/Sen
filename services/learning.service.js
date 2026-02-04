@@ -127,7 +127,7 @@ class LearningService extends ReviewableService {
 
       return {
         id: module.id,
-        pathId: module.pathId || module.path_id,
+        pathId: module.pathId,
         title: module.title,
         description: module.description,
         difficulty: module.difficulty,

@@ -51,6 +51,12 @@ module.exports = {
     required: false,
     description: 'ID danh mục'
   },
+  references: {
+    type: 'string',
+    required: false,
+    maxLength: 30000,
+    description: 'Nguồn tham khảo'
+  },
   // Related items
   relatedHeritageIds: {
     type: 'array',
