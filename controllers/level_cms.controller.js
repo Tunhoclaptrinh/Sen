@@ -1,11 +1,10 @@
-/**
- * Level CMS Controller - Admin routes để quản lý levels
- */
-
+const ReviewableController = require('../utils/ReviewableController');
 const levelManagementService = require('../services/level_cms.service');
-const { protect, authorize } = require('../middleware/auth.middleware');
 
-class LevelCMSController {
+class LevelCMSController extends ReviewableController {
+  constructor() {
+    super(levelManagementService);
+  }
 
   // ==================== BASIC CRUD ====================
 
@@ -80,22 +79,17 @@ class LevelCMSController {
    */
   getAllLevels = async (req, res, next) => {
     try {
-      const options = { ...req.parsedQuery };
+      const options = { ...req.parsedQuery, user: req.user };
 
-      // [RBAC] Researcher: Only see their own levels
-      if (req.user && req.user.role === 'researcher') {
-        options.filter = {
-          ...(options.filter || {}),
-          createdBy: req.user.id
-        };
-      }
+      // [RBAC] Researcher: Apply content isolation
+      this.applyResearcherFilter(options, req);
 
       const result = await levelManagementService.findAll(options);
 
       res.json({
         success: true,
-        count: result.data.length,
-        data: result.data,
+        count: result.data ? (result.data.length || 0) : 0,
+        data: result.data || [],
         pagination: result.pagination
       });
     } catch (error) {
@@ -112,6 +106,14 @@ class LevelCMSController {
 
       if (!result.success) {
         return res.status(result.statusCode || 404).json(result);
+      }
+
+      // [RBAC] Researcher: Check ownership
+      if (!this.checkOwnership(result.data, req)) {
+        return res.status(403).json({
+          success: false,
+          message: 'Bạn không có quyền xem tài nguyên này.'
+        });
       }
 
       res.json(result);
@@ -192,7 +194,7 @@ class LevelCMSController {
         });
       }
 
-      const result = await levelManagementService.bulkImportLevels(levels, chapterId);
+      const result = await levelManagementService.bulkImportLevels(levels, chapterId, req.user.id);
       res.json(result);
     } catch (error) {
       next(error);

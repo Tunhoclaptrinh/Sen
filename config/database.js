@@ -198,39 +198,58 @@ class JsonAdapter {
   }
 
   /**
-   * Apply filters (operators: _gte, _lte, _ne, _like, etc.)
+   * Apply filters (operators: _gte, _lte, _ne, _like, etc. + logical $or)
    */
   applyFilters(items, filters) {
     return items.filter(item => {
-      return Object.keys(filters).every(key => {
-        // Operator filters
-        if (key.endsWith('_gte')) {
-          const field = key.replace('_gte', '');
-          return item[field] >= filters[key];
-        }
-        if (key.endsWith('_lte')) {
-          const field = key.replace('_lte', '');
-          return item[field] <= filters[key];
-        }
-        if (key.endsWith('_ne')) {
-          const field = key.replace('_ne', '');
-          return item[field] !== filters[key];
-        }
-        if (key.endsWith('_like')) {
-          const field = key.replace('_like', '');
-          const regex = new RegExp(filters[key], 'i');
-          return regex.test(item[field]);
-        }
-        if (key.endsWith('_in')) {
-          const field = key.replace('_in', '');
-          const values = Array.isArray(filters[key]) ? filters[key] : filters[key].split(',');
-          return values.includes(String(item[field]));
-        }
+      // Support logical $or at top level
+      if (filters.$or && Array.isArray(filters.$or)) {
+        const orMatch = filters.$or.some(orFilter => {
+          return Object.keys(orFilter).every(key => this.matchFilter(item, key, orFilter[key]));
+        });
+        if (!orMatch) return false;
 
-        // Exact match
-        return item[key] == filters[key];
-      });
+        // If we have other filters alongside $or, they must also match (AND logic)
+        const otherFilters = { ...filters };
+        delete otherFilters.$or;
+        return Object.keys(otherFilters).every(key => this.matchFilter(item, key, otherFilters[key]));
+      }
+
+      // Default AND logic
+      return Object.keys(filters).every(key => this.matchFilter(item, key, filters[key]));
     });
+  }
+
+  /**
+   * Helper to match a single filter field/operator
+   */
+  matchFilter(item, key, value) {
+    // Operator filters
+    if (key.endsWith('_gte')) {
+      const field = key.replace('_gte', '');
+      return item[field] >= value;
+    }
+    if (key.endsWith('_lte')) {
+      const field = key.replace('_lte', '');
+      return item[field] <= value;
+    }
+    if (key.endsWith('_ne')) {
+      const field = key.replace('_ne', '');
+      return item[field] !== value;
+    }
+    if (key.endsWith('_like')) {
+      const field = key.replace('_like', '');
+      const regex = new RegExp(value, 'i');
+      return regex.test(item[field]);
+    }
+    if (key.endsWith('_in')) {
+      const field = key.replace('_in', '');
+      const values = Array.isArray(value) ? value : String(value).split(',');
+      return values.includes(String(item[field]));
+    }
+
+    // Exact match (handle null/undefined explicitly if needed)
+    return item[key] == value;
   }
 
   /**

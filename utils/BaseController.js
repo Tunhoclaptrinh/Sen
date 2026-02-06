@@ -8,6 +8,41 @@ class BaseController {
   }
 
   /**
+   * Helper to apply researcher content isolation filter
+   */
+  applyResearcherFilter(options, req) {
+    if (req.user && req.user.role === 'researcher') {
+      options.filter = {
+        ...(options.filter || {}),
+        $or: [
+          { createdBy: req.user.id },
+          { created_by: req.user.id }
+        ]
+      };
+    }
+  }
+
+  /**
+   * Helper to check ownership for researcher
+   */
+  checkOwnership(item, req) {
+    if (req.user && req.user.role === 'researcher') {
+      const ownerId = item.createdBy || item.created_by;
+      const isSystem = !ownerId || ownerId === 'system' || ownerId === 1 || ownerId === "1" || item.author === 'Hệ thống';
+
+      // Researcher strict isolation: only their own items
+      if (req.user.role === 'researcher' && isSystem) {
+        return false;
+      }
+
+      if (!isSystem && String(ownerId) !== String(req.user.id)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * GET all records
    * Supports pagination, filtering, sorting, search
    */
@@ -15,17 +50,15 @@ class BaseController {
     try {
       const options = { ...req.parsedQuery, user: req.user };
 
-      // [RBAC] Researcher: Only list own items
-      if (req.user && req.user.role === 'researcher') {
-        options.filter = { ...(options.filter || {}), createdBy: req.user.id };
-      }
+      // [RBAC] Researcher: Apply content isolation
+      this.applyResearcherFilter(options, req);
 
       const result = await this.service.findAll(options);
 
       res.json({
         success: result.success,
-        count: result.data.length,
-        data: result.data,
+        count: result.data ? (result.data.length || 0) : 0,
+        data: result.data || [],
         pagination: result.pagination
       });
     } catch (error) {
@@ -48,15 +81,11 @@ class BaseController {
       }
 
       // [RBAC] Researcher: Check ownership
-      if (req.user && req.user.role === 'researcher') {
-        const item = result.data;
-        const ownerId = item.createdBy || item.created_by;
-        if (ownerId && String(ownerId) !== String(req.user.id)) {
-          return res.status(403).json({
-            success: false,
-            message: 'Bạn không có quyền xem tài nguyên này.'
-          });
-        }
+      if (!this.checkOwnership(result.data, req)) {
+        return res.status(403).json({
+          success: false,
+          message: 'Bạn không có quyền xem tài nguyên này.'
+        });
       }
 
       res.json({

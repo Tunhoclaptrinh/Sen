@@ -115,7 +115,7 @@
       "isActive": true,
       "avatar": "https://ui-avatars.com/api/?name=Admin+Sen&background=0D8ABC&color=fff",
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-02-04T02:43:54.826Z"
+      "lastLogin": "2026-02-06T11:51:48.474Z"
     },
     {
       "id": 2,
@@ -125,7 +125,7 @@
       "role": "researcher",
       "isActive": true,
       "createdAt": "2024-02-20T14:20:00Z",
-      "lastLogin": "2026-02-04T11:24:50.784Z"
+      "lastLogin": "2026-02-06T11:51:32.246Z"
     },
     {
       "id": 3,
@@ -418,6 +418,31 @@
       "timeline": [],
       "updatedAt": "2026-01-23T10:55:52.011Z",
       "views": 1
+    },
+    {
+      "id": 5,
+      "name": "researcher",
+      "shortDescription": "researcher",
+      "description": "<p>researcherresearcherresearcherresearcherresearcher</p>",
+      "type": "monument",
+      "culturalPeriod": "researcher",
+      "region": "Bắc",
+      "province": "Quảng Ninh",
+      "address": "researcher",
+      "yearEstablished": 2026,
+      "image": "",
+      "gallery": [],
+      "visitHours": "researcher",
+      "isActive": true,
+      "unescoListed": false,
+      "relatedArtifactIds": [],
+      "relatedHistoryIds": [],
+      "timeline": [],
+      "createdBy": 2,
+      "status": "draft",
+      "createdAt": "2026-02-04T17:37:01.974Z",
+      "updatedAt": "2026-02-06T12:18:37.338Z",
+      "review_comment": null
     }
   ],
   "artifacts": [
@@ -534,6 +559,71 @@
       "relatedHeritageIds": [],
       "relatedHistoryIds": [],
       "views": 1
+    },
+    {
+      "id": 5,
+      "name": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "description": "<p>Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt&nbsp;</p>",
+      "shortDescription": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "heritageSiteId": 1,
+      "categoryId": 2,
+      "artifactType": "painting",
+      "yearCreated": 123,
+      "creator": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "material": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "dimensions": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "condition": "good",
+      "locationInSite": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "image": "/uploads/general/file-1770225691874.jpeg",
+      "isOnDisplay": true,
+      "gallery": [],
+      "relatedHeritageIds": [],
+      "relatedHistoryIds": [],
+      "createdBy": 1,
+      "createdAt": "2026-02-04T17:22:21.973Z",
+      "updatedAt": "2026-02-04T17:28:33.767Z",
+      "status": "published",
+      "review_comment": null
+    },
+    {
+      "id": 6,
+      "name": "Hienvat",
+      "description": "<p>HienvatHienvatHienvatHienvatHienvat</p>",
+      "shortDescription": "HienvatHienvatHienvatHienvatHienvatHienvat",
+      "categoryId": 2,
+      "artifactType": "document",
+      "creator": "Hienvat",
+      "material": "Hienvat",
+      "dimensions": "Hienvat",
+      "condition": "good",
+      "locationInSite": "Hienvat",
+      "image": "",
+      "isOnDisplay": true,
+      "gallery": [],
+      "relatedHeritageIds": [],
+      "relatedHistoryIds": [],
+      "createdBy": 1,
+      "createdAt": "2026-02-05T15:42:15.307Z",
+      "updatedAt": "2026-02-05T15:42:15.307Z"
+    },
+    {
+      "id": 7,
+      "name": "alo",
+      "description": "<p>aloaloaloaloalo</p>",
+      "shortDescription": "aloaloaloaloaloaloaloalo",
+      "categoryId": 2,
+      "artifactType": "painting",
+      "condition": "good",
+      "image": "",
+      "isOnDisplay": true,
+      "gallery": [],
+      "relatedHeritageIds": [],
+      "relatedHistoryIds": [],
+      "createdBy": 2,
+      "status": "draft",
+      "createdAt": "2026-02-05T15:53:05.732Z",
+      "updatedAt": "2026-02-06T12:45:49.201Z",
+      "review_comment": null
     }
   ],
   "timelines": [
@@ -800,17 +890,35 @@
     },
     {
       "id": 4,
-      "name": "Nguyễn Tiến Tuấn",
-      "description": "Nguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến Tuấn",
-      "theme": "Nguyễn Tiến Tuấn",
+      "name": "Quần thể di tích cố đô Huế",
+      "description": "Quần thể di tích cố đô HuếQuần thể di tích cố đô Huế",
+      "theme": "Quần thể di tích cố đô Huế",
       "order": 4,
-      "requiredPetals": 1,
-      "image": "https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/619660295_2079049926267994_718272744209069642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3SA0uOMwqBZMrjDI8KKotbpAvVtAwZtlukC9W0DBm2ehdIXgd0wTvS8jEtImNZQ-dyy1WV2KHXhXSgzBXoiqj&_nc_ohc=mme38aYJA5EQ7kNvwHsTSrz&_nc_oc=AdmGgdIIkG43gV4rxfXQsZ7Pu38f52Z3i2mF9AXYK_W1dZP28wpjCbA3oCNRCRHo3c4&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=bOkcu5iZ22LScpEpP_CPNg&oh=00_Afq9k6gtnY98aRNhn4kt33rw5UZhmB_x-ajTVR4_RtFNCg&oe=6980CAE0",
+      "requiredPetals": 0,
+      "color": "#1890ff",
       "isActive": true,
-      "createdAt": "2026-01-29T07:48:42.218Z",
-      "updatedAt": "2026-01-29T07:52:43.627Z",
-      "createdBy": 1,
-      "status": "published"
+      "createdBy": 2,
+      "author": "Phạm Văn Tuấn",
+      "publishDate": "2026-02-05T17:34:58.430Z",
+      "createdAt": "2026-02-05T17:35:11.393Z",
+      "updatedAt": "2026-02-06T14:10:29.421Z",
+      "status": "pending",
+      "review_comment": null
+    },
+    {
+      "id": 5,
+      "name": "abcde",
+      "description": "đâsdNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến TuấnNguyễn Tiến Tuấn",
+      "theme": "Nguyễn Tiến Tuấn",
+      "order": 5,
+      "requiredPetals": 0,
+      "color": "#1890ff",
+      "isActive": true,
+      "createdBy": 2,
+      "author": "Phạm Văn Tuấn",
+      "publishDate": "2026-02-06T13:24:24.429Z",
+      "createdAt": "2026-02-06T13:24:34.718Z",
+      "updatedAt": "2026-02-06T13:24:34.718Z"
     }
   ],
   "game_characters": [
@@ -1776,6 +1884,60 @@
       "createdAt": "2026-01-29T07:55:00.176Z",
       "updatedAt": "2026-01-30T08:09:20.142Z",
       "thumbnail": "https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/619660295_2079049926267994_718272744209069642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3SA0uOMwqBZMrjDI8KKotbpAvVtAwZtlukC9W0DBm2ehdIXgd0wTvS8jEtImNZQ-dyy1WV2KHXhXSgzBXoiqj&_nc_ohc=mme38aYJA5EQ7kNvwHsTSrz&_nc_oc=AdmGgdIIkG43gV4rxfXQsZ7Pu38f52Z3i2mF9AXYK_W1dZP28wpjCbA3oCNRCRHo3c4&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=bOkcu5iZ22LScpEpP_CPNg&oh=00_Afq9k6gtnY98aRNhn4kt33rw5UZhmB_x-ajTVR4_RtFNCg&oe=6980CAE0"
+    },
+    {
+      "id": 20,
+      "chapterId": 4,
+      "name": "Khám phá Ngọ Môn",
+      "description": "Tìm hiểu về cổng chính của Hoàng thành Huế.",
+      "type": "image_viewer",
+      "difficulty": "easy",
+      "order": 1,
+      "isLocked": false,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Ngomon_Hue.jpg/600px-Ngomon_Hue.jpg",
+      "screens": [
+        {
+          "id": "h1_s1",
+          "type": "IMAGE_VIEWER",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Ngomon_Hue.jpg/800px-Ngomon_Hue.jpg",
+          "caption": "Cổng Ngọ Môn - Huế"
+        }
+      ],
+      "rewards": {
+        "coins": 100,
+        "petals": 1
+      },
+      "createdBy": 1,
+      "status": "published"
+    },
+    {
+      "id": 21,
+      "chapterId": 4,
+      "name": "Đại Nội Uy Nghi",
+      "description": "Khám phá kiến trúc hoàng cung triều Nguyễn.",
+      "type": "story",
+      "difficulty": "medium",
+      "order": 2,
+      "isLocked": false,
+      "thumbnail": "https://i.pinimg.com/736x/8a/8a/8a/8a8a8a8a8a8a8a8a8a8a8a8a8a8a8a8a.jpg",
+      "screens": [
+        {
+          "id": "h2_s1",
+          "type": "DIALOGUE",
+          "content": [
+            {
+              "speaker": "AI",
+              "text": "Chào mừng bạn đến với Đại Nội Huế!"
+            }
+          ]
+        }
+      ],
+      "rewards": {
+        "coins": 150,
+        "petals": 2
+      },
+      "createdBy": 1,
+      "status": "published"
     }
   ],
   "history_articles": [
@@ -2347,6 +2509,56 @@
       ],
       "gallery": [],
       "updatedAt": "2026-01-23T11:21:43.101Z"
+    },
+    {
+      "id": 8,
+      "title": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "shortDescription": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "content": "<p>Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt&nbsp;</p>",
+      "image": "",
+      "gallery": [],
+      "author": "Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt ",
+      "isActive": true,
+      "references": "<p>Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt Ph&ecirc; duyệt&nbsp;</p>",
+      "relatedHeritageIds": [],
+      "relatedArtifactIds": [],
+      "createdBy": 1,
+      "createdAt": "2026-02-04T17:29:25.985Z",
+      "updatedAt": "2026-02-04T17:29:25.985Z"
+    },
+    {
+      "id": 9,
+      "title": "phần tác giả nên để cố định, chứ không thể edit được.",
+      "shortDescription": "phần tác giả nên để cố định, chứ không thể edit được.",
+      "content": "<p>phần t&aacute;c giả n&ecirc;n để cố định, chứ kh&ocirc;ng thể edit được.</p>",
+      "image": "",
+      "gallery": [],
+      "author": "Phạm Văn Tuấn",
+      "isActive": true,
+      "relatedHeritageIds": [],
+      "relatedArtifactIds": [],
+      "createdBy": 2,
+      "createdAt": "2026-02-05T17:22:39.112Z",
+      "updatedAt": "2026-02-05T17:25:34.078Z",
+      "status": "published",
+      "review_comment": null
+    },
+    {
+      "id": 10,
+      "title": "hi",
+      "shortDescription": "hi",
+      "content": "<p>hi</p>",
+      "image": "",
+      "gallery": [],
+      "publishDate": "2026-02-06T12:12:03.709Z",
+      "isActive": true,
+      "relatedHeritageIds": [],
+      "relatedArtifactIds": [],
+      "createdBy": 2,
+      "status": "pending",
+      "createdAt": "2026-02-06T12:12:14.330Z",
+      "updatedAt": "2026-02-06T12:18:54.120Z",
+      "review_comment": null
     }
   ],
   "products": [
@@ -2918,6 +3130,35 @@
       },
       "createdBy": 1,
       "status": "published"
+    },
+    {
+      "id": 5,
+      "title": "content_type",
+      "description": "content_typecontent_typecontent_typecontent_type",
+      "contentType": "article",
+      "contentUrl": "<div>\n<div>content_type\n<div>\n<div>content_type\n<div>\n<div>content_type\n<div>\n<div>content_type\n<div>\n<div>content_type</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
+      "difficulty": "easy",
+      "estimatedDuration": 30,
+      "thumbnail": "content_type",
+      "quiz": {
+        "passingScore": 50,
+        "questions": [
+          {
+            "point": 10,
+            "question": "content_type",
+            "correctAnswer": 0,
+            "options": [
+              "content_type",
+              "content_type"
+            ],
+            "id": 1770311636145
+          }
+        ]
+      },
+      "createdBy": 2,
+      "status": "pending",
+      "createdAt": "2026-02-05T17:13:56.233Z",
+      "updatedAt": "2026-02-06T13:00:07.237Z"
     }
   ],
   "user_progress": [

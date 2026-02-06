@@ -61,6 +61,16 @@ module.exports = {
     required: false,
     description: "Trạng thái phê duyệt nội dung"
   },
+  author: {
+    type: 'string',
+    required: false,
+    description: 'Tác giả (người đóng góp)'
+  },
+  publishDate: {
+    type: 'string',
+    required: false,
+    description: 'Ngày đăng'
+  },
   review_comment: {
     type: "string",
     required: false,
