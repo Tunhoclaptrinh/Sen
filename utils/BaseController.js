@@ -11,7 +11,12 @@ class BaseController {
    * Helper to apply researcher content isolation filter
    */
   applyResearcherFilter(options, req) {
-    if (req.user && req.user.role === 'researcher') {
+    // Only strictly isolate if the request is NOT searching for published content (Landing page)
+    // Or if there is an explicit context indicating Management
+    const isPublicQuery = options.filter && options.filter.status === 'published';
+    const isManagementCall = req.headers['x-context'] === 'cms' || req.query.context === 'cms';
+
+    if (req.user && req.user.role === 'researcher' && !isPublicQuery && isManagementCall) {
       options.filter = {
         ...(options.filter || {}),
         $or: [
@@ -20,6 +25,8 @@ class BaseController {
         ]
       };
     }
+    // Note: If no filter is applied, child items/lists will show everything published + researcher's own drafts 
+    // depending on other active filters (like status).
   }
 
   /**
