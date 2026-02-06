@@ -17,6 +17,26 @@ router.get('/export',
   importExportController.exportData
 );
 
+router.post('/import',
+  protect,
+  checkPermission('history_articles', 'create'),
+  importExportController.getUploadMiddleware(),
+  (req, res, next) => {
+    req.params.entity = 'history_articles';
+    next();
+  },
+  importExportController.importData
+);
+
+router.get('/template',
+  protect,
+  (req, res, next) => {
+    req.params.entity = 'history_articles';
+    next();
+  },
+  importExportController.downloadTemplate
+);
+
 // Public Routes
 router.get('/', optionalProtect, historyController.getAll);
 router.get('/stats/summary', historyController.getStats);
@@ -45,6 +65,7 @@ router.delete('/:id',
 
 // Review Routes
 router.patch('/:id/submit', protect, checkPermission('history_articles', 'update'), historyController.submitReview);
+router.patch('/:id/revert', protect, checkPermission('history_articles', 'update'), historyController.revertToDraft);
 router.patch('/:id/approve', protect, checkPermission('history_articles', 'publish'), historyController.approveReview);
 router.patch('/:id/reject', protect, checkPermission('history_articles', 'publish'), historyController.rejectReview);
 

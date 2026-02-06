@@ -56,10 +56,17 @@ class ReviewableService extends BaseService {
    */
   async approveReview(id) {
     try {
-      const result = await this.update(id, {
+      const updateData = {
         status: 'published',
         review_comment: null
-      });
+      };
+
+      // Automatically set publishDate if it exists in schema
+      if (this.schema && this.schema.publishDate) {
+        updateData.publishDate = new Date().toISOString();
+      }
+
+      const result = await this.update(id, updateData);
       return result;
     } catch (error) {
       throw error;
@@ -74,6 +81,21 @@ class ReviewableService extends BaseService {
       const result = await this.update(id, {
         status: 'rejected',
         review_comment: comment || 'Nội dung chưa đạt yêu cầu.'
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Revert item to draft status
+   */
+  async revertToDraft(id) {
+    try {
+      const result = await this.update(id, {
+        status: 'draft',
+        review_comment: null
       });
       return result;
     } catch (error) {

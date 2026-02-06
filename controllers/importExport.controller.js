@@ -42,11 +42,22 @@ class ImportExportController {
         });
       }
 
+      const options = { ...(req.body.options || {}) };
+
+      // [RBAC] Researcher: Force ownership and status
+      if (req.user && req.user.role === 'researcher') {
+        options.defaultData = {
+          ...(options.defaultData || {}),
+          createdBy: req.user.id,
+          status: 'draft'
+        };
+      }
+
       const result = await importExportService.importData(
         entityName,
         req.file.buffer,
         req.file.originalname,
-        req.body.options || {}
+        options
       );
 
       // Return partial success with errors
@@ -85,6 +96,11 @@ class ImportExportController {
         includeRelations,
         columns: req.query.columns ? req.query.columns.split(',') : null
       };
+
+      // [RBAC] Researcher: Only export own items
+      if (req.user && req.user.role === 'researcher') {
+        options.filter = { ...(options.filter || {}), createdBy: req.user.id };
+      }
 
       const buffer = await importExportService.exportData(
         entityName,

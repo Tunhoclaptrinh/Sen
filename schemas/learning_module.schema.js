@@ -13,22 +13,22 @@ module.exports = {
     maxLength: 2000,
     description: 'Mô tả bài học'
   },
-  content_type: {
+  contentType: {
     type: 'enum',
-    enum: ['video', 'article', 'quiz'],
+    enum: ['video', 'article', 'interactive', 'quiz'],
     required: false,
     default: 'article',
     description: 'Loại nội dung'
   },
-  video_url: {
+  videoUrl: {
     type: 'string',
     required: false,
     description: 'URL video (nếu có)'
   },
-  content: {
+  contentUrl: {
     type: 'string',
     required: false,
-    description: 'Nội dung chi tiết (HTML/Markdown)'
+    description: 'Nội dung chi tiết (HTML/Markdown) hoặc URL bên ngoài'
   },
   difficulty: {
     type: 'enum',
@@ -37,7 +37,7 @@ module.exports = {
     default: 'easy',
     description: 'Độ khó'
   },
-  estimated_duration: {
+  estimatedDuration: {
     type: 'number',
     required: false,
     default: 10,
@@ -59,25 +59,25 @@ module.exports = {
     required: false,
     description: 'Cấu trúc bài kiểm tra (JSON)',
     example: {
-      passing_score: 70,
+      passingScore: 70,
       questions: [
         {
           id: 1,
           question: "Câu hỏi 1?",
           options: ["A", "B", "C", "D"],
-          correct_answer: 0,
+          correctAnswer: 0,
           point: 10
         }
       ]
     }
   },
-  is_active: {
+  isActive: {
     type: 'boolean',
     required: false,
     default: true,
     description: 'Kích hoạt'
   },
-  created_by: {
+  createdBy: {
     type: 'number',
     required: false,
     foreignKey: 'users',
@@ -90,7 +90,7 @@ module.exports = {
     required: false,
     description: "Trạng thái phê duyệt"
   },
-  review_comment: {
+  reviewComment: {
     type: "string",
     required: false,
     description: "Phản hồi từ người duyệt"

@@ -6,7 +6,6 @@ const artifactController = require('../controllers/artifact.controller');
 const importExportController = require('../controllers/importExport.controller');
 
 // Export/Import (MUST come before /:id)
-// Export/Import (MUST come before /:id)
 router.get('/export',
     protect,
     checkPermission('artifacts', 'list'),
@@ -15,6 +14,26 @@ router.get('/export',
         next();
     },
     importExportController.exportData
+);
+
+router.post('/import',
+    protect,
+    checkPermission('artifacts', 'create'),
+    importExportController.getUploadMiddleware(),
+    (req, res, next) => {
+        req.params.entity = 'artifacts';
+        next();
+    },
+    importExportController.importData
+);
+
+router.get('/template',
+    protect,
+    (req, res, next) => {
+        req.params.entity = 'artifacts';
+        next();
+    },
+    importExportController.downloadTemplate
 );
 
 router.get('/', optionalProtect, artifactController.getAll);
@@ -30,6 +49,7 @@ router.delete('/:id', protect, checkPermission('artifacts', 'delete'), artifactC
 
 // Review Routes
 router.patch('/:id/submit', protect, checkPermission('artifacts', 'update'), artifactController.submitReview);
+router.patch('/:id/revert', protect, checkPermission('artifacts', 'update'), artifactController.revertToDraft);
 router.patch('/:id/approve', protect, checkPermission('artifacts', 'publish'), artifactController.approveReview);
 router.patch('/:id/reject', protect, checkPermission('artifacts', 'publish'), artifactController.rejectReview);
 

@@ -70,6 +70,33 @@ class ReviewableController extends BaseController {
       next(error);
     }
   };
+
+  /**
+   * Revert item to draft
+   */
+  revertToDraft = async (req, res, next) => {
+    try {
+      // [RBAC] Researcher: Check ownership before reverting
+      if (req.user && req.user.role === 'researcher') {
+        const itemResult = await this.service.findById(req.params.id);
+        if (itemResult.success) {
+          const item = itemResult.data;
+          const ownerId = item.createdBy || item.created_by;
+          if (ownerId && String(ownerId) !== String(req.user.id)) {
+            return res.status(403).json({
+              success: false,
+              message: 'Bạn chỉ có quyền hoàn về nháp tài nguyên do chính mình tạo.'
+            });
+          }
+        }
+      }
+
+      const result = await this.service.revertToDraft(req.params.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = ReviewableController;

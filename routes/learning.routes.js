@@ -3,6 +3,38 @@ const router = express.Router();
 const { protect, optionalProtect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const learningController = require('../controllers/learning.controller');
+const importExportController = require('../controllers/importExport.controller');
+
+// Export/Import (MUST come before /:id)
+router.get('/export',
+  protect,
+  checkPermission('learning_modules', 'list'),
+  (req, res, next) => {
+    req.params.entity = 'learning_modules';
+    next();
+  },
+  importExportController.exportData
+);
+
+router.post('/import',
+  protect,
+  checkPermission('learning_modules', 'create'),
+  importExportController.getUploadMiddleware(),
+  (req, res, next) => {
+    req.params.entity = 'learning_modules';
+    next();
+  },
+  importExportController.importData
+);
+
+router.get('/template',
+  protect,
+  (req, res, next) => {
+    req.params.entity = 'learning_modules';
+    next();
+  },
+  importExportController.downloadTemplate
+);
 
 // Public routes protected to ensure user context is available for RBAC
 router.get('/', optionalProtect, learningController.getAll);
@@ -16,6 +48,7 @@ router.delete('/:id', protect, checkPermission('learning_modules', 'delete'), le
 
 // Review Routes
 router.patch('/:id/submit', protect, checkPermission('learning_modules', 'update'), learningController.submitReview);
+router.patch('/:id/revert', protect, checkPermission('learning_modules', 'update'), learningController.revertToDraft);
 router.patch('/:id/approve', protect, checkPermission('learning_modules', 'publish'), learningController.approveReview);
 router.patch('/:id/reject', protect, checkPermission('learning_modules', 'publish'), learningController.rejectReview);
 

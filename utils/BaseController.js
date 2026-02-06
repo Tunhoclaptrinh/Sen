@@ -15,6 +15,10 @@ class BaseController {
     try {
       const options = { ...req.parsedQuery, user: req.user };
 
+      // [RBAC] Researcher: Only list own items
+      if (req.user && req.user.role === 'researcher') {
+        options.filter = { ...(options.filter || {}), createdBy: req.user.id };
+      }
 
       const result = await this.service.findAll(options);
 
@@ -43,6 +47,17 @@ class BaseController {
         });
       }
 
+      // [RBAC] Researcher: Check ownership
+      if (req.user && req.user.role === 'researcher') {
+        const item = result.data;
+        const ownerId = item.createdBy || item.created_by;
+        if (ownerId && String(ownerId) !== String(req.user.id)) {
+          return res.status(403).json({
+            success: false,
+            message: 'Bạn không có quyền xem tài nguyên này.'
+          });
+        }
+      }
 
       res.json({
         success: true,
@@ -72,7 +87,8 @@ class BaseController {
       if (!result.success) {
         return res.status(result.statusCode || 400).json({
           success: false,
-          message: result.message
+          message: result.message,
+          errors: result.errors
         });
       }
 

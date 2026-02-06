@@ -20,6 +20,26 @@ router.get('/export',
   importExportController.exportData
 );
 
+router.post('/import',
+  protect,
+  checkPermission('heritage_sites', 'create'),
+  importExportController.getUploadMiddleware(),
+  (req, res, next) => {
+    req.params.entity = 'heritage_sites';
+    next();
+  },
+  importExportController.importData
+);
+
+router.get('/template',
+  protect,
+  (req, res, next) => {
+    req.params.entity = 'heritage_sites';
+    next();
+  },
+  importExportController.downloadTemplate
+);
+
 router.get('/stats/summary', heritageSiteController.getStats);
 router.get('/:id', heritageSiteController.getById);
 router.get('/:id/artifacts', heritageSiteController.getArtifacts);
@@ -48,6 +68,7 @@ router.delete('/:id',
 
 // Review Routes
 router.patch('/:id/submit', protect, checkPermission('heritage_sites', 'update'), heritageSiteController.submitReview);
+router.patch('/:id/revert', protect, checkPermission('heritage_sites', 'update'), heritageSiteController.revertToDraft);
 router.patch('/:id/approve', protect, checkPermission('heritage_sites', 'publish'), heritageSiteController.approveReview);
 router.patch('/:id/reject', protect, checkPermission('heritage_sites', 'publish'), heritageSiteController.rejectReview);
 

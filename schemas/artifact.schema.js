@@ -39,7 +39,7 @@ module.exports = {
   },
   heritageSiteId: {
     type: "number",
-    required: true,
+    required: false,
     foreignKey: "heritage_sites",
     description: "Thuộc di sản nào",
   },
