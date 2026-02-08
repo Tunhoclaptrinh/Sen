@@ -213,8 +213,12 @@ class AIController {
    */
   clearHistory = async (req, res, next) => {
     try {
-      const { characterId } = req.query;
-      const result = await aiService.clearHistory(req.user.id, characterId ? parseInt(characterId) : null);
+      const { characterId, levelId } = req.query;
+      const result = await aiService.clearHistory(
+        req.user.id, 
+        characterId ? parseInt(characterId) : null,
+        levelId ? parseInt(levelId) : null
+      );
       res.json(result);
     } catch (error) {
       next(error);

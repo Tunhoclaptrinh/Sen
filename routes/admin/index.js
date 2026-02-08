@@ -16,5 +16,6 @@ router.use('/levels', require('./level.routes'));
 router.use('/chapters', require('./chapter.routes'));
 router.use('/characters', require('./character.routes'));
 router.use('/assets', require('./asset.routes'));
+router.use('/shop', require('./shop.routes'));
 
 module.exports = router;

@@ -8,6 +8,156 @@ class HeritageSiteService extends BaseService {
   }
 
   /**
+   * ✅ Transform heritage type: snake_case → camelCase for Frontend
+   */
+  _transformTypeForOutput(type) {
+    if (!type) return type;
+    const typeMap = {
+      'historic_building': 'historicBuilding',
+      'archaeological_site': 'archaeologicalSite',
+      'natural_heritage': 'naturalHeritage',
+      'intangible_heritage': 'intangibleHeritage'
+    };
+    return typeMap[type] || type; // Keep original if not in map (monument, temple, museum)
+  }
+
+  /**
+   * ✅ Transform heritage type: camelCase → snake_case for Database
+   */
+  _transformTypeForInput(type) {
+    if (!type) return type;
+    const typeMap = {
+      'historicBuilding': 'historic_building',
+      'archaeologicalSite': 'archaeological_site',
+      'naturalHeritage': 'natural_heritage',
+      'intangibleHeritage': 'intangible_heritage'
+    };
+    return typeMap[type] || type; // Keep original if not in map
+  }
+
+  /**
+   * Override create to add bidirectional linking
+   */
+  async create(data) {
+    // ✅ Transform type from Frontend format to DB format
+    if (data.type) {
+      data.type = this._transformTypeForInput(data.type);
+    }
+
+    const heritageSite = await super.create(data);
+
+    // ✅ Transform type back to Frontend format
+    if (heritageSite.data && heritageSite.data.type) {
+      heritageSite.data.type = this._transformTypeForOutput(heritageSite.data.type);
+    }
+
+    // 🆕 Bidirectional linking: Update Artifacts
+    if (data.relatedArtifactIds && data.relatedArtifactIds.length > 0) {
+      await this._syncArtifactLinks(heritageSite.data.id, data.relatedArtifactIds, []);
+    }
+
+    // 🆕 Bidirectional linking: Update History Articles
+    if (data.relatedHistoryIds && data.relatedHistoryIds.length > 0) {
+      await this._syncHistoryLinks(heritageSite.data.id, data.relatedHistoryIds, []);
+    }
+
+    return heritageSite;
+  }
+
+  /**
+   * Override update to sync bidirectional links
+   */
+  async update(id, data) {
+    // ✅ Transform type from Frontend format to DB format
+    if (data.type) {
+      data.type = this._transformTypeForInput(data.type);
+    }
+
+    // Get old heritage to compare links
+    const oldHeritage = await db.findById('heritage_sites', id);
+    if (!oldHeritage) {
+      return {
+        success: false,
+        message: 'Heritage site not found',
+        statusCode: 404
+      };
+    }
+
+    const updatedHeritage = await super.update(id, data);
+
+    // ✅ Transform type back to Frontend format
+    if (updatedHeritage.data && updatedHeritage.data.type) {
+      updatedHeritage.data.type = this._transformTypeForOutput(updatedHeritage.data.type);
+    }
+
+    // 🆕 Sync Artifact links
+    if (data.relatedArtifactIds !== undefined) {
+      const oldArtifactIds = oldHeritage.relatedArtifactIds || [];
+      const newArtifactIds = data.relatedArtifactIds || [];
+      await this._syncArtifactLinks(id, newArtifactIds, oldArtifactIds);
+    }
+
+    // 🆕 Sync History links
+    if (data.relatedHistoryIds !== undefined) {
+      const oldHistoryIds = oldHeritage.relatedHistoryIds || [];
+      const newHistoryIds = data.relatedHistoryIds || [];
+      await this._syncHistoryLinks(id, newHistoryIds, oldHistoryIds);
+    }
+
+    return updatedHeritage;
+  }
+
+  /**
+   * Override findById to transform type
+   */
+  async findById(id) {
+    const result = await super.findById(id);
+    if (result && result.data && result.data.type) {
+      result.data.type = this._transformTypeForOutput(result.data.type);
+    }
+    return result;
+  }
+
+  /**
+   * Override findAll to transform types in array
+   */
+  async findAll(options = {}) {
+    const result = await super.findAll(options);
+    if (result && result.data && Array.isArray(result.data)) {
+      result.data = result.data.map(item => ({
+        ...item,
+        type: this._transformTypeForOutput(item.type)
+      }));
+    }
+    return result;
+  }
+
+  /**
+   * Override delete to cleanup bidirectional links
+   */
+  async delete(id) {
+    const heritage = await db.findById('heritage_sites', id);
+    if (!heritage) {
+      return {
+        success: false,
+        message: 'Heritage site not found',
+        statusCode: 404
+      };
+    if (heritage.relatedHistoryIds && heritage.relatedHistoryIds.length > 0) {
+      await this._syncHistoryLinks(id, [], heritage.relatedHistoryIds);
+    }
+
+    }
+
+    // 🆕 Cleanup bidirectional links
+    if (heritage.relatedArtifactIds && heritage.relatedArtifactIds.length > 0) {
+      await this._syncArtifactLinks(id, [], heritage.relatedArtifactIds);
+    }
+
+    return await super.delete(id);
+  }
+
+  /**
    * Transform data before create
    */
   async beforeCreate(data) {
@@ -169,6 +319,74 @@ class HeritageSiteService extends BaseService {
       success: true,
       data: stats
     };
+  }
+
+  // 🆕 Sync bidirectional links with Artifacts
+  async _syncArtifactLinks(heritageId, newArtifactIds, oldArtifactIds) {
+    try {
+      const toAdd = newArtifactIds.filter(id => !oldArtifactIds.includes(id));
+      const toRemove = oldArtifactIds.filter(id => !newArtifactIds.includes(id));
+
+      for (const artifactId of toAdd) {
+        const artifact = await db.findById('artifacts', artifactId);
+        if (artifact) {
+          const relatedHeritages = artifact.relatedHeritageIds || [];
+          if (!relatedHeritages.includes(heritageId)) {
+            await db.update('artifacts', artifactId, {
+              relatedHeritageIds: [...relatedHeritages, heritageId]
+            });
+            console.log(`✅ Added heritage ${heritageId} to artifact ${artifactId}`);
+          }
+        }
+      }
+
+      for (const artifactId of toRemove) {
+        const artifact = await db.findById('artifacts', artifactId);
+        if (artifact && artifact.relatedHeritageIds) {
+          await db.update('artifacts', artifactId, {
+            relatedHeritageIds: artifact.relatedHeritageIds.filter(id => id !== heritageId)
+          });
+          console.log(`✅ Removed heritage ${heritageId} from artifact ${artifactId}`);
+        }
+      }
+    } catch (error) {
+      console.error('❌ Error syncing artifact links:', error);
+    }
+  }
+
+  /**
+   * 🆕 Sync bidirectional links with History Articles
+   */
+  async _syncHistoryLinks(heritageId, newHistoryIds, oldHistoryIds) {
+    try {
+      const toAdd = newHistoryIds.filter(id => !oldHistoryIds.includes(id));
+      const toRemove = oldHistoryIds.filter(id => !newHistoryIds.includes(id));
+
+      for (const historyId of toAdd) {
+        const history = await db.findById('history_articles', historyId);
+        if (history) {
+          const relatedHeritages = history.relatedHeritageIds || [];
+          if (!relatedHeritages.includes(heritageId)) {
+            await db.update('history_articles', historyId, {
+              relatedHeritageIds: [...relatedHeritages, heritageId]
+            });
+            console.log(`✅ Added heritage ${heritageId} to history ${historyId}`);
+          }
+        }
+      }
+
+      for (const historyId of toRemove) {
+        const history = await db.findById('history_articles', historyId);
+        if (history && history.relatedHeritageIds) {
+          await db.update('history_articles', historyId, {
+            relatedHeritageIds: history.relatedHeritageIds.filter(id => id !== heritageId)
+          });
+          console.log(`✅ Removed heritage ${heritageId} from history ${historyId}`);
+        }
+      }
+    } catch (error) {
+      console.error('❌ Error syncing history links:', error);
+    }
   }
 }
 

@@ -399,9 +399,10 @@ class AIService {
   /**
    * Xóa lịch sử
    */
-  async clearHistory(userId, characterId) {
+  async clearHistory(userId, characterId, levelId) {
     const query = { userId: userId };
     if (characterId) query.characterId = characterId;
+    if (levelId) query.levelId = levelId;
 
     const history = await db.findMany("ai_chat_history", query);
     for (const h of history) {
