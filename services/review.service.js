@@ -6,8 +6,14 @@ class ReviewService extends BaseService {
     super('reviews');
   }
 
+  normalizeType(type) {
+    if (type === 'heritageSite' || type === 'heritage_site') return 'heritage_site';
+    return type;
+  }
+
   async findByType(type, options = {}) {
-    if (!['heritageSite', 'artifact'].includes(type)) {
+    type = this.normalizeType(type);
+    if (!['heritage_site', 'artifact'].includes(type)) {
       return {
         success: false,
         message: 'Invalid type',
@@ -38,7 +44,8 @@ class ReviewService extends BaseService {
       total: allReviews.length,
       avgRating: parseFloat(avgRating),
       types: {
-        heritageSite: allReviews.filter(r => r.type === 'heritage_site').length,
+        heritageSite: allReviews.filter(r => r.type === 'heritage_site' || r.type === 'heritageSite').length,
+        heritage_site: allReviews.filter(r => r.type === 'heritage_site' || r.type === 'heritageSite').length,
         artifact: allReviews.filter(r => r.type === 'artifact').length
       },
       ratings: {

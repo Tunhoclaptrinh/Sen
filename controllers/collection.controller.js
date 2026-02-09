@@ -159,7 +159,7 @@ class CollectionController {
       const check = await this.service.findById(req.params.id);
       if (!check.success) return res.status(404).json(check);
 
-      if (check.data.user_id !== req.user.id) return res.status(403).json({ success: false, message: 'Not authorized' });
+      if (check.data.userId !== req.user.id) return res.status(403).json({ success: false, message: 'Not authorized' });
 
       const { itemId } = req.params;
       const { type } = req.query; // Pass type as query param: ?type=artifact
