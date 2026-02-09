@@ -8,6 +8,7 @@ class CollectionService extends BaseService {
 
     normalizeType(type) {
         if (type === 'heritageSite' || type === 'heritage_site') return 'heritage';
+        if (type === 'historyArticle' || type === 'article') return 'article';
         return type;
     }
 
@@ -49,6 +50,10 @@ class CollectionService extends BaseService {
                 details = await db.findById('heritage_sites', lookupId);
             } else if (item.type === 'artifact') {
                 details = await db.findById('artifacts', lookupId);
+            } else if (item.type === 'article') {
+                details = await db.findById('history_articles', lookupId);
+            } else if (item.type === 'exhibition') {
+                details = await db.findById('exhibitions', lookupId);
             }
 
             if (details) {
@@ -56,7 +61,7 @@ class CollectionService extends BaseService {
                     ...item,
                     details: {
                         id: details.id,
-                        name: details.name,
+                        name: details.name || details.title,
                         image: details.image || (details.images && details.images[0]) || details.thumbnail,
                         shortDescription: details.shortDescription || details.description
                     }
