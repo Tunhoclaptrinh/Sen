@@ -453,12 +453,17 @@ class GameService {
  */
   async startLevel(levelId, userId) {
 
+    console.log(`[GameService] Starting level ${levelId} for user ${userId}`);
     // Close ALL existing in_progress sessions for this level/user (not just expired ones)
     const existingSessions = await db.findMany('game_sessions', {
       levelId: levelId,
       userId: userId,
       status: 'in_progress'
     });
+
+    if (existingSessions.length > 0) {
+      console.log(`[GameService] Closing ${existingSessions.length} existing in_progress sessions`);
+    }
 
     for (const session of existingSessions) {
       await db.update('game_sessions', session.id, {
@@ -642,219 +647,240 @@ class GameService {
    * Submit answer for QUIZ screen
    */
   async submitAnswer(sessionId, userId, answerId) {
-    const session = await db.findOne('game_sessions', {
-      id: parseInt(sessionId),
-      userId: userId,
-      status: 'in_progress'
-    });
-
-    if (!session) {
-      return { success: false, message: 'Session not found', statusCode: 404 };
+    const lockKey = `session_${sessionId}`;
+    if (this.activeLocks.has(lockKey)) {
+      console.warn(`[GameService] Concurrent request blocked for session ${sessionId}`);
+      return { success: false, message: 'Request in progress', statusCode: 409 };
     }
+    this.activeLocks.add(lockKey);
 
-    // Check timeout
-    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
-    const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
-    if (Date.now() - lastActivity > SESSION_TIMEOUT) {
-      await db.update('game_sessions', session.id, {
-        status: 'expired',
-        expiredAt: new Date().toISOString()
+    try {
+      const session = await db.findOne('game_sessions', {
+        id: parseInt(sessionId),
+        userId: userId,
+        status: 'in_progress'
       });
-      return { success: false, message: 'Session expired', statusCode: 404 };
-    }
 
-    const level = await db.findById('game_levels', session.levelId);
-    const currentScreen = level.screens[session.currentScreenIndex];
-
-    if (currentScreen.type !== 'QUIZ') {
-      return { success: false, message: 'Current screen is not a quiz', statusCode: 400 };
-    }
-
-    const hasAnswered = session.answeredQuestions.some(
-      q => q.screenId === currentScreen.id
-    );
-
-    if (hasAnswered) {
-      return { success: false, message: 'Already answered this question', statusCode: 400 };
-    }
-
-    const selectedOption = currentScreen.options?.find(o => o.text === answerId);
-    if (!selectedOption) {
-      return { success: false, message: 'Invalid answer', statusCode: 400 };
-    }
-
-    const isCorrect = selectedOption.isCorrect;
-    const pointsEarned = isCorrect ? (currentScreen.reward?.points || currentScreen.points || 20) : 0;
-
-    const updatedSession = await db.update('game_sessions', sessionId, {
-      answeredQuestions: [
-        ...session.answeredQuestions,
-        {
-          screenId: currentScreen.id,
-          answer: answerId,
-          isCorrect: isCorrect,
-          points: pointsEarned,
-          answeredAt: new Date().toISOString()
-        }
-      ],
-      score: session.score + pointsEarned,
-      lastActivity: new Date().toISOString() // UPDATE LAST ACTIVITY
-    });
-
-    // TRIGGER QUEST CHECK (Quiz Success)
-    if (isCorrect) {
-      try {
-        const questService = require('./quest.service');
-        // Trigger 'perfect_quiz' if the user answers correctly. 
-        // Ideally we check if they got ALL questions right in a row, but for now, 
-        // given the simple mechanic (1 question per screen?), we verify if this success counts.
-        // If the quest requires 1 'perfect_quiz', and they passed a quiz screen, we trigger it.
-        await questService.checkAndAdvance(userId, 'perfect_quiz', 1);
-      } catch (e) {
-        console.error('Quest trigger failed', e);
+      if (!session) {
+        return { success: false, message: 'Session not found', statusCode: 404 };
       }
-    }
 
-    // TRIGGER BADGE CHECK (Quizzes Completed - Approximate as correct answers)
-    let newBadges = [];
-    if (isCorrect) {
-      try {
-        const allSessions = await db.findMany('game_sessions', { userId: userId });
-        let correctCount = 0;
-        allSessions.forEach(s => {
-          if (s.answeredQuestions) {
-            correctCount += s.answeredQuestions.filter(q => q.isCorrect).length;
-          }
+      // Check timeout
+      const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+      const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
+      if (Date.now() - lastActivity > SESSION_TIMEOUT) {
+        await db.update('game_sessions', session.id, {
+          status: 'expired',
+          expiredAt: new Date().toISOString()
         });
-        // Add current one if not yet saved/reflected (it is saved above)
-        // Actually it is saved in updatedSession, but we iterate all sessions.
-        // Simplified: just query DB.
-        const badgeResult = await badgeService.checkAndUnlock(userId, 'perfect_quiz', correctCount);
-        // Reuse 'perfect_quiz' for 'Correct Answers' count condition for now.
-        newBadges = badgeResult;
-      } catch (e) { console.error('Badge check failed', e); }
-    }
-
-    return {
-      success: true,
-      message: isCorrect ? 'Correct answer!' : 'Wrong answer',
-      data: {
-        isCorrect: isCorrect,
-        pointsEarned: pointsEarned,
-        totalScore: updatedSession.score,
-        explanation: selectedOption.explanation,
-        correctAnswer: isCorrect ? null : currentScreen.options.find(o => o.isCorrect)?.text,
-        newBadges
+        return { success: false, message: 'Session expired', statusCode: 404 };
       }
-    };
+
+      const level = await db.findById('game_levels', session.levelId);
+      const currentScreen = level.screens[session.currentScreenIndex];
+
+      if (currentScreen.type !== 'QUIZ') {
+        return { success: false, message: 'Current screen is not a quiz', statusCode: 400 };
+      }
+
+      const hasAnswered = session.answeredQuestions.some(
+        q => q.screenId === currentScreen.id
+      );
+
+      if (hasAnswered) {
+        return { success: false, message: 'Already answered this question', statusCode: 400 };
+      }
+
+      const selectedOption = currentScreen.options?.find(o => o.text === answerId);
+      if (!selectedOption) {
+        return { success: false, message: 'Invalid answer', statusCode: 400 };
+      }
+
+      const isCorrect = selectedOption.isCorrect;
+      const pointsEarned = isCorrect ? (currentScreen.reward?.points || currentScreen.points || 20) : 0;
+
+      const updatedSession = await db.update('game_sessions', sessionId, {
+        answeredQuestions: [
+          ...session.answeredQuestions,
+          {
+            screenId: currentScreen.id,
+            answer: answerId,
+            isCorrect: isCorrect,
+            points: pointsEarned,
+            answeredAt: new Date().toISOString()
+          }
+        ],
+        score: session.score + pointsEarned,
+        lastActivity: new Date().toISOString() // UPDATE LAST ACTIVITY
+      });
+
+      // TRIGGER QUEST CHECK (Quiz Success)
+      if (isCorrect) {
+        try {
+          const questService = require('./quest.service');
+          // Trigger 'perfect_quiz' if the user answers correctly. 
+          // Ideally we check if they got ALL questions right in a row, but for now, 
+          // given the simple mechanic (1 question per screen?), we verify if this success counts.
+          // If the quest requires 1 'perfect_quiz', and they passed a quiz screen, we trigger it.
+          await questService.checkAndAdvance(userId, 'perfect_quiz', 1);
+        } catch (e) {
+          console.error('Quest trigger failed', e);
+        }
+      }
+
+      // TRIGGER BADGE CHECK (Quizzes Completed - Approximate as correct answers)
+      let newBadges = [];
+      if (isCorrect) {
+        try {
+          const allSessions = await db.findMany('game_sessions', { userId: userId });
+          let correctCount = 0;
+          allSessions.forEach(s => {
+            if (s.answeredQuestions) {
+              correctCount += s.answeredQuestions.filter(q => q.isCorrect).length;
+            }
+          });
+          // Add current one if not yet saved/reflected (it is saved above)
+          // Actually it is saved in updatedSession, but we iterate all sessions.
+          // Simplified: just query DB.
+          const badgeResult = await badgeService.checkAndUnlock(userId, 'perfect_quiz', correctCount);
+          // Reuse 'perfect_quiz' for 'Correct Answers' count condition for now.
+          newBadges = badgeResult;
+        } catch (e) { console.error('Badge check failed', e); }
+      }
+
+      return {
+        success: true,
+        message: isCorrect ? 'Correct answer!' : 'Wrong answer',
+        data: {
+          isCorrect: isCorrect,
+          pointsEarned: pointsEarned,
+          totalScore: updatedSession.score,
+          explanation: selectedOption.explanation,
+          correctAnswer: isCorrect ? null : currentScreen.options.find(o => o.isCorrect)?.text,
+          newBadges
+        }
+      };
+    } finally {
+      this.activeLocks.delete(lockKey);
+    }
   }
 
   async submitTimelineOrder(sessionId, userId, eventOrder) {
-    const session = await db.findOne('game_sessions', {
-      id: parseInt(sessionId),
-      userId: userId,
-      status: 'in_progress'
-    });
-
-    if (!session) {
-      return {
-        success: false,
-        message: 'Session not found or expired',
-        statusCode: 404
-      };
+    const lockKey = `session_${sessionId}`;
+    if (this.activeLocks.has(lockKey)) {
+      return { success: false, message: 'Request in progress', statusCode: 409 };
     }
+    this.activeLocks.add(lockKey);
 
-    // CHECK SESSION TIMEOUT
-    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
-    const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
-    if (Date.now() - lastActivity > SESSION_TIMEOUT) {
-      await db.update('game_sessions', session.id, {
-        status: 'expired',
-        expiredAt: new Date().toISOString()
+    try {
+      const session = await db.findOne('game_sessions', {
+        id: parseInt(sessionId),
+        userId: userId,
+        status: 'in_progress'
       });
+
+      if (!session) {
+        return {
+          success: false,
+          message: 'Session not found or expired',
+          statusCode: 404
+        };
+      }
+
+      // CHECK SESSION TIMEOUT
+      const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+      const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
+      if (Date.now() - lastActivity > SESSION_TIMEOUT) {
+        await db.update('game_sessions', session.id, {
+          status: 'expired',
+          expiredAt: new Date().toISOString()
+        });
+        return {
+          success: false,
+          message: 'Session expired',
+          statusCode: 404
+        };
+      }
+
+      const level = await db.findById('game_levels', session.levelId);
+      const currentScreen = level.screens[session.currentScreenIndex];
+
+      // CHECK SCREEN TYPE
+      if (currentScreen.type !== 'TIMELINE') {
+        return {
+          success: false,
+          message: 'Current screen is not a timeline',
+          statusCode: 400
+        };
+      }
+
+      // GET CORRECT ORDER
+      const correctOrder = currentScreen.events
+        .sort((a, b) => a.year - b.year)
+        .map(e => e.id);
+
+      // VALIDATE ARRAY LENGTH
+      if (eventOrder.length !== correctOrder.length) {
+        return {
+          success: false,
+          message: `Timeline must have exactly ${correctOrder.length} events`,
+          statusCode: 400,
+          data: { required: correctOrder.length, received: eventOrder.length }
+        };
+      }
+
+      // VALIDATE EVENT IDs
+      const validEventIds = new Set(correctOrder);
+      const hasInvalidIds = eventOrder.some(id => !validEventIds.has(id));
+
+      if (hasInvalidIds) {
+        return {
+          success: false,
+          message: 'Invalid event IDs in timeline order',
+          statusCode: 400
+        };
+      }
+
+      // CHECK CORRECT ORDER
+      const isCorrect = JSON.stringify(eventOrder) === JSON.stringify(correctOrder);
+
+      // SAVE ORDER (even if wrong for retry)
+      await db.update('game_sessions', session.id, {
+        timelineOrder: eventOrder,
+        lastActivity: new Date().toISOString()
+      });
+
+      if (!isCorrect) {
+        return {
+          success: false,
+          message: 'Timeline order is incorrect. Please try again.',
+          statusCode: 400,
+          data: {
+            isCorrect: false,
+            hint: 'Check the years of each event carefully'
+            // ❌ DON'T reveal correctOrder in production
+          }
+        };
+      }
+
+      // ADD POINTS IF CORRECT
+      const pointsEarned = currentScreen.reward?.points || currentScreen.points || 20;
+      await db.update('game_sessions', session.id, {
+        score: session.score + pointsEarned
+      });
+
       return {
-        success: false,
-        message: 'Session expired',
-        statusCode: 404
-      };
-    }
-
-    const level = await db.findById('game_levels', session.levelId);
-    const currentScreen = level.screens[session.currentScreenIndex];
-
-    // CHECK SCREEN TYPE
-    if (currentScreen.type !== 'TIMELINE') {
-      return {
-        success: false,
-        message: 'Current screen is not a timeline',
-        statusCode: 400
-      };
-    }
-
-    // GET CORRECT ORDER
-    const correctOrder = currentScreen.events
-      .sort((a, b) => a.year - b.year)
-      .map(e => e.id);
-
-    // VALIDATE ARRAY LENGTH
-    if (eventOrder.length !== correctOrder.length) {
-      return {
-        success: false,
-        message: `Timeline must have exactly ${correctOrder.length} events`,
-        statusCode: 400,
-        data: { required: correctOrder.length, received: eventOrder.length }
-      };
-    }
-
-    // VALIDATE EVENT IDs
-    const validEventIds = new Set(correctOrder);
-    const hasInvalidIds = eventOrder.some(id => !validEventIds.has(id));
-
-    if (hasInvalidIds) {
-      return {
-        success: false,
-        message: 'Invalid event IDs in timeline order',
-        statusCode: 400
-      };
-    }
-
-    // CHECK CORRECT ORDER
-    const isCorrect = JSON.stringify(eventOrder) === JSON.stringify(correctOrder);
-
-    // SAVE ORDER (even if wrong for retry)
-    await db.update('game_sessions', session.id, {
-      timelineOrder: eventOrder,
-      lastActivity: new Date().toISOString()
-    });
-
-    if (!isCorrect) {
-      return {
-        success: false,
-        message: 'Timeline order is incorrect. Please try again.',
-        statusCode: 400,
+        success: true,
+        message: 'Timeline order is correct!',
         data: {
-          isCorrect: false,
-          hint: 'Check the years of each event carefully'
-          // ❌ DON'T reveal correctOrder in production
+          isCorrect: true,
+          pointsEarned,
+          totalScore: session.score + pointsEarned
         }
       };
+    } finally {
+      this.activeLocks.delete(lockKey);
     }
-
-    // ADD POINTS IF CORRECT
-    const pointsEarned = currentScreen.reward?.points || currentScreen.points || 20;
-    await db.update('game_sessions', session.id, {
-      score: session.score + pointsEarned
-    });
-
-    return {
-      success: true,
-      message: 'Timeline order is correct!',
-      data: {
-        isCorrect: true,
-        pointsEarned,
-        totalScore: session.score + pointsEarned
-      }
-    };
   }
 
   /**
@@ -862,128 +888,138 @@ class GameService {
    */
 
   async navigateToNextScreen(sessionId, userId) {
-    const session = await db.findOne('game_sessions', {
-      id: parseInt(sessionId),
-      userId: userId,
-      status: 'in_progress'
-    });
-
-    if (!session) {
-      return {
-        success: false,
-        message: 'Session not found or expired',
-        statusCode: 404
-      };
+    const lockKey = `session_${sessionId}`;
+    if (this.activeLocks.has(lockKey)) {
+      return { success: false, message: 'Request in progress', statusCode: 409 };
     }
+    this.activeLocks.add(lockKey);
 
-    // CHECK SESSION TIMEOUT
-    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
-    const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
-    if (Date.now() - lastActivity > SESSION_TIMEOUT) {
-      await db.update('game_sessions', session.id, {
-        status: 'expired',
-        expiredAt: new Date().toISOString()
+    try {
+      const session = await db.findOne('game_sessions', {
+        id: parseInt(sessionId),
+        userId: userId,
+        status: 'in_progress'
       });
-      return {
-        success: false,
-        message: 'Session expired',
-        statusCode: 404
-      };
-    }
 
-    const level = await db.findById('game_levels', session.levelId);
-    const currentScreen = level.screens[session.currentScreenIndex];
-
-    // Validate screen completion - Check if can proceed (completed current screen requirements)
-    const canProceed = this.validateScreenCompletion(currentScreen, session, level);
-    if (!canProceed.success) {
-      return canProceed;
-    }
-
-    // Find next screen
-    let nextScreenIndex = session.currentScreenIndex + 1;
-
-    // Check if has custom nextScreenId
-    if (currentScreen.nextScreenId) {
-      nextScreenIndex = level.screens.findIndex(s => s.id === currentScreen.nextScreenId);
-      if (nextScreenIndex === -1) {
+      if (!session) {
         return {
           success: false,
-          message: 'Invalid next_screen_id configuration',
-          statusCode: 500
+          message: 'Session not found or expired',
+          statusCode: 404
         };
       }
-    }
 
-    // ⚡ Calculate points for completing the CURRENT screen (e.g. passive screens like Video/Image)
-    // Only if points are defined and NOT already awarded (like Quiz/HiddenObject/Timeline which use submit endpoints)
-    let pointsToAdd = 0;
-    if (['DIALOGUE', 'VIDEO', 'IMAGE_VIEWER'].includes(currentScreen.type)) {
-      // Default 10 points for watching/reading if not specified
-      pointsToAdd = currentScreen.reward?.points || currentScreen.points || 10;
-
-      // Prevent farming: Check if screen already in completedScreens
-      if (session.completedScreens.includes(currentScreen.id)) {
-        pointsToAdd = 0;
+      // CHECK SESSION TIMEOUT
+      const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+      const lastActivity = new Date(session.lastActivity || session.startedAt).getTime();
+      if (Date.now() - lastActivity > SESSION_TIMEOUT) {
+        await db.update('game_sessions', session.id, {
+          status: 'expired',
+          expiredAt: new Date().toISOString()
+        });
+        return {
+          success: false,
+          message: 'Session expired',
+          statusCode: 404
+        };
       }
-    }
 
-    // Check if level finished
-    if (nextScreenIndex >= level.screens.length) {
-      // ⚡ Update session with final points BEFORE finishing
-      // Ensure we add the current screen to completed_screens too
-      await db.update('game_sessions', session.id, {
-        score: session.score + pointsToAdd,
+      const level = await db.findById('game_levels', session.levelId);
+      const currentScreen = level.screens[session.currentScreenIndex];
+
+      // Validate screen completion - Check if can proceed (completed current screen requirements)
+      const canProceed = this.validateScreenCompletion(currentScreen, session, level);
+      if (!canProceed.success) {
+        return canProceed;
+      }
+
+      // Find next screen
+      let nextScreenIndex = session.currentScreenIndex + 1;
+
+      // Check if has custom nextScreenId
+      if (currentScreen.nextScreenId) {
+        nextScreenIndex = level.screens.findIndex(s => s.id === currentScreen.nextScreenId);
+        if (nextScreenIndex === -1) {
+          return {
+            success: false,
+            message: 'Invalid next_screen_id configuration',
+            statusCode: 500
+          };
+        }
+      }
+
+      // ⚡ Calculate points for completing the CURRENT screen (e.g. passive screens like Video/Image)
+      // Only if points are defined and NOT already awarded (like Quiz/HiddenObject/Timeline which use submit endpoints)
+      let pointsToAdd = 0;
+      if (['DIALOGUE', 'VIDEO', 'IMAGE_VIEWER'].includes(currentScreen.type)) {
+        // Default 10 points for watching/reading if not specified
+        pointsToAdd = currentScreen.reward?.points || currentScreen.points || 10;
+
+        // Prevent farming: Check if screen already in completedScreens
+        if (session.completedScreens.includes(currentScreen.id)) {
+          pointsToAdd = 0;
+        }
+      }
+
+      // Check if level finished
+      if (nextScreenIndex >= level.screens.length) {
+        // ⚡ Update session with final points BEFORE finishing
+        // Ensure we add the current screen to completed_screens too
+        await db.update('game_sessions', session.id, {
+          score: session.score + pointsToAdd,
+          completedScreens: [...session.completedScreens, currentScreen.id],
+          lastActivity: new Date().toISOString()
+        });
+
+        // Auto complete level
+        return {
+          success: true,
+          message: 'Level completed. Please call completeLevel endpoint.',
+          data: {
+            levelFinished: true,
+            finalScore: session.score + pointsToAdd,
+            pointsEarned: pointsToAdd
+          }
+        };
+      }
+
+      const nextScreen = level.screens[nextScreenIndex];
+
+      // Update session - reset collectedItems for new screen
+      const updatedSession = await db.update('game_sessions', session.id, {
+        currentScreenId: nextScreen.id,
+        currentScreenIndex: nextScreenIndex,
         completedScreens: [...session.completedScreens, currentScreen.id],
-        lastActivity: new Date().toISOString()
+        score: session.score + pointsToAdd,
+        collectedItems: [], // Reset for new screen
+        lastActivity: new Date().toISOString() // ⚡ UPDATE LAST ACTIVITY
       });
 
-      // Auto complete level
       return {
         success: true,
-        message: 'Level completed. Please call completeLevel endpoint.',
+        message: 'Navigated to next screen',
         data: {
-          levelFinished: true,
-          finalScore: session.score + pointsToAdd,
+          sessionId: session.id,
+          currentScreen: this.enrichScreen(
+            nextScreen,
+            updatedSession,
+            nextScreenIndex,
+            level.screens.length,
+            level
+          ),
+          progress: {
+            completedScreens: updatedSession.completedScreens.length,
+            totalScreens: level.screens.length,
+            percentage: Math.round(
+              (updatedSession.completedScreens.length / level.screens.length) * 100
+            )
+          },
           pointsEarned: pointsToAdd
         }
       };
+    } finally {
+      this.activeLocks.delete(lockKey);
     }
-
-    const nextScreen = level.screens[nextScreenIndex];
-
-    // Update session - reset collectedItems for new screen
-    const updatedSession = await db.update('game_sessions', session.id, {
-      currentScreenId: nextScreen.id,
-      currentScreenIndex: nextScreenIndex,
-      completedScreens: [...session.completedScreens, currentScreen.id],
-      score: session.score + pointsToAdd,
-      collectedItems: [], // Reset for new screen
-      lastActivity: new Date().toISOString() // ⚡ UPDATE LAST ACTIVITY
-    });
-
-    return {
-      success: true,
-      message: 'Navigated to next screen',
-      data: {
-        sessionId: session.id,
-        currentScreen: this.enrichScreen(
-          nextScreen,
-          updatedSession,
-          nextScreenIndex,
-          level.screens.length,
-          level
-        ),
-        progress: {
-          completedScreens: updatedSession.completedScreens.length,
-          totalScreens: level.screens.length,
-          percentage: Math.round(
-            (updatedSession.completedScreens.length / level.screens.length) * 100
-          )
-        },
-        pointsEarned: pointsToAdd
-      }
-    };
   }
 
   /**
@@ -1079,44 +1115,207 @@ class GameService {
   }
 
   async completeLevel(levelId, userId, { score, timeSpent } = {}) {
-
-
-    const session = await db.findOne('game_sessions', {
-      levelId: levelId,
-      userId: userId,
-      status: 'in_progress'
-    });
-
-    if (!session) {
-      return { success: false, message: 'No active session', statusCode: 404 };
+    const lockKey = `complete_${userId}_${levelId}`;
+    if (this.activeLocks.has(lockKey)) {
+      return { success: false, message: 'Request in progress', statusCode: 409 };
     }
+    this.activeLocks.add(lockKey);
 
-    const level = await db.findById('game_levels', levelId);
-    const progress = await db.findOne('game_progress', { userId: userId });
+    let newBadges = []; // Moved outside to avoid scoping error
 
-    // ✅ SHARED SCORE CALCULATION
-    const timeBonus = this.calculateTimeBonus(timeSpent || session.timeSpent, level.timeLimit);
-    const hintPenalty = session.hintsUsed * 5;
-    const finalScore = Math.max(0, session.score + timeBonus - hintPenalty);
+    try {
 
-    // Calculate passing threshold based on percentage
-    const maxPotentialScore = this.calculateMaxPotentialScore(level);
-    const passingThreshold = Math.ceil((maxPotentialScore * (level.passingScore || 70)) / 100);
-    const passed = finalScore >= passingThreshold;
 
-    // ✅ UPDATE SESSION STATUS
-    await db.update('game_sessions', session.id, {
-      status: 'completed',
-      score: finalScore,
-      completedAt: new Date().toISOString()
-    });
+      const session = await db.findOne('game_sessions', {
+        levelId: levelId,
+        userId: userId,
+        status: 'in_progress'
+      });
 
-    if (!passed) {
+      if (!session) {
+        return { success: false, message: 'No active session', statusCode: 404 };
+      }
+
+      const level = await db.findById('game_levels', levelId);
+      const progress = await db.findOne('game_progress', { userId: userId });
+
+      // ✅ SHARED SCORE CALCULATION
+      const timeBonus = this.calculateTimeBonus(timeSpent || session.timeSpent, level.timeLimit);
+      const hintPenalty = session.hintsUsed * 5;
+      const finalScore = Math.max(0, session.score + timeBonus - hintPenalty);
+
+      // Calculate passing threshold based on percentage
+      const maxPotentialScore = this.calculateMaxPotentialScore(level);
+      const passingThreshold = Math.ceil((maxPotentialScore * (level.passingScore || 70)) / 100);
+      const passed = finalScore >= passingThreshold;
+
+      // ✅ UPDATE SESSION STATUS
+      await db.update('game_sessions', session.id, {
+        status: 'completed',
+        score: finalScore,
+        completedAt: new Date().toISOString()
+      });
+
+      if (!passed) {
+        return {
+          success: true,
+          message: 'Level completed but not passed',
+          data: {
+            passed: false,
+            score: finalScore,
+            breakdown: {
+              baseScore: session.score,
+              timeBonus: timeBonus,
+              hintPenalty: hintPenalty
+            },
+            requiredScore: passingThreshold,
+            maxPotentialScore: maxPotentialScore,
+            passingPercentage: level.passingScore || 70,
+            canRetry: true
+          }
+        };
+      }
+
+      // ✅ CALCULATE NEXT LEVEL (For both first-time and replay)
+      let nextLevelId = null;
+      try {
+        const allLevels = await db.findAll('game_levels');
+        const currentLevel = allLevels.find(l => l.id === parseInt(levelId));
+
+        if (currentLevel) {
+          const sameChapterLevels = allLevels.filter(l => l.chapterId === currentLevel.chapterId)
+            .sort((a, b) => a.order - b.order);
+          const currentIndex = sameChapterLevels.findIndex(l => l.id === parseInt(levelId));
+
+          if (currentIndex !== -1 && currentIndex < sameChapterLevels.length - 1) {
+            nextLevelId = sameChapterLevels[currentIndex + 1].id;
+          } else {
+            // Check next chapter
+            const allChapters = await db.findAll('game_chapters');
+            allChapters.sort((a, b) => a.order - b.order);
+            const currentChapterIndex = allChapters.findIndex(c => c.id === currentLevel.chapterId);
+
+            if (currentChapterIndex !== -1 && currentChapterIndex < allChapters.length - 1) {
+              const nextChapter = allChapters[currentChapterIndex + 1];
+              const nextChapterLevels = allLevels.filter(l => l.chapterId === nextChapter.id)
+                .sort((a, b) => a.order - b.order);
+              if (nextChapterLevels.length > 0) {
+                nextLevelId = nextChapterLevels[0].id;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Error calculating next level:', err);
+      }
+
+      // ✅ CHECK REWARDS (Only for first time)
+      const alreadyCompleted = progress.completedLevels.includes(parseInt(levelId));
+      let rewardsData = null;
+      let newTotals = null;
+
+      if (!alreadyCompleted) {
+        const rewards = level.rewards || {};
+        const newPetals = progress.totalSenPetals + (rewards.petals || 1);
+        const newCoins = progress.coins + (rewards.coins || 50);
+        const levelIdInt = parseInt(levelId);
+        const newCompleted = [...progress.completedLevels, levelIdInt];
+        let newCharacters = [...progress.collectedCharacters];
+        if (rewards.character && !newCharacters.includes(rewards.character)) {
+          newCharacters.push(rewards.character);
+        }
+
+        const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
+        // Kiểm tra xem tất cả level trong chapter đã có trong danh sách hoàn thành chưa
+        const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
+
+        let finishedChapters = [...(progress.finishedChapters || [])];
+        if (allCompleted && !finishedChapters.includes(level.chapterId)) {
+          finishedChapters.push(level.chapterId);
+        }
+
+        // Update Progress
+        await db.update('game_progress', progress.id, {
+          completedLevels: newCompleted,
+          totalSenPetals: newPetals,
+          totalPoints: progress.totalPoints + finalScore,
+          coins: newCoins,
+          collectedCharacters: newCharacters,
+          finishedChapters: finishedChapters
+        });
+
+        // TRIGGER BADGE CHECK (Level Reached & Level Up)
+        // Calculate Level based on Total Points (e.g. 1000 points = 1 level)
+        const newTotalPoints = progress.totalPoints + finalScore;
+        const calculatedLevel = Math.floor(newTotalPoints / 1000) + 1;
+
+        if (calculatedLevel > progress.level) {
+          // Level Up!
+          await db.update('game_progress', progress.id, { level: calculatedLevel });
+          try {
+            const badgeResult = await badgeService.checkAndUnlock(userId, 'level_reached', calculatedLevel);
+            newBadges = badgeResult;
+          } catch (e) { console.error('Badge check failed', e); }
+        }
+
+        rewardsData = {
+          petals: rewards.petals || 1,
+          coins: rewards.coins || 50,
+          character: rewards.character || null
+        };
+
+        newTotals = {
+          petals: newPetals,
+          points: progress.totalPoints + finalScore,
+          coins: newCoins
+        };
+      }
+
+      // TRIGGER QUESTS
+      try {
+        const questService = require('./quest.service');
+
+        // 1. Trigger Level Complete Quest
+        await questService.checkAndAdvance(userId, 'complete_level', 1);
+
+        // 2. Trigger Chapter Complete Quest
+        const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
+
+        // Use the potentially updated list from above if available, otherwise fetch
+        // Note: 'newCompleted' is only defined inside the if (!alreadyCompleted) block above.
+        // We must reconstruct the reliable list.
+
+        let effectiveCompletedIds = [];
+        if (!alreadyCompleted) {
+          // If we just completed it, we calculated newCompleted above but it's scoped.
+          // Re-calculate or fetch and append.
+          // Better: Use currentProgress fetch but FORCE add the current level if missing.
+          const currentProgress = await db.findOne('game_progress', { userId: userId });
+          effectiveCompletedIds = currentProgress?.completedLevels || [];
+          if (!effectiveCompletedIds.includes(parseInt(levelId))) {
+            effectiveCompletedIds.push(parseInt(levelId));
+          }
+        } else {
+          // Already completed, just verify
+          const currentProgress = await db.findOne('game_progress', { userId: userId });
+          effectiveCompletedIds = currentProgress?.completedLevels || [];
+        }
+
+        const isChapterDone = chapterLevels.every(l => effectiveCompletedIds.includes(l.id));
+
+        if (isChapterDone) {
+          console.log(`[GameService] Chapter ${level.chapterId} complete for user ${userId}. Triggering quest.`);
+          await questService.checkAndAdvance(userId, 'complete_chapter', 1);
+        }
+      } catch (e) {
+        console.error('Quest trigger failed', e);
+      }
+
       return {
         success: true,
-        message: 'Level completed but not passed',
+        message: alreadyCompleted ? 'Level completed (Revision mode)' : 'Level completed successfully!',
         data: {
-          passed: false,
+          passed: true,
           score: finalScore,
           breakdown: {
             baseScore: session.score,
@@ -1126,169 +1325,16 @@ class GameService {
           requiredScore: passingThreshold,
           maxPotentialScore: maxPotentialScore,
           passingPercentage: level.passingScore || 70,
-          canRetry: true
+          nextLevelId: nextLevelId,
+          rewards: rewardsData, // null if revision
+          newTotals: newTotals, // null if revision
+          isCompleted: alreadyCompleted,
+          newBadges: newBadges || []
         }
       };
+    } finally {
+      this.activeLocks.delete(lockKey);
     }
-
-    // ✅ CALCULATE NEXT LEVEL (For both first-time and replay)
-    let nextLevelId = null;
-    try {
-      const allLevels = await db.findAll('game_levels');
-      const currentLevel = allLevels.find(l => l.id === parseInt(levelId));
-
-      if (currentLevel) {
-        const sameChapterLevels = allLevels.filter(l => l.chapterId === currentLevel.chapterId)
-          .sort((a, b) => a.order - b.order);
-        const currentIndex = sameChapterLevels.findIndex(l => l.id === parseInt(levelId));
-
-        if (currentIndex !== -1 && currentIndex < sameChapterLevels.length - 1) {
-          nextLevelId = sameChapterLevels[currentIndex + 1].id;
-        } else {
-          // Check next chapter
-          const allChapters = await db.findAll('game_chapters');
-          allChapters.sort((a, b) => a.order - b.order);
-          const currentChapterIndex = allChapters.findIndex(c => c.id === currentLevel.chapterId);
-
-          if (currentChapterIndex !== -1 && currentChapterIndex < allChapters.length - 1) {
-            const nextChapter = allChapters[currentChapterIndex + 1];
-            const nextChapterLevels = allLevels.filter(l => l.chapterId === nextChapter.id)
-              .sort((a, b) => a.order - b.order);
-            if (nextChapterLevels.length > 0) {
-              nextLevelId = nextChapterLevels[0].id;
-            }
-          }
-        }
-      }
-    } catch (err) {
-      console.error('Error calculating next level:', err);
-    }
-
-    // ✅ CHECK REWARDS (Only for first time)
-    const alreadyCompleted = progress.completedLevels.includes(parseInt(levelId));
-    let rewardsData = null;
-    let newTotals = null;
-
-    if (!alreadyCompleted) {
-      const rewards = level.rewards || {};
-      const newPetals = progress.totalSenPetals + (rewards.petals || 1);
-      const newCoins = progress.coins + (rewards.coins || 50);
-      const levelIdInt = parseInt(levelId);
-      const newCompleted = [...progress.completedLevels, levelIdInt];
-      let newCharacters = [...progress.collectedCharacters];
-      if (rewards.character && !newCharacters.includes(rewards.character)) {
-        newCharacters.push(rewards.character);
-      }
-
-      const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
-      // Kiểm tra xem tất cả level trong chapter đã có trong danh sách hoàn thành chưa
-      const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
-
-      let finishedChapters = [...(progress.finishedChapters || [])];
-      if (allCompleted && !finishedChapters.includes(level.chapterId)) {
-        finishedChapters.push(level.chapterId);
-      }
-
-      // Update Progress
-      await db.update('game_progress', progress.id, {
-        completedLevels: newCompleted,
-        totalSenPetals: newPetals,
-        totalPoints: progress.totalPoints + finalScore,
-        coins: newCoins,
-        collectedCharacters: newCharacters,
-        finishedChapters: finishedChapters
-      });
-
-      // TRIGGER BADGE CHECK (Level Reached & Level Up)
-      // Calculate Level based on Total Points (e.g. 1000 points = 1 level)
-      const newTotalPoints = progress.totalPoints + finalScore;
-      const calculatedLevel = Math.floor(newTotalPoints / 1000) + 1;
-
-      let newBadges = [];
-      if (calculatedLevel > progress.level) {
-        // Level Up!
-        await db.update('game_progress', progress.id, { level: calculatedLevel });
-        try {
-          const badgeResult = await badgeService.checkAndUnlock(userId, 'level_reached', calculatedLevel);
-          newBadges = badgeResult;
-        } catch (e) { console.error('Badge check failed', e); }
-      }
-
-      rewardsData = {
-        petals: rewards.petals || 1,
-        coins: rewards.coins || 50,
-        character: rewards.character || null
-      };
-
-      newTotals = {
-        petals: newPetals,
-        points: progress.totalPoints + finalScore,
-        coins: newCoins
-      };
-    }
-
-    // TRIGGER QUESTS
-    try {
-      const questService = require('./quest.service');
-
-      // 1. Trigger Level Complete Quest
-      await questService.checkAndAdvance(userId, 'complete_level', 1);
-
-      // 2. Trigger Chapter Complete Quest
-      const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
-
-      // Use the potentially updated list from above if available, otherwise fetch
-      // Note: 'newCompleted' is only defined inside the if (!alreadyCompleted) block above.
-      // We must reconstruct the reliable list.
-
-      let effectiveCompletedIds = [];
-      if (!alreadyCompleted) {
-        // If we just completed it, we calculated newCompleted above but it's scoped.
-        // Re-calculate or fetch and append.
-        // Better: Use currentProgress fetch but FORCE add the current level if missing.
-        const currentProgress = await db.findOne('game_progress', { userId: userId });
-        effectiveCompletedIds = currentProgress?.completedLevels || [];
-        if (!effectiveCompletedIds.includes(parseInt(levelId))) {
-          effectiveCompletedIds.push(parseInt(levelId));
-        }
-      } else {
-        // Already completed, just verify
-        const currentProgress = await db.findOne('game_progress', { userId: userId });
-        effectiveCompletedIds = currentProgress?.completedLevels || [];
-      }
-
-      const isChapterDone = chapterLevels.every(l => effectiveCompletedIds.includes(l.id));
-
-      if (isChapterDone) {
-        console.log(`[GameService] Chapter ${level.chapterId} complete for user ${userId}. Triggering quest.`);
-        await questService.checkAndAdvance(userId, 'complete_chapter', 1);
-      }
-    } catch (e) {
-      console.error('Quest trigger failed', e);
-    }
-
-    return {
-      success: true,
-      message: alreadyCompleted ? 'Level completed (Revision mode)' : 'Level completed successfully!',
-      data: {
-        passed: true,
-        score: finalScore,
-        breakdown: {
-          baseScore: session.score,
-          timeBonus: timeBonus,
-          hintPenalty: hintPenalty
-        },
-        requiredScore: passingThreshold,
-        maxPotentialScore: maxPotentialScore,
-        passingPercentage: level.passingScore || 70,
-        nextLevelId: nextLevelId,
-        rewards: rewardsData, // null if revision
-        newTotals: newTotals, // null if revision
-        newTotals: newTotals, // null if revision
-        isCompleted: alreadyCompleted,
-        newBadges: newBadges || []
-      }
-    };
   }
 
   calculateTimeBonus(timeSpent, timeLimit) {
