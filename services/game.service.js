@@ -141,6 +141,38 @@ class GameService {
 
 
 
+  /**
+   * Tính toán hạng dựa trên điểm số
+   */
+  calculateRank(points) {
+    const ranks = [
+      { name: 'Tập Sự', minPoints: 0, nextRankPoints: 500, icon: '🏆' },
+      { name: 'Khám Phá', minPoints: 500, nextRankPoints: 1500, icon: '🏆' },
+      { name: 'Chinh Phục', minPoints: 1500, nextRankPoints: 3000, icon: '🏆' },
+      { name: 'Đại Sứ', minPoints: 3000, nextRankPoints: Infinity, icon: '🏆' }
+    ];
+
+    const currentRank = [...ranks].reverse().find(r => points >= r.minPoints) || ranks[0];
+    const nextRank = ranks[ranks.indexOf(currentRank) + 1] || null;
+
+    let progressPercent = 0;
+    if (nextRank) {
+      const range = nextRank.minPoints - currentRank.minPoints;
+      const earnedInRange = points - currentRank.minPoints;
+      progressPercent = Math.min(Math.round((earnedInRange / range) * 100), 100);
+    } else {
+      progressPercent = 100;
+    }
+
+    return {
+      currentRank: currentRank.name,
+      rankIcon: currentRank.icon,
+      nextRankName: nextRank ? nextRank.name : null,
+      pointsToNextRank: nextRank ? nextRank.minPoints - points : 0,
+      progressPercent
+    };
+  }
+
   // ==================== PROGRESS & STATS ====================
 
   /**
@@ -159,10 +191,13 @@ class GameService {
     const allLevels = await db.findAll('game_levels');
     const totalLevels = allLevels.length;
 
+    const rankInfo = this.calculateRank(progress.totalPoints || 0);
+
     return {
       success: true,
       data: {
         ...progress,
+        ...rankInfo,
         stats: {
           completionRate: totalLevels > 0 ? Math.round((progress.completedLevels.length / totalLevels) * 100) : 0,
           chaptersUnlocked: progress.unlockedChapters.length,
