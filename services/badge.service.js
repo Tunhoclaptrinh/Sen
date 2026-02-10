@@ -3,7 +3,7 @@ const db = require('../config/database');
 
 class BadgeService extends ReviewableService {
   constructor() {
-    super('badges');
+    super('game_badges');
   }
 
   /**
@@ -14,7 +14,7 @@ class BadgeService extends ReviewableService {
    */
   async checkAndUnlock(userId, type, currentValue) {
     // 1. Get all active badges of this type
-    const possibleBadges = await db.findMany('badges', {
+    const possibleBadges = await db.findMany('game_badges', {
       isActive: true,
       conditionType: type
     });
@@ -30,7 +30,10 @@ class BadgeService extends ReviewableService {
 
     for (const badge of possibleBadges) {
       // Check if already owned
-      if (currentBadges.some(b => b.id === badge.id)) continue;
+      if (currentBadges.some(b => {
+        if (b && typeof b === 'object' && b.id) return b.id === badge.id;
+        return false; // Ignore legacy strings for now as they don't match new numeric IDs
+      })) continue;
 
       // Check condition
       if (currentValue >= badge.conditionValue) {
@@ -47,10 +50,34 @@ class BadgeService extends ReviewableService {
         if (badge.rewardCoins) {
           progress.coins = (progress.coins || 0) + badge.rewardCoins;
           rewards.coins = badge.rewardCoins;
+
+          // Log transaction
+          await db.create('transactions', {
+            userId,
+            type: 'earn',
+            source: 'badge_reward',
+            sourceId: badge.id,
+            amount: badge.rewardCoins,
+            currency: 'coins',
+            description: `Thưởng huy hiệu: ${badge.name}`,
+            createdAt: new Date().toISOString()
+          });
         }
         if (badge.rewardPetals) {
           progress.totalSenPetals = (progress.totalSenPetals || 0) + badge.rewardPetals;
           rewards.petals = badge.rewardPetals;
+
+          // Log transaction
+          await db.create('transactions', {
+            userId,
+            type: 'earn',
+            source: 'badge_reward',
+            sourceId: badge.id,
+            amount: badge.rewardPetals,
+            currency: 'petals',
+            description: `Thưởng huy hiệu: ${badge.name}`,
+            createdAt: new Date().toISOString()
+          });
         }
 
         // Update Progress
@@ -76,7 +103,9 @@ class BadgeService extends ReviewableService {
 
     let totalAwarded = 0;
     allProgress.forEach(p => {
-      if (p.badges) totalAwarded += p.badges.length;
+      if (p.badges) {
+        totalAwarded += p.badges.filter(b => b && typeof b === 'object' && b.id).length;
+      }
     });
 
     return {

@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const DB_FILE = path.join(__dirname, '../database/db.json');
+const DB_FILE = path.resolve(__dirname, '../database/db.json');
+console.log('DB Path:', DB_FILE); // Debug log
 
 class JsonAdapter {
   constructor() {

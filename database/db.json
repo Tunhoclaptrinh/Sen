@@ -81,30 +81,7 @@
       "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
-  "user_inventory": [
-    {
-      "id": 1,
-      "userId": 3,
-      "items": [
-        {
-          "itemId": 3,
-          "quantity": 1,
-          "acquiredAt": "2026-01-28T16:27:51.408Z"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "userId": 3,
-      "items": [
-        {
-          "itemId": 3,
-          "quantity": 1,
-          "acquiredAt": "2026-02-02T17:24:28.939Z"
-        }
-      ]
-    }
-  ],
+  "user_inventory": [],
   "users": [
     {
       "id": 1,
@@ -135,7 +112,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-02-03T08:17:15.562Z"
+      "lastLogin": "2026-02-10T04:13:39.927Z"
     },
     {
       "id": 4,
@@ -279,7 +256,7 @@
       "description": "<p>Thương cảng Hội An được h&igrave;nh th&agrave;nh khoảng khoảng thế kỷ XV - XVI, thịnh đạt trong thế kỷ XVII - XVIII, nhưng trước đ&oacute; rất l&acirc;u, v&ugrave;ng đất Hội An đ&atilde; nằm trong địa b&agrave;n ph&acirc;n bố của văn h&oacute;a tiền Sa Huỳnh, Sa Huỳnh v&agrave; c&ograve;n l&agrave; một cảng thị trọng yếu của Chămpa (từ thế kỷ II - XV). Từ khoảng cuối thế kỷ XV, khu vực Hội An đ&atilde; c&oacute; d&acirc;n cư Đại Việt tới sinh sống, lập l&agrave;ng, người Việt đ&atilde; s&aacute;ng tạo ra nhiều ng&agrave;nh nghề ph&ugrave; hợp với điều kiện tự nhi&ecirc;n v&agrave; x&atilde; hội nơi đ&acirc;y. Cuối thế kỷ XVI - XVII, người Hoa v&agrave; người Nhật đ&atilde; đến đ&acirc;y định cư, gi&uacute;p cho hoạt động thương nghiệp ở Hội An ph&aacute;t triển mạnh. Với vị tr&iacute; địa l&yacute; thuận lợi cũng như bối cảnh kinh tế, x&atilde; hội, văn h&oacute;a Đ&agrave;ng Trong ph&aacute;t triển tương đối ổn định, Hội An nhanh ch&oacute;ng trở th&agrave;nh đ&ocirc; thị/thương cảng phồn thịnh trong nhiều thế kỷ.</p>\n<p>Những di t&iacute;ch kiến tr&uacute;c trong phố cổ Hội An đều mang đậm dấu ấn xưa cũ vốn c&oacute;. Kiểu nh&agrave; ở phổ biến nhất trong khu vực n&agrave;y thường c&oacute; mặt bằng dạng h&igrave;nh ống, c&aacute;c nếp nh&agrave; li&ecirc;n tiếp nối nhau bởi nh&agrave; cầu v&agrave; s&acirc;n trời, theo một thứ tự gần như thống nhất, gồm: nh&agrave; - s&acirc;n - nh&agrave;. C&aacute;c nh&agrave; đều được l&agrave;m khung gỗ, xung quanh c&oacute; tường gạch (một số nếp nh&agrave; c&oacute; v&aacute;ch gỗ). Kết cấu đỡ m&aacute;i kh&aacute; đa dạng, như chồng rường - giả thủ, cột trốn - kẻ chuyền, k&egrave;o cầu - c&aacute;nh &aacute;c, chồng đấu - con son,&nbsp; đặc biệt c&oacute; kết cấu &ldquo;v&igrave; vỏ cua&rdquo; ở hi&ecirc;n, m&aacute;i thường lợp ng&oacute;i m&aacute;ng (kiểu &acirc;m dương), tường hồi b&iacute;t đốc c&oacute; bờ dải uốn lượn mềm mại (kiểu long đ&igrave;nh). Tr&ecirc;n kiến tr&uacute;c thường được chạm khắc trang tr&iacute; c&aacute;c đề t&agrave;i truyền thống, với c&aacute;c thủ ph&aacute;p tạo h&igrave;nh như chạm nổi, chạm thủng, k&ecirc;nh bong. Đặc biệt, trước nh&agrave; c&oacute; hai mắt cửa gỗ, được gắn tr&ecirc;n bạo cửa ra v&agrave;o ch&iacute;nh.</p>\n<p>Hiện nay, phố cổ Hội An - một di sản thế giới ở Việt Nam đ&atilde; thực sự trở th&agrave;nh nguồn lực của sự ph&aacute;t triển kinh tế - x&atilde; hội ở Hội An, c&oacute; đ&oacute;ng g&oacute;p t&iacute;ch cực v&agrave;o sự ph&aacute;t triển kinh tế - du lịch dịch vụ, n&acirc;ng cao thu nhập, cải thiện đời sống của nh&acirc;n d&acirc;n địa phương, qua đ&oacute; cũng tạo ra những điều kiện thuận lợi để t&aacute;i đầu tư bảo tồn v&agrave; ph&aacute;t huy gi&aacute; trị di t&iacute;ch một c&aacute;ch bền vững&hellip;</p>\n<p>Với những gi&aacute; trị lịch sử, văn ho&aacute; v&agrave; khoa học đặc biệt của di t&iacute;ch,&nbsp; Thủ tướng Ch&iacute;nh phủ đ&atilde; quyết định xếp hạng Di t&iacute;ch kiến tr&uacute;c nghệ thuật Đ&ocirc; thị cổ Hội An l&agrave; di t&iacute;ch quốc gia đặc biệt (Quyết định số 1272/QĐ-TTg, ng&agrave;y 12/8/2009).</p>\n<p style=\"text-align: right;\"><strong>Ho&agrave;ng Ph&uacute;c (Theo Hồ sơ xếp hạng di t&iacute;ch, tư liệu Cục Di sản văn h&oacute;a)</strong></p>",
       "province": "Quảng Nam",
       "gallery": [],
-      "views": 2
+      "views": 3
     },
     {
       "id": 2,
@@ -385,7 +362,7 @@
       "relatedHistoryIds": [],
       "timeline": [],
       "updatedAt": "2026-01-23T10:54:56.058Z",
-      "views": 1
+      "views": 2
     },
     {
       "id": 4,
@@ -558,7 +535,7 @@
       "gallery": [],
       "relatedHeritageIds": [],
       "relatedHistoryIds": [],
-      "views": 1
+      "views": 3
     },
     {
       "id": 5,
@@ -793,6 +770,20 @@
       "type": "article",
       "referenceId": 2,
       "createdAt": "2026-01-18T04:49:08.047Z"
+    },
+    {
+      "id": 9,
+      "userId": 3,
+      "type": "heritage_site",
+      "referenceId": 1,
+      "createdAt": "2026-02-09T15:56:10.061Z"
+    },
+    {
+      "id": 10,
+      "userId": 3,
+      "type": "article",
+      "referenceId": 2,
+      "createdAt": "2026-02-09T16:01:16.310Z"
     }
   ],
   "reviews": [
@@ -1952,7 +1943,7 @@
       "createdBy": 2,
       "status": "published",
       "isActive": true,
-      "views": 3,
+      "views": 4,
       "relatedHeritageIds": [
         2
       ],
@@ -2084,7 +2075,7 @@
           "gallery": [],
           "relatedHeritageIds": [],
           "relatedHistoryIds": [],
-          "views": 1
+          "views": 2
         }
       ],
       "relatedLevels": [],
@@ -2121,7 +2112,7 @@
       "createdBy": 2,
       "status": "published",
       "isActive": true,
-      "views": 1,
+      "views": 2,
       "relatedHeritageIds": [],
       "relatedArtifactIds": [],
       "timelineEvents": [
@@ -2486,7 +2477,7 @@
       "createdBy": 2,
       "status": "published",
       "isActive": true,
-      "views": 1,
+      "views": 3,
       "relatedHeritageIds": [],
       "relatedArtifactIds": [],
       "timelineEvents": [
@@ -2541,7 +2532,8 @@
       "createdAt": "2026-02-05T17:22:39.112Z",
       "updatedAt": "2026-02-05T17:25:34.078Z",
       "status": "published",
-      "review_comment": null
+      "review_comment": null,
+      "views": 2
     },
     {
       "id": 10,
@@ -2651,6 +2643,23 @@
       "createdAt": "2026-01-19T01:46:49.856Z",
       "totalItems": 1,
       "updatedAt": "2026-01-19T02:12:52.563Z"
+    },
+    {
+      "id": 3,
+      "name": "heloo",
+      "userId": 3,
+      "items": [
+        {
+          "id": 4,
+          "type": "artifact",
+          "addedAt": "2026-02-09T16:01:08.080Z",
+          "note": ""
+        }
+      ],
+      "isPublic": false,
+      "createdAt": "2026-02-09T16:01:06.186Z",
+      "updatedAt": "2026-02-09T16:01:08.080Z",
+      "totalItems": 1
     }
   ],
   "scan_objects": [
@@ -2727,17 +2736,25 @@
       "name": "Nhà thám hiểm",
       "description": "Hoàn thành chapter đầu tiên",
       "icon": "🗺️",
-      "requirement": "complete_chapter_1",
+      "conditionType": "chapter_completed",
+      "conditionValue": 1,
+      "rewardCoins": 100,
+      "rewardPetals": 5,
       "rarity": "common",
+      "isActive": true,
       "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 2,
       "name": "Bậc thầy lịch sử",
-      "description": "Hoàn thành tất cả các màn lịch sử",
+      "description": "Đạt cấp độ 10",
       "icon": "📜",
-      "requirement": "complete_all_history_levels",
+      "conditionType": "level_reached",
+      "conditionValue": 10,
+      "rewardCoins": 200,
+      "rewardPetals": 10,
       "rarity": "rare",
+      "isActive": true,
       "createdAt": "2024-01-01T00:00:00Z"
     },
     {
@@ -2745,17 +2762,25 @@
       "name": "Người sưu tầm",
       "description": "Thu thập 10 nhân vật",
       "icon": "🎭",
-      "requirement": "collect_10_characters",
+      "conditionType": "characters_collected",
+      "conditionValue": 10,
+      "rewardCoins": 300,
+      "rewardPetals": 15,
       "rarity": "epic",
+      "isActive": true,
       "createdAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": 4,
       "name": "Thám tử lão luyện",
-      "description": "Tìm được tất cả manh mối không cần gợi ý",
+      "description": "Tìm được 50 manh mối",
       "icon": "🔍",
-      "requirement": "find_all_clues_no_hints",
+      "conditionType": "clues_collected",
+      "conditionValue": 50,
+      "rewardCoins": 400,
+      "rewardPetals": 20,
       "rarity": "epic",
+      "isActive": true,
       "createdAt": "2024-01-01T00:00:00Z"
     },
     {
@@ -2763,8 +2788,12 @@
       "name": "Bậc thầy tri thức",
       "description": "Trả lời đúng 50 câu hỏi",
       "icon": "🎓",
-      "requirement": "answer_50_questions",
+      "conditionType": "perfect_quiz",
+      "conditionValue": 50,
+      "rewardCoins": 500,
+      "rewardPetals": 25,
       "rarity": "rare",
+      "isActive": true,
       "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
@@ -2831,56 +2860,7 @@
       "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
-  "game_progress": [
-    {
-      "id": 1,
-      "userId": 3,
-      "currentChapter": 1,
-      "totalSenPetals": 1,
-      "totalPoints": 0,
-      "level": 1,
-      "coins": 1050,
-      "unlockedChapters": [
-        1
-      ],
-      "completedLevels": [],
-      "collectedCharacters": [],
-      "badges": [],
-      "achievements": [],
-      "museumOpen": false,
-      "museumIncome": 0,
-      "streakDays": 1,
-      "lastRewardClaim": "2026-02-01T17:30:06.126Z",
-      "lastLogin": "2026-02-01T17:30:03.415Z",
-      "createdAt": "2026-02-01T17:30:03.415Z",
-      "completedModules": [],
-      "completedQuestsCount": 0
-    },
-    {
-      "id": 2,
-      "userId": 1,
-      "currentChapter": 1,
-      "totalSenPetals": 0,
-      "totalPoints": 0,
-      "level": 1,
-      "coins": 1000,
-      "unlockedChapters": [
-        1
-      ],
-      "completedLevels": [],
-      "collectedCharacters": [],
-      "badges": [],
-      "achievements": [],
-      "museumOpen": false,
-      "museumIncome": 0,
-      "streakDays": 0,
-      "lastRewardClaim": null,
-      "lastLogin": "2026-02-04T15:23:38.338Z",
-      "createdAt": "2026-02-04T15:23:38.338Z",
-      "completedModules": [],
-      "completedQuestsCount": 0
-    }
-  ],
+  "game_progress": [],
   "game_sessions": [],
   "learning_modules": [
     {
@@ -3357,38 +3337,7 @@
       "thumbnail": "https://i.pinimg.com/1200x/20/05/52/2005521af7ccf8b74cf4453ec32b62d4.jpg"
     }
   ],
-  "user_quests": [
-    {
-      "id": 1,
-      "userId": 3,
-      "quest_id": 3,
-      "status": "claimed",
-      "current_value": 1,
-      "startedAt": "2026-01-29T07:49:54.473Z",
-      "completed_at": "2026-01-29T07:49:54.480Z",
-      "claimed_at": "2026-01-29T10:12:42.451Z"
-    },
-    {
-      "id": 2,
-      "userId": 3,
-      "quest_id": 2,
-      "status": "claimed",
-      "current_value": 5,
-      "startedAt": "2026-01-29T07:50:01.638Z",
-      "completed_at": "2026-01-29T07:52:14.788Z",
-      "claimed_at": "2026-01-29T10:12:43.418Z"
-    },
-    {
-      "id": 3,
-      "userId": 3,
-      "quest_id": 1,
-      "status": "claimed",
-      "current_value": 1,
-      "startedAt": "2026-01-29T07:50:37.037Z",
-      "completed_at": "2026-01-29T07:50:37.048Z",
-      "claimed_at": "2026-01-29T10:12:41.093Z"
-    }
-  ],
+  "user_quests": [],
   "scan_history": [],
   "user_characters": [
     {

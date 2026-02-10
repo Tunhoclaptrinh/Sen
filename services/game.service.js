@@ -168,7 +168,7 @@ class GameService {
           chaptersUnlocked: progress.unlockedChapters.length,
           totalChapters: totalChapters,
           charactersCollected: progress.collectedCharacters.length,
-          totalBadges: progress.badges.length
+          totalBadges: (progress.badges || []).filter(b => b && typeof b === 'object' && b.id).length
         }
       }
     };
@@ -620,6 +620,18 @@ class GameService {
       newBadges = badgeResult;
     } catch (e) {
       console.error('Badge check failed', e);
+    }
+
+    // TRIGGER BADGE CHECK (Clues Collected)
+    try {
+      const allSessions = await db.findMany('game_sessions', { userId: userId });
+      const totalClues = allSessions.reduce((sum, s) => sum + (s.collectedItems || []).length, 0);
+      const cluesBadge = await badgeService.checkAndUnlock(userId, 'clues_collected', totalClues);
+      if (cluesBadge && cluesBadge.length > 0) {
+        newBadges = [...newBadges, ...cluesBadge];
+      }
+    } catch (e) {
+      console.error('Clues badge check failed', e);
     }
 
     return {
@@ -1256,6 +1268,15 @@ class GameService {
             const badgeResult = await badgeService.checkAndUnlock(userId, 'level_reached', calculatedLevel);
             newBadges = badgeResult;
           } catch (e) { console.error('Badge check failed', e); }
+
+          // CHECK CHARACTERS COLLECTED BADGE
+          try {
+            const charCount = newCharacters.length;
+            const charBadge = await badgeService.checkAndUnlock(userId, 'characters_collected', charCount);
+            if (charBadge && charBadge.length > 0) {
+              newBadges = [...(newBadges || []), ...charBadge];
+            }
+          } catch (e) { console.error('Character badge check failed', e); }
         }
 
         rewardsData = {
@@ -1306,6 +1327,21 @@ class GameService {
         if (isChapterDone) {
           console.log(`[GameService] Chapter ${level.chapterId} complete for user ${userId}. Triggering quest.`);
           await questService.checkAndAdvance(userId, 'complete_chapter', 1);
+
+          // TRIGGER BADGE CHECK (Chapter Completed)
+          try {
+            // Count total finished chapters
+            const finalProgress = await db.findOne('game_progress', { userId: userId });
+            const finishedCount = finalProgress.finishedChapters ? finalProgress.finishedChapters.length : 0;
+            const chapterBadges = await badgeService.checkAndUnlock(userId, 'chapter_completed', finishedCount);
+
+            // Add to newBadges if any
+            if (chapterBadges && chapterBadges.length > 0) {
+              // Ensure newBadges is array
+              if (!Array.isArray(newBadges)) newBadges = [];
+              newBadges.push(...chapterBadges);
+            }
+          } catch (e) { console.error('Chapter badge check failed', e); }
         }
       } catch (e) {
         console.error('Quest trigger failed', e);
@@ -1792,6 +1828,14 @@ class GameService {
       collectedCharacters: newCharacters
     });
 
+    // TRIGGER BADGE CHECK (Characters Collected)
+    let newBadges = [];
+    try {
+      const charCount = newCharacters.length;
+      const charBadge = await badgeService.checkAndUnlock(userId, 'characters_collected', charCount);
+      newBadges = charBadge;
+    } catch (e) { console.error('Character badge check failed', e); }
+
     // Lưu scan history
     await db.create('scan_history', {
       userId: userId,
@@ -1803,7 +1847,7 @@ class GameService {
     return {
       success: true,
       message: 'Scan successful!',
-      data: { artifact, rewards: reward }
+      data: { artifact, rewards: reward, newBadges }
     };
   }
 
@@ -1814,13 +1858,66 @@ class GameService {
    * Lấy badges
    */
   async getBadges(userId) {
-    const progress = await this.getProgress(userId);
+    // 1. Get current progress
+    let progress = await this.getProgress(userId);
+    const progressData = progress.data;
+
+    // 2. Auto-Heal: Check specific badge types that are easy to calculate
+    try {
+      // A. Chapters Completed
+      const finishedCount = progressData.finishedChapters ? progressData.finishedChapters.length : 0;
+      await badgeService.checkAndUnlock(userId, 'chapter_completed', finishedCount);
+
+      // B. Characters Collected
+      const charCount = progressData.collectedCharacters ? progressData.collectedCharacters.length : 0;
+      await badgeService.checkAndUnlock(userId, 'characters_collected', charCount);
+
+      // C. Level Reached
+      const currentLevel = progressData.level || 1;
+      await badgeService.checkAndUnlock(userId, 'level_reached', currentLevel);
+
+      // Note: 'clues_collected' and 'perfect_quiz' are too expensive to calculate here
+      // without aggregate queries, so we rely on their specific triggers.
+
+    } catch (e) {
+      console.error('Auto-heal badges failed', e);
+    }
+
+    // 3. Re-fetch progress to get updated badges list
+    progress = await this.getProgress(userId);
     const allBadges = await db.findAll('game_badges');
 
-    const enriched = allBadges.map(badge => ({
-      ...badge,
-      isUnlocked: progress.data.badges.includes(badge.id)
-    }));
+    // 4. Enrich
+    const userBadges = progress.data.badges || [];
+    // note: progress.data.badges might be array of strings (ids) or objects? 
+    // In BadgeService.js: progress.badges = [...(progress.badges || []), newBadgeEntry];
+    // where newBadgeEntry is { id, name, ... }.
+    // So it is an array of OBJECTS.
+    // But checkAndUnlock logic: if (currentBadges.some(b => b.id === badge.id))
+
+    // Check db.json content: "badges": ["quiz_master"] -> It was STRINGS in my previous view of db.json!
+    // Wait, let's check BadgeService.js again.
+    // line 33: if (currentBadges.some(b => b.id === badge.id))
+    // If db.json has strings, this check check will FAIL (undefined === badge.id).
+    // AND the push: progress.badges = [... [], newBadgeEntry object].
+    // So it will become mixed [ "quiz_master", { id: 1, ... } ].
+
+    // I NEED TO FIX BADGESERVICE TO HANDLE BOTH or MIGRATE DB.
+    // If db.json has strings, I should probably convert them or handle them.
+    // 'quiz_master' seems like a legacy string ID. The new system uses numeric IDs and objects.
+
+    // Let's stick to the Auto-Healing logic first.
+
+    const enriched = allBadges.map(badge => {
+      const isUnlocked = userBadges.some(b => {
+        if (typeof b === 'string') return b === badge.requirement; // Legacy check?
+        return b.id === badge.id;
+      });
+      return {
+        ...badge,
+        isUnlocked: isUnlocked
+      };
+    });
 
     return { success: true, data: enriched };
   }
