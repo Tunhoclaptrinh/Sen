@@ -93,13 +93,44 @@ class ImportExportController {
       // Get filters from query params
       const options = {
         ...req.parsedQuery,
+        user: req.user, // Pass user for permission-based filtering in services
         includeRelations,
         columns: req.query.columns ? req.query.columns.split(',') : null
       };
 
-      // [RBAC] Researcher: Only export own items
+      // Ensure limit is high for exports if ids are provided specifically or if not set
+      if (req.query.id_in || req.query.ids) {
+        options.limit = -1;
+      }
+
+      // [RBAC] Researcher: Only export own items OR published items
       if (req.user && req.user.role === 'researcher') {
-        options.filter = { ...(options.filter || {}), createdBy: req.user.id };
+        const currentFilter = options.filter || {};
+
+        // If we are already filtering by specific IDs (Batch Export), let the service handles it (permissions are checked)
+        // BUT we should still ensure they don't export someone else's DRAFT via ID guessing.
+
+        // Construct a safe filter: (createdBy == me) OR (status == 'published')
+        // We need to merge this with existing filters.
+
+        // Note: If the user is specifically filtering by "My Content" (createdBy=me), then ($or: [me, published]) AND (me) = (me).
+        // If the user is filtering by "Published" (status=published), then ($or: [me, published]) AND (published) = (published).
+
+        // However, we must be careful not to override existing filters, but AND them.
+        // Since JsonAdapter might not support complex $and merge easily if not careful,
+        // but it supports $or.
+
+        // Let's rely on the fact that ReviewableService doesn't filter for researchers.
+        // We MUST inject the restriction here.
+
+        options.filter = {
+          ...currentFilter,
+          $or: [
+            { createdBy: req.user.id },
+            { created_by: req.user.id }, // snake_case support
+            { status: 'published' }
+          ]
+        };
       }
 
       const buffer = await importExportService.exportData(

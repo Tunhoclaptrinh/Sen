@@ -18,12 +18,13 @@ class ReviewableController extends BaseController {
         return res.status(501).json({ success: false, message: 'Review workflow not implemented for this resource' });
       }
 
-      // [RBAC] Researcher: Check ownership before submitting
-      if (req.user && req.user.role === 'researcher') {
+      // [RBAC] Check ownership before submitting (Admins and Researchers)
+      if (req.user) {
         const itemResult = await this.service.findById(req.params.id);
         if (itemResult.success) {
           const item = itemResult.data;
           const ownerId = item.createdBy || item.created_by;
+          // Only owner can submit
           if (ownerId && String(ownerId) !== String(req.user.id)) {
             return res.status(403).json({
               success: false,
@@ -76,8 +77,8 @@ class ReviewableController extends BaseController {
    */
   revertToDraft = async (req, res, next) => {
     try {
-      // [RBAC] Researcher: Check ownership before reverting
-      if (req.user && req.user.role === 'researcher') {
+      // [RBAC] Check ownership before reverting (Admins and Researchers)
+      if (req.user) {
         const itemResult = await this.service.findById(req.params.id);
         if (itemResult.success) {
           const item = itemResult.data;

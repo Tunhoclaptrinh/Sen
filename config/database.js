@@ -334,6 +334,20 @@ class JsonAdapter {
   applyPagination(items, page = 1, limit = 10) {
     const total = items.length;
     const currentPage = Math.max(1, parseInt(page));
+
+    // Handle limit -1 (all items)
+    if (parseInt(limit) === -1) {
+      return {
+        data: items,
+        page: 1,
+        limit: total,
+        total,
+        totalPages: 1,
+        hasNext: false,
+        hasPrev: false
+      };
+    }
+
     const itemsPerPage = Math.max(1, parseInt(limit));
     const totalPages = Math.ceil(total / itemsPerPage);
 
