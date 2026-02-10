@@ -20,5 +20,6 @@ router.patch("/:id/submit", checkPermission('game_content', 'update'), chapterCM
 router.patch("/:id/approve", checkPermission('game_content', 'approve'), chapterCMSController.approveReview);
 router.patch("/:id/reject", checkPermission('game_content', 'approve'), chapterCMSController.rejectReview);
 router.patch("/:id/revert", checkPermission('game_content', 'update'), chapterCMSController.revertToDraft);
+router.patch("/:id/unpublish", checkPermission('game_content', 'update'), chapterCMSController.requestUnpublish);
 
 module.exports = router;

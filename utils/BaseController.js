@@ -230,6 +230,14 @@ class BaseController {
               message: 'Bạn chỉ có quyền xóa tài nguyên do chính mình tạo.'
             });
           }
+
+          // [Safeguard] Prevent deleting published content
+          if (item.status === 'published') {
+            return res.status(403).json({
+              success: false,
+              message: 'Bạn không thể xóa tài nguyên đã xuất bản. Vui lòng gỡ bài (Unpublish) trước.'
+            });
+          }
         }
       }
 

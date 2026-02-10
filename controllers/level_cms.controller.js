@@ -35,6 +35,18 @@ class LevelCMSController extends ReviewableController {
    */
   updateLevel = async (req, res, next) => {
     try {
+      // [RBAC] Researcher: Check ownership
+      const levelResult = await levelManagementService.findById(req.params.id);
+      if (!levelResult.success) {
+        return res.status(levelResult.statusCode || 404).json(levelResult);
+      }
+      if (!this.checkOwnership(levelResult.data, req)) {
+        return res.status(403).json({
+          success: false,
+          message: 'Bạn không có quyền chỉnh sửa tài nguyên này.'
+        });
+      }
+
       // Validate screens nếu có update
       if (req.body.screens) {
         const validation = levelManagementService.validateScreens(req.body.screens);
@@ -61,6 +73,18 @@ class LevelCMSController extends ReviewableController {
    */
   deleteLevel = async (req, res, next) => {
     try {
+      // [RBAC] Researcher: Check ownership
+      const levelResult = await levelManagementService.findById(req.params.id);
+      if (!levelResult.success) {
+        return res.status(levelResult.statusCode || 404).json(levelResult);
+      }
+      if (!this.checkOwnership(levelResult.data, req)) {
+        return res.status(403).json({
+          success: false,
+          message: 'Bạn không có quyền xóa tài nguyên này.'
+        });
+      }
+
       const result = await levelManagementService.delete(req.params.id);
 
       if (!result.success) {

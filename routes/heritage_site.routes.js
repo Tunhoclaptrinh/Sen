@@ -69,6 +69,7 @@ router.delete('/:id',
 // Review Routes
 router.patch('/:id/submit', protect, checkPermission('heritage_sites', 'update'), heritageSiteController.submitReview);
 router.patch('/:id/revert', protect, checkPermission('heritage_sites', 'update'), heritageSiteController.revertToDraft);
+router.patch('/:id/unpublish', protect, checkPermission('heritage_sites', 'update'), heritageSiteController.requestUnpublish);
 router.patch('/:id/approve', protect, checkPermission('heritage_sites', 'publish'), heritageSiteController.approveReview);
 router.patch('/:id/reject', protect, checkPermission('heritage_sites', 'publish'), heritageSiteController.rejectReview);
 

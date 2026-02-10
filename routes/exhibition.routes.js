@@ -74,6 +74,12 @@ router.patch('/:id/revert',
   exhibitionController.revertToDraft
 );
 
+router.patch('/:id/unpublish',
+  protect,
+  checkPermission('exhibitions', 'update'),
+  exhibitionController.requestUnpublish
+);
+
 router.patch('/:id/approve',
   protect,
   checkPermission('exhibitions', 'publish'),

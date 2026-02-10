@@ -66,6 +66,7 @@ router.delete('/:id',
 // Review Routes
 router.patch('/:id/submit', protect, checkPermission('history_articles', 'update'), historyController.submitReview);
 router.patch('/:id/revert', protect, checkPermission('history_articles', 'update'), historyController.revertToDraft);
+router.patch('/:id/unpublish', protect, checkPermission('history_articles', 'update'), historyController.requestUnpublish);
 router.patch('/:id/approve', protect, checkPermission('history_articles', 'publish'), historyController.approveReview);
 router.patch('/:id/reject', protect, checkPermission('history_articles', 'publish'), historyController.rejectReview);
 

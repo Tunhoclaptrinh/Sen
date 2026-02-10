@@ -49,6 +49,7 @@ router.delete('/:id', protect, checkPermission('learning_modules', 'delete'), le
 // Review Routes
 router.patch('/:id/submit', protect, checkPermission('learning_modules', 'update'), learningController.submitReview);
 router.patch('/:id/revert', protect, checkPermission('learning_modules', 'update'), learningController.revertToDraft);
+router.patch('/:id/unpublish', protect, checkPermission('learning_modules', 'update'), learningController.requestUnpublish);
 router.patch('/:id/approve', protect, checkPermission('learning_modules', 'publish'), learningController.approveReview);
 router.patch('/:id/reject', protect, checkPermission('learning_modules', 'publish'), learningController.rejectReview);
 

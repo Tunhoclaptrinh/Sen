@@ -50,6 +50,7 @@ router.delete('/:id', protect, checkPermission('artifacts', 'delete'), artifactC
 // Review Routes
 router.patch('/:id/submit', protect, checkPermission('artifacts', 'update'), artifactController.submitReview);
 router.patch('/:id/revert', protect, checkPermission('artifacts', 'update'), artifactController.revertToDraft);
+router.patch('/:id/unpublish', protect, checkPermission('artifacts', 'update'), artifactController.requestUnpublish);
 router.patch('/:id/approve', protect, checkPermission('artifacts', 'publish'), artifactController.approveReview);
 router.patch('/:id/reject', protect, checkPermission('artifacts', 'publish'), artifactController.rejectReview);
 

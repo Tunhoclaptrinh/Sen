@@ -32,6 +32,7 @@ router.patch('/:id/submit', checkPermission('game_content', 'update'), levelCMSC
 router.patch('/:id/approve', checkPermission('game_content', 'approve'), levelCMSController.approveReview);
 router.patch('/:id/reject', checkPermission('game_content', 'approve'), levelCMSController.rejectReview);
 router.patch('/:id/revert', checkPermission('game_content', 'update'), levelCMSController.revertToDraft);
+router.patch('/:id/unpublish', checkPermission('game_content', 'update'), levelCMSController.requestUnpublish);
 
 // ==================== SCREEN MANAGEMENT (GRANULAR) ====================
 router.get('/:id/screens', levelCMSController.getScreens);
