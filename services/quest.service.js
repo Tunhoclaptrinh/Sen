@@ -103,7 +103,7 @@ class QuestService extends BaseService {
 
       for (const quest of activeQuests) {
         // Check if user has started this quest
-        let userQuest = userQuests.find(uq => uq.questId == quest.id);
+        let userQuest = userQuests.find(uq => (uq.questId || uq.quest_id) == quest.id);
 
         // If not started, auto-start it (Passive Quest Logic)
         if (!userQuest) {

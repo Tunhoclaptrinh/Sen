@@ -74,7 +74,7 @@ exports.buyItem = async (userId, itemId, quantity = 1) => {
         items: currentItems
     });
 
-    return {
+    const successResult = {
         success: true,
         message: 'Purchase successful',
         item: item,
@@ -85,4 +85,25 @@ exports.buyItem = async (userId, itemId, quantity = 1) => {
         },
         inventory: currentItems
     };
+
+    // [New] Trigger Hidden Unlock: Buying "Trang phục chú Tễu" (ID 3) unlocks "Chú Tễu" (Character ID 1)
+    if (itemId === 3) {
+        const teuCharacterId = 1;
+        const existingChar = db.findOne('user_characters', { userId: userId, characterId: teuCharacterId });
+        if (!existingChar) {
+            db.create('user_characters', {
+                userId: userId,
+                characterId: teuCharacterId,
+                unlockedAt: new Date().toISOString(),
+                unlockType: 'bonus_with_skin'
+            });
+            // Update return message to inform user
+            return {
+                ...successResult,
+                message: 'Mua thành công! Bạn đã nhận được cả nhân vật Chú Tễu!'
+            };
+        }
+    }
+
+    return successResult;
 };

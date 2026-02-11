@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth.middleware');
+const { protect, optionalProtect } = require('../middleware/auth.middleware');
 const aiController = require('../controllers/ai.controller');
 
-// Character routes (Publicly accessible for default characters like Sen)
+// Character routes (Publicly accessible but identifies user if logged in)
 // Order matters: specific routes before parameterized routes
-router.get('/characters/available', aiController.getAvailableCharacters);
-router.get('/characters', aiController.getCharacters);
+router.get('/characters/available', optionalProtect, aiController.getAvailableCharacters);
+router.get('/characters', optionalProtect, aiController.getCharacters);
 
 // All other AI routes require authentication
 router.use(protect);

@@ -81,7 +81,35 @@
       "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
-  "user_inventory": [],
+  "user_inventory": [
+    {
+      "id": 1,
+      "userId": 3,
+      "items": [
+        {
+          "itemId": 3,
+          "quantity": 1,
+          "acquiredAt": "2026-01-28T16:27:51.408Z"
+        },
+        {
+          "itemId": 1,
+          "quantity": 2,
+          "acquiredAt": "2026-02-09T15:42:40.519Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "items": [
+        {
+          "itemId": 3,
+          "quantity": 1,
+          "acquiredAt": "2026-02-02T17:24:28.939Z"
+        }
+      ]
+    }
+  ],
   "users": [
     {
       "id": 1,
@@ -92,7 +120,7 @@
       "isActive": true,
       "avatar": "https://ui-avatars.com/api/?name=Admin+Sen&background=0D8ABC&color=fff",
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-02-06T11:51:48.474Z"
+      "lastLogin": "2026-02-11T10:20:40.561Z"
     },
     {
       "id": 2,
@@ -102,7 +130,7 @@
       "role": "researcher",
       "isActive": true,
       "createdAt": "2024-02-20T14:20:00Z",
-      "lastLogin": "2026-02-06T11:51:32.246Z"
+      "lastLogin": "2026-02-10T11:03:00.160Z"
     },
     {
       "id": 3,
@@ -112,7 +140,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-02-10T04:13:39.927Z"
+      "lastLogin": "2026-02-11T10:29:14.315Z"
     },
     {
       "id": 4,
@@ -225,10 +253,7 @@
       "publishDate": "2024-08-01T10:00:00Z",
       "shortDescription": "Phố cổ Hội An là di sản văn hóa thế giới được UNESCO công nhận, nổi tiếng với kiến trúc cổ kính và lồng đèn rực rỡ.",
       "commentCount": 128,
-      "relatedArtifactIds": [
-        1,
-        2
-      ],
+      "relatedArtifactIds": [1, 2],
       "timeline": [
         {
           "id": 2,
@@ -250,9 +275,7 @@
         }
       ],
       "updatedAt": "2026-02-03T13:54:10.023Z",
-      "relatedHistoryIds": [
-        1
-      ],
+      "relatedHistoryIds": [1],
       "description": "<p>Thương cảng Hội An được h&igrave;nh th&agrave;nh khoảng khoảng thế kỷ XV - XVI, thịnh đạt trong thế kỷ XVII - XVIII, nhưng trước đ&oacute; rất l&acirc;u, v&ugrave;ng đất Hội An đ&atilde; nằm trong địa b&agrave;n ph&acirc;n bố của văn h&oacute;a tiền Sa Huỳnh, Sa Huỳnh v&agrave; c&ograve;n l&agrave; một cảng thị trọng yếu của Chămpa (từ thế kỷ II - XV). Từ khoảng cuối thế kỷ XV, khu vực Hội An đ&atilde; c&oacute; d&acirc;n cư Đại Việt tới sinh sống, lập l&agrave;ng, người Việt đ&atilde; s&aacute;ng tạo ra nhiều ng&agrave;nh nghề ph&ugrave; hợp với điều kiện tự nhi&ecirc;n v&agrave; x&atilde; hội nơi đ&acirc;y. Cuối thế kỷ XVI - XVII, người Hoa v&agrave; người Nhật đ&atilde; đến đ&acirc;y định cư, gi&uacute;p cho hoạt động thương nghiệp ở Hội An ph&aacute;t triển mạnh. Với vị tr&iacute; địa l&yacute; thuận lợi cũng như bối cảnh kinh tế, x&atilde; hội, văn h&oacute;a Đ&agrave;ng Trong ph&aacute;t triển tương đối ổn định, Hội An nhanh ch&oacute;ng trở th&agrave;nh đ&ocirc; thị/thương cảng phồn thịnh trong nhiều thế kỷ.</p>\n<p>Những di t&iacute;ch kiến tr&uacute;c trong phố cổ Hội An đều mang đậm dấu ấn xưa cũ vốn c&oacute;. Kiểu nh&agrave; ở phổ biến nhất trong khu vực n&agrave;y thường c&oacute; mặt bằng dạng h&igrave;nh ống, c&aacute;c nếp nh&agrave; li&ecirc;n tiếp nối nhau bởi nh&agrave; cầu v&agrave; s&acirc;n trời, theo một thứ tự gần như thống nhất, gồm: nh&agrave; - s&acirc;n - nh&agrave;. C&aacute;c nh&agrave; đều được l&agrave;m khung gỗ, xung quanh c&oacute; tường gạch (một số nếp nh&agrave; c&oacute; v&aacute;ch gỗ). Kết cấu đỡ m&aacute;i kh&aacute; đa dạng, như chồng rường - giả thủ, cột trốn - kẻ chuyền, k&egrave;o cầu - c&aacute;nh &aacute;c, chồng đấu - con son,&nbsp; đặc biệt c&oacute; kết cấu &ldquo;v&igrave; vỏ cua&rdquo; ở hi&ecirc;n, m&aacute;i thường lợp ng&oacute;i m&aacute;ng (kiểu &acirc;m dương), tường hồi b&iacute;t đốc c&oacute; bờ dải uốn lượn mềm mại (kiểu long đ&igrave;nh). Tr&ecirc;n kiến tr&uacute;c thường được chạm khắc trang tr&iacute; c&aacute;c đề t&agrave;i truyền thống, với c&aacute;c thủ ph&aacute;p tạo h&igrave;nh như chạm nổi, chạm thủng, k&ecirc;nh bong. Đặc biệt, trước nh&agrave; c&oacute; hai mắt cửa gỗ, được gắn tr&ecirc;n bạo cửa ra v&agrave;o ch&iacute;nh.</p>\n<p>Hiện nay, phố cổ Hội An - một di sản thế giới ở Việt Nam đ&atilde; thực sự trở th&agrave;nh nguồn lực của sự ph&aacute;t triển kinh tế - x&atilde; hội ở Hội An, c&oacute; đ&oacute;ng g&oacute;p t&iacute;ch cực v&agrave;o sự ph&aacute;t triển kinh tế - du lịch dịch vụ, n&acirc;ng cao thu nhập, cải thiện đời sống của nh&acirc;n d&acirc;n địa phương, qua đ&oacute; cũng tạo ra những điều kiện thuận lợi để t&aacute;i đầu tư bảo tồn v&agrave; ph&aacute;t huy gi&aacute; trị di t&iacute;ch một c&aacute;ch bền vững&hellip;</p>\n<p>Với những gi&aacute; trị lịch sử, văn ho&aacute; v&agrave; khoa học đặc biệt của di t&iacute;ch,&nbsp; Thủ tướng Ch&iacute;nh phủ đ&atilde; quyết định xếp hạng Di t&iacute;ch kiến tr&uacute;c nghệ thuật Đ&ocirc; thị cổ Hội An l&agrave; di t&iacute;ch quốc gia đặc biệt (Quyết định số 1272/QĐ-TTg, ng&agrave;y 12/8/2009).</p>\n<p style=\"text-align: right;\"><strong>Ho&agrave;ng Ph&uacute;c (Theo Hồ sơ xếp hạng di t&iacute;ch, tư liệu Cục Di sản văn h&oacute;a)</strong></p>",
       "province": "Quảng Nam",
       "gallery": [],
@@ -281,14 +304,8 @@
       "publishDate": "2024-08-05T09:30:00Z",
       "description": "<p>Ho&agrave;ng th&agrave;nh Thăng Long l&agrave; quần thể di t&iacute;ch lịch sử gắn b&oacute; mật thiết với sự ph&aacute;t triển của Thăng Long &ndash; H&agrave; Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII &ndash; IX), khu di t&iacute;ch tiếp tục ph&aacute;t triển qua c&aacute;c triều đại Đinh &ndash; Tiền L&ecirc; (thế kỷ XI) v&agrave; đạt đến đỉnh cao dưới thời L&yacute; &ndash; Trần &ndash; L&ecirc; (thế kỷ XI &ndash; XVIII). Dưới triều Nguyễn (thế kỷ XIX &ndash; XX), mặc d&ugrave; kinh đ&ocirc; được dời v&agrave;o Ph&uacute; Xu&acirc;n (Huế), nhưng Ho&agrave;ng th&agrave;nh Thăng Long vẫn giữ vai tr&ograve; quan trọng.</p>\n<p>Năm 1010, khi vua L&yacute; Th&aacute;i Tổ dời đ&ocirc; từ Hoa Lư ra Thăng Long, &ocirc;ng đ&atilde; quy hoạch kinh th&agrave;nh theo m&ocirc; h&igrave;nh &ldquo;tam tr&ugrave;ng th&agrave;nh qu&aacute;ch&rdquo;, gồm ba v&ograve;ng th&agrave;nh: Kinh th&agrave;nh (nơi cư d&acirc;n sinh sống), Ho&agrave;ng th&agrave;nh (khu vực d&agrave;nh cho quan lại l&agrave;m việc) v&agrave; Cấm th&agrave;nh (khu vực chỉ d&agrave;nh ri&ecirc;ng cho ho&agrave;ng gia). Từ thế kỷ XI đến XVIII, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n l&agrave; trung t&acirc;m ch&iacute;nh trị, h&agrave;nh ch&iacute;nh của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đ&ocirc; v&agrave;o Ph&uacute; Xu&acirc;n, Thăng Long bị hạ cấp th&agrave;nh Bắc Th&agrave;nh (th&agrave;nh H&agrave; Nội). D&ugrave; vậy, điện K&iacute;nh Thi&ecirc;n v&agrave; Hậu L&acirc;u trong Cấm th&agrave;nh vẫn được duy tr&igrave; l&agrave;m h&agrave;nh cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p>\n<p>Sang thời kỳ Ph&aacute;p thuộc, H&agrave; Nội trở th&agrave;nh trung t&acirc;m h&agrave;nh ch&iacute;nh của Li&ecirc;n bang Đ&ocirc;ng Dương, v&agrave; Th&agrave;nh cổ H&agrave; Nội được sử dụng l&agrave;m Sở chỉ huy qu&acirc;n sự của Ph&aacute;p. L&uacute;c n&agrave;y, hầu hết c&aacute;c c&ocirc;ng tr&igrave;nh cung điện, đền đ&agrave;i trong Ho&agrave;ng th&agrave;nh đều bị ph&aacute; hủy, chỉ c&ograve;n Bắc M&ocirc;n v&agrave; Kỳ Đ&agrave;i được bảo tồn. Tr&ecirc;n nền điện K&iacute;nh Thi&ecirc;n v&agrave; s&acirc;n Long Tr&igrave;, người Ph&aacute;p x&acirc;y dựng c&aacute;c c&ocirc;ng tr&igrave;nh kiến tr&uacute;c mới theo phong c&aacute;ch ch&acirc;u &Acirc;u. Đến năm 1954, sau khi Thủ đ&ocirc; được giải ph&oacute;ng, Th&agrave;nh H&agrave; Nội trở th&agrave;nh Tổng h&agrave;nh dinh của Qu&acirc;n đội nh&acirc;n d&acirc;n Việt Nam v&agrave; duy tr&igrave; vai tr&ograve; n&agrave;y đến năm 2004.</p>\n<p>Ng&agrave;y nay, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long, gồm di t&iacute;ch khảo cổ học 18 Ho&agrave;ng Diệu v&agrave; Th&agrave;nh cổ H&agrave; Nội, nằm trong khu vực trung t&acirc;m ch&iacute;nh trị Ba Đ&igrave;nh &ndash; nơi đặt trụ sở của c&aacute;c cơ quan l&atilde;nh đạo cao nhất của Đảng v&agrave; Nh&agrave; nước. Đ&acirc;y kh&ocirc;ng chỉ l&agrave; một khu di t&iacute;ch lịch sử &ndash; văn h&oacute;a quan trọng m&agrave; c&ograve;n l&agrave; kh&ocirc;ng gian kiến tr&uacute;c mang gi&aacute; trị đặc biệt, gắn liền chặc chẽ với qu&aacute; tr&igrave;nh ph&aacute;t triển của đất nước. Đ&acirc;y cũng l&agrave; nơi tổ chức c&aacute;c sự kiện ch&iacute;nh trị, văn h&oacute;a trọng đại của quốc gia.</p>\n<h3>Vị thế v&agrave; tầm v&oacute;c</h3>\n<p>Trải qua 13 thế kỷ, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n giữ vị thế trung t&acirc;m ch&iacute;nh trị v&agrave; l&agrave; một trong những di t&iacute;ch quan trọng nhất của Việt Nam. Ng&agrave;y 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long &ndash; H&agrave; Nội ch&iacute;nh thức được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a thế giới. Gi&aacute; trị nổi bật của di sản n&agrave;y thể hiện qua chiều d&agrave;i lịch sử li&ecirc;n tục suốt 13 thế kỷ, vai tr&ograve; l&agrave; trung t&acirc;m quyền lực trong nhiều thời kỳ v&agrave; hệ thống di t&iacute;ch, di vật phong ph&uacute;. Đ&acirc;y cũng l&agrave; nơi lưu giữ những dấu ấn văn h&oacute;a quan trọng v&agrave; chứng kiến nhiều sự kiện mang tầm v&oacute;c lớn lao trong lịch sử d&acirc;n tộc.</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://i.pinimg.com/1200x/ea/42/15/ea4215828ac658b735472adfddf13132.jpg\"></p>\n<h3>C&aacute;c di vật được khảo cổ, khai quật trong Ho&agrave;ng Th&agrave;nh Thăng Long</h3>\n<p>C&aacute;c di vật được khai quật v&agrave; hiện đang trưng b&agrave;y ở Khu khảo cổ 18 Ho&agrave;ng Diệu.</p>\n<p>Thềm chia l&agrave;m 3 lối l&ecirc;n xuống đều nhau, lối giữa ngăn c&aacute;ch với 2 lối b&ecirc;n bằng đ&ocirc;i rồng đ&aacute; được x&acirc;y dựng năm 1467 ( đời vua L&ecirc; Th&aacute;nh T&ocirc;ng ). Rồng được tạo t&aacute;c kh&aacute; đẹp v&agrave; trau chuốt, tạo khối kiểu tượng tr&ograve;n c&oacute; d&aacute;ng mập, khỏe, đầu vươn cao ph&iacute;a ch&acirc;n thềm bậc, th&acirc;n uốn kh&uacute;c nhịp nh&agrave;ng v&agrave; chạy d&agrave;i theo 9 bậc l&ecirc;n. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, r&acirc;u v&agrave; t&oacute;c kết th&agrave;nh đao bay về sau.</p>\n<p>Tai rồng lớn kiểu tai tr&acirc;u, sừng đơn vươn d&agrave;i ra ph&iacute;a sau v&agrave; &aacute;p s&aacute;t th&acirc;n rồng. Dọc sống lưng đục chạm h&agrave;ng v&acirc;y c&aacute; to, mập. B&ecirc;n ngo&agrave;i bậc thềm c&oacute; 2 lan can h&igrave;nh rồng c&aacute;ch điệu dạng ph&ugrave; đi&ecirc;u ( gọi l&agrave; v&acirc;n h&oacute;a rồng ), mặt trong trang tr&iacute; v&acirc;n m&acirc;y, b&ecirc;n ngo&agrave;i thể hiện hoa c&uacute;c d&acirc;y. C&aacute;c hoa văn n&agrave;y được phủ k&iacute;n mặt ngo&agrave;i của th&acirc;n rồng đ&aacute; c&aacute;ch điệu.</p>\n<p>Ph&iacute;a ngo&agrave;i l&agrave; hai đ&aacute;m m&acirc;y h&oacute;a rồng. Đ&acirc;y l&agrave; hai tảng đ&aacute; nguy&ecirc;n khối d&agrave;y 36 &ndash; 39 cm, phần đầu thấp d&agrave;y hơn, c&oacute; những đường cuốn cắt ngang c&ugrave;ng những đường gờ nổi nối tiếp nhau chạy hết chiều d&agrave;i phiến đ&aacute; 5,3 m, những đường gờ nổi kh&ocirc;ng theo quy luật.</p>\n<p>Mặt trong v&agrave; ngo&agrave;i của hai con rồng c&aacute;ch điệu n&agrave;y trang tr&iacute; hoa văn, họa tiết khắc ch&igrave;m v&agrave;o đ&aacute;. Ph&iacute;a ngo&agrave;i, c&oacute; hai đường thẳng chạy dọc theo th&acirc;n rồng c&aacute;ch nhau 10 cm, chia đ&ocirc;i th&agrave;nh hai nửa tr&ecirc;n dưới, b&ecirc;n trong l&agrave; những b&ocirc;ng hoa bốn c&aacute;nh xếp liền nhau. Nửa tr&ecirc;n l&agrave; những cuộn m&acirc;y, đao lửa &iacute;t theo quy luật r&otilde; rang, nửa dưới l&agrave; những h&igrave;nh ảnh mặt trời c&aacute;ch điệu, đao lửa, m&acirc;y vờn. Ph&iacute;a mặt trong của phiến đ&aacute; do c&oacute; bậc thềm cao n&ecirc;n diện t&iacute;ch trạm khắc &iacute;t hơn, một đường thẳng b&ecirc;n tr&ecirc;n l&agrave; những cuộn m&acirc;y nhỏ dẫn từ dưới thấp l&ecirc;n cao.</p>",
       "commentCount": 85,
-      "relatedArtifactIds": [
-        7,
-        8,
-        9
-      ],
-      "relatedHistoryIds": [
-        1
-      ],
+      "relatedArtifactIds": [7, 8, 9],
+      "relatedHistoryIds": [1],
       "shortDescription": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
       "province": "Hà Nội",
       "gallery": [],
@@ -331,7 +348,7 @@
         }
       ],
       "updatedAt": "2026-02-03T12:16:03.663Z",
-      "views": 2,
+      "views": 3,
       "references": "<p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>"
     },
     {
@@ -398,28 +415,26 @@
     },
     {
       "id": 5,
-      "name": "researcher",
-      "shortDescription": "researcher",
-      "description": "<p>researcherresearcherresearcherresearcherresearcher</p>",
-      "type": "monument",
-      "culturalPeriod": "researcher",
+      "name": "Di sản",
+      "shortDescription": "Di sản",
+      "description": "<p>Di sảnDi sảnDi sảnDi sảnDi sảnDi sảnDi sảnDi sản</p>",
+      "type": "temple",
       "region": "Bắc",
-      "province": "Quảng Ninh",
-      "address": "researcher",
+      "address": "Di sản Di sảnDi sảnDi sảnDi sảnDi sản",
       "yearEstablished": 2026,
       "image": "",
       "gallery": [],
-      "visitHours": "researcher",
       "isActive": true,
       "unescoListed": false,
       "relatedArtifactIds": [],
       "relatedHistoryIds": [],
       "timeline": [],
       "createdBy": 2,
-      "status": "draft",
-      "createdAt": "2026-02-04T17:37:01.974Z",
-      "updatedAt": "2026-02-06T12:18:37.338Z",
-      "review_comment": null
+      "status": "published",
+      "createdAt": "2026-02-10T08:25:49.264Z",
+      "updatedAt": "2026-02-10T14:14:32.471Z",
+      "review_comment": null,
+      "views": 1
     }
   ],
   "artifacts": [
@@ -483,7 +498,7 @@
       "gallery": [],
       "relatedHeritageIds": [],
       "relatedHistoryIds": [],
-      "views": 2
+      "views": 3
     },
     {
       "id": 3,
@@ -599,7 +614,7 @@
       "createdBy": 2,
       "status": "draft",
       "createdAt": "2026-02-05T15:53:05.732Z",
-      "updatedAt": "2026-02-06T12:45:49.201Z",
+      "updatedAt": "2026-02-10T11:49:43.019Z",
       "review_comment": null
     }
   ],
@@ -688,10 +703,7 @@
       "endDate": "2026-12-31T23:59:59Z",
       "curator": "ThS. Trần Văn An",
       "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?w=600",
-      "artifactIds": [
-        1,
-        2
-      ],
+      "artifactIds": [1, 2],
       "isActive": true,
       "createdBy": 1,
       "status": "published"
@@ -706,9 +718,7 @@
       "endDate": "2026-08-31T23:59:59Z",
       "curator": "GS. Lê Văn Minh",
       "image": "https://images.unsplash.com/photo-1553484771-ee0bdc25ef14?w=600",
-      "artifactIds": [
-        3
-      ],
+      "artifactIds": [3],
       "isActive": true,
       "createdBy": 1,
       "status": "published"
@@ -892,8 +902,8 @@
       "author": "Phạm Văn Tuấn",
       "publishDate": "2026-02-05T17:34:58.430Z",
       "createdAt": "2026-02-05T17:35:11.393Z",
-      "updatedAt": "2026-02-06T14:10:29.421Z",
-      "status": "pending",
+      "updatedAt": "2026-02-10T11:50:34.746Z",
+      "status": "draft",
       "review_comment": null
     },
     {
@@ -1129,7 +1139,7 @@
           "content": {
             "title": "Họa tiết trống đồng",
             "description": "Hãy quan sát kỹ hoa văn trước khi trả lời câu hỏi tiếp theo.",
-            "image_url": "https://i.pinimg.com/1200x/e7/7a/89/e77a8980de2368500805c202b73e50e3.jpg"
+            "imageUrl": "https://i.pinimg.com/1200x/e7/7a/89/e77a8980de2368500805c202b73e50e3.jpg"
           }
         },
         {
@@ -1198,11 +1208,7 @@
               "description": "Lê Lợi khởi nghĩa Lam Sơn"
             }
           ],
-          "correctOrder": [
-            "e1",
-            "e2",
-            "e3"
-          ],
+          "correctOrder": ["e1", "e2", "e3"],
           "points": 100
         }
       ],
@@ -1468,11 +1474,7 @@
               "title": "Chữ Quốc Ngữ phổ cập"
             }
           ],
-          "correctOrder": [
-            "e1",
-            "e2",
-            "e3"
-          ]
+          "correctOrder": ["e1", "e2", "e3"]
         }
       ],
       "rewards": {
@@ -1944,12 +1946,8 @@
       "status": "published",
       "isActive": true,
       "views": 4,
-      "relatedHeritageIds": [
-        2
-      ],
-      "relatedArtifactIds": [
-        2
-      ],
+      "relatedHeritageIds": [2],
+      "relatedArtifactIds": [2],
       "timelineEvents": [
         {
           "year": "1953",
@@ -1996,14 +1994,8 @@
           "publishDate": "2024-08-05T09:30:00Z",
           "description": "<p>Ho&agrave;ng th&agrave;nh Thăng Long l&agrave; quần thể di t&iacute;ch lịch sử gắn b&oacute; mật thiết với sự ph&aacute;t triển của Thăng Long &ndash; H&agrave; Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII &ndash; IX), khu di t&iacute;ch tiếp tục ph&aacute;t triển qua c&aacute;c triều đại Đinh &ndash; Tiền L&ecirc; (thế kỷ XI) v&agrave; đạt đến đỉnh cao dưới thời L&yacute; &ndash; Trần &ndash; L&ecirc; (thế kỷ XI &ndash; XVIII). Dưới triều Nguyễn (thế kỷ XIX &ndash; XX), mặc d&ugrave; kinh đ&ocirc; được dời v&agrave;o Ph&uacute; Xu&acirc;n (Huế), nhưng Ho&agrave;ng th&agrave;nh Thăng Long vẫn giữ vai tr&ograve; quan trọng.</p>\n<p>Năm 1010, khi vua L&yacute; Th&aacute;i Tổ dời đ&ocirc; từ Hoa Lư ra Thăng Long, &ocirc;ng đ&atilde; quy hoạch kinh th&agrave;nh theo m&ocirc; h&igrave;nh &ldquo;tam tr&ugrave;ng th&agrave;nh qu&aacute;ch&rdquo;, gồm ba v&ograve;ng th&agrave;nh: Kinh th&agrave;nh (nơi cư d&acirc;n sinh sống), Ho&agrave;ng th&agrave;nh (khu vực d&agrave;nh cho quan lại l&agrave;m việc) v&agrave; Cấm th&agrave;nh (khu vực chỉ d&agrave;nh ri&ecirc;ng cho ho&agrave;ng gia). Từ thế kỷ XI đến XVIII, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n l&agrave; trung t&acirc;m ch&iacute;nh trị, h&agrave;nh ch&iacute;nh của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đ&ocirc; v&agrave;o Ph&uacute; Xu&acirc;n, Thăng Long bị hạ cấp th&agrave;nh Bắc Th&agrave;nh (th&agrave;nh H&agrave; Nội). D&ugrave; vậy, điện K&iacute;nh Thi&ecirc;n v&agrave; Hậu L&acirc;u trong Cấm th&agrave;nh vẫn được duy tr&igrave; l&agrave;m h&agrave;nh cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p>\n<p>Sang thời kỳ Ph&aacute;p thuộc, H&agrave; Nội trở th&agrave;nh trung t&acirc;m h&agrave;nh ch&iacute;nh của Li&ecirc;n bang Đ&ocirc;ng Dương, v&agrave; Th&agrave;nh cổ H&agrave; Nội được sử dụng l&agrave;m Sở chỉ huy qu&acirc;n sự của Ph&aacute;p. L&uacute;c n&agrave;y, hầu hết c&aacute;c c&ocirc;ng tr&igrave;nh cung điện, đền đ&agrave;i trong Ho&agrave;ng th&agrave;nh đều bị ph&aacute; hủy, chỉ c&ograve;n Bắc M&ocirc;n v&agrave; Kỳ Đ&agrave;i được bảo tồn. Tr&ecirc;n nền điện K&iacute;nh Thi&ecirc;n v&agrave; s&acirc;n Long Tr&igrave;, người Ph&aacute;p x&acirc;y dựng c&aacute;c c&ocirc;ng tr&igrave;nh kiến tr&uacute;c mới theo phong c&aacute;ch ch&acirc;u &Acirc;u. Đến năm 1954, sau khi Thủ đ&ocirc; được giải ph&oacute;ng, Th&agrave;nh H&agrave; Nội trở th&agrave;nh Tổng h&agrave;nh dinh của Qu&acirc;n đội nh&acirc;n d&acirc;n Việt Nam v&agrave; duy tr&igrave; vai tr&ograve; n&agrave;y đến năm 2004.</p>\n<p>Ng&agrave;y nay, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long, gồm di t&iacute;ch khảo cổ học 18 Ho&agrave;ng Diệu v&agrave; Th&agrave;nh cổ H&agrave; Nội, nằm trong khu vực trung t&acirc;m ch&iacute;nh trị Ba Đ&igrave;nh &ndash; nơi đặt trụ sở của c&aacute;c cơ quan l&atilde;nh đạo cao nhất của Đảng v&agrave; Nh&agrave; nước. Đ&acirc;y kh&ocirc;ng chỉ l&agrave; một khu di t&iacute;ch lịch sử &ndash; văn h&oacute;a quan trọng m&agrave; c&ograve;n l&agrave; kh&ocirc;ng gian kiến tr&uacute;c mang gi&aacute; trị đặc biệt, gắn liền chặc chẽ với qu&aacute; tr&igrave;nh ph&aacute;t triển của đất nước. Đ&acirc;y cũng l&agrave; nơi tổ chức c&aacute;c sự kiện ch&iacute;nh trị, văn h&oacute;a trọng đại của quốc gia.</p>\n<h3>Vị thế v&agrave; tầm v&oacute;c</h3>\n<p>Trải qua 13 thế kỷ, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n giữ vị thế trung t&acirc;m ch&iacute;nh trị v&agrave; l&agrave; một trong những di t&iacute;ch quan trọng nhất của Việt Nam. Ng&agrave;y 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long &ndash; H&agrave; Nội ch&iacute;nh thức được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a thế giới. Gi&aacute; trị nổi bật của di sản n&agrave;y thể hiện qua chiều d&agrave;i lịch sử li&ecirc;n tục suốt 13 thế kỷ, vai tr&ograve; l&agrave; trung t&acirc;m quyền lực trong nhiều thời kỳ v&agrave; hệ thống di t&iacute;ch, di vật phong ph&uacute;. Đ&acirc;y cũng l&agrave; nơi lưu giữ những dấu ấn văn h&oacute;a quan trọng v&agrave; chứng kiến nhiều sự kiện mang tầm v&oacute;c lớn lao trong lịch sử d&acirc;n tộc.</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://i.pinimg.com/1200x/ea/42/15/ea4215828ac658b735472adfddf13132.jpg\"></p>\n<h3>C&aacute;c di vật được khảo cổ, khai quật trong Ho&agrave;ng Th&agrave;nh Thăng Long</h3>\n<p>C&aacute;c di vật được khai quật v&agrave; hiện đang trưng b&agrave;y ở Khu khảo cổ 18 Ho&agrave;ng Diệu.</p>\n<p>Thềm chia l&agrave;m 3 lối l&ecirc;n xuống đều nhau, lối giữa ngăn c&aacute;ch với 2 lối b&ecirc;n bằng đ&ocirc;i rồng đ&aacute; được x&acirc;y dựng năm 1467 ( đời vua L&ecirc; Th&aacute;nh T&ocirc;ng ). Rồng được tạo t&aacute;c kh&aacute; đẹp v&agrave; trau chuốt, tạo khối kiểu tượng tr&ograve;n c&oacute; d&aacute;ng mập, khỏe, đầu vươn cao ph&iacute;a ch&acirc;n thềm bậc, th&acirc;n uốn kh&uacute;c nhịp nh&agrave;ng v&agrave; chạy d&agrave;i theo 9 bậc l&ecirc;n. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, r&acirc;u v&agrave; t&oacute;c kết th&agrave;nh đao bay về sau.</p>\n<p>Tai rồng lớn kiểu tai tr&acirc;u, sừng đơn vươn d&agrave;i ra ph&iacute;a sau v&agrave; &aacute;p s&aacute;t th&acirc;n rồng. Dọc sống lưng đục chạm h&agrave;ng v&acirc;y c&aacute; to, mập. B&ecirc;n ngo&agrave;i bậc thềm c&oacute; 2 lan can h&igrave;nh rồng c&aacute;ch điệu dạng ph&ugrave; đi&ecirc;u ( gọi l&agrave; v&acirc;n h&oacute;a rồng ), mặt trong trang tr&iacute; v&acirc;n m&acirc;y, b&ecirc;n ngo&agrave;i thể hiện hoa c&uacute;c d&acirc;y. C&aacute;c hoa văn n&agrave;y được phủ k&iacute;n mặt ngo&agrave;i của th&acirc;n rồng đ&aacute; c&aacute;ch điệu.</p>\n<p>Ph&iacute;a ngo&agrave;i l&agrave; hai đ&aacute;m m&acirc;y h&oacute;a rồng. Đ&acirc;y l&agrave; hai tảng đ&aacute; nguy&ecirc;n khối d&agrave;y 36 &ndash; 39 cm, phần đầu thấp d&agrave;y hơn, c&oacute; những đường cuốn cắt ngang c&ugrave;ng những đường gờ nổi nối tiếp nhau chạy hết chiều d&agrave;i phiến đ&aacute; 5,3 m, những đường gờ nổi kh&ocirc;ng theo quy luật.</p>\n<p>Mặt trong v&agrave; ngo&agrave;i của hai con rồng c&aacute;ch điệu n&agrave;y trang tr&iacute; hoa văn, họa tiết khắc ch&igrave;m v&agrave;o đ&aacute;. Ph&iacute;a ngo&agrave;i, c&oacute; hai đường thẳng chạy dọc theo th&acirc;n rồng c&aacute;ch nhau 10 cm, chia đ&ocirc;i th&agrave;nh hai nửa tr&ecirc;n dưới, b&ecirc;n trong l&agrave; những b&ocirc;ng hoa bốn c&aacute;nh xếp liền nhau. Nửa tr&ecirc;n l&agrave; những cuộn m&acirc;y, đao lửa &iacute;t theo quy luật r&otilde; rang, nửa dưới l&agrave; những h&igrave;nh ảnh mặt trời c&aacute;ch điệu, đao lửa, m&acirc;y vờn. Ph&iacute;a mặt trong của phiến đ&aacute; do c&oacute; bậc thềm cao n&ecirc;n diện t&iacute;ch trạm khắc &iacute;t hơn, một đường thẳng b&ecirc;n tr&ecirc;n l&agrave; những cuộn m&acirc;y nhỏ dẫn từ dưới thấp l&ecirc;n cao.</p>",
           "commentCount": 85,
-          "relatedArtifactIds": [
-            7,
-            8,
-            9
-          ],
-          "relatedHistoryIds": [
-            1
-          ],
+          "relatedArtifactIds": [7, 8, 9],
+          "relatedHistoryIds": [1],
           "shortDescription": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
           "province": "Hà Nội",
           "gallery": [],
@@ -2295,11 +2287,7 @@
                   "description": "Lê Lợi khởi nghĩa Lam Sơn thành công."
                 }
               ],
-              "correctOrder": [
-                "e1",
-                "e2",
-                "e3"
-              ]
+              "correctOrder": ["e1", "e2", "e3"]
             },
             {
               "id": "demo_image",
@@ -2313,7 +2301,7 @@
               "content": {
                 "title": "Chùa Một Cột",
                 "description": "Biểu tượng văn hóa tâm linh độc đáo của Hà Nội, được xây dựng từ thời Lý.",
-                "image_url": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800"
+                "imageUrl": "https://images.unsplash.com/photo-1599525281489-0824b223c285?w=800"
               }
             },
             {
@@ -2400,14 +2388,8 @@
           "publishDate": "2024-08-05T09:30:00Z",
           "description": "<p>Ho&agrave;ng th&agrave;nh Thăng Long l&agrave; quần thể di t&iacute;ch lịch sử gắn b&oacute; mật thiết với sự ph&aacute;t triển của Thăng Long &ndash; H&agrave; Nội trong suốt 13 thế kỷ. Khởi nguồn từ thời kỳ tiền Thăng Long (thế kỷ VII &ndash; IX), khu di t&iacute;ch tiếp tục ph&aacute;t triển qua c&aacute;c triều đại Đinh &ndash; Tiền L&ecirc; (thế kỷ XI) v&agrave; đạt đến đỉnh cao dưới thời L&yacute; &ndash; Trần &ndash; L&ecirc; (thế kỷ XI &ndash; XVIII). Dưới triều Nguyễn (thế kỷ XIX &ndash; XX), mặc d&ugrave; kinh đ&ocirc; được dời v&agrave;o Ph&uacute; Xu&acirc;n (Huế), nhưng Ho&agrave;ng th&agrave;nh Thăng Long vẫn giữ vai tr&ograve; quan trọng.</p>\n<p>Năm 1010, khi vua L&yacute; Th&aacute;i Tổ dời đ&ocirc; từ Hoa Lư ra Thăng Long, &ocirc;ng đ&atilde; quy hoạch kinh th&agrave;nh theo m&ocirc; h&igrave;nh &ldquo;tam tr&ugrave;ng th&agrave;nh qu&aacute;ch&rdquo;, gồm ba v&ograve;ng th&agrave;nh: Kinh th&agrave;nh (nơi cư d&acirc;n sinh sống), Ho&agrave;ng th&agrave;nh (khu vực d&agrave;nh cho quan lại l&agrave;m việc) v&agrave; Cấm th&agrave;nh (khu vực chỉ d&agrave;nh ri&ecirc;ng cho ho&agrave;ng gia). Từ thế kỷ XI đến XVIII, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n l&agrave; trung t&acirc;m ch&iacute;nh trị, h&agrave;nh ch&iacute;nh của đất nước Đại Việt. Đến thế kỷ XIX, khi triều Nguyễn chuyển kinh đ&ocirc; v&agrave;o Ph&uacute; Xu&acirc;n, Thăng Long bị hạ cấp th&agrave;nh Bắc Th&agrave;nh (th&agrave;nh H&agrave; Nội). D&ugrave; vậy, điện K&iacute;nh Thi&ecirc;n v&agrave; Hậu L&acirc;u trong Cấm th&agrave;nh vẫn được duy tr&igrave; l&agrave;m h&agrave;nh cung cho vua Nguyễn mỗi khi tuần du ra Bắc.</p>\n<p>Sang thời kỳ Ph&aacute;p thuộc, H&agrave; Nội trở th&agrave;nh trung t&acirc;m h&agrave;nh ch&iacute;nh của Li&ecirc;n bang Đ&ocirc;ng Dương, v&agrave; Th&agrave;nh cổ H&agrave; Nội được sử dụng l&agrave;m Sở chỉ huy qu&acirc;n sự của Ph&aacute;p. L&uacute;c n&agrave;y, hầu hết c&aacute;c c&ocirc;ng tr&igrave;nh cung điện, đền đ&agrave;i trong Ho&agrave;ng th&agrave;nh đều bị ph&aacute; hủy, chỉ c&ograve;n Bắc M&ocirc;n v&agrave; Kỳ Đ&agrave;i được bảo tồn. Tr&ecirc;n nền điện K&iacute;nh Thi&ecirc;n v&agrave; s&acirc;n Long Tr&igrave;, người Ph&aacute;p x&acirc;y dựng c&aacute;c c&ocirc;ng tr&igrave;nh kiến tr&uacute;c mới theo phong c&aacute;ch ch&acirc;u &Acirc;u. Đến năm 1954, sau khi Thủ đ&ocirc; được giải ph&oacute;ng, Th&agrave;nh H&agrave; Nội trở th&agrave;nh Tổng h&agrave;nh dinh của Qu&acirc;n đội nh&acirc;n d&acirc;n Việt Nam v&agrave; duy tr&igrave; vai tr&ograve; n&agrave;y đến năm 2004.</p>\n<p>Ng&agrave;y nay, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long, gồm di t&iacute;ch khảo cổ học 18 Ho&agrave;ng Diệu v&agrave; Th&agrave;nh cổ H&agrave; Nội, nằm trong khu vực trung t&acirc;m ch&iacute;nh trị Ba Đ&igrave;nh &ndash; nơi đặt trụ sở của c&aacute;c cơ quan l&atilde;nh đạo cao nhất của Đảng v&agrave; Nh&agrave; nước. Đ&acirc;y kh&ocirc;ng chỉ l&agrave; một khu di t&iacute;ch lịch sử &ndash; văn h&oacute;a quan trọng m&agrave; c&ograve;n l&agrave; kh&ocirc;ng gian kiến tr&uacute;c mang gi&aacute; trị đặc biệt, gắn liền chặc chẽ với qu&aacute; tr&igrave;nh ph&aacute;t triển của đất nước. Đ&acirc;y cũng l&agrave; nơi tổ chức c&aacute;c sự kiện ch&iacute;nh trị, văn h&oacute;a trọng đại của quốc gia.</p>\n<h3>Vị thế v&agrave; tầm v&oacute;c</h3>\n<p>Trải qua 13 thế kỷ, Ho&agrave;ng th&agrave;nh Thăng Long lu&ocirc;n giữ vị thế trung t&acirc;m ch&iacute;nh trị v&agrave; l&agrave; một trong những di t&iacute;ch quan trọng nhất của Việt Nam. Ng&agrave;y 31/7/2010, tại kỳ họp lần thứ 34 của Ủy ban Di sản thế giới diễn ra tại Brazil, Khu trung t&acirc;m Ho&agrave;ng th&agrave;nh Thăng Long &ndash; H&agrave; Nội ch&iacute;nh thức được UNESCO c&ocirc;ng nhận l&agrave; Di sản văn h&oacute;a thế giới. Gi&aacute; trị nổi bật của di sản n&agrave;y thể hiện qua chiều d&agrave;i lịch sử li&ecirc;n tục suốt 13 thế kỷ, vai tr&ograve; l&agrave; trung t&acirc;m quyền lực trong nhiều thời kỳ v&agrave; hệ thống di t&iacute;ch, di vật phong ph&uacute;. Đ&acirc;y cũng l&agrave; nơi lưu giữ những dấu ấn văn h&oacute;a quan trọng v&agrave; chứng kiến nhiều sự kiện mang tầm v&oacute;c lớn lao trong lịch sử d&acirc;n tộc.</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://i.pinimg.com/1200x/ea/42/15/ea4215828ac658b735472adfddf13132.jpg\"></p>\n<h3>C&aacute;c di vật được khảo cổ, khai quật trong Ho&agrave;ng Th&agrave;nh Thăng Long</h3>\n<p>C&aacute;c di vật được khai quật v&agrave; hiện đang trưng b&agrave;y ở Khu khảo cổ 18 Ho&agrave;ng Diệu.</p>\n<p>Thềm chia l&agrave;m 3 lối l&ecirc;n xuống đều nhau, lối giữa ngăn c&aacute;ch với 2 lối b&ecirc;n bằng đ&ocirc;i rồng đ&aacute; được x&acirc;y dựng năm 1467 ( đời vua L&ecirc; Th&aacute;nh T&ocirc;ng ). Rồng được tạo t&aacute;c kh&aacute; đẹp v&agrave; trau chuốt, tạo khối kiểu tượng tr&ograve;n c&oacute; d&aacute;ng mập, khỏe, đầu vươn cao ph&iacute;a ch&acirc;n thềm bậc, th&acirc;n uốn kh&uacute;c nhịp nh&agrave;ng v&agrave; chạy d&agrave;i theo 9 bậc l&ecirc;n. Đầu rồng lớn, miệng ngậm ngọc, mũi nở, mắt lồi, r&acirc;u v&agrave; t&oacute;c kết th&agrave;nh đao bay về sau.</p>\n<p>Tai rồng lớn kiểu tai tr&acirc;u, sừng đơn vươn d&agrave;i ra ph&iacute;a sau v&agrave; &aacute;p s&aacute;t th&acirc;n rồng. Dọc sống lưng đục chạm h&agrave;ng v&acirc;y c&aacute; to, mập. B&ecirc;n ngo&agrave;i bậc thềm c&oacute; 2 lan can h&igrave;nh rồng c&aacute;ch điệu dạng ph&ugrave; đi&ecirc;u ( gọi l&agrave; v&acirc;n h&oacute;a rồng ), mặt trong trang tr&iacute; v&acirc;n m&acirc;y, b&ecirc;n ngo&agrave;i thể hiện hoa c&uacute;c d&acirc;y. C&aacute;c hoa văn n&agrave;y được phủ k&iacute;n mặt ngo&agrave;i của th&acirc;n rồng đ&aacute; c&aacute;ch điệu.</p>\n<p>Ph&iacute;a ngo&agrave;i l&agrave; hai đ&aacute;m m&acirc;y h&oacute;a rồng. Đ&acirc;y l&agrave; hai tảng đ&aacute; nguy&ecirc;n khối d&agrave;y 36 &ndash; 39 cm, phần đầu thấp d&agrave;y hơn, c&oacute; những đường cuốn cắt ngang c&ugrave;ng những đường gờ nổi nối tiếp nhau chạy hết chiều d&agrave;i phiến đ&aacute; 5,3 m, những đường gờ nổi kh&ocirc;ng theo quy luật.</p>\n<p>Mặt trong v&agrave; ngo&agrave;i của hai con rồng c&aacute;ch điệu n&agrave;y trang tr&iacute; hoa văn, họa tiết khắc ch&igrave;m v&agrave;o đ&aacute;. Ph&iacute;a ngo&agrave;i, c&oacute; hai đường thẳng chạy dọc theo th&acirc;n rồng c&aacute;ch nhau 10 cm, chia đ&ocirc;i th&agrave;nh hai nửa tr&ecirc;n dưới, b&ecirc;n trong l&agrave; những b&ocirc;ng hoa bốn c&aacute;nh xếp liền nhau. Nửa tr&ecirc;n l&agrave; những cuộn m&acirc;y, đao lửa &iacute;t theo quy luật r&otilde; rang, nửa dưới l&agrave; những h&igrave;nh ảnh mặt trời c&aacute;ch điệu, đao lửa, m&acirc;y vờn. Ph&iacute;a mặt trong của phiến đ&aacute; do c&oacute; bậc thềm cao n&ecirc;n diện t&iacute;ch trạm khắc &iacute;t hơn, một đường thẳng b&ecirc;n tr&ecirc;n l&agrave; những cuộn m&acirc;y nhỏ dẫn từ dưới thấp l&ecirc;n cao.</p>\n<p><em>Nguồn: https://hoidisanvanhoa.vn/hoang-thanh-thang-long-bieu-tuong-lich-su-van-hoa-dai-viet/</em></p>",
           "commentCount": 85,
-          "relatedArtifactIds": [
-            7,
-            8,
-            9
-          ],
-          "relatedHistoryIds": [
-            1
-          ],
+          "relatedArtifactIds": [7, 8, 9],
+          "relatedHistoryIds": [1],
           "shortDescription": "Hoàng thành Thăng Long được xây dựng năm 1010, khi vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La và đặt tên kinh đô là Thăng Long. Đây là trung tâm quyền lực chính trị của Việt Nam suốt hơn một nghìn năm qua nhiều triều đại. Hoàng thành mang giá trị to lớn về lịch sử, văn hoá và là Di sản Văn hoá Thế giới được UNESCO công nhận.",
           "province": "Hà Nội",
           "gallery": [],
@@ -2530,8 +2512,8 @@
       "relatedArtifactIds": [],
       "createdBy": 2,
       "createdAt": "2026-02-05T17:22:39.112Z",
-      "updatedAt": "2026-02-05T17:25:34.078Z",
-      "status": "published",
+      "updatedAt": "2026-02-10T11:23:54.358Z",
+      "status": "draft",
       "review_comment": null,
       "views": 2
     },
@@ -2542,14 +2524,14 @@
       "content": "<p>hi</p>",
       "image": "",
       "gallery": [],
-      "publishDate": "2026-02-06T12:12:03.709Z",
+      "publishDate": "2026-02-10T14:20:22.679Z",
       "isActive": true,
       "relatedHeritageIds": [],
       "relatedArtifactIds": [],
       "createdBy": 2,
-      "status": "pending",
+      "status": "published",
       "createdAt": "2026-02-06T12:12:14.330Z",
-      "updatedAt": "2026-02-06T12:18:54.120Z",
+      "updatedAt": "2026-02-10T14:20:22.679Z",
       "review_comment": null
     }
   ],
@@ -2604,13 +2586,8 @@
       "description": "Bộ sưu tập các cổ vật đặc sắc thời Lý",
       "visibility": "public",
       "totalItems": 2,
-      "heritageSiteIds": [
-        2,
-        5
-      ],
-      "artifactIds": [
-        3
-      ],
+      "heritageSiteIds": [2, 5],
+      "artifactIds": [3],
       "exhibitionIds": [],
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2026-01-19T01:50:38.397Z",
@@ -2860,8 +2837,508 @@
       "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
-  "game_progress": [],
-  "game_sessions": [],
+  "game_progress": [
+    {
+      "id": 1,
+      "userId": 3,
+      "currentChapter": 1,
+      "totalSenPetals": 84,
+      "totalPoints": 579,
+      "level": 1,
+      "coins": 2001,
+      "unlockedChapters": [1],
+      "completedLevels": [1, 2, 3, 4, 19],
+      "collectedCharacters": [],
+      "badges": [
+        "quiz_master",
+        {
+          "id": 1,
+          "name": "Nhà thám hiểm",
+          "icon": "🗺️",
+          "earnedAt": "2026-02-10T07:34:08.188Z"
+        },
+        "beginner_explorer"
+      ],
+      "achievements": [],
+      "museumOpen": false,
+      "museumIncome": 0,
+      "streakDays": 1,
+      "lastRewardClaim": "2026-02-01T17:30:06.126Z",
+      "lastLogin": "2026-02-01T17:30:03.415Z",
+      "createdAt": "2026-02-01T17:30:03.415Z",
+      "completedModules": [],
+      "completedQuestsCount": 3,
+      "finishedChapters": [1]
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "currentChapter": 1,
+      "totalSenPetals": 0,
+      "totalPoints": 0,
+      "level": 1,
+      "coins": 1000,
+      "unlockedChapters": [1],
+      "completedLevels": [],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": false,
+      "museumIncome": 0,
+      "streakDays": 0,
+      "lastRewardClaim": null,
+      "lastLogin": "2026-02-04T15:23:38.338Z",
+      "createdAt": "2026-02-04T15:23:38.338Z",
+      "completedModules": [],
+      "completedQuestsCount": 0
+    }
+  ],
+  "game_sessions": [
+    {
+      "id": 1,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-02-09T14:47:35.533Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 159,
+      "totalScreens": 4,
+      "completedScreens": ["intro_d1", "intro_d2", "story_video", "intro_q1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-09T14:47:27.009Z",
+      "lastActivity": "2026-02-09T14:47:36.335Z",
+      "completedAt": "2026-02-09T14:47:36.358Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-02-09T15:08:10.110Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 158,
+      "totalScreens": 4,
+      "completedScreens": ["intro_d1", "intro_d2", "story_video", "intro_q1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-09T15:08:00.929Z",
+      "lastActivity": "2026-02-09T15:08:11.970Z",
+      "completedAt": "2026-02-09T15:08:11.985Z"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-02-09T15:11:17.255Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 158,
+      "totalScreens": 4,
+      "completedScreens": ["intro_d1", "intro_d2", "story_video", "intro_q1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-09T15:11:04.815Z",
+      "lastActivity": "2026-02-09T15:11:18.333Z",
+      "completedAt": "2026-02-09T15:11:18.350Z"
+    },
+    {
+      "id": 4,
+      "userId": 3,
+      "levelId": 2,
+      "status": "abandoned",
+      "currentScreenId": "img_drum_detail",
+      "currentScreenIndex": 2,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 70,
+      "totalScreens": 4,
+      "completedScreens": ["ho_intro", "ho_1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-09T15:11:34.308Z",
+      "lastActivity": "2026-02-09T15:11:47.620Z",
+      "expiredAt": "2026-02-09T15:11:48.053Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "levelId": 2,
+      "status": "completed",
+      "currentScreenId": "quiz_drum",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "quiz_drum",
+          "answer": "Đồng",
+          "isCorrect": true,
+          "points": 40,
+          "answeredAt": "2026-02-09T15:12:04.295Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 130,
+      "totalScreens": 4,
+      "completedScreens": ["ho_intro", "ho_1", "img_drum_detail", "quiz_drum"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-09T15:11:48.057Z",
+      "lastActivity": "2026-02-09T15:12:04.995Z",
+      "completedAt": "2026-02-09T15:12:05.010Z"
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-02-10T07:33:50.174Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 159,
+      "totalScreens": 4,
+      "completedScreens": ["intro_d1", "intro_d2", "story_video", "intro_q1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-10T07:33:45.307Z",
+      "lastActivity": "2026-02-10T07:33:50.792Z",
+      "completedAt": "2026-02-10T07:33:50.821Z"
+    },
+    {
+      "id": 7,
+      "userId": 3,
+      "levelId": 3,
+      "status": "completed",
+      "currentScreenId": "tl_1",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": ["e1", "e2", "e3"],
+      "score": 100,
+      "totalScreens": 1,
+      "completedScreens": ["tl_1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-10T07:33:53.329Z",
+      "lastActivity": "2026-02-10T07:33:55.185Z",
+      "completedAt": "2026-02-10T07:33:55.207Z"
+    },
+    {
+      "id": 8,
+      "userId": 3,
+      "levelId": 4,
+      "status": "completed",
+      "currentScreenId": "q_quanho",
+      "currentScreenIndex": 2,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "q_ha",
+          "answer": "Thừa Thiên Huế",
+          "isCorrect": false,
+          "points": 0,
+          "answeredAt": "2026-02-10T07:34:00.380Z"
+        },
+        {
+          "screenId": "q_quanho",
+          "answer": "Kinh Bắc (Bắc Ninh, Bắc Giang)",
+          "isCorrect": true,
+          "points": 20,
+          "answeredAt": "2026-02-10T07:34:04.057Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 30,
+      "totalScreens": 3,
+      "completedScreens": ["vid_1", "q_ha", "q_quanho"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-10T07:33:57.170Z",
+      "lastActivity": "2026-02-10T07:34:04.476Z",
+      "completedAt": "2026-02-10T07:34:04.505Z"
+    },
+    {
+      "id": 9,
+      "userId": 3,
+      "levelId": 19,
+      "status": "completed",
+      "currentScreenId": "intro",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 10,
+      "totalScreens": 1,
+      "completedScreens": ["intro"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-10T07:34:07.100Z",
+      "lastActivity": "2026-02-10T07:34:08.145Z",
+      "completedAt": "2026-02-10T07:34:08.165Z"
+    },
+    {
+      "id": 10,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-02-11T10:10:54.606Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 158,
+      "totalScreens": 4,
+      "completedScreens": ["intro_d1", "intro_d2", "story_video", "intro_q1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T10:10:43.865Z",
+      "lastActivity": "2026-02-11T10:10:56.215Z",
+      "completedAt": "2026-02-11T10:10:56.231Z"
+    },
+    {
+      "id": 11,
+      "userId": 3,
+      "levelId": 2,
+      "status": "completed",
+      "currentScreenId": "quiz_drum",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "quiz_drum",
+          "answer": "Đồng",
+          "isCorrect": true,
+          "points": 40,
+          "answeredAt": "2026-02-11T10:15:49.869Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 120,
+      "totalScreens": 4,
+      "completedScreens": ["ho_intro", "ho_1", "img_drum_detail", "quiz_drum"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T10:11:02.116Z",
+      "lastActivity": "2026-02-11T10:15:50.327Z",
+      "completedAt": "2026-02-11T10:15:50.343Z"
+    },
+    {
+      "id": 12,
+      "userId": 3,
+      "levelId": 2,
+      "status": "completed",
+      "currentScreenId": "quiz_drum",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "quiz_drum",
+          "answer": "Đồng",
+          "isCorrect": true,
+          "points": 40,
+          "answeredAt": "2026-02-11T10:32:41.869Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 120,
+      "totalScreens": 4,
+      "completedScreens": ["ho_intro", "ho_1", "img_drum_detail", "quiz_drum"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T10:29:21.970Z",
+      "lastActivity": "2026-02-11T10:32:56.370Z",
+      "completedAt": "2026-02-11T10:32:56.388Z"
+    },
+    {
+      "id": 13,
+      "userId": 3,
+      "levelId": 2,
+      "status": "abandoned",
+      "currentScreenId": "img_drum_detail",
+      "currentScreenIndex": 2,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 70,
+      "totalScreens": 4,
+      "completedScreens": ["ho_intro", "ho_1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T10:34:35.060Z",
+      "lastActivity": "2026-02-11T10:34:47.780Z",
+      "expiredAt": "2026-02-11T10:35:39.695Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 14,
+      "userId": 3,
+      "levelId": 2,
+      "status": "abandoned",
+      "currentScreenId": "img_drum_detail",
+      "currentScreenIndex": 2,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 70,
+      "totalScreens": 4,
+      "completedScreens": ["ho_intro", "ho_1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T10:35:39.702Z",
+      "lastActivity": "2026-02-11T10:35:48.022Z",
+      "expiredAt": "2026-02-11T10:36:13.491Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 15,
+      "userId": 3,
+      "levelId": 2,
+      "status": "abandoned",
+      "currentScreenId": "img_drum_detail",
+      "currentScreenIndex": 2,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 70,
+      "totalScreens": 4,
+      "completedScreens": ["ho_intro", "ho_1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T10:36:13.496Z",
+      "lastActivity": "2026-02-11T10:36:20.497Z",
+      "expiredAt": "2026-02-11T10:38:34.659Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 16,
+      "userId": 3,
+      "levelId": 2,
+      "status": "abandoned",
+      "currentScreenId": "ho_intro",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 0,
+      "totalScreens": 4,
+      "completedScreens": [],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T10:38:34.665Z",
+      "lastActivity": "2026-02-11T10:38:34.665Z",
+      "expiredAt": "2026-02-11T10:56:02.241Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 17,
+      "userId": 3,
+      "levelId": 2,
+      "status": "abandoned",
+      "currentScreenId": "ho_intro",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 0,
+      "totalScreens": 4,
+      "completedScreens": [],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T10:56:02.244Z",
+      "lastActivity": "2026-02-11T10:56:02.244Z",
+      "expiredAt": "2026-02-11T11:24:21.918Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 18,
+      "userId": 3,
+      "levelId": 2,
+      "status": "in_progress",
+      "currentScreenId": "img_drum_detail",
+      "currentScreenIndex": 2,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 70,
+      "totalScreens": 4,
+      "completedScreens": ["ho_intro", "ho_1"],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-11T11:24:21.924Z",
+      "lastActivity": "2026-02-11T11:24:32.145Z"
+    }
+  ],
   "learning_modules": [
     {
       "id": 1,
@@ -2881,60 +3358,35 @@
           {
             "id": 1,
             "question": "Lạc Long Quân là con của ai?",
-            "options": [
-              "Kinh Dương Vương",
-              "Lê Lợi",
-              "Thánh Gióng",
-              "Vua Hùng"
-            ],
+            "options": ["Kinh Dương Vương", "Lê Lợi", "Thánh Gióng", "Vua Hùng"],
             "correctAnswer": 0,
             "point": 20
           },
           {
             "id": 2,
             "question": "Âu Cơ sinh ra bao nhiêu người con?",
-            "options": [
-              "50",
-              "100",
-              "10",
-              "2"
-            ],
+            "options": ["50", "100", "10", "2"],
             "correctAnswer": 1,
             "point": 20
           },
           {
             "id": 3,
             "question": "Lạc Long Quân đưa 50 con đi đâu?",
-            "options": [
-              "Lên núi",
-              "Xuống biển",
-              "Về trời",
-              "Ở lại đất liền"
-            ],
+            "options": ["Lên núi", "Xuống biển", "Về trời", "Ở lại đất liền"],
             "correctAnswer": 1,
             "point": 20
           },
           {
             "id": 4,
             "question": "Âu Cơ đưa 50 con đi đâu?",
-            "options": [
-              "Lên núi",
-              "Xuống biển",
-              "Về trời",
-              "Ở lại đất liền"
-            ],
+            "options": ["Lên núi", "Xuống biển", "Về trời", "Ở lại đất liền"],
             "correctAnswer": 0,
             "point": 20
           },
           {
             "id": 5,
             "question": "Người con trưởng theo Âu Cơ đã lập ra nhà nước nào?",
-            "options": [
-              "Văn Lang",
-              "Âu Lạc",
-              "Đại Việt",
-              "Đại Cồ Việt"
-            ],
+            "options": ["Văn Lang", "Âu Lạc", "Đại Việt", "Đại Cồ Việt"],
             "correctAnswer": 0,
             "point": 20
           }
@@ -2961,36 +3413,21 @@
           {
             "id": 1,
             "question": "Nhà nước đầu tiên của Việt Nam có tên là gì?",
-            "options": [
-              "Âu Lạc",
-              "Văn Lang",
-              "Vạn Xuân",
-              "Đại Việt"
-            ],
+            "options": ["Âu Lạc", "Văn Lang", "Vạn Xuân", "Đại Việt"],
             "correctAnswer": 1,
             "point": 30
           },
           {
             "id": 2,
             "question": "Hiện vật nào là biểu tượng của văn hóa Đông Sơn?",
-            "options": [
-              "Trống đồng",
-              "Tháp Chàm",
-              "Bia đá",
-              "Cung điện"
-            ],
+            "options": ["Trống đồng", "Tháp Chàm", "Bia đá", "Cung điện"],
             "correctAnswer": 0,
             "point": 40
           },
           {
             "id": 3,
             "question": "Các Vua Hùng đóng đô ở đâu?",
-            "options": [
-              "Phong Châu",
-              "Cổ Loa",
-              "Thăng Long",
-              "Huế"
-            ],
+            "options": ["Phong Châu", "Cổ Loa", "Thăng Long", "Huế"],
             "correctAnswer": 0,
             "point": 30
           }
@@ -3017,36 +3454,21 @@
           {
             "id": 1,
             "question": "Ai là người chỉ huy trận Bạch Đằng năm 938?",
-            "options": [
-              "Trần Hưng Đạo",
-              "Ngô Quyền",
-              "Lê Hoàn",
-              "Lý Thường Kiệt"
-            ],
+            "options": ["Trần Hưng Đạo", "Ngô Quyền", "Lê Hoàn", "Lý Thường Kiệt"],
             "correctAnswer": 1,
             "point": 50
           },
           {
             "id": 2,
             "question": "Quân Nam Hán bị đánh bại trên sông nào?",
-            "options": [
-              "Sông Hồng",
-              "Sông Bạch Đằng",
-              "Sông Cầu",
-              "Sông Như Nguyệt"
-            ],
+            "options": ["Sông Hồng", "Sông Bạch Đằng", "Sông Cầu", "Sông Như Nguyệt"],
             "correctAnswer": 1,
             "point": 25
           },
           {
             "id": 3,
             "question": "Chiến thuật độc đáo được sử dụng là gì?",
-            "options": [
-              "Cắm cọc gỗ đầu bịt sắt",
-              "Vườn không nhà trống",
-              "Du kích",
-              "Dùng voi chiến"
-            ],
+            "options": ["Cắm cọc gỗ đầu bịt sắt", "Vườn không nhà trống", "Du kích", "Dùng voi chiến"],
             "correctAnswer": 0,
             "point": 25
           }
@@ -3073,36 +3495,21 @@
           {
             "id": 1,
             "question": "Văn Miếu được xây dựng dưới triều đại nào?",
-            "options": [
-              "Lý",
-              "Trần",
-              "Lê",
-              "Nguyễn"
-            ],
+            "options": ["Lý", "Trần", "Lê", "Nguyễn"],
             "correctAnswer": 0,
             "point": 25
           },
           {
             "id": 2,
             "question": "Công trình biểu tượng của Văn Miếu là gì?",
-            "options": [
-              "Khuê Văn Các",
-              "Tháp Rùa",
-              "Chùa Một Cột",
-              "Ngọ Môn"
-            ],
+            "options": ["Khuê Văn Các", "Tháp Rùa", "Chùa Một Cột", "Ngọ Môn"],
             "correctAnswer": 0,
             "point": 25
           },
           {
             "id": 3,
             "question": "Di sản tư liệu thế giới tại Văn Miếu là gì?",
-            "options": [
-              "Bia Tiến sĩ",
-              "Trống đồng",
-              "Chuông đồng",
-              "Sách cổ"
-            ],
+            "options": ["Bia Tiến sĩ", "Trống đồng", "Chuông đồng", "Sách cổ"],
             "correctAnswer": 0,
             "point": 50
           }
@@ -3127,18 +3534,15 @@
             "point": 10,
             "question": "content_type",
             "correctAnswer": 0,
-            "options": [
-              "content_type",
-              "content_type"
-            ],
+            "options": ["content_type", "content_type"],
             "id": 1770311636145
           }
         ]
       },
       "createdBy": 2,
-      "status": "pending",
+      "status": "published",
       "createdAt": "2026-02-05T17:13:56.233Z",
-      "updatedAt": "2026-02-06T13:00:07.237Z"
+      "updatedAt": "2026-02-10T11:51:03.657Z"
     }
   ],
   "user_progress": [
@@ -3170,9 +3574,7 @@
       "completedModules": [],
       "totalPoints": 300,
       "level": 2,
-      "badges": [
-        "hard_worker"
-      ]
+      "badges": ["hard_worker"]
     }
   ],
   "ai_chat_history": [
@@ -3337,7 +3739,76 @@
       "thumbnail": "https://i.pinimg.com/1200x/20/05/52/2005521af7ccf8b74cf4453ec32b62d4.jpg"
     }
   ],
-  "user_quests": [],
+  "user_quests": [
+    {
+      "id": 1,
+      "userId": 3,
+      "quest_id": 3,
+      "status": "claimed",
+      "current_value": 1,
+      "startedAt": "2026-01-29T07:49:54.473Z",
+      "completed_at": "2026-01-29T07:49:54.480Z",
+      "claimed_at": "2026-01-29T10:12:42.451Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "quest_id": 2,
+      "status": "claimed",
+      "current_value": 5,
+      "startedAt": "2026-01-29T07:50:01.638Z",
+      "completed_at": "2026-01-29T07:52:14.788Z",
+      "claimed_at": "2026-01-29T10:12:43.418Z"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "quest_id": 1,
+      "status": "claimed",
+      "current_value": 1,
+      "startedAt": "2026-01-29T07:50:37.037Z",
+      "completed_at": "2026-01-29T07:50:37.048Z",
+      "claimed_at": "2026-01-29T10:12:41.093Z"
+    },
+    {
+      "id": 4,
+      "userId": 3,
+      "questId": 3,
+      "status": "claimed",
+      "currentValue": 1,
+      "startedAt": "2026-02-09T14:47:35.550Z",
+      "completedAt": "2026-02-09T14:47:35.559Z",
+      "claimedAt": "2026-02-09T15:42:58.204Z"
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "questId": 2,
+      "status": "claimed",
+      "currentValue": 5,
+      "startedAt": "2026-02-09T15:11:39.422Z",
+      "completedAt": "2026-02-09T15:11:55.081Z",
+      "claimedAt": "2026-02-09T15:42:56.597Z"
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "questId": 1,
+      "status": "claimed",
+      "currentValue": 1,
+      "startedAt": "2026-02-10T07:33:36.676Z",
+      "completedAt": "2026-02-10T07:34:08.181Z",
+      "claimedAt": "2026-02-10T07:34:15.001Z"
+    },
+    {
+      "id": 7,
+      "userId": 3,
+      "questId": 4,
+      "status": "in_progress",
+      "currentValue": 0,
+      "startedAt": "2026-02-10T07:47:59.652Z"
+    }
+  ],
   "scan_history": [],
   "user_characters": [
     {
@@ -3346,6 +3817,30 @@
       "characterId": 1,
       "unlockedAt": "2026-02-02T17:19:47.621Z",
       "unlockType": "purchase"
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "userId": 3,
+      "type": "earn",
+      "source": "badge_reward",
+      "sourceId": 1,
+      "amount": 100,
+      "currency": "coins",
+      "description": "Thưởng huy hiệu: Nhà thám hiểm",
+      "createdAt": "2026-02-10T07:34:08.188Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "type": "earn",
+      "source": "badge_reward",
+      "sourceId": 1,
+      "amount": 5,
+      "currency": "petals",
+      "description": "Thưởng huy hiệu: Nhà thám hiểm",
+      "createdAt": "2026-02-10T07:34:08.197Z"
     }
   ]
 }

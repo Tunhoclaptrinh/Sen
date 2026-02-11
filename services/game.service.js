@@ -5,6 +5,7 @@
 const db = require('../config/database');
 const { calculateDistance } = require('../utils/helpers');
 const badgeService = require('./badge.service');
+const questService = require('./quest.service');
 
 class GameService {
   constructor() {
@@ -1567,6 +1568,15 @@ class GameService {
 
   async getMuseum(userId) {
     const progress = await this.getProgress(userId);
+
+    // ✅ Trigger Quest Progression for visiting museum
+    try {
+      console.log(`[DEBUG] Triggering visit_museum quest for user: ${userId}`);
+      const questResult = await questService.checkAndAdvance(userId, 'visit_museum');
+      console.log(`[DEBUG] Quest progression result:`, JSON.stringify(questResult));
+    } catch (e) {
+      console.error("Error advancing museum quest:", e);
+    }
 
     // Fetch Artifacts from Scan History
     let artifacts = [];
