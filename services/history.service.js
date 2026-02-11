@@ -1,7 +1,7 @@
-const BaseService = require('../utils/BaseService');
+const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
 
-class HistoryService extends BaseService {
+class HistoryService extends ReviewableService {
   constructor() {
     super('history_articles');
   }
@@ -13,6 +13,9 @@ class HistoryService extends BaseService {
     // Ensure numeric fields
     if (data.categoryId) data.categoryId = Number(data.categoryId);
     if (data.views) data.views = Number(data.views);
+
+    // Initial status for review workflow if not provided (Admins)
+    if (!data.status) data.status = 'draft';
 
     return super.beforeCreate(data);
   }

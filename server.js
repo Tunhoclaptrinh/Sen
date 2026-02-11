@@ -62,6 +62,8 @@ app.use('/api/auth/register', authLimiter);
 // Mount all routes
 app.use('/api', require('./routes'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/', require('./routes'));
+app.use('/admin', require('./routes/admin'));
 
 // API Documentation
 app.get('/api', (req, res) => {

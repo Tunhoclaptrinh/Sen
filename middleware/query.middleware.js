@@ -22,7 +22,11 @@ exports.parseQuery = (req, res, next) => {
 
   // Validate and normalize values
   parsedQuery.page = Math.max(1, parsedQuery.page);
-  parsedQuery.limit = Math.min(Math.max(1, parsedQuery.limit), 100); // Max 100 items per page
+
+  // Allow -1 for "all/no limit" (useful for export). Otherwise cap at 1000.
+  if (parsedQuery.limit !== -1) {
+    parsedQuery.limit = Math.min(Math.max(1, parsedQuery.limit), 1000);
+  }
 
   if (parsedQuery.order !== 'asc' && parsedQuery.order !== 'desc') {
     parsedQuery.order = 'asc';

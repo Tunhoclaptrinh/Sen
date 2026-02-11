@@ -1,7 +1,7 @@
-const BaseService = require('../utils/BaseService');
+const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
 
-class ArtifactService extends BaseService {
+class ArtifactService extends ReviewableService {
   constructor() {
     super('artifacts');
   }
@@ -10,6 +10,10 @@ class ArtifactService extends BaseService {
    * Transform data before create
    */
   async beforeCreate(data) {
+    if (data.shortDescription && !data.short_description) {
+      data.short_description = data.shortDescription;
+    }
+
     // Ensure numeric fields
     if (data.categoryId) data.categoryId = Number(data.categoryId);
     if (data.heritageSiteId) data.heritageSiteId = Number(data.heritageSiteId);
@@ -30,6 +34,31 @@ class ArtifactService extends BaseService {
     if (data.weight) data.weight = Number(data.weight);
 
     return super.beforeUpdate(id, data);
+  }
+
+  async findAll(options = {}) {
+    // Handle comma-separated IDs (e.g. ?ids=1,2,3)
+    if (options.ids) {
+      const ids = String(options.ids).split(',').map(Number);
+      // Modify filter to include these IDs
+      // Note: This assumes underlying DB adapter handles { id: [1,2,3] } as IN query
+      // or we filter results manually after fetching
+      if (!options.filter) options.filter = {};
+      options.filter.id = ids;
+      delete options.ids; // Clean up so it doesn't confuse exact match logic
+    }
+
+    const result = await super.findAll(options);
+
+    // Fallback: If DB didn't filter by IDs (result contains more items or wrong items), filter manually
+    // This is safer if strict ID filtering is required but DB adapter is simple
+    if (result.success && options.filter && Array.isArray(options.filter.id)) {
+      const ids = options.filter.id;
+      result.data = result.data.filter(item => ids.includes(item.id));
+      result.pagination.total = result.data.length; // Update total roughly
+    }
+
+    return result;
   }
 
   async getByType(type) {

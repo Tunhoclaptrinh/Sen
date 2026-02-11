@@ -1,9 +1,19 @@
-const BaseService = require('../utils/BaseService');
+const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
 
-class LearningService extends BaseService {
+class LearningService extends ReviewableService {
   constructor() {
     super('learning_modules');
+  }
+
+  /**
+   * Transform data before create
+   */
+  async beforeCreate(data) {
+    // Initial status for review workflow if not provided
+    if (!data.status) data.status = 'draft';
+
+    return super.beforeCreate(data);
   }
 
   async completeModule(moduleId, userId, score, answers) {

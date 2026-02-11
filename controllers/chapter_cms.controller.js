@@ -1,7 +1,7 @@
-const BaseController = require('../utils/BaseController');
+const ReviewableController = require('../utils/ReviewableController');
 const chapterCMSService = require('../services/chapter_cms.service');
 
-class ChapterCMSController extends BaseController {
+class ChapterCMSController extends ReviewableController {
   constructor() {
     super(chapterCMSService);
   }

@@ -1,21 +1,43 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth.middleware');
+const { protect, optionalProtect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const heritageSiteController = require('../controllers/heritage_site.controller');
 const importExportController = require('../controllers/importExport.controller');
 
 // Public Routes
-router.get('/', heritageSiteController.getAll);
+router.get('/', optionalProtect, heritageSiteController.getAll);
 router.get('/search', heritageSiteController.search);
 router.get('/nearby', heritageSiteController.getNearby);
 // Export/Import
 router.get('/export',
+  protect,
+  checkPermission('heritage_sites', 'list'), // Or import/export specific permission if available, list is good enough for now as it reads data
   (req, res, next) => {
     req.params.entity = 'heritage_sites';
     next();
   },
   importExportController.exportData
+);
+
+router.post('/import',
+  protect,
+  checkPermission('heritage_sites', 'create'),
+  importExportController.getUploadMiddleware(),
+  (req, res, next) => {
+    req.params.entity = 'heritage_sites';
+    next();
+  },
+  importExportController.importData
+);
+
+router.get('/template',
+  protect,
+  (req, res, next) => {
+    req.params.entity = 'heritage_sites';
+    next();
+  },
+  importExportController.downloadTemplate
 );
 
 router.get('/stats/summary', heritageSiteController.getStats);
@@ -43,5 +65,12 @@ router.delete('/:id',
   checkPermission('heritage_sites', 'delete'),
   heritageSiteController.delete
 );
+
+// Review Routes
+router.patch('/:id/submit', protect, checkPermission('heritage_sites', 'update'), heritageSiteController.submitReview);
+router.patch('/:id/revert', protect, checkPermission('heritage_sites', 'update'), heritageSiteController.revertToDraft);
+router.patch('/:id/unpublish', protect, checkPermission('heritage_sites', 'update'), heritageSiteController.requestUnpublish);
+router.patch('/:id/approve', protect, checkPermission('heritage_sites', 'publish'), heritageSiteController.approveReview);
+router.patch('/:id/reject', protect, checkPermission('heritage_sites', 'publish'), heritageSiteController.rejectReview);
 
 module.exports = router;

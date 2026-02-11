@@ -198,5 +198,27 @@ module.exports = {
     required: false,
     foreignKey: 'users',
     description: 'Admin/Creator ID'
+  },
+  author: {
+    type: 'string',
+    required: false,
+    description: 'Tác giả (người đóng góp)'
+  },
+  publishDate: {
+    type: 'string',
+    required: false,
+    description: 'Ngày đăng'
+  },
+  status: {
+    type: "enum",
+    enum: ["draft", "pending", "published", "rejected"],
+    default: "draft",
+    required: false,
+    description: "Trạng thái phê duyệt nội dung"
+  },
+  review_comment: {
+    type: "string",
+    required: false,
+    description: "Phản hồi từ người duyệt"
   }
 };

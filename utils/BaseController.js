@@ -8,17 +8,64 @@ class BaseController {
   }
 
   /**
+   * Helper to apply researcher content isolation filter
+   */
+  applyResearcherFilter(options, req) {
+    // Only strictly isolate if the request is NOT searching for published content (Landing page)
+    // Or if there is an explicit context indicating Management
+    const isPublicQuery = options.filter && options.filter.status === 'published';
+    const isManagementCall = req.headers['x-context'] === 'cms' || req.query.context === 'cms';
+
+    if (req.user && req.user.role === 'researcher' && !isPublicQuery && isManagementCall) {
+      options.filter = {
+        ...(options.filter || {}),
+        $or: [
+          { createdBy: req.user.id },
+          { created_by: req.user.id }
+        ]
+      };
+    }
+    // Note: If no filter is applied, child items/lists will show everything published + researcher's own drafts 
+    // depending on other active filters (like status).
+  }
+
+  /**
+   * Helper to check ownership for researcher
+   */
+  checkOwnership(item, req) {
+    if (req.user && req.user.role === 'researcher') {
+      const ownerId = item.createdBy || item.created_by;
+      const isSystem = !ownerId || ownerId === 'system' || ownerId === 1 || ownerId === "1" || item.author === 'Hệ thống';
+
+      // Researcher strict isolation: only their own items
+      if (req.user.role === 'researcher' && isSystem) {
+        return false;
+      }
+
+      if (!isSystem && String(ownerId) !== String(req.user.id)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * GET all records
    * Supports pagination, filtering, sorting, search
    */
   getAll = async (req, res, next) => {
     try {
-      const result = await this.service.findAll(req.parsedQuery);
+      const options = { ...req.parsedQuery, user: req.user };
+
+      // [RBAC] Researcher: Apply content isolation
+      this.applyResearcherFilter(options, req);
+
+      const result = await this.service.findAll(options);
 
       res.json({
         success: result.success,
-        count: result.data.length,
-        data: result.data,
+        count: result.data ? (result.data.length || 0) : 0,
+        data: result.data || [],
         pagination: result.pagination
       });
     } catch (error) {
@@ -40,6 +87,14 @@ class BaseController {
         });
       }
 
+      // [RBAC] Researcher: Check ownership
+      if (!this.checkOwnership(result.data, req)) {
+        return res.status(403).json({
+          success: false,
+          message: 'Bạn không có quyền xem tài nguyên này.'
+        });
+      }
+
       res.json({
         success: true,
         data: result.data
@@ -56,8 +111,11 @@ class BaseController {
     try {
       // Autopopulate creator info if user is logged in
       if (req.user) {
-        if (!req.body.createdBy) req.body.createdBy = req.user.id;
-        // NOTE: We no longer store author/authorName strings as they are populated dynamically
+        // Force createdBy to be current user for non-admins (e.g. researchers)
+        // If admin, they might want to set it on behalf of someone (though rarely used here)
+        if (req.user.role !== 'admin' || !req.body.createdBy) {
+          req.body.createdBy = req.user.id;
+        }
       }
 
       const result = await this.service.create(req.body);
@@ -65,7 +123,8 @@ class BaseController {
       if (!result.success) {
         return res.status(result.statusCode || 400).json({
           success: false,
-          message: result.message
+          message: result.message,
+          errors: result.errors
         });
       }
 
@@ -119,6 +178,21 @@ class BaseController {
    */
   update = async (req, res, next) => {
     try {
+      // [RBAC] Researcher: Check ownership
+      if (req.user && req.user.role === 'researcher') {
+        const itemResult = await this.service.findById(req.params.id);
+        if (itemResult.success) {
+          const item = itemResult.data;
+          const ownerId = item.createdBy || item.created_by;
+          if (ownerId && String(ownerId) !== String(req.user.id)) {
+            return res.status(403).json({
+              success: false,
+              message: 'Bạn chỉ có quyền chỉnh sửa tài nguyên do chính mình tạo.'
+            });
+          }
+        }
+      }
+
       const result = await this.service.update(req.params.id, req.body);
 
       if (!result.success) {
@@ -144,6 +218,29 @@ class BaseController {
    */
   delete = async (req, res, next) => {
     try {
+      // [RBAC] Researcher: Check ownership
+      if (req.user && req.user.role === 'researcher') {
+        const itemResult = await this.service.findById(req.params.id);
+        if (itemResult.success) {
+          const item = itemResult.data;
+          const ownerId = item.createdBy || item.created_by;
+          if (ownerId && String(ownerId) !== String(req.user.id)) {
+            return res.status(403).json({
+              success: false,
+              message: 'Bạn chỉ có quyền xóa tài nguyên do chính mình tạo.'
+            });
+          }
+
+          // [Safeguard] Prevent deleting published content
+          if (item.status === 'published') {
+            return res.status(403).json({
+              success: false,
+              message: 'Bạn không thể xóa tài nguyên đã xuất bản. Vui lòng gỡ bài (Unpublish) trước.'
+            });
+          }
+        }
+      }
+
       const result = await this.service.delete(req.params.id);
 
       if (!result.success) {
@@ -212,6 +309,7 @@ class BaseController {
       next(error);
     }
   };
+
 
   // ============= HELPERS =============
 

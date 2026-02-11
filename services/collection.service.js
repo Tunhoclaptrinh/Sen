@@ -6,6 +6,12 @@ class CollectionService extends BaseService {
         super('collections');
     }
 
+    normalizeType(type) {
+        if (type === 'heritageSite' || type === 'heritage_site') return 'heritage';
+        if (type === 'historyArticle' || type === 'article') return 'article';
+        return type;
+    }
+
     /**
      * Get collection by ID and populate items
      */
@@ -44,6 +50,10 @@ class CollectionService extends BaseService {
                 details = await db.findById('heritage_sites', lookupId);
             } else if (item.type === 'artifact') {
                 details = await db.findById('artifacts', lookupId);
+            } else if (item.type === 'article') {
+                details = await db.findById('history_articles', lookupId);
+            } else if (item.type === 'exhibition') {
+                details = await db.findById('exhibitions', lookupId);
             }
 
             if (details) {
@@ -51,7 +61,7 @@ class CollectionService extends BaseService {
                     ...item,
                     details: {
                         id: details.id,
-                        name: details.name,
+                        name: details.name || details.title,
                         image: details.image || (details.images && details.images[0]) || details.thumbnail,
                         shortDescription: details.shortDescription || details.description
                     }
@@ -81,9 +91,10 @@ class CollectionService extends BaseService {
 
         const collection = result.data;
         const items = collection.items || [];
+        const type = this.normalizeType(itemData.type);
 
         // Check duplicate
-        const exists = items.find(i => i.id === itemData.id && i.type === itemData.type);
+        const exists = items.find(i => i.id === itemData.id && i.type === type);
         if (exists) {
             return {
                 success: false,
@@ -94,7 +105,7 @@ class CollectionService extends BaseService {
 
         const newItem = {
             id: itemData.id,
-            type: itemData.type,
+            type: type,
             addedAt: new Date().toISOString(),
             note: itemData.note || ''
         };
@@ -128,7 +139,8 @@ class CollectionService extends BaseService {
         const collection = result.data;
         const items = collection.items || [];
 
-        const newItems = items.filter(i => !(i.id === parseInt(itemId) && i.type === type));
+        const normalizedType = this.normalizeType(type);
+        const newItems = items.filter(i => !(i.id === parseInt(itemId) && i.type === normalizedType));
 
         if (newItems.length === items.length) {
             return {

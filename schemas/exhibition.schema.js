@@ -57,5 +57,17 @@ module.exports = {
     required: false,
     foreignKey: 'users',
     description: 'ID người đóng góp'
+  },
+  status: {
+    type: 'enum',
+    values: ['draft', 'pending', 'published', 'rejected'],
+    default: 'draft',
+    description: 'Trạng thái kiểm duyệt'
+  },
+  review_comment: {
+    type: 'string',
+    required: false,
+    maxLength: 500,
+    description: 'Bình luận của người kiểm duyệt'
   }
 };

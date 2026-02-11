@@ -1,7 +1,7 @@
-const BaseController = require('../utils/BaseController');
+const ReviewableController = require('../utils/ReviewableController');
 const historyService = require('../services/history.service');
 
-class HistoryController extends BaseController {
+class HistoryController extends ReviewableController {
   constructor() {
     super(historyService);
   }

@@ -3,12 +3,23 @@
  * Hỗ trợ: Kịch bản, Screens, Assets, Cơ chế đa dạng
  */
 
-const BaseService = require('../utils/BaseService');
+const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
+const levelSchema = require('../schemas/game_level.schema');
 
-class LevelManagementService extends BaseService {
+class LevelManagementService extends ReviewableService {
   constructor() {
-    super('game_levels');
+    super('game_levels', levelSchema);
+  }
+
+  /**
+   * Transform data before create
+   */
+  async beforeCreate(data) {
+    // Initial status for review workflow if not provided
+    if (!data.status) data.status = 'draft';
+
+    return super.beforeCreate(data);
   }
 
   // ==================== CMS: CREATE LEVEL ====================
@@ -540,7 +551,7 @@ class LevelManagementService extends BaseService {
   /**
    * Bulk import levels from JSON
    */
-  async bulkImportLevels(levelsData, chapterId) {
+  async bulkImportLevels(levelsData, chapterId, creatorId) {
     const results = {
       success: 0,
       failed: 0,
@@ -553,7 +564,7 @@ class LevelManagementService extends BaseService {
         await this.createLevel({
           ...levelData,
           chapterId: chapterId
-        });
+        }, creatorId);
         results.success++;
       } catch (error) {
         results.failed++;

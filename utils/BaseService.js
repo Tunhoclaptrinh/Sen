@@ -329,8 +329,10 @@ class BaseService {
     if (!data) return data;
     const enriched = { ...data };
 
-    if (enriched.createdBy) {
-      const author = await db.findById('users', enriched.createdBy);
+    const creatorId = enriched.createdBy || enriched.created_by;
+
+    if (creatorId) {
+      const author = await db.findById('users', creatorId);
       if (author) {
         enriched.authorName = author.name;
         // Also set legacy author field if it exists or is expected
@@ -520,6 +522,7 @@ class BaseService {
     }
   }
 
+
   // ==================== IMPORT/EXPORT METHODS ====================
 
   /**
@@ -615,7 +618,13 @@ class BaseService {
   /**
    * Import data from records
    */
-  async importData(records) {
+  /**
+  * Import data
+  * @param {Array} records 
+  * @param {Object} options 
+  */
+  async importData(records, options = {}) {
+    const { defaultData = {} } = options;
     const results = {
       total: records.length,
       success: 0,
@@ -657,8 +666,11 @@ class BaseService {
           continue;
         }
 
+        // Merge with default values (like createdBy)
+        const finalData = { ...transformed, ...defaultData };
+
         // Create
-        const item = await db.create(this.collection, transformed);
+        const item = await db.create(this.collection, finalData);
         results.success++;
         results.inserted.push(item);
       } catch (error) {

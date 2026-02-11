@@ -149,7 +149,7 @@ class ImportExportService {
       }
 
       // Delegate import to service
-      const result = await service.importData(rawData);
+      const result = await service.importData(rawData, options);
 
       return result;
 

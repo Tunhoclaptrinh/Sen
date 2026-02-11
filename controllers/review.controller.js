@@ -4,8 +4,10 @@ const reviewService = require('../services/review.service');
 class ReviewController {
   getByType = async (req, res, next) => {
     try {
-      const { type } = req.params;
-      if (!['heritageSite', 'artifact'].includes(type)) {
+      let { type } = req.params;
+      if (type === 'heritageSite' || type === 'heritage_site') type = 'heritage_site';
+
+      if (!['heritage_site', 'artifact'].includes(type)) {
         return res.status(400).json({
           success: false,
           message: 'Invalid type'

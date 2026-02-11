@@ -15,12 +15,13 @@ const PERMISSIONS = {
 
   // 2. Researcher: Nhà nghiên cứu/Biên tập viên
   researcher: {
-    heritage_sites: ['create', 'read', 'update', 'list'],
-    artifacts: ['create', 'read', 'update', 'list'],
-    exhibitions: ['create', 'read', 'update', 'list'],
-    history_articles: ['create', 'read', 'update', 'list'],
-    game_content: ['create', 'read', 'update', 'list', 'suggest'],
-    learning_modules: ['create', 'read', 'update', 'list'],
+    heritage_sites: ['create', 'read', 'update', 'delete', 'list'],
+    artifacts: ['create', 'read', 'update', 'delete', 'list'],
+    exhibitions: ['create', 'read', 'update', 'delete', 'list'],
+    history_articles: ['create', 'read', 'update', 'delete', 'list'],
+    game_content: ['create', 'read', 'update', 'delete', 'list', 'suggest'],
+    learning_modules: ['create', 'read', 'update', 'delete', 'list'],
+    game_levels: ['create', 'read', 'update', 'delete', 'list'], // Added explicit game_levels
     users: ['read'] // Xem profile cơ bản
   },
 

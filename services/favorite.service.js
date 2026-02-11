@@ -6,13 +6,29 @@ class FavoriteService extends BaseService {
     super('favorites');
   }
 
+  normalizeType(type) {
+    if (type === 'heritageSite' || type === 'heritage_site') return 'heritage_site';
+    if (type === 'historyArticle' || type === 'history_article') return 'article';
+    return type;
+  }
+
+  denormalizeType(type) {
+    if (type === 'heritage_site') return 'heritageSite';
+    return type;
+  }
+
   async getFavorites(userId, options = {}) {
+    const filter = { ...options.filter, userId };
+
+    if (filter.type === 'all' || !filter.type) {
+      delete filter.type;
+    } else {
+      filter.type = this.normalizeType(filter.type);
+    }
+
     const result = await db.findAllAdvanced('favorites', {
       ...options,
-      filter: {
-        ...options.filter,
-        userId: userId
-      }
+      filter
     });
 
     const enriched = (await Promise.all(result.data.map(async (fav) => {
@@ -29,6 +45,7 @@ class FavoriteService extends BaseService {
 
       return {
         ...fav,
+        type: this.denormalizeType(fav.type),
         item: item || null
       };
     }))).filter(f => f.item !== null);
@@ -41,6 +58,7 @@ class FavoriteService extends BaseService {
   }
 
   async addFavorite(userId, type, referenceId) {
+    type = this.normalizeType(type);
     if (!['heritage_site', 'artifact', 'exhibition', 'article'].includes(type)) {
       return {
         success: false,
@@ -73,11 +91,15 @@ class FavoriteService extends BaseService {
     return {
       success: true,
       message: 'Added to favorites',
-      data: favorite
+      data: {
+        ...favorite,
+        type: this.denormalizeType(favorite.type)
+      }
     };
   }
 
   async removeFavorite(userId, type, referenceId) {
+    type = this.normalizeType(type);
     const favorite = await db.findOne('favorites', {
       userId: userId,
       type,
@@ -103,6 +125,7 @@ class FavoriteService extends BaseService {
   // --- NEW METHODS ---
 
   async checkFavorite(userId, type, referenceId) {
+    type = this.normalizeType(type);
     const favorite = await db.findOne('favorites', {
       userId: userId,
       type,
@@ -119,6 +142,7 @@ class FavoriteService extends BaseService {
   }
 
   async toggleFavorite(userId, type, referenceId) {
+    type = this.normalizeType(type);
     const check = await this.checkFavorite(userId, type, referenceId);
 
     if (check.data.isFavorited) {
@@ -140,7 +164,7 @@ class FavoriteService extends BaseService {
 
   async clearFavorites(userId, type = null) {
     const query = { userId: userId };
-    if (type) query.type = type;
+    if (type) query.type = this.normalizeType(type);
 
     const favorites = await db.findMany('favorites', query);
 
@@ -164,6 +188,7 @@ class FavoriteService extends BaseService {
       total: favorites.length,
       byType: {
         heritage_site: favorites.filter(f => f.type === 'heritage_site').length,
+        heritageSite: favorites.filter(f => f.type === 'heritage_site').length, // For frontend compatibility
         artifact: favorites.filter(f => f.type === 'artifact').length,
         exhibition: favorites.filter(f => f.type === 'exhibition').length,
         article: favorites.filter(f => f.type === 'article').length

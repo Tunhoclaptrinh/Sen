@@ -27,6 +27,13 @@ router.post('/', checkPermission('game_content', 'create'), levelCMSController.c
 router.put('/:id', checkPermission('game_content', 'update'), levelCMSController.updateLevel);
 router.delete('/:id', checkPermission('game_content', 'delete'), levelCMSController.deleteLevel);
 
+// Review workflow
+router.patch('/:id/submit', checkPermission('game_content', 'update'), levelCMSController.submitReview);
+router.patch('/:id/approve', checkPermission('game_content', 'approve'), levelCMSController.approveReview);
+router.patch('/:id/reject', checkPermission('game_content', 'approve'), levelCMSController.rejectReview);
+router.patch('/:id/revert', checkPermission('game_content', 'update'), levelCMSController.revertToDraft);
+router.patch('/:id/unpublish', checkPermission('game_content', 'update'), levelCMSController.requestUnpublish);
+
 // ==================== SCREEN MANAGEMENT (GRANULAR) ====================
 router.get('/:id/screens', levelCMSController.getScreens);
 router.post('/:id/screens', checkPermission('game_content', 'update'), levelCMSController.addScreen);

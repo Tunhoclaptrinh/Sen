@@ -376,6 +376,26 @@ class GameController {
     }
   };
 
+  resetUserScore = async (req, res, next) => {
+    try {
+      const { userId } = req.body; // or params
+
+      if (!userId) {
+        return res.status(400).json({ success: false, message: 'User ID is required' });
+      }
+
+      const result = await gameService.resetUserScore(userId);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   getDailyReward = async (req, res, next) => {
     try {
       const result = await gameService.getDailyReward(req.user.id);
