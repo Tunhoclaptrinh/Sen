@@ -89,8 +89,23 @@ class ReviewableController extends BaseController {
         }
       }
 
-      // If all checks pass, proceed to base implementation
-      return super.update(req, res, next);
+      // Instead of super.update(req, res, next), perform base logic directly 
+      // because BaseController.update is an arrow function and not accessible via 'super'.
+      const result = await this.service.update(req.params.id, req.body);
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json({
+          success: false,
+          message: result.message,
+          errors: result.errors
+        });
+      }
+
+      res.json({
+        success: true,
+        message: result.message,
+        data: result.data
+      });
     } catch (error) {
       next(error);
     }

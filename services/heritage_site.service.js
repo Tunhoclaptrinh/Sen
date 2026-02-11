@@ -26,6 +26,9 @@ class HeritageSiteService extends ReviewableService {
     if (data.entranceFee) data.entranceFee = Number(data.entranceFee);
     if (data.yearEstablished) data.yearEstablished = Number(data.yearEstablished);
 
+    // Initial status for review workflow if not provided (Admins)
+    if (!data.status) data.status = 'draft';
+
     // Debug logging
     console.log('[HeritageService] Creating:', { name: data.name, shortDesc: data.shortDescription });
 

@@ -6,6 +6,16 @@ class LearningService extends ReviewableService {
     super('learning_modules');
   }
 
+  /**
+   * Transform data before create
+   */
+  async beforeCreate(data) {
+    // Initial status for review workflow if not provided
+    if (!data.status) data.status = 'draft';
+
+    return super.beforeCreate(data);
+  }
+
   async completeModule(moduleId, userId, score, answers) {
     const moduleIdInt = parseInt(moduleId);
     let finalScore = parseInt(score);

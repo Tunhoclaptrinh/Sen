@@ -20,6 +20,16 @@ class ChapterCMSService extends ReviewableService {
 
     return super.create(data);
   }
+
+  /**
+   * Transform data before create (called by BaseService.create)
+   */
+  async beforeCreate(data) {
+    // Initial status for review workflow if not provided
+    if (!data.status) data.status = 'draft';
+
+    return super.beforeCreate(data);
+  }
 }
 
 module.exports = new ChapterCMSService();

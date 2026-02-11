@@ -12,6 +12,16 @@ class LevelManagementService extends ReviewableService {
     super('game_levels', levelSchema);
   }
 
+  /**
+   * Transform data before create
+   */
+  async beforeCreate(data) {
+    // Initial status for review workflow if not provided
+    if (!data.status) data.status = 'draft';
+
+    return super.beforeCreate(data);
+  }
+
   // ==================== CMS: CREATE LEVEL ====================
 
   /**

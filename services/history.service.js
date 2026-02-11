@@ -14,6 +14,9 @@ class HistoryService extends ReviewableService {
     if (data.categoryId) data.categoryId = Number(data.categoryId);
     if (data.views) data.views = Number(data.views);
 
+    // Initial status for review workflow if not provided (Admins)
+    if (!data.status) data.status = 'draft';
+
     return super.beforeCreate(data);
   }
 
