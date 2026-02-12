@@ -38,6 +38,7 @@ router.get('/template',
 
 // Public routes protected to ensure user context is available for RBAC
 router.get('/', optionalProtect, learningController.getAll);
+router.get('/stats/summary', protect, learningController.getStats);
 router.get('/path', protect, learningController.getLearningPath);
 router.get('/:id', protect, learningController.getById);
 

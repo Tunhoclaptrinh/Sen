@@ -39,13 +39,14 @@ class HistoryService extends ReviewableService {
 
     const active = allArticles.filter(a => a.isActive !== false).length;
     const inactive = allArticles.length - active;
+    const totalViews = allArticles.reduce((sum, a) => sum + (a.views || 0), 0);
 
     const stats = {
       total: allArticles.length,
       active: active,
       inactive: inactive,
-      totalViews: allArticles.reduce((sum, a) => sum + (a.views || 0), 0),
-      avgViews: allArticles.length > 0 ? (allArticles.reduce((sum, a) => sum + (a.views || 0), 0) / allArticles.length).toFixed(0) : 0,
+      totalViews: totalViews,
+      avgViews: allArticles.length > 0 ? (totalViews / allArticles.length).toFixed(0) : 0,
       summary: [
         { status: 'active', count: active, label: 'Đang hiển thị' },
         { status: 'inactive', count: inactive, label: 'Đã ẩn' }

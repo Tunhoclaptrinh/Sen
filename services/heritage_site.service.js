@@ -25,6 +25,7 @@ class HeritageSiteService extends ReviewableService {
     // Ensure numeric fields are numbers
     if (data.entranceFee) data.entranceFee = Number(data.entranceFee);
     if (data.yearEstablished) data.yearEstablished = Number(data.yearEstablished);
+    if (data.categoryId) data.categoryId = Number(data.categoryId);
 
     // Initial status for review workflow if not provided (Admins)
     if (!data.status) data.status = 'draft';
@@ -53,6 +54,7 @@ class HeritageSiteService extends ReviewableService {
     // Ensure numeric fields are numbers
     if (data.entranceFee) data.entranceFee = Number(data.entranceFee);
     if (data.yearEstablished) data.yearEstablished = Number(data.yearEstablished) || null;
+    if (data.categoryId) data.categoryId = Number(data.categoryId);
 
     // Debug logging
     console.log('[HeritageService] Updating:', { id, shortDesc: data.shortDescription });

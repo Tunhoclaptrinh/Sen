@@ -170,6 +170,34 @@ class LearningService extends ReviewableService {
       }
     };
   }
+
+  async getStats() {
+    const allModules = await db.findAll('learning_modules');
+
+    const stats = {
+      total: allModules.length,
+      byDifficulty: {
+        easy: allModules.filter(m => m.difficulty === 'easy').length,
+        medium: allModules.filter(m => m.difficulty === 'medium').length,
+        hard: allModules.filter(m => m.difficulty === 'hard').length
+      },
+      byType: {
+        video: allModules.filter(m => m.contentType === 'video').length,
+        article: allModules.filter(m => m.contentType === 'article').length,
+        quiz: allModules.filter(m => m.contentType === 'quiz' || (m.quiz && m.quiz.questions)).length
+      },
+      statusSummary: {
+        draft: allModules.filter(m => m.status === 'draft' || !m.status).length,
+        pending: allModules.filter(m => m.status === 'pending').length,
+        published: allModules.filter(m => m.status === 'published').length
+      }
+    };
+
+    return {
+      success: true,
+      data: stats
+    };
+  }
 }
 
 module.exports = new LearningService();

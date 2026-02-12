@@ -91,9 +91,11 @@ class ArtifactService extends ReviewableService {
   }
 
   async getStats() {
-    const allArtifacts = await db.findAll('artifacts');
-    const allSites = await db.findAll('heritage_sites');
-    const allReviews = await db.findMany('reviews', { type: 'artifact' });
+    const [allArtifacts, allSites, allReviews] = await Promise.all([
+      db.findAll('artifacts'),
+      db.findAll('heritage_sites'),
+      db.findMany('reviews', { type: 'artifact' })
+    ]);
 
     const siteMap = allSites.reduce((acc, site) => {
       acc[site.id] = site;
@@ -108,6 +110,11 @@ class ArtifactService extends ReviewableService {
       total: allArtifacts.length,
       onDisplay: allArtifacts.filter(a => a.isOnDisplay !== false).length,
       goodCondition: allArtifacts.filter(a => ['excellent', 'good'].includes(a.condition)).length,
+      byCondition: {
+        good: allArtifacts.filter(a => ['excellent', 'good'].includes(a.condition)).length,
+        fair: allArtifacts.filter(a => a.condition === 'fair').length,
+        poor: allArtifacts.filter(a => ['poor', 'damaged'].includes(a.condition)).length,
+      },
       avgRating: avgRating,
       unesco: allArtifacts.filter(a => siteMap[a.heritageSiteId]?.unescoListed).length,
       region: {

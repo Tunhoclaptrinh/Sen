@@ -158,6 +158,12 @@ module.exports = {
     default: 0,
     description: "Lượt xem",
   },
+  categoryId: {
+    type: "number",
+    required: false,
+    foreignKey: "cultural_categories",
+    description: "ID danh mục văn hóa",
+  },
   // Related items (admin-managed)
   relatedArtifactIds: {
     type: "array",

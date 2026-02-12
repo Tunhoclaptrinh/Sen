@@ -7,15 +7,26 @@ class CategoryService extends BaseService {
   }
 
   async validateDelete(id) {
-    const artifacts = await db.findMany('artifacts', { categoryId: parseInt(id) });
+    const categoryId = parseInt(id);
+    const [artifacts, sites, articles, modules] = await Promise.all([
+      db.findMany('artifacts', { categoryId }),
+      db.findMany('heritage_sites', { categoryId }),
+      db.findMany('history_articles', { categoryId }),
+      db.findMany('learning_modules', { categoryId })
+    ]);
 
-    if (artifacts.length > 0) {
+    const totalUsage = artifacts.length + sites.length + articles.length + modules.length;
+
+    if (totalUsage > 0) {
       return {
         success: false,
         message: 'Cannot delete category in use',
         statusCode: 400,
         details: {
-          artifactsCount: artifacts.length
+          artifacts: artifacts.length,
+          heritageSites: sites.length,
+          historyArticles: articles.length,
+          learningModules: modules.length
         }
       };
     }
@@ -27,9 +38,6 @@ class CategoryService extends BaseService {
    * Lấy tất cả vật phẩm/di sản thuộc category này
    */
   async getItemsByCategory(categoryId, queryOptions = {}) {
-    // Hiện tại chủ yếu là artifacts có category_id
-    // Có thể mở rộng thêm cho heritage_sites nếu sau này bổ sung schema
-
     const options = {
       ...queryOptions,
       filter: {
@@ -38,6 +46,8 @@ class CategoryService extends BaseService {
       }
     };
 
+    // Optimization: Check if we need both artifacts and sites or just artifacts
+    // For now, mirroring previous logic but using Promise.all if we were to expand
     const result = await db.findAllAdvanced('artifacts', options);
 
     return {
