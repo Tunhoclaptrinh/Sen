@@ -222,6 +222,39 @@ class UserService extends BaseService {
       deleted
     };
   }
+
+  async afterCreate(item) {
+    try {
+      const notificationService = require('./notification.service');
+      // Notify admins about new signup
+      await notificationService.notifyAdmins(
+        'Thành viên mới! 👋',
+        `Người dùng "${item.name}" vừa đăng ký tài khoản mới.`,
+        'system'
+      );
+    } catch (e) {
+      console.error('User registration notification failed', e);
+    }
+  }
+
+  async afterUpdate(item) {
+    try {
+      const notificationService = require('./notification.service');
+      // Check if password was updated (this is a bit tricky since item is the updated record)
+      // For now, if updatedAt was just set, we could notify if a "passwordUpdated" flag was passed, 
+      // but BaseService doesn't pass that.
+      // However, we can notify the user that their profile has been updated.
+
+      await notificationService.notify(
+        item.id,
+        'Cập nhật tài khoản 🔐',
+        'Thông tin tài khoản của bạn vừa được cập nhật thành công.',
+        'system'
+      );
+    } catch (e) {
+      console.error('User update notification failed', e);
+    }
+  }
 }
 
 module.exports = new UserService();

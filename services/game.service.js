@@ -6,6 +6,7 @@ const db = require('../config/database');
 const { calculateDistance } = require('../utils/helpers');
 const badgeService = require('./badge.service');
 const questService = require('./quest.service');
+const notificationService = require('./notification.service');
 
 class GameService {
   constructor() {
@@ -379,7 +380,7 @@ class GameService {
       totalSenPetals: newPetalsCount
     });
 
-    return {
+    const result = {
       success: true,
       message: 'Chapter unlocked successfully',
       data: {
@@ -389,6 +390,21 @@ class GameService {
         petalsRemaining: newPetalsCount
       }
     };
+
+    // TRIGGER NOTIFICATION
+    try {
+      await notificationService.notify(
+        userId,
+        'Mở khóa chương mới! 🌸',
+        `Chúc mừng! Bạn đã mở khóa chương "${chapter.name}". Hãy bắt đầu khám phá ngay!`,
+        'learning',
+        chapterId
+      );
+    } catch (e) {
+      console.error('Notification failed', e);
+    }
+
+    return result;
   }
 
   // ==================== LEVELS ====================
@@ -642,6 +658,19 @@ class GameService {
             scanCode: 'HO_REWARD_' + item.id
           });
           console.log(`[GameService] Added artifact ${item.artifactId} to museum for user ${userId}`);
+
+          // TRIGGER NOTIFICATION
+          try {
+            await notificationService.notify(
+              userId,
+              'Tìm thấy hiện vật mới! 🏺',
+              `Bạn vừa tìm thấy "${item.name}"! Hiện vật này đã được thêm vào bảo tàng của bạn.`,
+              'artifact',
+              item.artifactId
+            );
+          } catch (e) {
+            console.error('Notification failed', e);
+          }
         }
       } catch (e) {
         console.error('Museum artifact unlock failed', e);
@@ -1172,8 +1201,6 @@ class GameService {
     let newBadges = []; // Moved outside to avoid scoping error
 
     try {
-
-
       const session = await db.findOne('game_sessions', {
         levelId: levelId,
         userId: userId,
@@ -1326,6 +1353,32 @@ class GameService {
           points: progress.totalPoints + finalScore,
           coins: newCoins
         };
+
+        // DETECT RANK PROMOTION
+        const oldRankInfo = this.calculateRank(progress.totalPoints || 0);
+        const newRankInfo = this.calculateRank(progress.totalPoints + finalScore);
+
+        if (newRankInfo.currentRank !== oldRankInfo.currentRank) {
+          try {
+            await notificationService.notify(
+              userId,
+              'Danh hiệu mới! 🏆',
+              `Chúc mừng! Bạn đã đạt được danh hiệu mới: "${newRankInfo.currentRank}"!`,
+              'system'
+            );
+          } catch (e) { console.error('Rank notification failed', e); }
+        }
+
+        // TRIGGER LEVEL COMPLETED NOTIFICATION
+        try {
+          await notificationService.notify(
+            userId,
+            'Hoàn thành màn chơi! ✨',
+            `Chúc mừng! Bạn đã vượt qua màn chơi "${level.name}" với ${finalScore} điểm!`,
+            'learning',
+            level.id
+          );
+        } catch (e) { console.error('Level notification failed', e); }
       }
 
       // TRIGGER QUESTS
@@ -1338,31 +1391,27 @@ class GameService {
         // 2. Trigger Chapter Complete Quest
         const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
 
-        // Use the potentially updated list from above if available, otherwise fetch
-        // Note: 'newCompleted' is only defined inside the if (!alreadyCompleted) block above.
-        // We must reconstruct the reliable list.
-
         let effectiveCompletedIds = [];
-        if (!alreadyCompleted) {
-          // If we just completed it, we calculated newCompleted above but it's scoped.
-          // Re-calculate or fetch and append.
-          // Better: Use currentProgress fetch but FORCE add the current level if missing.
-          const currentProgress = await db.findOne('game_progress', { userId: userId });
-          effectiveCompletedIds = currentProgress?.completedLevels || [];
-          if (!effectiveCompletedIds.includes(parseInt(levelId))) {
-            effectiveCompletedIds.push(parseInt(levelId));
-          }
-        } else {
-          // Already completed, just verify
-          const currentProgress = await db.findOne('game_progress', { userId: userId });
-          effectiveCompletedIds = currentProgress?.completedLevels || [];
-        }
+        const currentProgress = await db.findOne('game_progress', { userId: userId });
+        effectiveCompletedIds = currentProgress?.completedLevels || [];
 
         const isChapterDone = chapterLevels.every(l => effectiveCompletedIds.includes(l.id));
 
         if (isChapterDone) {
           console.log(`[GameService] Chapter ${level.chapterId} complete for user ${userId}. Triggering quest.`);
           await questService.checkAndAdvance(userId, 'complete_chapter', 1);
+
+          // TRIGGER NOTIFICATION
+          try {
+            const chapter = await db.findById('game_chapters', level.chapterId);
+            await notificationService.notify(
+              userId,
+              'Chương hoàn tất! 🌸',
+              `Tuyệt vời! Bạn đã hoàn thành toàn bộ chương "${chapter?.name || ''}"!`,
+              'learning',
+              level.chapterId
+            );
+          } catch (e) { console.error('Chapter completion notification failed', e); }
 
           // TRIGGER BADGE CHECK (Chapter Completed)
           try {
@@ -1373,7 +1422,6 @@ class GameService {
 
             // Add to newBadges if any
             if (chapterBadges && chapterBadges.length > 0) {
-              // Ensure newBadges is array
               if (!Array.isArray(newBadges)) newBadges = [];
               newBadges.push(...chapterBadges);
             }

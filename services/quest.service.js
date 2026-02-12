@@ -1,5 +1,6 @@
 const BaseService = require('../utils/BaseService');
 const db = require('../config/database');
+const notificationService = require('./notification.service');
 
 class QuestService extends BaseService {
   constructor() {
@@ -80,6 +81,16 @@ class QuestService extends BaseService {
       status: isCompleted ? 'completed' : 'in_progress',
       completedAt: isCompleted ? new Date().toISOString() : null
     });
+
+    if (isCompleted) {
+      await notificationService.notify(
+        userId,
+        'Hoàn thành nhiệm vụ',
+        `Nhiệm vụ "${quest.title}" đã hoàn thành! Hãy vào mục Nhiệm vụ để nhận phần thưởng nhé.`,
+        'quest',
+        questId
+      );
+    }
 
     return {
       success: true,
@@ -186,6 +197,24 @@ class QuestService extends BaseService {
       badges: newBadges,
       completedQuestsCount: (gameProgress.completedQuestsCount || 0) + 1
     });
+
+    // Notify User
+    await notificationService.notify(
+      userId,
+      'Nhận phần thưởng nhiệm vụ',
+      `Bạn đã nhận được phần thưởng từ nhiệm vụ "${quest.title}": ${quest.rewards.petals || 0} Cánh Sen, ${quest.rewards.coins || 0} Xu và ${quest.rewards.experience || 0} kinh nghiệm.`,
+      'quest',
+      questId
+    );
+
+    if (newLevel > gameProgress.level) {
+      await notificationService.notify(
+        userId,
+        'Lên cấp mới!',
+        `Chúc mừng! Bạn đã đạt Cấp ${newLevel} từ việc hoàn thành nhiệm vụ.`,
+        'system'
+      );
+    }
 
     return {
       success: true,

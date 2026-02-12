@@ -88,6 +88,33 @@ class FavoriteService extends BaseService {
       createdAt: new Date().toISOString()
     });
 
+    // TRIGGER NOTIFICATION TO CREATOR
+    try {
+      const notificationService = require('./notification.service');
+      const user = await db.findById('users', userId);
+
+      // Get item to find creator
+      let item = null;
+      let collectionName = '';
+      if (type === 'heritage_site') collectionName = 'heritage_sites';
+      else if (type === 'artifact') collectionName = 'artifacts';
+      else if (type === 'exhibition') collectionName = 'exhibitions';
+      else if (type === 'article') collectionName = 'history_articles';
+
+      if (collectionName) {
+        item = await db.findById(collectionName, referenceId);
+        if (item && item.createdBy && item.createdBy !== userId) {
+          await notificationService.notify(
+            item.createdBy,
+            'Yêu thích mới! ❤️',
+            `Người dùng "${user?.name || 'Ai đó'}" đã thêm "${item.name || item.title}" vào danh sách yêu thích.`,
+            'social',
+            referenceId
+          );
+        }
+      }
+    } catch (e) { console.error('Favorite notification failed', e); }
+
     return {
       success: true,
       message: 'Added to favorites',

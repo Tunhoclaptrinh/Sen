@@ -83,6 +83,66 @@ class NotificationService extends BaseService {
       count: userNotificationIds.length
     };
   }
+
+  /**
+   * Helper to create a notification easily
+   */
+  async notify(userId, title, message, type, refId = null) {
+    try {
+      if (!userId) {
+        console.error('[Notification] Cannot create notification: No userId provided');
+        return null;
+      }
+
+      const notification = await db.create('notifications', {
+        userId: Number(userId),
+        title,
+        message,
+        type,
+        refId: refId ? Number(refId) : null,
+        isRead: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      });
+
+      console.log(`[Notification] Sent to user ${userId}: ${title}`);
+      return notification;
+    } catch (error) {
+      console.error('[Notification] Error creating notification:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Direct notify to all admins
+   */
+  async notifyAdmins(title, message, type, refId = null) {
+    try {
+      const users = await db.findAll('users');
+      const admins = users.filter(u => u.role?.toLowerCase() === 'admin');
+
+      for (const admin of admins) {
+        await this.notify(admin.id, title, message, type, refId);
+      }
+    } catch (error) {
+      console.error('[Notification] Error notifying admins:', error);
+    }
+  }
+
+  /**
+   * Broadcast notify to all users
+   */
+  async notifyAll(title, message, type, refId = null) {
+    try {
+      const users = await db.findAll('users');
+      // Limit broadcast to customers mainly, or everyone
+      for (const user of users) {
+        await this.notify(user.id, title, message, type, refId);
+      }
+    } catch (error) {
+      console.error('[Notification] Error broadcasting notification:', error);
+    }
+  }
 }
 
 module.exports = new NotificationService();

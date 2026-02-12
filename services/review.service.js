@@ -62,6 +62,21 @@ class ReviewService extends BaseService {
       data: stats
     };
   }
+
+  async afterCreate(item) {
+    try {
+      const notificationService = require('./notification.service');
+      // Notify admins about new review
+      await notificationService.notifyAdmins(
+        'Đánh giá mới! ⭐',
+        `Có một đánh giá ${item.rating} sao mới cho ${item.type === 'heritage_site' ? 'di sản' : 'cổ vật'} (ID: ${item.referenceId}).`,
+        'review',
+        item.referenceId
+      );
+    } catch (e) {
+      console.error('Review notification failed', e);
+    }
+  }
 }
 
 module.exports = new ReviewService();

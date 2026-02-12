@@ -1,5 +1,6 @@
 const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
+const notificationService = require('./notification.service');
 
 class LearningService extends ReviewableService {
   constructor() {
@@ -101,6 +102,38 @@ class LearningService extends ReviewableService {
       level: Math.max(gameProgress.level, newLevel),
       badges: newBadges
     });
+
+    // Notify User
+    if (finalScore >= passingScore) {
+      await notificationService.notify(
+        userId,
+        'Hoàn thành bài học',
+        `Chúc mừng! Bạn đã hoàn thành bài học "${moduleItem.title}" với điểm số ${finalScore}% và nhận được ${points} điểm kinh nghiệm.`,
+        'learning',
+        moduleIdInt
+      );
+    }
+
+    if (newLevel > gameProgress.level) {
+      await notificationService.notify(
+        userId,
+        'Lên cấp mới!',
+        `Chúc mừng! Bạn đã đạt Cấp ${newLevel}. Hãy tiếp tục hành trình khám phá di sản nhé!`,
+        'system'
+      );
+    }
+
+    // Badge notifications
+    for (const badge of newBadges) {
+      if (!gameProgress.badges?.includes(badge)) {
+        await notificationService.notify(
+          userId,
+          'Nhận huy hiệu mới',
+          `Bạn vừa nhận được huy hiệu "${badge === 'newbie' ? 'Người Mới Bắt Đầu' : 'Điểm Tuyệt Đối'}"!`,
+          'quest'
+        );
+      }
+    }
 
     return {
       success: true,

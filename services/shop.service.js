@@ -1,4 +1,5 @@
 const db = require('../config/database');
+const notificationService = require('./notification.service');
 
 exports.getShopItems = async () => {
     const items = db.findAll('shop_items');
@@ -86,6 +87,16 @@ exports.buyItem = async (userId, itemId, quantity = 1) => {
         inventory: currentItems
     };
 
+    // TRIGGER PURCHASE NOTIFICATION
+    try {
+        await notificationService.notify(
+            userId,
+            'Mua sắm thành công! 🛒',
+            `Bạn đã mua thành công "${item.name}" x${quantity}.`,
+            'system'
+        );
+    } catch (e) { console.error('Shop notification failed', e); }
+
     // [New] Trigger Hidden Unlock: Buying "Trang phục chú Tễu" (ID 3) unlocks "Chú Tễu" (Character ID 1)
     if (itemId === 3) {
         const teuCharacterId = 1;
@@ -97,6 +108,17 @@ exports.buyItem = async (userId, itemId, quantity = 1) => {
                 unlockedAt: new Date().toISOString(),
                 unlockType: 'bonus_with_skin'
             });
+
+            // TRIGGER CHARACTER UNLOCK NOTIFICATION
+            try {
+                await notificationService.notify(
+                    userId,
+                    'Nhân vật mới! 🎭',
+                    'Chúc mừng! Bạn đã nhận được thêm nhân vật "Chú Tễu" như một phần quà đặc biệt!',
+                    'system'
+                );
+            } catch (e) { console.error('Bonus notification failed', e); }
+
             // Update return message to inform user
             return {
                 ...successResult,

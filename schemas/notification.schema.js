@@ -13,9 +13,15 @@ module.exports = {
     maxLength: 500,
     description: 'Nội dung thông báo'
   },
+  userId: {
+    type: 'number',
+    required: true,
+    foreignKey: 'users',
+    description: 'ID người nhận thông báo'
+  },
   type: {
     type: 'enum',
-    enum: ['heritage', 'artifact', 'exhibition', 'review', 'system'],
+    enum: ['heritage', 'artifact', 'exhibition', 'review', 'system', 'learning', 'history', 'quest', 'achievement', 'social', 'reward'],
     required: true,
     description: 'Loại thông báo'
   },

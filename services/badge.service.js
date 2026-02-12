@@ -1,5 +1,6 @@
 const ReviewableService = require('../utils/ReviewableService');
 const db = require('../config/database');
+const notificationService = require('./notification.service');
 
 class BadgeService extends ReviewableService {
   constructor() {
@@ -87,6 +88,19 @@ class BadgeService extends ReviewableService {
           badge,
           rewards
         });
+
+        // TRIGGER NOTIFICATION
+        try {
+          await notificationService.notify(
+            userId,
+            'Danh hiệu mới! 🏅',
+            `Chúc mừng! Bạn vừa đạt được danh hiệu "${badge.name}".`,
+            'achievement',
+            badge.id
+          );
+        } catch (e) {
+          console.error('Badge notification failed', e);
+        }
       }
     }
 

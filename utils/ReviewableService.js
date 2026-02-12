@@ -1,4 +1,5 @@
 const BaseService = require('./BaseService');
+const notificationService = require('../services/notification.service');
 
 /**
  * ReviewableService - Extension of BaseService for entities that require
@@ -59,6 +60,19 @@ class ReviewableService extends BaseService {
         status: 'pending',
         review_comment: null // Clear previous comments
       });
+
+      // Notify Admins
+      if (result.success) {
+        const item = result.data;
+        await notificationService.notifyAdmins(
+          'Nội dung mới cần duyệt',
+          `"${item.name || item.title}" đã được gửi yêu cầu duyệt.`,
+          this.collection === 'artifacts' ? 'artifact' :
+            this.collection === 'heritage_sites' ? 'heritage' : 'history',
+          id
+        );
+      }
+
       return result;
     } catch (error) {
       throw error;
@@ -83,6 +97,35 @@ class ReviewableService extends BaseService {
       }
 
       const result = await this.update(id, updateData);
+
+      // Notify Researcher
+      if (result.success) {
+        const item = result.data;
+        const creatorId = item.createdBy || item.created_by;
+        if (creatorId) {
+          await notificationService.notify(
+            creatorId,
+            'Nội dung đã được duyệt',
+            `Chúc mừng! "${item.name || item.title}" của bạn đã được phê duyệt và công khai.`,
+            this.collection === 'artifacts' ? 'artifact' :
+              this.collection === 'heritage_sites' ? 'heritage' : 'history',
+            id
+          );
+        }
+
+        // Broadcast to ALL users
+        const typeLabel = this.collection === 'artifacts' ? 'cổ vật' :
+          this.collection === 'heritage_sites' ? 'di sản' : 'nội dung';
+
+        await notificationService.notifyAll(
+          'Khám phá mới! ✨',
+          `Một ${typeLabel} mới mang tên "${item.name || item.title}" vừa được ra mắt. Hãy khám phá ngay!`,
+          this.collection === 'artifacts' ? 'artifact' :
+            this.collection === 'heritage_sites' ? 'heritage' : 'history',
+          id
+        );
+      }
+
       return result;
     } catch (error) {
       throw error;
@@ -98,6 +141,23 @@ class ReviewableService extends BaseService {
         status: 'rejected',
         review_comment: comment || 'Nội dung chưa đạt yêu cầu.'
       });
+
+      // Notify Researcher
+      if (result.success) {
+        const item = result.data;
+        const creatorId = item.createdBy || item.created_by;
+        if (creatorId) {
+          await notificationService.notify(
+            creatorId,
+            'Nội dung bị từ chối',
+            `Nội dung "${item.name || item.title}" của bạn không được phê duyệt: ${comment || 'Nội dung chưa đạt yêu cầu.'}`,
+            this.collection === 'artifacts' ? 'artifact' :
+              this.collection === 'heritage_sites' ? 'heritage' : 'history',
+            id
+          );
+        }
+      }
+
       return result;
     } catch (error) {
       throw error;
