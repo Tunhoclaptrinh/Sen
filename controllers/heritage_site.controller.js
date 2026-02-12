@@ -55,6 +55,15 @@ class HeritageSiteController extends ReviewableController {
       next(error);
     }
   };
+
+  getLocations = async (req, res, next) => {
+    try {
+      const result = await this.service.getLocations();
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = new HeritageSiteController();

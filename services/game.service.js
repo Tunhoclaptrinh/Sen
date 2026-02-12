@@ -2032,10 +2032,14 @@ class GameService {
   /**
  * Bảng xếp hạng
  */
-  async getLeaderboard(type = 'global', limit = 20) {
+  async getLeaderboard(type = 'points', limit = 20) {
+    let sortField = 'totalPoints';
+    if (type === 'level') sortField = 'level';
+    if (type === 'checkins') sortField = 'checkinCount';
+
     // Optimized: Use findAllAdvanced directly with sort
     const result = await db.findAllAdvanced('game_progress', {
-      sort: 'totalPoints',
+      sort: sortField,
       order: 'desc',
       limit: limit,
       page: 1
@@ -2050,12 +2054,83 @@ class GameService {
         userAvatar: user?.avatar,
         totalPoints: prog.totalPoints,
         level: prog.level,
+        checkinCount: prog.checkinCount || 0,
         senPetals: prog.totalSenPetals,
         charactersCount: prog.collectedCharacters?.length || 0
       };
     }));
 
     return { success: true, data: leaderboard };
+  }
+
+  /**
+   * Check-in tại địa điểm (QR Code)
+   */
+  async checkIn(userId, locationId) {
+    // 1. Validate location
+    const location = await db.findById('heritage_sites', locationId);
+    if (!location) {
+      return { success: false, message: 'Location not found', statusCode: 404 };
+    }
+
+    // 2. Check cooldown (e.g., 1 hour)
+    const lastCheckin = await db.findOne('scan_history', {
+      userId: userId,
+      objectId: locationId,
+      type: 'checkin'
+    });
+
+    if (lastCheckin) {
+      const lastTime = new Date(lastCheckin.scannedAt).getTime();
+      const now = new Date().getTime();
+      const diffMinutes = (now - lastTime) / (1000 * 60);
+      if (diffMinutes < 60) {
+        return { success: false, message: 'Bạn đã check-in gần đây, hãy quay lại sau!', statusCode: 400 };
+      }
+    }
+
+    // 3. Record Check-in
+    await db.create('scan_history', {
+      userId: userId,
+      objectId: locationId,
+      type: 'checkin',
+      scannedAt: new Date().toISOString(),
+      scanCode: `CHECKIN_${locationId}`
+    });
+
+    // 4. Update Progress & Rewards
+    const progress = await db.findOne('game_progress', { userId: userId });
+    // Initialize if needed
+    if (!progress) await this.initializeProgress(userId);
+
+    const points = 50; // Points per check-in
+    await db.update('game_progress', progress.id, {
+      totalPoints: (progress.totalPoints || 0) + points,
+      checkinCount: (progress.checkinCount || 0) + 1,
+      lastActivity: new Date().toISOString()
+    });
+
+    // 5. Trigger Notification
+    try {
+      const notificationService = require('./notification.service');
+      await notificationService.notify(
+        userId,
+        'Check-in thành công! 📍',
+        `Bạn đã check-in tại "${location.name}" và nhận được ${points} điểm!`,
+        'social', // Using social or reward icon
+        locationId
+      );
+    } catch (e) { console.error('Notify checkin failed', e); }
+
+    return {
+      success: true,
+      message: 'Check-in thành công!',
+      data: {
+        pointsEarned: points,
+        locationName: location.name,
+        totalCheckins: (progress.checkinCount || 0) + 1
+      }
+    };
   }
 
   /**

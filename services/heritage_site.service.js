@@ -175,6 +175,30 @@ class HeritageSiteService extends ReviewableService {
       data: stats
     };
   }
+
+  /**
+   * Get lightweight locations for map
+   */
+  async getLocations() {
+    const allSites = await db.findAll('heritage_sites');
+    const locations = allSites
+      .filter(s => s.status === 'published' && (s.latitude || s.location?.latitude))
+      .map(s => ({
+        id: s.id,
+        name: s.name,
+        lat: s.latitude || s.location?.latitude,
+        lng: s.longitude || s.location?.longitude,
+        type: s.type,
+        province: s.province || s.location?.province,
+        thumbnail: s.image
+      }));
+
+    return {
+      success: true,
+      data: locations,
+      count: locations.length
+    };
+  }
 }
 
 module.exports = new HeritageSiteService();

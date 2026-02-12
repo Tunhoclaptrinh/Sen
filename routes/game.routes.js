@@ -47,6 +47,7 @@ router.get('/achievements', gameController.getAchievements);
 
 // ==================== SCAN TO PLAY ====================
 router.post('/scan', checkPermission('game_play', 'scan_qr'), gameController.scanObject);
+router.post('/checkin', checkPermission('game_play', 'scan_qr'), gameController.checkIn);
 
 // ==================== SHOP & INVENTORY ====================
 router.post('/shop/purchase', checkPermission('shop', 'purchase'), gameController.purchaseItem);

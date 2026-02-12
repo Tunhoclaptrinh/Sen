@@ -359,6 +359,26 @@ class GameController {
     }
   };
 
+  checkIn = async (req, res, next) => {
+    try {
+      const { locationId } = req.body;
+
+      if (!locationId) {
+        return res.status(400).json({ success: false, message: 'Location ID is required' });
+      }
+
+      const result = await gameService.checkIn(req.user.id, parseInt(locationId));
+
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // ==================== LEADERBOARD ====================
 
   getLeaderboard = async (req, res, next) => {

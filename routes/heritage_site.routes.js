@@ -8,6 +8,7 @@ const importExportController = require('../controllers/importExport.controller')
 // Public Routes
 router.get('/', optionalProtect, heritageSiteController.getAll);
 router.get('/search', heritageSiteController.search);
+router.get('/locations', heritageSiteController.getLocations); // Map data
 router.get('/nearby', heritageSiteController.getNearby);
 // Export/Import
 router.get('/export',

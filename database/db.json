@@ -3437,7 +3437,7 @@
       "id": 18,
       "userId": 3,
       "levelId": 2,
-      "status": "in_progress",
+      "status": "expired",
       "currentScreenId": "img_drum_detail",
       "currentScreenIndex": 2,
       "collectedItems": [],
@@ -3453,7 +3453,31 @@
       "timeSpent": 0,
       "hintsUsed": 0,
       "startedAt": "2026-02-11T11:24:21.924Z",
-      "lastActivity": "2026-02-11T11:24:32.145Z"
+      "lastActivity": "2026-02-11T11:24:32.145Z",
+      "expiredAt": "2026-02-12T13:38:46.021Z",
+      "expiredReason": "Session timeout (24 hours inactive)"
+    },
+    {
+      "id": 19,
+      "userId": 3,
+      "levelId": 1,
+      "status": "in_progress",
+      "currentScreenId": "story_video",
+      "currentScreenIndex": 2,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 20,
+      "totalScreens": 4,
+      "completedScreens": [
+        "intro_d1",
+        "intro_d2"
+      ],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-12T09:42:34.012Z",
+      "lastActivity": "2026-02-12T09:42:36.386Z"
     }
   ],
   "learning_modules": [
