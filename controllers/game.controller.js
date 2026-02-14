@@ -383,7 +383,8 @@ class GameController {
 
   getLeaderboard = async (req, res, next) => {
     try {
-      const { type = 'global', limit = 20 } = req.query;
+      const { type = 'global' } = req.query;
+      const limit = req.query.limit || req.query._limit || 20;
 
       const result = await gameService.getLeaderboard(
         type,

@@ -4,13 +4,19 @@ const { protect } = require('../middleware/auth.middleware');
 const { checkPermission } = require('../middleware/rbac.middleware');
 const gameController = require('../controllers/game.controller');
 
-router.use(protect); // Bắt buộc đăng nhập
+// ==================== PUBLIC ENDPOINTS (NO AUTH) ====================
+// Leaderboard - Public for Landing Page (Top 5)
+router.get('/leaderboard', gameController.getLeaderboard);
+
+// Badges - Public for exploration
+router.get('/badges', gameController.getBadges);
+
+router.use(protect); // Bắt buộc đăng nhập từ dòng này trở xuống
 
 // Áp dụng quyền 'game_play' cho các action chơi game
 const requireGamePlay = checkPermission('game_play', 'play');
 
 router.get('/progress', requireGamePlay, gameController.getProgress);
-router.get('/leaderboard', requireGamePlay, gameController.getLeaderboard);
 router.post('/leaderboard/reset', checkPermission('game_content', 'update'), gameController.resetUserScore);
 router.get('/daily-reward', checkPermission('game_play', 'earn_rewards'), gameController.getDailyReward);
 
@@ -42,7 +48,6 @@ router.post('/museum/toggle', requireGamePlay, gameController.toggleMuseum);
 router.post('/museum/collect', checkPermission('game_play', 'earn_rewards'), gameController.collectMuseumIncome);
 
 // ==================== BADGES & ACHIEVEMENTS ====================
-router.get('/badges', gameController.getBadges);
 router.get('/achievements', gameController.getAchievements);
 
 // ==================== SCAN TO PLAY ====================

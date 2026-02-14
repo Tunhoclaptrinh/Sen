@@ -177,6 +177,361 @@
       "isActive": true,
       "createdAt": "2025-12-31T05:57:22.760Z",
       "updatedAt": "2026-01-13T09:07:35.429Z"
+    },
+    {
+      "id": 11,
+      "name": "Le Hoang Nam",
+      "email": "nam.le@sen.com",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Le+Hoang+Nam&background=random",
+      "isActive": true,
+      "createdAt": "2024-06-01T10:00:00Z"
+    },
+    {
+      "id": 12,
+      "name": "Pham Ngoc Lan",
+      "email": "lan.pham@sen.com",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Pham+Ngoc+Lan&background=FF5722&color=fff",
+      "isActive": true,
+      "createdAt": "2024-06-02T10:00:00Z"
+    },
+    {
+      "id": 13,
+      "name": "Hoang Minh Duc",
+      "email": "duc.hoang@sen.com",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Hoang+Minh+Duc&background=4CAF50&color=fff",
+      "isActive": true,
+      "createdAt": "2024-06-03T10:00:00Z"
+    },
+    {
+      "id": 14,
+      "name": "Vu Thi Mai",
+      "email": "mai.vu@sen.com",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Vu+Thi+Mai&background=E91E63&color=fff",
+      "isActive": true,
+      "createdAt": "2024-06-04T10:00:00Z"
+    },
+    {
+      "id": 15,
+      "name": "Dang Van Hung",
+      "email": "hung.dang@sen.com",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Dang+Van+Hung&background=2196F3&color=fff",
+      "isActive": true,
+      "createdAt": "2024-06-05T10:00:00Z"
+    },
+    {
+      "id": 16,
+      "name": "Bui Thi Thu",
+      "email": "thu.bui@sen.com",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Bui+Thi+Thu&background=9C27B0&color=fff",
+      "isActive": true,
+      "createdAt": "2024-06-06T10:00:00Z"
+    },
+    {
+      "id": 17,
+      "name": "Do Minh Tuan",
+      "email": "tuan.do@sen.com",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Do+Minh+Tuan&background=607D8B&color=fff",
+      "isActive": true,
+      "createdAt": "2024-06-07T10:00:00Z"
+    },
+    {
+      "id": 18,
+      "name": "Ngo Van Long",
+      "email": "long.ngo@sen.com",
+      "role": "customer",
+      "avatar": "https://ui-avatars.com/api/?name=Ngo+Van+Long&background=795548&color=fff",
+      "isActive": true,
+      "createdAt": "2024-06-08T10:00:00Z"
+    }
+  ],
+  "game_progress": [
+    {
+      "id": 1,
+      "userId": 1,
+      "level": 25,
+      "totalPoints": 12500,
+      "totalSenPetals": 300,
+      "checkinCount": 10,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 4500,
+      "createdAt": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "level": 18,
+      "totalPoints": 9000,
+      "totalSenPetals": 150,
+      "checkinCount": 5,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 2000,
+      "createdAt": "2024-02-20T14:20:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "level": 12,
+      "totalPoints": 6000,
+      "totalSenPetals": 80,
+      "checkinCount": 8,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": false,
+      "museumIncome": 0,
+      "createdAt": "2024-03-10T09:15:00Z"
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "level": 30,
+      "totalPoints": 15000,
+      "totalSenPetals": 450,
+      "checkinCount": 20,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2,
+        3
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 8000,
+      "createdAt": "2024-04-05T11:00:00Z"
+    },
+    {
+      "id": 5,
+      "userId": 5,
+      "level": 5,
+      "totalPoints": 2500,
+      "totalSenPetals": 20,
+      "checkinCount": 2,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": false,
+      "museumIncome": 0,
+      "createdAt": "2024-05-12T14:30:00Z"
+    },
+    {
+      "id": 6,
+      "userId": 7,
+      "level": 15,
+      "totalPoints": 7500,
+      "totalSenPetals": 120,
+      "checkinCount": 12,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 3000,
+      "createdAt": "2025-12-31T06:15:42Z"
+    },
+    {
+      "id": 7,
+      "userId": 6,
+      "level": 8,
+      "totalPoints": 4000,
+      "totalSenPetals": 50,
+      "checkinCount": 4,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 1000,
+      "createdAt": "2025-12-31T05:57:22Z"
+    },
+    {
+      "id": 11,
+      "userId": 11,
+      "level": 22,
+      "totalPoints": 11000,
+      "totalSenPetals": 280,
+      "checkinCount": 15,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 3500,
+      "createdAt": "2024-06-01T10:00:00Z"
+    },
+    {
+      "id": 12,
+      "userId": 12,
+      "level": 19,
+      "totalPoints": 9500,
+      "totalSenPetals": 180,
+      "checkinCount": 9,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 2200,
+      "createdAt": "2024-06-02T10:00:00Z"
+    },
+    {
+      "id": 13,
+      "userId": 13,
+      "level": 14,
+      "totalPoints": 7000,
+      "totalSenPetals": 100,
+      "checkinCount": 7,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 1500,
+      "createdAt": "2024-06-03T10:00:00Z"
+    },
+    {
+      "id": 14,
+      "userId": 14,
+      "level": 28,
+      "totalPoints": 14000,
+      "totalSenPetals": 400,
+      "checkinCount": 18,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2,
+        3
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 7000,
+      "createdAt": "2024-06-04T10:00:00Z"
+    },
+    {
+      "id": 15,
+      "userId": 15,
+      "level": 10,
+      "totalPoints": 5000,
+      "totalSenPetals": 60,
+      "checkinCount": 3,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": false,
+      "museumIncome": 500,
+      "createdAt": "2024-06-05T10:00:00Z"
+    },
+    {
+      "id": 16,
+      "userId": 16,
+      "level": 16,
+      "totalPoints": 8000,
+      "totalSenPetals": 130,
+      "checkinCount": 11,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 3200,
+      "createdAt": "2024-06-06T10:00:00Z"
+    },
+    {
+      "id": 17,
+      "userId": 17,
+      "level": 24,
+      "totalPoints": 12000,
+      "totalSenPetals": 290,
+      "checkinCount": 16,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 4200,
+      "createdAt": "2024-06-07T10:00:00Z"
+    },
+    {
+      "id": 18,
+      "userId": 18,
+      "level": 20,
+      "totalPoints": 10000,
+      "totalSenPetals": 200,
+      "checkinCount": 10,
+      "completedLevels": [],
+      "unlockedChapters": [
+        1,
+        2
+      ],
+      "collectedCharacters": [],
+      "badges": [],
+      "achievements": [],
+      "museumOpen": true,
+      "museumIncome": 3800,
+      "createdAt": "2024-06-08T10:00:00Z"
     }
   ],
   "cultural_categories": [
@@ -379,7 +734,7 @@
       "relatedHistoryIds": [],
       "timeline": [],
       "updatedAt": "2026-01-23T10:54:56.058Z",
-      "views": 2
+      "views": 3
     },
     {
       "id": 4,
@@ -575,7 +930,8 @@
       "createdAt": "2026-02-04T17:22:21.973Z",
       "updatedAt": "2026-02-04T17:28:33.767Z",
       "status": "published",
-      "review_comment": null
+      "review_comment": null,
+      "views": 1
     },
     {
       "id": 6,
@@ -2875,7 +3231,7 @@
       "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
-  "game_progress": [
+  "game_progress_legacy": [
     {
       "id": 1,
       "userId": 3,
@@ -3461,7 +3817,7 @@
       "id": 19,
       "userId": 3,
       "levelId": 1,
-      "status": "in_progress",
+      "status": "expired",
       "currentScreenId": "story_video",
       "currentScreenIndex": 2,
       "collectedItems": [],
@@ -3477,7 +3833,9 @@
       "timeSpent": 0,
       "hintsUsed": 0,
       "startedAt": "2026-02-12T09:42:34.012Z",
-      "lastActivity": "2026-02-12T09:42:36.386Z"
+      "lastActivity": "2026-02-12T09:42:36.386Z",
+      "expiredAt": "2026-02-14T01:43:41.561Z",
+      "expiredReason": "Session timeout (24 hours inactive)"
     }
   ],
   "learning_modules": [
