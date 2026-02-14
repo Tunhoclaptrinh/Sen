@@ -8,10 +8,10 @@ const gameController = require('../controllers/game.controller');
 // Leaderboard - Public for Landing Page (Top 5)
 router.get('/leaderboard', gameController.getLeaderboard);
 
-// Badges - Public for exploration
-router.get('/badges', gameController.getBadges);
-
 router.use(protect); // Bắt buộc đăng nhập từ dòng này trở xuống
+
+// Badges - For authenticated user
+router.get('/badges', gameController.getBadges);
 
 // Áp dụng quyền 'game_play' cho các action chơi game
 const requireGamePlay = checkPermission('game_play', 'play');

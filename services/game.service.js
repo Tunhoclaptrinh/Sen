@@ -2003,8 +2003,8 @@ class GameService {
 
     const enriched = allBadges.map(badge => {
       const isUnlocked = userBadges.some(b => {
-        if (typeof b === 'string') return b === badge.requirement; // Legacy check?
-        return b.id === badge.id;
+        if (typeof b === 'string') return false; // Ignore legacy strings, rely on auto-heal to add objects
+        return b && b.id === badge.id;
       });
       return {
         ...badge,
