@@ -137,6 +137,20 @@ module.exports = {
     required: false,
     description: "Danh sách ID bài viết lịch sử liên quan",
   },
+  rating: {
+    type: "number",
+    required: false,
+    min: 0,
+    max: 5,
+    default: 0,
+    description: "Đánh giá trung bình",
+  },
+  totalReviews: {
+    type: "number",
+    required: false,
+    default: 0,
+    description: "Tổng số đánh giá",
+  },
   createdBy: {
     type: 'number',
     required: false,

@@ -22,7 +22,8 @@ const PERMISSIONS = {
     game_content: ['create', 'read', 'update', 'delete', 'list', 'suggest'],
     learning_modules: ['create', 'read', 'update', 'delete', 'list'],
     game_levels: ['create', 'read', 'update', 'delete', 'list'], // Added explicit game_levels
-    users: ['read'] // Xem profile cơ bản
+    users: ['read'], // Xem profile cơ bản
+    reviews: ['create', 'read', 'update', 'delete', 'list']
   },
 
   // 3. Customer: Người chơi
@@ -31,7 +32,8 @@ const PERMISSIONS = {
     artifacts: ['read', 'list'],
     game_play: ['play', 'submit_score', 'collect_reward', 'earn_rewards', 'scan_qr'],
     user_data: ['read_own', 'update_own', 'delete_own'], // Collections, Favorites, Progress
-    shop: ['purchase', 'use_item']
+    shop: ['purchase', 'use_item'],
+    reviews: ['create', 'read', 'update_own', 'delete_own']
   }
 };
 

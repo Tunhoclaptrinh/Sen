@@ -8,6 +8,8 @@ const reviewController = require('../controllers/review.controller');
 router.get('/', reviewController.getAll);
 router.get('/stats/summary', reviewController.getStats);
 router.get('/type/:type', reviewController.getByType);
+router.get('/sync/ratings', protect, checkPermission('reviews', 'delete'), reviewController.syncRatings);
+router.get('/:type/:referenceId', reviewController.getByItem);
 
 // User Actions
 router.post('/',

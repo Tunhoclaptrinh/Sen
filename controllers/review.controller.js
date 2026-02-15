@@ -7,18 +7,47 @@ class ReviewController {
       let { type } = req.params;
       if (type === 'heritageSite' || type === 'heritage_site') type = 'heritage_site';
 
-      if (!['heritage_site', 'artifact'].includes(type)) {
+      if (!['heritage_site', 'artifact', 'exhibition', 'history_article'].includes(type)) {
         return res.status(400).json({
           success: false,
           message: 'Invalid type'
         });
       }
 
-      const reviews = await db.findMany('reviews', { type: type });
+      const result = await reviewService.findByType(type, req.parsedQuery);
+
+      // Populate user info for each review if needed (though findByType might already handle common fields)
+      // BaseService.populateAuthor is handled in reviewService.findByType (via findAllAdvanced)
+
       res.json({
         success: true,
-        count: reviews.length,
-        data: reviews
+        count: result.data.length,
+        data: result.data,
+        pagination: result.pagination
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getByItem = async (req, res, next) => {
+    try {
+      let { type, referenceId } = req.params;
+      if (type === 'heritageSite' || type === 'heritage_site') type = 'heritage_site';
+
+      if (!['heritage_site', 'artifact', 'exhibition', 'history_article'].includes(type)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid type'
+        });
+      }
+
+      const result = await reviewService.findByItem(type, referenceId, req.parsedQuery);
+      res.json({
+        success: true,
+        count: result.data.length,
+        data: result.data,
+        pagination: result.pagination
       });
     } catch (error) {
       next(error);
@@ -27,16 +56,20 @@ class ReviewController {
 
   create = async (req, res, next) => {
     try {
-      const review = await db.create('reviews', {
+      const result = await reviewService.create({
         ...req.body,
         userId: req.user.id,
         createdAt: new Date().toISOString()
       });
 
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+
       res.status(201).json({
         success: true,
         message: 'Review created',
-        data: review
+        data: result.data
       });
     } catch (error) {
       next(error);
@@ -60,15 +93,19 @@ class ReviewController {
         });
       }
 
-      const updated = await db.update('reviews', req.params.id, {
+      const result = await reviewService.update(req.params.id, {
         ...req.body,
         updatedAt: new Date().toISOString()
       });
 
+      if (!result.success) {
+        return res.status(result.statusCode || 400).json(result);
+      }
+
       res.json({
         success: true,
         message: 'Review updated',
-        data: updated
+        data: result.data
       });
     } catch (error) {
       next(error);
@@ -92,7 +129,7 @@ class ReviewController {
         });
       }
 
-      await db.delete('reviews', req.params.id);
+      await reviewService.delete(req.params.id);
       res.json({
         success: true,
         message: 'Review deleted'
@@ -164,6 +201,19 @@ class ReviewController {
     try {
       const result = await reviewService.getStats();
       res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  syncRatings = async (req, res, next) => {
+    try {
+      const result = await reviewService.recalculateAllRatings();
+      res.json({
+        success: true,
+        message: 'All ratings recalculated successfully',
+        data: result
+      });
     } catch (error) {
       next(error);
     }
