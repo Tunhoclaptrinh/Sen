@@ -109,7 +109,7 @@
       "isActive": true,
       "avatar": "https://ui-avatars.com/api/?name=Admin+Sen&background=0D8ABC&color=fff",
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-02-11T10:20:40.561Z"
+      "lastLogin": "2026-02-15T10:10:44.932Z"
     },
     {
       "id": 2,
@@ -2390,7 +2390,7 @@
       "createdBy": 2,
       "status": "published",
       "isActive": true,
-      "views": 5,
+      "views": 6,
       "relatedHeritageIds": [
         2
       ],
@@ -2518,12 +2518,12 @@
           "status": "published",
           "publishDate": "2024-09-05T15:30:00Z",
           "shortDescription": "Bảo vật quốc gia, biểu tượng rực rỡ nhất của nền văn hóa Đông Sơn.",
-          "commentCount": 34,
+          "commentCount": 0,
           "gallery": [],
           "relatedHeritageIds": [],
           "relatedHistoryIds": [],
           "views": 5,
-          "totalReviews": 34,
+          "totalReviews": 0,
           "rating": 0
         }
       ],

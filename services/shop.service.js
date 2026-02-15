@@ -1,9 +1,8 @@
 const db = require('../config/database');
 const notificationService = require('./notification.service');
 
-exports.getShopItems = async () => {
-    const items = db.findAll('shop_items');
-    return items || [];
+exports.getShopItems = async (options = {}) => {
+    return db.findAllAdvanced('shop_items', options);
 };
 
 exports.getUserInventory = async (userId) => {
@@ -128,4 +127,29 @@ exports.buyItem = async (userId, itemId, quantity = 1) => {
     }
 
     return successResult;
+};
+
+// Admin CRUD Methods
+
+exports.createItem = async (data) => {
+    // Ensure isActive is boolean
+    const itemData = {
+        ...data,
+        isActive: data.isActive !== undefined ? !!data.isActive : true,
+    };
+    return db.create('shop_items', itemData);
+};
+
+exports.updateItem = async (id, data) => {
+    const item = db.findById('shop_items', id);
+    if (!item) throw new Error('Item not found');
+
+    return db.update('shop_items', id, data);
+};
+
+exports.deleteItem = async (id) => {
+    const item = db.findById('shop_items', id);
+    if (!item) throw new Error('Item not found');
+
+    return db.delete('shop_items', id);
 };
