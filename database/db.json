@@ -257,7 +257,7 @@
       "userId": 1,
       "level": 25,
       "totalPoints": 12500,
-      "totalSenPetals": 300,
+      "totalSenPetals": 310,
       "checkinCount": 10,
       "completedLevels": [],
       "unlockedChapters": [
@@ -265,11 +265,19 @@
         2
       ],
       "collectedCharacters": [],
-      "badges": [],
+      "badges": [
+        {
+          "id": 2,
+          "name": "Bậc thầy lịch sử",
+          "icon": "📜",
+          "earnedAt": "2026-02-15T10:28:35.755Z"
+        }
+      ],
       "achievements": [],
       "museumOpen": true,
       "museumIncome": 4500,
-      "createdAt": "2024-01-15T10:30:00Z"
+      "createdAt": "2024-01-15T10:30:00Z",
+      "coins": 200
     },
     {
       "id": 2,
@@ -4545,6 +4553,28 @@
       "currency": "petals",
       "description": "Thưởng huy hiệu: Bậc thầy lịch sử",
       "createdAt": "2026-02-14T09:36:16.564Z"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "type": "earn",
+      "source": "badge_reward",
+      "sourceId": 2,
+      "amount": 200,
+      "currency": "coins",
+      "description": "Thưởng huy hiệu: Bậc thầy lịch sử",
+      "createdAt": "2026-02-15T10:28:35.755Z"
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "type": "earn",
+      "source": "badge_reward",
+      "sourceId": 2,
+      "amount": 10,
+      "currency": "petals",
+      "description": "Thưởng huy hiệu: Bậc thầy lịch sử",
+      "createdAt": "2026-02-15T10:28:35.761Z"
     }
   ],
   "notifications": [
@@ -4569,6 +4599,17 @@
       "isRead": false,
       "createdAt": "2026-02-15T03:20:54.052Z",
       "updatedAt": "2026-02-15T03:20:54.052Z"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "title": "Danh hiệu mới! 🏅",
+      "message": "Chúc mừng! Bạn vừa đạt được danh hiệu \"Bậc thầy lịch sử\".",
+      "type": "achievement",
+      "refId": 2,
+      "isRead": false,
+      "createdAt": "2026-02-15T10:28:35.766Z",
+      "updatedAt": "2026-02-15T10:28:35.766Z"
     }
   ]
 }
