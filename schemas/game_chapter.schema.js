@@ -75,5 +75,20 @@ module.exports = {
     type: "string",
     required: false,
     description: "Phản hồi từ người duyệt"
+  },
+  relatedHeritageIds: {
+    type: 'array',
+    required: false,
+    description: 'Di sản liên quan'
+  },
+  relatedArtifactIds: {
+    type: 'array',
+    required: false,
+    description: 'Hiện vật liên quan'
+  },
+  relatedHistoryIds: {
+    type: 'array',
+    required: false,
+    description: 'Bài viết lịch sử liên quan'
   }
 };

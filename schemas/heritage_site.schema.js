@@ -171,6 +171,12 @@ module.exports = {
     required: false,
     description: "Danh sách ID hiện vật liên quan",
   },
+  relatedHeritageIds: {
+    type: "array",
+    items: { type: "number" },
+    required: false,
+    description: "Danh sách ID di sản liên quan",
+  },
   relatedHistoryIds: {
     type: "array",
     items: { type: "number" },

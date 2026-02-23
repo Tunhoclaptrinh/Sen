@@ -68,6 +68,11 @@ module.exports = {
     required: false,
     description: 'Danh sách ID Hiện vật liên quan'
   },
+  relatedHistoryIds: {
+    type: 'array',
+    required: false,
+    description: 'Danh sách ID Bài viết lịch sử liên quan'
+  },
   relatedLevelIds: {
     type: 'array',
     required: false,

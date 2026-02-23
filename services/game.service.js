@@ -314,7 +314,7 @@ class GameService {
     const enrichedLevels = await Promise.all(levels.map(async (level) => ({
       ...level,
       isCompleted: progress.data.completedLevels.includes(level.id),
-      isLocked: !this.canPlayLevel(level, progress.data),
+      isLocked: !this.canPlayLevel(level, progress.data, levels),
       playerBestScore: await this.getBestScore(level.id, userId)
     })));
 
@@ -431,7 +431,7 @@ class GameService {
       thumbnail: level.thumbnail,
       backgroundImage: level.backgroundImage,
       isCompleted: progress.data.completedLevels.includes(level.id),
-      isLocked: !this.canPlayLevel(level, progress.data),
+      isLocked: !this.canPlayLevel(level, progress.data, levels),
       rewards: level.rewards,
       requiredLevel: level.requiredLevel
     }));
@@ -442,13 +442,24 @@ class GameService {
   /**
    * Kiểm tra có thể chơi level không
    */
-  canPlayLevel(level, progress) {
-    // Level đầu luôn chơi được
+  canPlayLevel(level, progress, chapterLevels = []) {
+    // Level 1 always playable if chapter is unlocked
     if (level.order === 1) return true;
+
+    // Explicit requirement
     if (level.requiredLevel) {
       return progress.completedLevels.includes(level.requiredLevel);
     }
 
+    // Implicit requirement: Previous level in same chapter must be completed
+    if (chapterLevels.length > 0) {
+      const prevLevel = chapterLevels.find(l => l.order === level.order - 1);
+      if (prevLevel) {
+        return progress.completedLevels.includes(prevLevel.id);
+      }
+    }
+
+    // Fallback for cases without chapterLevels or if previous level missing in config
     return true;
   }
 
@@ -531,7 +542,9 @@ class GameService {
     }
 
     const progress = await db.findOne('game_progress', { userId: userId });
-    if (!this.canPlayLevel(level, progress)) {
+    const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
+
+    if (!this.canPlayLevel(level, progress, chapterLevels)) {
       return { success: false, message: 'Level is locked', statusCode: 403 };
     }
 

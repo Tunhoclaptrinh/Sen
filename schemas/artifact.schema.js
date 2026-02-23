@@ -125,6 +125,12 @@ module.exports = {
     description: "Lượt xem",
   },
   // Related items (admin-managed)
+  relatedArtifactIds: {
+    type: "array",
+    items: { type: "number" },
+    required: false,
+    description: "Danh sách ID hiện vật liên quan",
+  },
   relatedHeritageIds: {
     type: "array",
     items: { type: "number" },

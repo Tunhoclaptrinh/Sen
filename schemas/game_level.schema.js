@@ -187,6 +187,21 @@ module.exports = {
     foreignKey: 'heritage_sites',
     description: 'Di sản liên quan'
   },
+  relatedHeritageIds: {
+    type: 'array',
+    required: false,
+    description: 'Danh sách ID Di sản liên quan'
+  },
+  relatedArtifactIds: {
+    type: 'array',
+    required: false,
+    description: 'Danh sách ID Hiện vật liên quan'
+  },
+  relatedHistoryIds: {
+    type: 'array',
+    required: false,
+    description: 'Danh sách ID Bài viết lịch sử liên quan'
+  },
   isActive: {
     type: 'boolean',
     required: false,

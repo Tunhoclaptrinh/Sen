@@ -109,7 +109,7 @@
       "isActive": true,
       "avatar": "https://ui-avatars.com/api/?name=Admin+Sen&background=0D8ABC&color=fff",
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-02-15T10:10:44.932Z"
+      "lastLogin": "2026-02-23T16:39:19.290Z"
     },
     {
       "id": 2,
@@ -129,7 +129,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-02-15T02:45:44.132Z"
+      "lastLogin": "2026-02-22T15:16:01.472Z"
     },
     {
       "id": 4,
@@ -301,10 +301,12 @@
       "id": 3,
       "userId": 3,
       "level": 12,
-      "totalPoints": 6000,
-      "totalSenPetals": 91,
+      "totalPoints": 6155,
+      "totalSenPetals": 92,
       "checkinCount": 8,
-      "completedLevels": [],
+      "completedLevels": [
+        1
+      ],
       "unlockedChapters": [
         1
       ],
@@ -321,9 +323,10 @@
       "museumOpen": false,
       "museumIncome": 0,
       "createdAt": "2024-03-10T09:15:00Z",
-      "coins": 250,
+      "coins": 350,
       "streakDays": 1,
-      "lastRewardClaim": "2026-02-15T03:13:25.127Z"
+      "lastRewardClaim": "2026-02-15T03:13:25.127Z",
+      "finishedChapters": []
     },
     {
       "id": 4,
@@ -619,6 +622,12 @@
         1,
         2
       ],
+      "relatedHeritageIds": [
+        2
+      ],
+      "relatedLevelIds": [
+        1
+      ],
       "timeline": [
         {
           "id": 2,
@@ -675,6 +684,9 @@
         7,
         8,
         9
+      ],
+      "relatedHeritageIds": [
+        1
       ],
       "relatedHistoryIds": [
         1
@@ -854,11 +866,10 @@
       "rating": 4,
       "totalReviews": 1,
       "relatedHeritageIds": [
-        {
-          "label": "Phố Cổ Hội An",
-          "value": 1,
-          "key": 1
-        }
+        2
+      ],
+      "relatedArtifactIds": [
+        2
       ],
       "views": 3,
       "historicalContext": "<div class=\"mw-heading mw-heading2\">\n<p>Theo học kh&oacute;a sơn dầu&nbsp;<a title=\"1926\" href=\"https://vi.wikipedia.org/wiki/1926\">1926</a>-<a title=\"1931\" href=\"https://vi.wikipedia.org/wiki/1931\">1931</a>&nbsp;của trường&nbsp;<a title=\"Trường Đại học Mỹ thuật Việt Nam\" href=\"https://vi.wikipedia.org/wiki/Tr%C6%B0%E1%BB%9Dng_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_M%E1%BB%B9_thu%E1%BA%ADt_Vi%E1%BB%87t_Nam\">Cao đẳng Mỹ thuật Đ&ocirc;ng Dương</a>, họa sĩ&nbsp;<a title=\"T&ocirc; Ngọc V&acirc;n\" href=\"https://vi.wikipedia.org/wiki/T%C3%B4_Ng%E1%BB%8Dc_V%C3%A2n\">T&ocirc; Ngọc V&acirc;n</a>&nbsp;được coi l&agrave; một trong những nghệ sĩ xuất sắc của hội họa Việt Nam trước&nbsp;<a title=\"1945\" href=\"https://vi.wikipedia.org/wiki/1945\">1945</a>&nbsp;với c&acirc;u so s&aacute;nh \"Nhất&nbsp;<a title=\"Nguyễn Gia Tr&iacute;\" href=\"https://vi.wikipedia.org/wiki/Nguy%E1%BB%85n_Gia_Tr%C3%AD\">Tr&iacute;</a>, nh&igrave;&nbsp;<a title=\"T&ocirc; Ngọc V&acirc;n\" href=\"https://vi.wikipedia.org/wiki/T%C3%B4_Ng%E1%BB%8Dc_V%C3%A2n\">V&acirc;n</a>, tam&nbsp;<a title=\"Nguyễn Tường L&acirc;n\" href=\"https://vi.wikipedia.org/wiki/Nguy%E1%BB%85n_T%C6%B0%E1%BB%9Dng_L%C3%A2n\">L&acirc;n</a>, tứ&nbsp;<a title=\"Trần Văn Cẩn\" href=\"https://vi.wikipedia.org/wiki/Tr%E1%BA%A7n_V%C4%83n_C%E1%BA%A9n\">Cẩn</a>\". Bắt đầu c&oacute; nhiều t&aacute;c phẩm đ&aacute;ng ch&uacute; &yacute; từ&nbsp;<a title=\"Thập ni&ecirc;n 1930\" href=\"https://vi.wikipedia.org/wiki/Th%E1%BA%ADp_ni%C3%AAn_1930\">thập ni&ecirc;n 1930</a>, T&ocirc; Ngọc V&acirc;n s&aacute;ng t&aacute;c bức tranh nổi tiếng nhất của &ocirc;ng,&nbsp;<em>Thiếu nữ b&ecirc;n hoa huệ</em>, v&agrave;o năm&nbsp;<a title=\"1943\" href=\"https://vi.wikipedia.org/wiki/1943\">1943</a>.<sup id=\"cite_ref-vtc_3-0\" class=\"reference\"><a href=\"https://vi.wikipedia.org/wiki/Thi%E1%BA%BFu_n%E1%BB%AF_b%C3%AAn_hoa_hu%E1%BB%87#cite_note-vtc-3\"><span class=\"cite-bracket\">[</span>3<span class=\"cite-bracket\">]</span></a></sup>&nbsp;Người mẫu của bức tranh l&agrave; c&ocirc; S&aacute;u, một người mẫu tranh s&aacute;ng gi&aacute; thời bấy giờ ở&nbsp;<a title=\"H&agrave; Nội\" href=\"https://vi.wikipedia.org/wiki/H%C3%A0_N%E1%BB%99i\">H&agrave; Nội</a>. C&ocirc; c&ograve;n l&agrave; người mẫu cho nhiều t&aacute;c phẩm kh&aacute;c của họa sĩ T&ocirc; Ngọc V&acirc;n trong đ&oacute; c&oacute; bức&nbsp;<em><a class=\"new\" title=\"Thiếu nữ với hoa sen (trang kh&ocirc;ng tồn tại)\" href=\"https://vi.wikipedia.org/w/index.php?title=Thi%E1%BA%BFu_n%E1%BB%AF_v%E1%BB%9Bi_hoa_sen&amp;action=edit&amp;redlink=1\">Thiếu nữ với hoa sen</a></em>. B&ecirc;n cạnh T&ocirc; Ngọc V&acirc;n, c&ocirc; S&aacute;u c&ograve;n l&agrave; người mẫu tranh cho nhiều họa sĩ nổi tiếng đương thời như&nbsp;<a title=\"Trần Văn Cẩn\" href=\"https://vi.wikipedia.org/wiki/Tr%E1%BA%A7n_V%C4%83n_C%E1%BA%A9n\">Trần Văn Cẩn</a>,&nbsp;<a title=\"Nguyễn Gia Tr&iacute;\" href=\"https://vi.wikipedia.org/wiki/Nguy%E1%BB%85n_Gia_Tr%C3%AD\">Nguyễn Gia Tr&iacute;</a>,&nbsp;<a title=\"Lương Xu&acirc;n Nhị\" href=\"https://vi.wikipedia.org/wiki/L%C6%B0%C6%A1ng_Xu%C3%A2n_Nh%E1%BB%8B\">Lương Xu&acirc;n Nhị</a>. Sau n&agrave;y khi di cư v&agrave;o miền Nam c&ocirc; tiếp tục l&agrave;m người mẫu cho họa sĩ Nguyễn Gia Tr&iacute;.<sup id=\"cite_ref-4\" class=\"reference\"><a href=\"https://vi.wikipedia.org/wiki/Thi%E1%BA%BFu_n%E1%BB%AF_b%C3%AAn_hoa_hu%E1%BB%87#cite_note-4\"><span class=\"cite-bracket\">[</span>4<span class=\"cite-bracket\">]</span></a></sup></p>\n<p>Sau khi qu&acirc;n đội&nbsp;<a title=\"Ph&aacute;p\" href=\"https://vi.wikipedia.org/wiki/Ph%C3%A1p\">Ph&aacute;p</a>&nbsp;quay lại chiếm&nbsp;<a title=\"H&agrave; Nội\" href=\"https://vi.wikipedia.org/wiki/H%C3%A0_N%E1%BB%99i\">H&agrave; Nội</a>,&nbsp;<em>Thiếu nữ b&ecirc;n hoa huệ</em>&nbsp;được b&aacute;n cho nh&agrave; sưu tập tranh nổi tiếng&nbsp;<a class=\"new\" title=\"Đức Minh (nh&agrave; sưu tập) (trang kh&ocirc;ng tồn tại)\" href=\"https://vi.wikipedia.org/w/index.php?title=%C4%90%E1%BB%A9c_Minh_(nh%C3%A0_s%C6%B0u_t%E1%BA%ADp)&amp;action=edit&amp;redlink=1\">Ho&agrave;ng Vũ</a>&nbsp;(t&ecirc;n thật l&agrave; B&ugrave;i Đ&igrave;nh Thản). Sau khi &ocirc;ng Ho&agrave;ng Vũ qua đời, t&aacute;c phẩm n&agrave;y được c&aacute;c con của &ocirc;ng b&aacute;n cho một người sưu tầm t&ecirc;n l&agrave; H&agrave; Th&uacute;c Cần với gi&aacute; 1&nbsp;<a title=\"Đ&ocirc; la Mỹ\" href=\"https://vi.wikipedia.org/wiki/%C4%90%C3%B4_la_M%E1%BB%B9\">USD</a>.<sup id=\"cite_ref-5\" class=\"reference\"><a href=\"https://vi.wikipedia.org/wiki/Thi%E1%BA%BFu_n%E1%BB%AF_b%C3%AAn_hoa_hu%E1%BB%87#cite_note-5\"><span class=\"cite-bracket\">[</span>5<span class=\"cite-bracket\">]</span></a></sup>&nbsp;Theo lời họa sĩ T&ocirc; Ngọc Th&agrave;nh, con trai của họa sĩ T&ocirc; Ngọc V&acirc;n, th&igrave; sau khi mua được&nbsp;<em>Thiếu nữ b&ecirc;n hoa huệ</em>, &ocirc;ng Cần đ&atilde; b&aacute;n lại t&aacute;c phẩm nổi tiếng ra nước ngo&agrave;i, bấp chấp quy định cấm của Việt Nam.<sup id=\"cite_ref-6\" class=\"reference\"><a href=\"https://vi.wikipedia.org/wiki/Thi%E1%BA%BFu_n%E1%BB%AF_b%C3%AAn_hoa_hu%E1%BB%87#cite_note-6\"><span class=\"cite-bracket\">[</span>6<span class=\"cite-bracket\">]</span></a></sup>&nbsp;Một phi&ecirc;n bản ch&eacute;p lại của bức tranh từng được trưng b&agrave;y tại&nbsp;<a title=\"Bảo t&agrave;ng Mỹ thuật Việt Nam\" href=\"https://vi.wikipedia.org/wiki/B%E1%BA%A3o_t%C3%A0ng_M%E1%BB%B9_thu%E1%BA%ADt_Vi%E1%BB%87t_Nam\">Bảo t&agrave;ng Mỹ thuật Việt Nam</a>&nbsp;nhưng từ sau năm&nbsp;<a title=\"1990\" href=\"https://vi.wikipedia.org/wiki/1990\">1990</a>&nbsp;phi&ecirc;n bản n&agrave;y đ&atilde; được gỡ bỏ trong nỗ lực chỉ treo tranh bản ch&iacute;nh của Bảo t&agrave;ng.<sup id=\"cite_ref-7\" class=\"reference\"><a href=\"https://vi.wikipedia.org/wiki/Thi%E1%BA%BFu_n%E1%BB%AF_b%C3%AAn_hoa_hu%E1%BB%87#cite_note-7\"><span class=\"cite-bracket\">[</span>7<span class=\"cite-bracket\">]</span></a></sup></p>\n</div>",
@@ -975,7 +986,7 @@
       "updatedAt": "2026-02-04T17:28:33.767Z",
       "status": "published",
       "review_comment": null,
-      "views": 2,
+      "views": 3,
       "totalReviews": 0,
       "commentCount": 0,
       "rating": 0
@@ -2165,7 +2176,7 @@
       "requiredLevel": 1
     },
     {
-      "id": 20,
+      "id": 22,
       "chapterId": 4,
       "name": "Màn 1",
       "description": "Màn 1Màn 1Màn 1Màn 1",
@@ -2405,6 +2416,9 @@
       "relatedArtifactIds": [
         2
       ],
+      "relatedLevelIds": [
+        1
+      ],
       "timelineEvents": [
         {
           "year": "1953",
@@ -2573,8 +2587,12 @@
       "status": "published",
       "isActive": true,
       "views": 2,
-      "relatedHeritageIds": [],
-      "relatedArtifactIds": [],
+      "relatedHeritageIds": [
+        3
+      ],
+      "relatedArtifactIds": [
+        4
+      ],
       "timelineEvents": [
         {
           "year": "04/03/1975",
@@ -3943,6 +3961,39 @@
       "lastActivity": "2026-02-12T09:42:36.386Z",
       "expiredAt": "2026-02-14T01:43:41.561Z",
       "expiredReason": "Session timeout (24 hours inactive)"
+    },
+    {
+      "id": 20,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-02-22T15:17:12.347Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 155,
+      "totalScreens": 4,
+      "completedScreens": [
+        "intro_d1",
+        "intro_d2",
+        "story_video",
+        "intro_q1"
+      ],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-22T15:16:28.570Z",
+      "lastActivity": "2026-02-22T15:17:13.262Z",
+      "completedAt": "2026-02-22T15:17:13.275Z"
     }
   ],
   "learning_modules": [
@@ -4610,6 +4661,17 @@
       "isRead": false,
       "createdAt": "2026-02-15T10:28:35.766Z",
       "updatedAt": "2026-02-15T10:28:35.766Z"
+    },
+    {
+      "id": 4,
+      "userId": 3,
+      "title": "Hoàn thành màn chơi! ✨",
+      "message": "Chúc mừng! Bạn đã vượt qua màn chơi \"Huyền thoại Rồng Tiên\" với 155 điểm!",
+      "type": "learning",
+      "refId": 1,
+      "isRead": false,
+      "createdAt": "2026-02-22T15:17:13.294Z",
+      "updatedAt": "2026-02-22T15:17:13.294Z"
     }
   ]
 }

@@ -41,6 +41,11 @@ module.exports = {
     maxLength: 200,
     description: 'Người quản lý'
   },
+  reviewComment: {
+    type: "string",
+    required: false,
+    description: "Phản hồi từ người duyệt"
+  },
   image: {
     type: 'string',
     required: false,
@@ -69,5 +74,20 @@ module.exports = {
     required: false,
     maxLength: 500,
     description: 'Bình luận của người kiểm duyệt'
+  },
+  relatedHeritageIds: {
+    type: 'array',
+    required: false,
+    description: 'Di sản liên quan'
+  },
+  relatedArtifactIds: {
+    type: 'array',
+    required: false,
+    description: 'Hiện vật liên quan'
+  },
+  relatedHistoryIds: {
+    type: 'array',
+    required: false,
+    description: 'Bài viết lịch sử liên quan'
   }
 };
