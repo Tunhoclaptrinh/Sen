@@ -206,23 +206,17 @@ class ArtifactService extends BaseService {
         const isSameCat = a.categoryId == artifact.categoryId;
         const isNotSelf = a.id != artifactId;
         
-        // Debug first few checks
-        // if (a.id < 10) console.log(`Check ID ${a.id}: Site ${a.heritageSiteId} vs ${artifact.heritageSiteId} (${isSameSite}), Cat ${a.categoryId} vs ${artifact.categoryId} (${isSameCat})`);
-
         return isNotSelf && (isSameSite || isSameCat);
       })
       .slice(0, 5);
       
     // Fallback: If no related artifacts found, return random artifacts (Discovery Mode)
     if (related.length === 0) {
-       console.log('[ArtifactService] No strict matches, using fallback');
        const others = allArtifacts.filter(a => a.id != artifactId);
        // Shuffle and pick 5
        const shuffled = others.sort(() => 0.5 - Math.random());
        related.push(...shuffled.slice(0, 5));
     }
-
-    console.log(`[DEBUG] getRelated returning ${related.length} items`);
 
     return {
       success: true,

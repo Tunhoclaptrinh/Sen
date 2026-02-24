@@ -4,7 +4,7 @@
  * Base URL: http://localhost:3000/api
  */
 
-const BASE_URL = process.env.API_URL || 'http://localhost:3000/api/';
+const BASE_URL = process.env.API_URL;
 
 /**
  * Authentication Endpoints

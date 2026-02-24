@@ -1588,7 +1588,7 @@ class GameService {
         lastMuseumCollection: new Date().toISOString()
       });
 
-      console.log(`✅ User ${userId} collected ${incomeInfo.pending} coins from museum`);
+
 
       return {
         success: true,

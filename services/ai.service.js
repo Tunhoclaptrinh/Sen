@@ -104,7 +104,10 @@ class AIService {
           user_input: cleanMessage,
           history: history,
         },
-        { timeout: 60000 }
+        { 
+          timeout: 60000,
+          family: 4, // Enforce IPv4
+        }
       );
 
       const { answer, rewritten_query: rewrittenQuery, route, score, audio_base64: audioBase64, emotion } = response.data;
@@ -615,88 +618,6 @@ class AIService {
 
 module.exports = new AIService();
 
-// /**
-//  * AI Service - Tích hợp AI chatbot
-//  * Sử dụng OpenAI hoặc Gemini API
-//  */
-
-// const db = require('../config/database');
-
-// class AIService {
-//   constructor() {
-//     this.API_KEY = process.env.OPENAI_API_KEY || process.env.GEMINI_API_KEY;
-//     this.MODEL = process.env.AI_MODEL || 'gpt-3.5-turbo';
-//     this.API_URL = process.env.OPENAI_API_KEY
-//       ? 'https://api.openai.com/v1/chat/completions'
-//       : 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-//   }
-
-//   /**
-//    * Chat với AI
-//    */
-//   async chat(userId, message, context = {}) {
-
-//     // Sanitize user input - Simple validation
-//     const cleanMessage = message
-//       .replace(/</g, '&lt;')
-//       .replace(/>/g, '&gt;')
-//       .replace(/"/g, '&quot;')
-//       .replace(/'/g, '&#x27;')
-//       .trim();
-
-//     // Length limit
-//     if (cleanMessage.length > 500) {
-//       return {
-//         success: false,
-//         message: 'Message too long (max 500 characters)'
-//       };
-//     }
-
-//     try {
-//       // Lấy character context từ level hiện tại
-//       const character = await this.getCharacterContext(context, userId);
-
-//       // Lấy knowledge base
-//       const knowledge = await this.getKnowledgeBase(context);
-
-//       // Build system prompt
-//       const systemPrompt = this.buildSystemPrompt(character, knowledge);
-
-//       // Lấy conversation history
-//       const history = await this.getConversationHistory(userId, context.levelId, 5);
-
-//       // Call AI API
-//       const aiResponse = await this.callAI(systemPrompt, history, message);
-
-//       // Lưu vào database
-//       const chatRecord = await db.create('ai_chat_history', {
-//         user_id: userId,
-//         level_id: context.levelId || null,
-//         character_id: context.characterId || null,
-//         message: message,
-//         response: aiResponse,
-//         context: context,
-//         created_at: new Date().toISOString()
-//       });
-
-//       return {
-//         success: true,
-//         data: {
-//           message: aiResponse,
-//           character: character,
-//           timestamp: chatRecord.created_at
-//         }
-//       };
-//     } catch (error) {
-//       console.error('AI Chat Error:', error);
-//       return {
-//         success: false,
-//         message: 'AI service temporarily unavailable',
-//         statusCode: 500
-//       };
-//     }
-//   }
-
 //   /**
 //    * Lấy context của character
 //    */
@@ -781,7 +702,6 @@ module.exports = new AIService();
 //    * Build system prompt
 //    */
 //   buildSystemPrompt(character, knowledge) {
-//     // Default character if null
 //     if (!character) {
 //       character = {
 //         persona: 'Bạn là trợ lý AI thông minh về văn hóa Việt Nam.',
@@ -822,63 +742,6 @@ module.exports = new AIService();
 //     ]).flat();
 //   }
 
-//   /**
-//    * Call AI API (OpenAI hoặc Gemini)
-//    */
-//   async callAI(systemPrompt, history, userMessage) {
-//     if (!this.API_KEY) {
-//       // Fallback response nếu không có API key
-//       return this.getFallbackResponse(userMessage);
-//     }
-
-//     try {
-//       const messages = [
-//         { role: 'system', content: systemPrompt },
-//         ...history,
-//         { role: 'user', content: userMessage }
-//       ];
-
-//       const response = await fetch(this.API_URL, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${this.API_KEY}`
-//         },
-//         body: JSON.stringify({
-//           model: this.MODEL,
-//           messages: messages,
-//           max_tokens: 150,
-//           temperature: 0.7
-//         })
-//       });
-
-//       const data = await response.json();
-
-//       if (process.env.OPENAI_API_KEY) {
-//         return data.choices[0].message.content;
-//       } else {
-//         // Gemini response format
-//         return data.candidates[0].content.parts[0].text;
-//       }
-//     } catch (error) {
-//       console.error('AI API Error:', error);
-//       return this.getFallbackResponse(userMessage);
-//     }
-//   }
-
-//   /**
-//    * Fallback response nếu AI không khả dụng
-//    */
-//   getFallbackResponse(message) {
-//     const responses = [
-//       "Hm, câu hỏi hay đấy! Hãy quan sát xung quanh và tìm thêm manh mối nhé! 🔍",
-//       "Ta nghĩ bạn đang trên đường đúng rồi đấy! Hãy tiếp tục khám phá! ✨",
-//       "Thật tuyệt vời! Bạn đang học hỏi rất nhiều về lịch sử Việt Nam! 🏛️",
-//       "Câu hỏi thú vị! Hãy tìm kiếm các vật phẩm xung quanh để tìm câu trả lời nhé! 🎯"
-//     ];
-
-//     return responses[Math.floor(Math.random() * responses.length)];
-//   }
 
 //   /**
 //    * Cung cấp gợi ý
@@ -1018,39 +881,3 @@ module.exports = new AIService();
 //       data: quiz
 //     };
 //   }
-
-//   /**
-//    * Lấy lịch sử chat
-//    */
-//   async getHistory(userId, levelId, limit) {
-//     const query = { user_id: userId };
-//     if (levelId) query.level_id = levelId;
-
-//     const history = (await db.findMany('ai_chat_history', query))
-//       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-//       .slice(0, limit);
-
-//     return {
-//       success: true,
-//       data: history
-//     };
-//   }
-
-//   /**
-//    * Xóa lịch sử
-//    */
-//   async clearHistory(userId) {
-//     const history = await db.findMany('ai_chat_history', { user_id: userId });
-
-//     for (const h of history) {
-//       await db.delete('ai_chat_history', h.id);
-//     }
-
-//     return {
-//       success: true,
-//       message: 'Chat history cleared'
-//     };
-//   }
-// }
-
-// module.exports = new AIService();

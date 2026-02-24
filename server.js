@@ -386,12 +386,10 @@ function startKeepAlive() {
     return;
   }
 
-  // Extract base URL (e.g., https://npc-sen.onrender.com) from /process_query
+  // Extract base URL
   try {
     const urlObj = new URL(serviceUrl);
     const targetUrl = `${urlObj.origin}/`; // Ping root path always
-
-    console.log(`⏰ Wake up SEN periodically: ${targetUrl}`);
 
     // Initial ping
     pingService(targetUrl);
@@ -412,16 +410,13 @@ async function pingService(url) {
     // Increased timeout to 60s because HF Spaces can take a long time to cold boot.
     await axios.get(url, { 
       timeout: 60000,
+      family: 4, // Enforce IPv4
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
       }
     });
-    console.log(`[${new Date().toISOString()}] 💓 Wake up successful (Status: 200)`);
   } catch (error) {
-    // If root doesn't exist but we got a response, that's still a wake-up success (e.g. 404)
-    // But 405 means method not allowed, which is what we want to avoid.
     if (error.response) {
-      console.log(`[${new Date().toISOString()}] 💓 Wake up successful (Status: ${error.response.status})`);
     } else {
       console.error(`[${new Date().toISOString()}] ⚠️ Wake up failed: ${error.message}`);
     }
