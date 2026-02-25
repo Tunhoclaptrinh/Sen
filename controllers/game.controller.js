@@ -19,11 +19,20 @@ class GameController {
     }
   };
 
+  getAll = async (req, res, next) => {
+    try {
+      const result = await gameService.getAllLevels(req.query);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // ==================== CHAPTERS ====================
 
   getChapters = async (req, res, next) => {
     try {
-      const result = await gameService.getChapters(req.user.id);
+      const result = await gameService.getChapters(req.user?.id || null);
       res.json(result);
     } catch (error) {
       next(error);
@@ -34,7 +43,7 @@ class GameController {
     try {
       const result = await gameService.getChapterDetail(
         parseInt(req.params.id),
-        req.user.id
+        req.user?.id || null
       );
 
       if (!result.success) {
@@ -76,7 +85,7 @@ class GameController {
     try {
       const result = await gameService.getLevels(
         parseInt(req.params.chapterId),
-        req.user.id
+        req.user?.id || null
       );
       res.json(result);
     } catch (error) {
@@ -88,7 +97,7 @@ class GameController {
     try {
       const result = await gameService.getLevelDetail(
         parseInt(req.params.id),
-        req.user.id
+        req.user?.id || null
       );
 
       if (!result.success) {
@@ -108,7 +117,7 @@ class GameController {
     try {
       const result = await gameService.startLevel(
         parseInt(req.params.id),
-        req.user.id
+        req.user?.id || null
       );
 
       if (!result.success) {
@@ -137,7 +146,7 @@ class GameController {
 
       const result = await gameService.collectClue(
         parseInt(req.params.id),
-        req.user.id,
+        req.user?.id || null,
         clueId
       );
 
@@ -160,7 +169,7 @@ class GameController {
 
       const result = await gameService.completeLevel(
         parseInt(req.params.id),
-        req.user.id,
+        req.user?.id || null,
         { score, timeSpent }
       );
 
@@ -187,7 +196,7 @@ class GameController {
     try {
       const result = await gameService.navigateToNextScreen(
         parseInt(req.params.id),
-        req.user.id
+        req.user?.id || null
       );
 
       if (!result.success) {
@@ -221,7 +230,7 @@ class GameController {
 
       const result = await gameService.submitAnswer(
         parseInt(req.params.id),
-        req.user.id,
+        req.user?.id || null,
         answerId
       );
 
@@ -253,7 +262,7 @@ class GameController {
 
       const result = await gameService.submitTimelineOrder(
         parseInt(sessionId),
-        req.user.id,
+        req.user?.id || null,
         eventOrder
       );
 

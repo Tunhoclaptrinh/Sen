@@ -178,10 +178,16 @@ module.exports = {
     description: "Danh sách ID di sản liên quan",
   },
   relatedHistoryIds: {
-    type: "array",
+    type: 'array',
     items: { type: "number" },
     required: false,
     description: "Danh sách ID bài viết lịch sử liên quan",
+  },
+  relatedLevelIds: {
+    type: 'array',
+    items: { type: "number" },
+    required: false,
+    description: "Danh sách ID màn chơi liên quan",
   },
   timeline: {
     type: "array",

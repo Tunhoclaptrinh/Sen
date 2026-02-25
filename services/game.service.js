@@ -181,6 +181,46 @@ class GameService {
   * Lấy tiến độ game của user
   */
   async getProgress(userId) {
+    // For guest users, return default progress without creating DB record
+    if (!userId) {
+      const allChapters = await db.findAll('game_chapters');
+      const totalChapters = allChapters.length;
+
+      const allLevels = await db.findAll('game_levels');
+      const totalLevels = allLevels.length;
+
+      const rankInfo = this.calculateRank(0);
+
+      const guestProgress = {
+        userId: null,
+        level: 1,
+        totalPoints: 0,
+        completedLevels: [],
+        totalSenPetals: 0,
+        unlockedChapters: [],
+        finishedChapters: [],
+        collectedCharacters: [],
+        coins: 0,
+        badges: [],
+        isGuest: true
+      };
+
+      return {
+        success: true,
+        data: {
+          ...guestProgress,
+          ...rankInfo,
+          stats: {
+            completionRate: 0,
+            chaptersUnlocked: 0,
+            totalChapters: totalChapters,
+            charactersCollected: 0,
+            totalBadges: 0
+          }
+        }
+      };
+    }
+
     let progress = await db.findOne('game_progress', { userId: userId });
     if (!progress) {
       progress = await this.initializeProgress(userId);
@@ -410,11 +450,47 @@ class GameService {
   // ==================== LEVELS ====================
 
   /**
- * Lấy danh sách levels trong chapter
- */
+   * Lấy danh sách levels với bộ lọc (heritage, artifact, history)
+   */
+  async getAllLevels(query = {}) {
+    try {
+      const { relatedHeritageIds, relatedArtifactIds, relatedHistoryIds, limit } = query;
+      let levels = await db.findAll('game_levels');
+
+      if (relatedHeritageIds) {
+        levels = levels.filter(l =>
+          l.heritageSiteId === parseInt(relatedHeritageIds) ||
+          (Array.isArray(l.relatedHeritageIds) && l.relatedHeritageIds.includes(parseInt(relatedHeritageIds)))
+        );
+      }
+
+      if (relatedArtifactIds) {
+        levels = levels.filter(l =>
+          (Array.isArray(l.artifactIds) && l.artifactIds.includes(parseInt(relatedArtifactIds))) ||
+          (Array.isArray(l.relatedArtifactIds) && l.relatedArtifactIds.includes(parseInt(relatedArtifactIds)))
+        );
+      }
+
+      if (relatedHistoryIds) {
+        levels = levels.filter(l =>
+          Array.isArray(l.relatedHistoryIds) && l.relatedHistoryIds.includes(parseInt(relatedHistoryIds))
+        );
+      }
+
+      if (limit) {
+        levels = levels.slice(0, parseInt(limit));
+      }
+
+      return { success: true, data: levels };
+    } catch (error) {
+      console.error('[GameService:getAllLevels] Error:', error);
+      throw error;
+    }
+  }
+
   /**
-  * Lấy danh sách levels trong chapter
-  */
+   * Lấy danh sách levels trong chapter
+   */
   async getLevels(chapterId, userId) {
     const progress = await this.getProgress(userId);
     const levels = await db.findMany('game_levels', { chapterId: parseInt(chapterId) });
@@ -517,6 +593,9 @@ class GameService {
   async startLevel(levelId, userId) {
 
     console.log(`[GameService] Starting level ${levelId} for user ${userId}`);
+    
+    const isGuest = !userId; // Guest user if no userId
+
     // Close ALL existing in_progress sessions for this level/user (not just expired ones)
     const existingSessions = await db.findMany('game_sessions', {
       levelId: levelId,
@@ -541,11 +620,14 @@ class GameService {
       return { success: false, message: 'Level not found', statusCode: 404 };
     }
 
-    const progress = await db.findOne('game_progress', { userId: userId });
-    const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
+    // For guests, skip permission/progress checks
+    if (!isGuest) {
+      const progress = await db.findOne('game_progress', { userId: userId });
+      const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
 
-    if (!this.canPlayLevel(level, progress, chapterLevels)) {
-      return { success: false, message: 'Level is locked', statusCode: 403 };
+      if (!this.canPlayLevel(level, progress, chapterLevels)) {
+        return { success: false, message: 'Level is locked', statusCode: 403 };
+      }
     }
 
     // Validate screens structure
@@ -562,6 +644,7 @@ class GameService {
       userId: userId,
       levelId: levelId,
       status: 'in_progress',
+      isGuest: isGuest,  // Mark as guest session
       currentScreenId: level.screens[0].id,
       currentScreenIndex: 0,
       collectedItems: [],
@@ -805,7 +888,7 @@ class GameService {
       });
 
       // TRIGGER QUEST CHECK (Quiz Success)
-      if (isCorrect) {
+      if (isCorrect && userId) { // Skip for guests
         try {
           const questService = require('./quest.service');
           // Trigger 'perfect_quiz' if the user answers correctly. 
@@ -1211,6 +1294,7 @@ class GameService {
     }
     this.activeLocks.add(lockKey);
 
+    const isGuest = !userId; // Guest user if no userId
     let newBadges = []; // Moved outside to avoid scoping error
 
     try {
@@ -1225,7 +1309,6 @@ class GameService {
       }
 
       const level = await db.findById('game_levels', levelId);
-      const progress = await db.findOne('game_progress', { userId: userId });
 
       // ✅ SHARED SCORE CALCULATION
       const timeBonus = this.calculateTimeBonus(timeSpent || session.timeSpent, level.timeLimit);
@@ -1264,7 +1347,29 @@ class GameService {
         };
       }
 
-      // ✅ CALCULATE NEXT LEVEL (For both first-time and replay)
+      // ✅ For guests, return success without saving progress
+      if (isGuest) {
+        return {
+          success: true,
+          message: 'Level completed (guest)',
+          data: {
+            passed: true,
+            score: finalScore,
+            breakdown: {
+              baseScore: session.score,
+              timeBonus: timeBonus,
+              hintPenalty: hintPenalty
+            },
+            requiredScore: passingThreshold,
+            maxPotentialScore: maxPotentialScore,
+            passingPercentage: level.passingScore || 70,
+            isGuest: true
+          }
+        };
+      }
+
+      // ✅ For authenticated users, continue with progress updates
+      const progress = await db.findOne('game_progress', { userId: userId });
       let nextLevelId = null;
       try {
         const allLevels = await db.findAll('game_levels');

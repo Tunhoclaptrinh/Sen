@@ -43,10 +43,53 @@ class ReviewableService extends BaseService {
   async findById(id) {
     try {
       await this.autoUnpublishCheck();
-      return await super.findById(id);
+      let result = await super.findById(id);
+
+      // Dynamic Level Population
+      if (result.success && result.data) {
+        result.data = await this.populateLevels(result.data);
+      }
+
+      return result;
     } catch (error) {
       throw error;
     }
+  }
+
+  /**
+   * Populate related game levels for an item based on many-to-many lookup
+   */
+  async populateLevels(item) {
+    if (!item) return item;
+    const enriched = { ...item };
+
+    // Determine which field to filter game_levels by based on collection name
+    let filterField;
+    if (this.collection === 'heritage_sites') filterField = 'relatedHeritageIds';
+    else if (this.collection === 'artifacts') filterField = 'relatedArtifactIds';
+    else if (this.collection === 'history_articles') filterField = 'relatedHistoryIds';
+
+    if (filterField) {
+      try {
+        const db = require('../config/database');
+        const allLevels = await db.findAll('game_levels');
+        const relatedLevelIds = Array.isArray(enriched.relatedLevelIds) ? enriched.relatedLevelIds : [];
+
+        // A level is related if:
+        // 1. Its filterField array contains the item's id (Level -> Entity)
+        // 2. The item's relatedLevelIds contains the level's id (Entity -> Level)
+        enriched.relatedLevels = allLevels.filter(level =>
+          (Array.isArray(level[filterField]) && level[filterField].includes(Number(item.id))) ||
+          (level[filterField] === Number(item.id)) ||
+          relatedLevelIds.includes(Number(level.id))
+        );
+      } catch (err) {
+        console.error(`[ReviewableService:${this.collection}] Failed to populate levels:`, err);
+        enriched.relatedLevels = enriched.relatedLevels || [];
+      }
+    }
+
+    return enriched;
   }
 
   // ==================== REVIEW METHODS ====================
