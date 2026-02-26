@@ -24,6 +24,7 @@ router.use('/ai', require('./ai.routes'));
 router.use('/quests', require('./quest.routes'));
 router.use('/shop', require('./shop.routes'));
 router.use('/badges', require('./badge.routes'));
+router.use('/welfare', require('./welfare.routes'));
 
 router.use('/upload', require('./upload.routes'));
 router.use('/notifications', require('./notification.routes'));

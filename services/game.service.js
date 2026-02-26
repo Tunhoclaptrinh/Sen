@@ -257,6 +257,84 @@ class GameService {
     };
   }
 
+  /**
+   * Nhận thưởng hàng ngày
+   */
+  async getDailyReward(userId) {
+    const progress = await db.findOne('game_progress', { userId: userId });
+    if (!progress) {
+      return { success: false, message: 'User progress not found', statusCode: 404 };
+    }
+
+    const lastClaim = progress.lastRewardClaim ? new Date(progress.lastRewardClaim) : null;
+    const now = new Date();
+    
+    // Check if already claimed today (reset at midnight)
+    if (lastClaim && 
+        lastClaim.getFullYear() === now.getFullYear() && 
+        lastClaim.getMonth() === now.getMonth() && 
+        lastClaim.getDate() === now.getDate()) {
+      return { success: false, message: 'Bạn đã nhận thưởng hôm nay rồi!', statusCode: 400 };
+    }
+
+    // Calculate rewards
+    const coinsReward = 200;
+    const petalsReward = 10;
+    
+    // Update streak (if claim yesterday, increment; if not, reset to 1)
+    let newStreak = 1;
+    if (lastClaim) {
+      const yesterday = new Date(now);
+      yesterday.setDate(yesterday.getDate() - 1);
+      if (lastClaim.getFullYear() === yesterday.getFullYear() && 
+          lastClaim.getMonth() === yesterday.getMonth() && 
+          lastClaim.getDate() === yesterday.getDate()) {
+        newStreak = (progress.streakDays || 0) + 1;
+      }
+    }
+
+    const updatedProgress = await db.update('game_progress', progress.id, {
+      coins: (progress.coins || 0) + coinsReward,
+      totalSenPetals: (progress.totalSenPetals || 0) + petalsReward,
+      streakDays: newStreak,
+      lastRewardClaim: now.toISOString(),
+      lastLogin: now.toISOString()
+    });
+
+    // Create transaction record
+    await db.create('transactions', {
+      userId: userId,
+      amount: coinsReward,
+      currency: 'coins',
+      type: 'credit',
+      source: 'daily_reward',
+      description: 'Thưởng điểm danh hàng ngày',
+      createdAt: now.toISOString()
+    });
+
+    await db.create('transactions', {
+      userId: userId,
+      amount: petalsReward,
+      currency: 'petals',
+      type: 'credit',
+      source: 'daily_reward',
+      description: 'Thưởng điểm danh hàng ngày',
+      createdAt: now.toISOString()
+    });
+
+    return { 
+      success: true, 
+      message: 'Điểm danh thành công!',
+      data: {
+        coins: coinsReward,
+        petals: petalsReward,
+        streakDays: newStreak,
+        totalCoins: updatedProgress.coins,
+        totalPetals: updatedProgress.totalSenPetals
+      } 
+    };
+  }
+
   // ==================== CHAPTERS ====================
 
   /**
@@ -2333,77 +2411,74 @@ class GameService {
   }
 
   /**
-   * Phần thưởng hàng ngày
+   * Nhận thưởng hàng ngày (Consolidated Version)
    */
   async getDailyReward(userId) {
     let progress = await db.findOne('game_progress', { userId: userId });
-
-    // Fix: Auto-initialize if not exists
     if (!progress) {
       progress = await this.initializeProgress(userId);
     }
 
-    const today = new Date().toISOString().split('T')[0];
-    const lastClaim = progress.lastRewardClaim
-      ? new Date(progress.lastRewardClaim).toISOString().split('T')[0]
+    const now = new Date();
+    // Using simple YYYY-MM-DD from local time for comparison
+    const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    
+    const lastClaimDate = progress.lastRewardClaim ? new Date(progress.lastRewardClaim) : null;
+    const lastClaim = lastClaimDate 
+      ? `${lastClaimDate.getFullYear()}-${lastClaimDate.getMonth() + 1}-${lastClaimDate.getDate()}`
       : null;
 
     if (lastClaim === today) {
-      // Return current status even if already claimed
       return {
         success: false,
-        message: 'Daily reward already claimed',
+        message: 'Bạn đã nhận thưởng hôm nay rồi!',
         statusCode: 400,
         data: {
           streakDays: progress.streakDays || 1,
-          claimedToday: true,
-          nextReward: { coins: 50, petals: 1 } // Simplified preview
+          claimedToday: true
         }
       };
     }
 
     // Calculate Streak
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    const yesterdayDate = new Date(now);
+    yesterdayDate.setDate(now.getDate() - 1);
+    const yesterday = `${yesterdayDate.getFullYear()}-${yesterdayDate.getMonth() + 1}-${yesterdayDate.getDate()}`;
 
     let streak = (progress.streakDays || 0);
-
-    // If claimed yesterday, increment. If not (and not first time), reset.
-    // Allow first claim to start streak at 1
-    if (lastClaim === yesterdayStr) {
+    if (lastClaim === yesterday) {
       streak += 1;
     } else {
-      streak = 1; // Reset or Start
+      streak = 1;
     }
 
-    // Cap streak visual at 7 for cycle? Or keep growing?
-    // Let's keep growing but cycle rewards every 7 days
+    // Rewards based on streak (Day 7 gives bonus)
     const dayInCycle = ((streak - 1) % 7) + 1;
+    const coinsReward = 100 + (dayInCycle * 20) + (dayInCycle === 7 ? 500 : 0);
+    const petalsReward = dayInCycle === 7 ? 5 : 1;
 
-    // Reward Logic
-    let reward = { coins: 50, petals: 1 };
-
-    // Day 7 Bonus
-    if (dayInCycle === 7) {
-      reward = { coins: 200, petals: 5 };
-    }
-
-    await db.update('game_progress', progress.id, {
-      coins: (progress.coins || 0) + reward.coins,
-      totalSenPetals: (progress.totalSenPetals || 0) + reward.petals,
+    const updatedData = {
+      coins: (progress.coins || 0) + coinsReward,
+      totalSenPetals: (progress.totalSenPetals || 0) + petalsReward,
       streakDays: streak,
-      lastRewardClaim: new Date().toISOString()
-      // Note: last_login is handled by auth controller
-    });
+      lastRewardClaim: now.toISOString(),
+      pcoin: (progress.pcoin || 0) + (dayInCycle === 7 ? 10 : 0)
+    };
+
+    await db.update('game_progress', progress.id, updatedData);
 
     return {
       success: true,
-      message: `Daily reward claimed! Day ${dayInCycle} Streak.`,
+      message: `Nhận thưởng thành công! Day ${dayInCycle} của chuỗi.`,
       data: {
-        ...reward,
+        coinsReward,
+        petalsReward,
         streakDays: streak,
-        dayInCycle: dayInCycle
+        dayInCycle,
+        rewards: [
+          { type: 'coins', amount: coinsReward },
+          { type: 'petals', amount: petalsReward }
+        ]
       }
     };
   }

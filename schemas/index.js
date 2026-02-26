@@ -23,5 +23,6 @@ module.exports = {
   scan_objects: require('./scan_object.schema'),
   shop_items: require('./shop_item.schema'),
   history_articles: require('./history_article.schema'),
-  learning_modules: require('./learning_module.schema')
+  learning_modules: require('./learning_module.schema'),
+  vouchers: require('./voucher.schema')
 };

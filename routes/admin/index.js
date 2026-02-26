@@ -17,5 +17,6 @@ router.use('/chapters', require('./chapter.routes'));
 router.use('/characters', require('./character.routes'));
 router.use('/assets', require('./asset.routes'));
 router.use('/shop', require('./shop.routes'));
+router.use('/welfare', require('./welfare.routes'));
 
 module.exports = router;
