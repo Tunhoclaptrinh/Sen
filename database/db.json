@@ -285,7 +285,7 @@
       "userId": 3,
       "level": 12,
       "totalPoints": 6155,
-      "totalSenPetals": 142,
+      "totalSenPetals": 143,
       "checkinCount": 12,
       "completedLevels": [
         1
@@ -306,9 +306,9 @@
       "museumOpen": false,
       "museumIncome": 0,
       "createdAt": "2024-03-10T09:15:00Z",
-      "coins": 850,
+      "coins": 900,
       "streakDays": 1,
-      "lastRewardClaim": "2026-02-15T03:13:25.127Z",
+      "lastRewardClaim": "2026-02-26T09:05:22.550Z",
       "finishedChapters": []
     },
     {
@@ -2350,6 +2350,34 @@
       "createdAt": "2024-01-01T00:00:00Z"
     },
     {
+      "id": 5,
+      "code": "TRONGDONG001",
+      "name": "Trống đồng Ngọc Lũ",
+      "type": "artifact",
+      "referenceId": 2,
+      "latitude": 21.0489,
+      "longitude": 105.8592,
+      "rewardCoins": 300,
+      "rewardPetals": 5,
+      "rewardCharacter": null,
+      "isActive": true,
+      "createdAt": "2026-02-26T10:00:00Z"
+    },
+    {
+      "id": 6,
+      "code": "MOCBAN001",
+      "name": "Mộc bản triều Nguyễn",
+      "type": "artifact",
+      "referenceId": 4,
+      "latitude": 16.4678,
+      "longitude": 107.5789,
+      "rewardCoins": 200,
+      "rewardPetals": 4,
+      "rewardCharacter": null,
+      "isActive": true,
+      "createdAt": "2026-02-26T10:00:00Z"
+    },
+    {
       "id": 201,
       "name": "Hành Trình Phố Cổ",
       "description": "Khám phá vẻ đẹp vượt thời gian của Hội An qua các thử thách.",
@@ -2495,10 +2523,10 @@
       "id": 1,
       "userId": 3,
       "currentChapter": 1,
-      "totalSenPetals": 84,
+      "totalSenPetals": 109,
       "totalPoints": 579,
       "level": 1,
-      "coins": 1951,
+      "coins": 2101,
       "unlockedChapters": [
         1
       ],
@@ -3102,10 +3130,18 @@
     {
       "id": 5,
       "userId": 3,
-      "objectId": 7,
-      "type": "collect_artifact",
+      "objectId": 3,
+      "type": "checkin",
       "scannedAt": "2026-02-26T11:15:30.000Z",
-      "scanCode": "SEN_ART_7"
+      "scanCode": "HANOI001"
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "objectId": 5,
+      "type": "collect_artifact",
+      "scannedAt": "2026-02-26T12:00:00.000Z",
+      "scanCode": "TRONGDONG001"
     }
   ],
   "user_characters": [
@@ -3267,6 +3303,39 @@
       "currency": "petals",
       "description": "Thưởng Thu thập hiện vật",
       "createdAt": "2026-02-26T11:15:30.000Z"
+    },
+    {
+      "id": 14,
+      "userId": 3,
+      "type": "earn",
+      "source": "checkin",
+      "sourceId": 5,
+      "amount": 50,
+      "currency": "coins",
+      "description": "Thưởng Ghi danh: Hoàng Thành Thăng Long",
+      "createdAt": "2026-02-26T11:15:30.000Z"
+    },
+    {
+      "id": 15,
+      "userId": 3,
+      "type": "earn",
+      "source": "artifact_scan",
+      "sourceId": 6,
+      "amount": 100,
+      "currency": "coins",
+      "description": "Thưởng Thu thập hiện vật: Trống đồng Ngọc Lũ",
+      "createdAt": "2026-02-26T12:00:00.000Z"
+    },
+    {
+      "id": 16,
+      "userId": 3,
+      "type": "earn",
+      "source": "artifact_scan",
+      "sourceId": 6,
+      "amount": 25,
+      "currency": "petals",
+      "description": "Thưởng Thu thập hiện vật: Trống đồng Ngọc Lũ",
+      "createdAt": "2026-02-26T12:00:00.000Z"
     }
   ],
   "notifications": [

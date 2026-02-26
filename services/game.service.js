@@ -2047,13 +2047,40 @@ class GameService {
       newBadges = charBadge;
     } catch (e) { console.error('Character badge check failed', e); }
 
-    // Lưu scan history
-    await db.create('scan_history', {
+    // Lưu scan history 
+    const historyEntry = await db.create('scan_history', {
       userId: userId,
       objectId: artifact.id,
       location: location,
-      scannedAt: new Date().toISOString()
+      type: 'collect_artifact', // Ensure type is explicitly set
+      scannedAt: new Date().toISOString(),
+      scanCode: code
     });
+
+    // Logging Transactions for summary/stats
+    await db.create('transactions', {
+      userId: userId,
+      type: 'earn',
+      source: 'artifact_scan',
+      sourceId: artifact.id,
+      amount: reward.coins,
+      currency: 'coins',
+      description: `Thưởng Thu thập hiện vật: ${artifact.name}`,
+      createdAt: new Date().toISOString()
+    });
+
+    if (reward.petals > 0) {
+      await db.create('transactions', {
+        userId: userId,
+        type: 'earn',
+        source: 'artifact_scan',
+        sourceId: artifact.id,
+        amount: reward.petals,
+        currency: 'petals',
+        description: `Thưởng Thu thập hiện vật: ${artifact.name}`,
+        createdAt: new Date().toISOString()
+      });
+    }
 
     // ✅ TRIGGER QUEST PROGRESS
     try {
@@ -2213,11 +2240,12 @@ class GameService {
     }
 
     // 3. Record Check-in
+    const timestamp = new Date().toISOString();
     await db.create('scan_history', {
       userId: userId,
       objectId: locationId,
       type: 'checkin',
-      scannedAt: new Date().toISOString(),
+      scannedAt: timestamp,
       scanCode: `CHECKIN_${locationId}`
     });
 
@@ -2226,9 +2254,10 @@ class GameService {
     // Initialize if needed
     if (!progress) await this.initializeProgress(userId);
 
-    const points = 50; // Points per check-in
+    const points = 50; // Points/Coins per check-in
     await db.update('game_progress', progress.id, {
       totalPoints: (progress.totalPoints || 0) + points,
+      coins: (progress.coins || 0) + points,
       checkinCount: (progress.checkinCount || 0) + 1,
       lastActivity: new Date().toISOString()
     });
@@ -2238,7 +2267,18 @@ class GameService {
       await questService.checkAndAdvance(userId, 'checkin_location', 1);
     } catch (e) { console.error('Quest advance failed', e); }
 
-    // 5. Trigger Notification
+    // 5. Trigger Notification and Log Transaction
+    await db.create('transactions', {
+      userId: userId,
+      type: 'earn',
+      source: 'checkin',
+      sourceId: locationId,
+      amount: points,
+      currency: 'coins',
+      description: `Thưởng Ghi danh: ${location.name}`,
+      createdAt: timestamp
+    });
+
     try {
       const notificationService = require('./notification.service');
       await notificationService.notify(
