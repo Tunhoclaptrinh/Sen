@@ -45,7 +45,13 @@ class GameService {
       lastLogin: new Date().toISOString(),
       createdAt: new Date().toISOString(),
       completedModules: [],
-      completedQuestsCount: 0
+      completedQuestsCount: 0,
+      unlockedThemes: ['default'],
+      activeTheme: 'default',
+      unlockedAvatars: [],
+      activeAvatar: null,
+      hintCharges: 0,
+      shieldCharges: 0
     });
   }
 
@@ -2511,7 +2517,6 @@ class GameService {
    */
   async useItem(userId, itemId, targetId) {
     const inventory = await db.findOne('user_inventory', { userId: userId });
-
     if (!inventory) {
       return { success: false, message: 'No inventory found', statusCode: 404 };
     }
@@ -2522,14 +2527,57 @@ class GameService {
     }
 
     const itemData = await db.findById('shop_items', itemId);
+    const progress = await db.findOne('game_progress', { userId: userId });
 
+    let effect = 'Applied successfully';
+    const updates = {};
+
+    // Specific category handling
+    switch (itemData.type) {
+      case 'consumable_hint':
+        updates.hintCharges = (progress.hintCharges || 0) + 1;
+        effect = 'Đã thêm 1 lượt gợi ý vào tài khoản.';
+        break;
+      case 'consumable_shield':
+        updates.shieldCharges = (progress.shieldCharges || 0) + 1;
+        effect = 'Đã kích hoạt bảo vệ cho màn chơi tiếp theo.';
+        break;
+      case 'permanent_theme':
+        const themes = progress.unlockedThemes || ['default'];
+        if (!themes.includes(itemData.effect || itemData.name)) {
+          themes.push(itemData.effect || itemData.name);
+        }
+        updates.activeTheme = itemData.effect || itemData.name;
+        updates.unlockedThemes = themes;
+        effect = `Đã áp dụng giao diện ${itemData.name}.`;
+        break;
+      case 'permanent_avatar':
+        const avatars = progress.unlockedAvatars || [];
+        if (!avatars.includes(itemData.image)) {
+          avatars.push(itemData.image);
+        }
+        updates.activeAvatar = itemData.image;
+        updates.unlockedAvatars = avatars;
+        effect = 'Đã thay đổi ảnh đại diện mới.';
+        break;
+      default:
+        // Generic consumption for other types
+        effect = `Sử dụng ${itemData.name} thành công.`;
+    }
+
+    // Update Progress if there are specific effect updates
+    if (Object.keys(updates).length > 0) {
+      await db.update('game_progress', progress.id, updates);
+    }
+
+    // Deduct quantity
     item.quantity -= 1;
     await db.update('user_inventory', inventory.id, { items: inventory.items });
 
     return {
       success: true,
-      message: 'Item used successfully',
-      data: { item: itemData, effect: 'Applied successfully' }
+      message: 'Sử dụng vật phẩm thành công',
+      data: { item: itemData, effect: effect }
     };
   }
 

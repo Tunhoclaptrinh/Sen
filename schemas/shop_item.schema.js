@@ -11,7 +11,7 @@ module.exports = {
   },
   type: {
     type: 'enum',
-    enum: ['powerup', 'character', 'theme', 'premium_ai', 'decoration'],
+    enum: ['powerup', 'character', 'theme', 'premium_ai', 'decoration', 'consumable_hint', 'consumable_shield', 'permanent_theme', 'permanent_avatar'],
     required: true,
     description: 'Loại item'
   },

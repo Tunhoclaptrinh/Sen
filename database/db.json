@@ -79,9 +79,36 @@
       "isAvailable": true,
       "isActive": true,
       "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 6,
+      "name": "P-Coin",
+      "typeSelect": "other",
+      "customType": "Tiền tệ",
+      "type": "Tiền tệ",
+      "isActive": true,
+      "price": 20,
+      "currency": "petals",
+      "imageType": "upload",
+      "image": "/uploads/general/file-1772099811318.jpeg",
+      "description": "P-Coin: Tiền ảo thuộc hệ sinh thái của Học viện Công nghệ Bưu chính Viễn thông",
+      "isConsumable": true,
+      "maxStack": 16
     }
   ],
-  "user_inventory": [],
+  "user_inventory": [
+    {
+      "id": 1,
+      "userId": 3,
+      "items": [
+        {
+          "itemId": 6,
+          "quantity": 1,
+          "acquiredAt": "2026-02-26T09:58:46.971Z"
+        }
+      ]
+    }
+  ],
   "users": [
     {
       "id": 1,
@@ -92,7 +119,7 @@
       "isActive": true,
       "avatar": "https://ui-avatars.com/api/?name=Admin+Sen&background=0D8ABC&color=fff",
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-02-26T04:34:42.363Z"
+      "lastLogin": "2026-02-26T10:39:17.984Z"
     },
     {
       "id": 2,
@@ -112,7 +139,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-02-25T15:33:37.090Z"
+      "lastLogin": "2026-02-26T10:37:29.317Z"
     },
     {
       "id": 4,
@@ -285,7 +312,7 @@
       "userId": 3,
       "level": 12,
       "totalPoints": 6155,
-      "totalSenPetals": 143,
+      "totalSenPetals": 103,
       "checkinCount": 12,
       "completedLevels": [
         1
@@ -1249,16 +1276,17 @@
     {
       "id": 0,
       "name": "Sen",
-      "description": "Trợ lý ảo thông minh, thân thiện",
+      "description": "Trợ lý ảo thông minh, thân thiện (mặc định)",
       "persona": "Bạn là Sen, một trợ lý ảo vui vẻ, am hiểu lịch sử và văn hóa Việt Nam. Bạn luôn sẵn sàng giúp đỡ và giải đáp thắc mắc.",
       "speakingStyle": "Thân thiện, lễ phép, hóm hỉnh",
-      "avatar": "/images/characters/sen_avatar.png",
+      "avatar": "/uploads/general/file-1772103561608.jpeg",
       "rarity": "common",
       "origin": "Sen Hoa",
       "isCollectible": false,
       "isDefault": true,
       "price": 0,
-      "createdAt": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2026-02-26T10:59:35.610Z"
     },
     {
       "id": 1,
@@ -1266,39 +1294,42 @@
       "description": "Nhân vật rối nước vui tính, thông minh",
       "persona": "Bạn là Chú Tễu. Ở trạng thái mất trí nhớ, bạn ngơ ngác và hay hỏi lại. Khi hồi phục, bạn vui vẻ, hay cười 'hi hi' và kể chuyện tiếu lâm.",
       "speakingStyle": "Vui vẻ, dân dã, dùng từ địa phương Bắc Bộ",
-      "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
+      "avatar": "/uploads/general/file-1772103531385.jpeg",
       "avatarUncolored": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu&backgroundColor=b6b6b6",
       "rarity": "rare",
       "origin": "Múa rối nước",
       "isCollectible": true,
       "price": 100,
-      "createdAt": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2026-02-26T10:58:53.178Z"
     },
     {
       "id": 2,
-      "name": "Thị Kính",
-      "description": "Quan Âm Thị Kính - Biểu tượng của sự nhẫn nhịn",
-      "persona": "Bạn là Thị Kính. Bạn nhẹ nhàng, từ tốn và luôn khuyên răn người khác làm việc thiện.",
-      "speakingStyle": "Nhẹ nhàng, từ bi, bác học",
-      "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=Kinh",
-      "rarity": "epic",
-      "origin": "Truyền thuyết dân gian",
+      "name": "Chú Tễu",
+      "description": "Nhân vật rối nước vui tính, thông minh",
+      "persona": "Bạn là Chú Tễu. Ở trạng thái mất trí nhớ, bạn ngơ ngác và hay hỏi lại. Khi hồi phục, bạn vui vẻ, hay cười 'hi hi' và kể chuyện tiếu lâm.",
+      "speakingStyle": "Vui vẻ, dân dã, dùng từ địa phương Bắc Bộ",
+      "avatar": "/uploads/general/file-1772103271800.jpeg",
+      "rarity": "rare",
+      "origin": "Múa rối nước",
       "isCollectible": true,
       "price": 100,
-      "createdAt": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2026-02-26T10:54:33.920Z"
     },
     {
       "id": 3,
-      "name": "Thánh Gióng",
-      "description": "Vị thánh chống giặc ngoại xâm",
-      "persona": "Bạn là Thánh Gióng. Bạn ít nói, hành động dứt khoát, giọng nói vang rền như sấm.",
-      "speakingStyle": "Mạnh mẽ, ngắn gọn, uy lực",
-      "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=Giong",
-      "rarity": "legendary",
-      "origin": "Truyền thuyết Thánh Gióng",
+      "name": "Chú Tễu",
+      "description": "Nhân vật rối nước vui tính, thông minh",
+      "persona": "Bạn là Chú Tễu. Ở trạng thái mất trí nhớ, bạn ngơ ngác và hay hỏi lại. Khi hồi phục, bạn vui vẻ, hay cười 'hi hi' và kể chuyện tiếu lâm.",
+      "speakingStyle": "Vui vẻ, dân dã, dùng từ địa phương Bắc Bộ",
+      "avatar": "/uploads/general/file-1772103325408.jpeg",
+      "rarity": "rare",
+      "origin": "Múa rối nước",
       "isCollectible": true,
       "price": 100,
-      "createdAt": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2026-02-26T10:55:26.980Z"
     }
   ],
   "game_levels": [
@@ -1391,12 +1422,17 @@
         }
       ],
       "rewards": {
-        "coins": 100,
-        "petals": 1
+        "petals": 1,
+        "coins": 100
       },
-      "updatedAt": "2026-01-28T17:55:36.665Z",
+      "updatedAt": "2026-02-26T10:28:03.649Z",
       "createdBy": 1,
-      "status": "published"
+      "status": "published",
+      "backgroundMusic": "uploads/general/audio-1769674874159.mp3",
+      "relatedHeritageIds": [],
+      "relatedArtifactIds": [],
+      "relatedHistoryIds": [],
+      "author": "Admin Sen"
     },
     {
       "id": 2,
@@ -2591,7 +2627,7 @@
       "id": 1,
       "userId": 3,
       "levelId": 1,
-      "status": "in_progress",
+      "status": "abandoned",
       "isGuest": false,
       "currentScreenId": "intro_d1",
       "currentScreenIndex": 0,
@@ -2605,7 +2641,29 @@
       "timeSpent": 0,
       "hintsUsed": 0,
       "startedAt": "2026-02-26T04:17:18.616Z",
-      "lastActivity": "2026-02-26T04:17:18.616Z"
+      "lastActivity": "2026-02-26T04:17:18.616Z",
+      "expiredAt": "2026-02-26T10:38:48.406Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "levelId": 1,
+      "status": "in_progress",
+      "isGuest": false,
+      "currentScreenId": "intro_d1",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 0,
+      "totalScreens": 4,
+      "completedScreens": [],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-26T10:38:48.409Z",
+      "lastActivity": "2026-02-26T10:38:48.409Z"
     }
   ],
   "learning_modules": [
@@ -3357,7 +3415,7 @@
       "message": "Người dùng \"Đỗ Thị Hương\" đã thêm \"Trống đồng Ngọc Lũ\" vào danh sách yêu thích.",
       "type": "social",
       "refId": 2,
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-02-15T03:20:54.052Z",
       "updatedAt": "2026-02-15T03:20:54.052Z"
     },
@@ -3393,6 +3451,28 @@
       "isRead": false,
       "createdAt": "2026-02-26T03:37:35.785Z",
       "updatedAt": "2026-02-26T03:37:35.785Z"
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "title": "Mua sắm thành công! 🛒",
+      "message": "Bạn đã mua thành công \"P-Coin\" x1.",
+      "type": "system",
+      "refId": null,
+      "isRead": false,
+      "createdAt": "2026-02-26T09:58:46.978Z",
+      "updatedAt": "2026-02-26T09:58:46.978Z"
+    },
+    {
+      "id": 7,
+      "userId": 3,
+      "title": "Mua sắm thành công! 🛒",
+      "message": "Bạn đã mua thành công \"P-Coin\" x1.",
+      "type": "system",
+      "refId": null,
+      "isRead": false,
+      "createdAt": "2026-02-26T10:16:04.735Z",
+      "updatedAt": "2026-02-26T10:16:04.735Z"
     }
   ]
 }
