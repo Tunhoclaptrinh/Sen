@@ -2055,6 +2055,11 @@ class GameService {
       scannedAt: new Date().toISOString()
     });
 
+    // ✅ TRIGGER QUEST PROGRESS
+    try {
+      await questService.checkAndAdvance(userId, 'collect_artifact', 1);
+    } catch (e) { console.error('Quest advance failed', e); }
+
     return {
       success: true,
       message: 'Scan successful!',
@@ -2227,6 +2232,11 @@ class GameService {
       checkinCount: (progress.checkinCount || 0) + 1,
       lastActivity: new Date().toISOString()
     });
+
+    // ✅ TRIGGER QUEST PROGRESS
+    try {
+      await questService.checkAndAdvance(userId, 'checkin_location', 1);
+    } catch (e) { console.error('Quest advance failed', e); }
 
     // 5. Trigger Notification
     try {
@@ -2480,6 +2490,67 @@ class GameService {
       success: true,
       message: 'Item used successfully',
       data: { item: itemData, effect: 'Applied successfully' }
+    };
+  }
+
+  /**
+   * Lấy lịch sử quét và check-in của người dùng
+   */
+  async getScanHistory(userId) {
+    const history = await db.findMany('scan_history', { userId: userId });
+    
+    // Sort by date desc
+    history.sort((a, b) => new Date(b.scannedAt) - new Date(a.scannedAt));
+
+    const enriched = await Promise.all(history.map(async (item) => {
+      let objectData = null;
+      if (item.type === 'checkin') {
+        objectData = await db.findById('heritage_sites', item.objectId);
+      } else if (item.type === 'collect_artifact') {
+        objectData = await db.findById('artifacts', item.objectId);
+      }
+
+      // Find rewards for this scan in transactions
+      const rewards = await db.findMany('transactions', { 
+        userId: userId,
+        source: item.type === 'checkin' ? 'checkin' : 'artifact_scan',
+        // In my seeding I used sourceId as the artifact/site ID or transaction sequence...
+        // Actually for checkin I should match by objectId. 
+        // Let's keep it simple for now or fetch based on timestamp proximity if sourceId is not perfect
+      });
+
+      // Filter rewards that happened at approximately the same time (± 5 seconds)
+      const eventTime = new Date(item.scannedAt).getTime();
+      const itemRewards = rewards.filter(r => {
+        const rewardTime = new Date(r.createdAt).getTime();
+        return Math.abs(rewardTime - eventTime) < 5000;
+      });
+
+      return {
+        ...item,
+        objectName: objectData?.name || 'Unknown',
+        objectImage: objectData?.image || (item.type === 'checkin' ? '/images/site-placeholder.jpg' : '/images/artifact-placeholder.jpg'),
+        rewards: itemRewards.map(r => ({ amount: r.amount, currency: r.currency }))
+      };
+    }));
+
+    // Calculate statistics
+    const stats = {
+      totalCheckins: history.filter(h => h.type === 'checkin').length,
+      totalArtifacts: history.filter(h => h.type === 'collect_artifact').length,
+      uniqueSites: new Set(history.filter(h => h.type === 'checkin').map(h => h.objectId)).size,
+      totalCoinsEarned: enriched.reduce((sum, item) => 
+        sum + item.rewards.filter(r => r.currency === 'coins').reduce((s, r) => s + r.amount, 0), 0),
+      totalPetalsEarned: enriched.reduce((sum, item) => 
+        sum + item.rewards.filter(r => r.currency === 'petals').reduce((s, r) => s + r.amount, 0), 0)
+    };
+
+    return {
+      success: true,
+      data: {
+        history: enriched,
+        stats
+      }
     };
   }
 }

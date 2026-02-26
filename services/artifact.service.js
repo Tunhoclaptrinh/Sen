@@ -23,6 +23,34 @@ class ArtifactService extends ReviewableService {
     return super.beforeCreate(data);
   }
 
+  async create(data) {
+    const { autoCreateScanObject, ...rest } = data;
+    const result = await super.create(rest);
+
+    if (result.success && autoCreateScanObject) {
+      const item = result.data;
+      try {
+        const scanObject = {
+          code: `ART_${item.id}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+          name: `Tầm bảo: ${item.name}`,
+          type: 'artifact',
+          referenceId: item.id,
+          latitude: item.latitude,
+          longitude: item.longitude,
+          rewardCoins: 1000, // Artifacts usually harder to find
+          rewardPetals: 5,
+          isActive: true
+        };
+        await db.create('scan_objects', scanObject);
+        console.log(`[ArtifactService] Auto-created scan object for artifact ${item.id}`);
+      } catch (error) {
+        console.error(`[ArtifactService] Failed to auto-create scan object:`, error);
+      }
+    }
+
+    return result;
+  }
+
   /**
    * Transform data before update
    */

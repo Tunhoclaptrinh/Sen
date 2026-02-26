@@ -80,6 +80,7 @@ router.post('/checkin', requireAuth, checkPermission('game_play', 'scan_qr'), ga
 // ==================== SHOP & INVENTORY ====================
 router.post('/shop/purchase', requireAuth, checkPermission('shop', 'purchase'), gameController.purchaseItem);
 router.get('/inventory', requireAuth, gameController.getInventory);
+router.get('/scan-history', requireAuth, gameController.getScanHistory);
 router.post('/inventory/use', requireAuth, checkPermission('shop', 'use_item'), gameController.useItem);
 
 module.exports = router;
