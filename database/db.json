@@ -2558,7 +2558,28 @@
       "completedQuestsCount": 0
     }
   ],
-  "game_sessions": [],
+  "game_sessions": [
+    {
+      "id": 1,
+      "userId": 3,
+      "levelId": 1,
+      "status": "in_progress",
+      "isGuest": false,
+      "currentScreenId": "intro_d1",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 0,
+      "totalScreens": 4,
+      "completedScreens": [],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-26T04:17:18.616Z",
+      "lastActivity": "2026-02-26T04:17:18.616Z"
+    }
+  ],
   "learning_modules": [
     {
       "id": 1,
@@ -3034,7 +3055,17 @@
       "thumbnail": "https://i.pinimg.com/1200x/20/05/52/2005521af7ccf8b74cf4453ec32b62d4.jpg"
     }
   ],
-  "user_quests": [],
+  "user_quests": [
+    {
+      "id": 1,
+      "userId": 3,
+      "questId": 4,
+      "status": "completed",
+      "currentValue": 1,
+      "startedAt": "2026-02-26T03:37:35.779Z",
+      "completedAt": "2026-02-26T03:37:35.782Z"
+    }
+  ],
   "scan_history": [],
   "user_characters": [
     {
@@ -3164,6 +3195,17 @@
       "isRead": false,
       "createdAt": "2026-02-22T15:17:13.294Z",
       "updatedAt": "2026-02-22T15:17:13.294Z"
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "title": "Hoàn thành nhiệm vụ",
+      "message": "Nhiệm vụ \"Khám phá Bảo tàng\" đã hoàn thành! Hãy vào mục Nhiệm vụ để nhận phần thưởng nhé.",
+      "type": "quest",
+      "refId": 4,
+      "isRead": false,
+      "createdAt": "2026-02-26T03:37:35.785Z",
+      "updatedAt": "2026-02-26T03:37:35.785Z"
     }
   ]
 }

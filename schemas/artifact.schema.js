@@ -143,6 +143,11 @@ module.exports = {
     required: false,
     description: "Danh sách ID bài viết lịch sử liên quan",
   },
+  bookingLink: {
+    type: "string",
+    required: false,
+    description: "Link đặt vé/tham quan (Affiliate link)",
+  },
   relatedLevelIds: {
     type: "array",
     items: { type: "number" },

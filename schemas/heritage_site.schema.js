@@ -110,6 +110,11 @@ module.exports = {
     default: 0,
     description: "Phí vào cửa (VNĐ)",
   },
+  bookingLink: {
+    type: "string",
+    required: false,
+    description: "Link đặt vé (Affiliate link)",
+  },
   isActive: {
     type: "boolean",
     required: false,
