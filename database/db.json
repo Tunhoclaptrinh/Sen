@@ -79,9 +79,36 @@
       "isAvailable": true,
       "isActive": true,
       "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 6,
+      "name": "P-Coin",
+      "typeSelect": "other",
+      "customType": "Tiền tệ",
+      "type": "Tiền tệ",
+      "isActive": true,
+      "price": 20,
+      "currency": "petals",
+      "imageType": "upload",
+      "image": "/uploads/general/file-1772099811318.jpeg",
+      "description": "P-Coin: Tiền ảo thuộc hệ sinh thái của Học viện Công nghệ Bưu chính Viễn thông",
+      "isConsumable": true,
+      "maxStack": 16
     }
   ],
-  "user_inventory": [],
+  "user_inventory": [
+    {
+      "id": 1,
+      "userId": 3,
+      "items": [
+        {
+          "itemId": 6,
+          "quantity": 1,
+          "acquiredAt": "2026-02-26T09:58:46.971Z"
+        }
+      ]
+    }
+  ],
   "users": [
     {
       "id": 1,
@@ -92,7 +119,7 @@
       "isActive": true,
       "avatar": "https://ui-avatars.com/api/?name=Admin+Sen&background=0D8ABC&color=fff",
       "createdAt": "2024-01-15T10:30:00Z",
-      "lastLogin": "2026-02-25T15:30:53.877Z"
+      "lastLogin": "2026-02-26T10:39:17.984Z"
     },
     {
       "id": 2,
@@ -112,7 +139,7 @@
       "role": "customer",
       "isActive": true,
       "createdAt": "2024-03-10T09:15:00Z",
-      "lastLogin": "2026-02-25T15:33:37.090Z"
+      "lastLogin": "2026-02-26T10:37:29.317Z"
     },
     {
       "id": 4,
@@ -285,8 +312,8 @@
       "userId": 3,
       "level": 12,
       "totalPoints": 6155,
-      "totalSenPetals": 92,
-      "checkinCount": 8,
+      "totalSenPetals": 103,
+      "checkinCount": 12,
       "completedLevels": [
         1
       ],
@@ -306,9 +333,9 @@
       "museumOpen": false,
       "museumIncome": 0,
       "createdAt": "2024-03-10T09:15:00Z",
-      "coins": 350,
+      "coins": 900,
       "streakDays": 1,
-      "lastRewardClaim": "2026-02-15T03:13:25.127Z",
+      "lastRewardClaim": "2026-02-26T09:05:22.550Z",
       "finishedChapters": []
     },
     {
@@ -638,7 +665,7 @@
       "description": "<p>Thương cảng Hội An được h&igrave;nh th&agrave;nh khoảng khoảng thế kỷ XV - XVI, thịnh đạt trong thế kỷ XVII - XVIII, nhưng trước đ&oacute; rất l&acirc;u, v&ugrave;ng đất Hội An đ&atilde; nằm trong địa b&agrave;n ph&acirc;n bố của văn h&oacute;a tiền Sa Huỳnh, Sa Huỳnh v&agrave; c&ograve;n l&agrave; một cảng thị trọng yếu của Chămpa (từ thế kỷ II - XV). Từ khoảng cuối thế kỷ XV, khu vực Hội An đ&atilde; c&oacute; d&acirc;n cư Đại Việt tới sinh sống, lập l&agrave;ng, người Việt đ&atilde; s&aacute;ng tạo ra nhiều ng&agrave;nh nghề ph&ugrave; hợp với điều kiện tự nhi&ecirc;n v&agrave; x&atilde; hội nơi đ&acirc;y. Cuối thế kỷ XVI - XVII, người Hoa v&agrave; người Nhật đ&atilde; đến đ&acirc;y định cư, gi&uacute;p cho hoạt động thương nghiệp ở Hội An ph&aacute;t triển mạnh. Với vị tr&iacute; địa l&yacute; thuận lợi cũng như bối cảnh kinh tế, x&atilde; hội, văn h&oacute;a Đ&agrave;ng Trong ph&aacute;t triển tương đối ổn định, Hội An nhanh ch&oacute;ng trở th&agrave;nh đ&ocirc; thị/thương cảng phồn thịnh trong nhiều thế kỷ.</p>\n<p>Những di t&iacute;ch kiến tr&uacute;c trong phố cổ Hội An đều mang đậm dấu ấn xưa cũ vốn c&oacute;. Kiểu nh&agrave; ở phổ biến nhất trong khu vực n&agrave;y thường c&oacute; mặt bằng dạng h&igrave;nh ống, c&aacute;c nếp nh&agrave; li&ecirc;n tiếp nối nhau bởi nh&agrave; cầu v&agrave; s&acirc;n trời, theo một thứ tự gần như thống nhất, gồm: nh&agrave; - s&acirc;n - nh&agrave;. C&aacute;c nh&agrave; đều được l&agrave;m khung gỗ, xung quanh c&oacute; tường gạch (một số nếp nh&agrave; c&oacute; v&aacute;ch gỗ). Kết cấu đỡ m&aacute;i kh&aacute; đa dạng, như chồng rường - giả thủ, cột trốn - kẻ chuyền, k&egrave;o cầu - c&aacute;nh &aacute;c, chồng đấu - con son,&nbsp; đặc biệt c&oacute; kết cấu &ldquo;v&igrave; vỏ cua&rdquo; ở hi&ecirc;n, m&aacute;i thường lợp ng&oacute;i m&aacute;ng (kiểu &acirc;m dương), tường hồi b&iacute;t đốc c&oacute; bờ dải uốn lượn mềm mại (kiểu long đ&igrave;nh). Tr&ecirc;n kiến tr&uacute;c thường được chạm khắc trang tr&iacute; c&aacute;c đề t&agrave;i truyền thống, với c&aacute;c thủ ph&aacute;p tạo h&igrave;nh như chạm nổi, chạm thủng, k&ecirc;nh bong. Đặc biệt, trước nh&agrave; c&oacute; hai mắt cửa gỗ, được gắn tr&ecirc;n bạo cửa ra v&agrave;o ch&iacute;nh.</p>\n<p>Hiện nay, phố cổ Hội An - một di sản thế giới ở Việt Nam đ&atilde; thực sự trở th&agrave;nh nguồn lực của sự ph&aacute;t triển kinh tế - x&atilde; hội ở Hội An, c&oacute; đ&oacute;ng g&oacute;p t&iacute;ch cực v&agrave;o sự ph&aacute;t triển kinh tế - du lịch dịch vụ, n&acirc;ng cao thu nhập, cải thiện đời sống của nh&acirc;n d&acirc;n địa phương, qua đ&oacute; cũng tạo ra những điều kiện thuận lợi để t&aacute;i đầu tư bảo tồn v&agrave; ph&aacute;t huy gi&aacute; trị di t&iacute;ch một c&aacute;ch bền vững&hellip;</p>\n<p>Với những gi&aacute; trị lịch sử, văn ho&aacute; v&agrave; khoa học đặc biệt của di t&iacute;ch,&nbsp; Thủ tướng Ch&iacute;nh phủ đ&atilde; quyết định xếp hạng Di t&iacute;ch kiến tr&uacute;c nghệ thuật Đ&ocirc; thị cổ Hội An l&agrave; di t&iacute;ch quốc gia đặc biệt (Quyết định số 1272/QĐ-TTg, ng&agrave;y 12/8/2009).</p>\n<p style=\"text-align: right;\"><strong>Ho&agrave;ng Ph&uacute;c (Theo Hồ sơ xếp hạng di t&iacute;ch, tư liệu Cục Di sản văn h&oacute;a)</strong></p>",
       "province": "Quảng Nam",
       "gallery": [],
-      "views": 6
+      "views": 7
     },
     {
       "id": 2,
@@ -788,13 +815,13 @@
       "culturalPeriod": "Triều Lý",
       "region": "Bắc",
       "address": "58 Quốc Tử Giám, Ba Đình, Hà Nội",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Van_Mieu_Hanoi_2005.jpg/800px-Van_Mieu_Hanoi_2005.jpg",
+      "image": "https://ik.imagekit.io/tvlk/blog/2022/08/van-mieu-quoc-tu-giam-1.jpg",
       "rating": 5,
       "totalReviews": 1,
       "commentCount": 1,
       "isActive": true,
       "status": "published",
-      "views": 10
+      "views": 11
     }
   ],
   "artifacts": [
@@ -1249,16 +1276,17 @@
     {
       "id": 0,
       "name": "Sen",
-      "description": "Trợ lý ảo thông minh, thân thiện",
+      "description": "Trợ lý ảo thông minh, thân thiện (mặc định)",
       "persona": "Bạn là Sen, một trợ lý ảo vui vẻ, am hiểu lịch sử và văn hóa Việt Nam. Bạn luôn sẵn sàng giúp đỡ và giải đáp thắc mắc.",
       "speakingStyle": "Thân thiện, lễ phép, hóm hỉnh",
-      "avatar": "/images/characters/sen_avatar.png",
+      "avatar": "/uploads/general/file-1772103561608.jpeg",
       "rarity": "common",
       "origin": "Sen Hoa",
       "isCollectible": false,
       "isDefault": true,
       "price": 0,
-      "createdAt": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2026-02-26T10:59:35.610Z"
     },
     {
       "id": 1,
@@ -1266,39 +1294,42 @@
       "description": "Nhân vật rối nước vui tính, thông minh",
       "persona": "Bạn là Chú Tễu. Ở trạng thái mất trí nhớ, bạn ngơ ngác và hay hỏi lại. Khi hồi phục, bạn vui vẻ, hay cười 'hi hi' và kể chuyện tiếu lâm.",
       "speakingStyle": "Vui vẻ, dân dã, dùng từ địa phương Bắc Bộ",
-      "avatar": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu",
+      "avatar": "/uploads/general/file-1772103531385.jpeg",
       "avatarUncolored": "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Teu&backgroundColor=b6b6b6",
       "rarity": "rare",
       "origin": "Múa rối nước",
       "isCollectible": true,
       "price": 100,
-      "createdAt": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2026-02-26T10:58:53.178Z"
     },
     {
       "id": 2,
-      "name": "Thị Kính",
-      "description": "Quan Âm Thị Kính - Biểu tượng của sự nhẫn nhịn",
-      "persona": "Bạn là Thị Kính. Bạn nhẹ nhàng, từ tốn và luôn khuyên răn người khác làm việc thiện.",
-      "speakingStyle": "Nhẹ nhàng, từ bi, bác học",
-      "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=Kinh",
-      "rarity": "epic",
-      "origin": "Truyền thuyết dân gian",
+      "name": "Chú Tễu",
+      "description": "Nhân vật rối nước vui tính, thông minh",
+      "persona": "Bạn là Chú Tễu. Ở trạng thái mất trí nhớ, bạn ngơ ngác và hay hỏi lại. Khi hồi phục, bạn vui vẻ, hay cười 'hi hi' và kể chuyện tiếu lâm.",
+      "speakingStyle": "Vui vẻ, dân dã, dùng từ địa phương Bắc Bộ",
+      "avatar": "/uploads/general/file-1772103271800.jpeg",
+      "rarity": "rare",
+      "origin": "Múa rối nước",
       "isCollectible": true,
       "price": 100,
-      "createdAt": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2026-02-26T10:54:33.920Z"
     },
     {
       "id": 3,
-      "name": "Thánh Gióng",
-      "description": "Vị thánh chống giặc ngoại xâm",
-      "persona": "Bạn là Thánh Gióng. Bạn ít nói, hành động dứt khoát, giọng nói vang rền như sấm.",
-      "speakingStyle": "Mạnh mẽ, ngắn gọn, uy lực",
-      "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=Giong",
-      "rarity": "legendary",
-      "origin": "Truyền thuyết Thánh Gióng",
+      "name": "Chú Tễu",
+      "description": "Nhân vật rối nước vui tính, thông minh",
+      "persona": "Bạn là Chú Tễu. Ở trạng thái mất trí nhớ, bạn ngơ ngác và hay hỏi lại. Khi hồi phục, bạn vui vẻ, hay cười 'hi hi' và kể chuyện tiếu lâm.",
+      "speakingStyle": "Vui vẻ, dân dã, dùng từ địa phương Bắc Bộ",
+      "avatar": "/uploads/general/file-1772103325408.jpeg",
+      "rarity": "rare",
+      "origin": "Múa rối nước",
       "isCollectible": true,
       "price": 100,
-      "createdAt": "2024-01-01T00:00:00Z"
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2026-02-26T10:55:26.980Z"
     }
   ],
   "game_levels": [
@@ -1391,12 +1422,17 @@
         }
       ],
       "rewards": {
-        "coins": 100,
-        "petals": 1
+        "petals": 1,
+        "coins": 100
       },
-      "updatedAt": "2026-01-28T17:55:36.665Z",
+      "updatedAt": "2026-02-26T10:28:03.649Z",
       "createdBy": 1,
-      "status": "published"
+      "status": "published",
+      "backgroundMusic": "uploads/general/audio-1769674874159.mp3",
+      "relatedHeritageIds": [],
+      "relatedArtifactIds": [],
+      "relatedHistoryIds": [],
+      "author": "Admin Sen"
     },
     {
       "id": 2,
@@ -2350,6 +2386,34 @@
       "createdAt": "2024-01-01T00:00:00Z"
     },
     {
+      "id": 5,
+      "code": "TRONGDONG001",
+      "name": "Trống đồng Ngọc Lũ",
+      "type": "artifact",
+      "referenceId": 2,
+      "latitude": 21.0489,
+      "longitude": 105.8592,
+      "rewardCoins": 300,
+      "rewardPetals": 5,
+      "rewardCharacter": null,
+      "isActive": true,
+      "createdAt": "2026-02-26T10:00:00Z"
+    },
+    {
+      "id": 6,
+      "code": "MOCBAN001",
+      "name": "Mộc bản triều Nguyễn",
+      "type": "artifact",
+      "referenceId": 4,
+      "latitude": 16.4678,
+      "longitude": 107.5789,
+      "rewardCoins": 200,
+      "rewardPetals": 4,
+      "rewardCharacter": null,
+      "isActive": true,
+      "createdAt": "2026-02-26T10:00:00Z"
+    },
+    {
       "id": 201,
       "name": "Hành Trình Phố Cổ",
       "description": "Khám phá vẻ đẹp vượt thời gian của Hội An qua các thử thách.",
@@ -2495,10 +2559,10 @@
       "id": 1,
       "userId": 3,
       "currentChapter": 1,
-      "totalSenPetals": 84,
+      "totalSenPetals": 109,
       "totalPoints": 579,
       "level": 1,
-      "coins": 1951,
+      "coins": 2101,
       "unlockedChapters": [
         1
       ],
@@ -2558,7 +2622,50 @@
       "completedQuestsCount": 0
     }
   ],
-  "game_sessions": [],
+  "game_sessions": [
+    {
+      "id": 1,
+      "userId": 3,
+      "levelId": 1,
+      "status": "abandoned",
+      "isGuest": false,
+      "currentScreenId": "intro_d1",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 0,
+      "totalScreens": 4,
+      "completedScreens": [],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-26T04:17:18.616Z",
+      "lastActivity": "2026-02-26T04:17:18.616Z",
+      "expiredAt": "2026-02-26T10:38:48.406Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "levelId": 1,
+      "status": "in_progress",
+      "isGuest": false,
+      "currentScreenId": "intro_d1",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 0,
+      "totalScreens": 4,
+      "completedScreens": [],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-02-26T10:38:48.409Z",
+      "lastActivity": "2026-02-26T10:38:48.409Z"
+    }
+  ],
   "learning_modules": [
     {
       "id": 1,
@@ -3034,8 +3141,67 @@
       "thumbnail": "https://i.pinimg.com/1200x/20/05/52/2005521af7ccf8b74cf4453ec32b62d4.jpg"
     }
   ],
-  "user_quests": [],
-  "scan_history": [],
+  "user_quests": [
+    {
+      "id": 1,
+      "userId": 3,
+      "questId": 4,
+      "status": "completed",
+      "currentValue": 1,
+      "startedAt": "2026-02-26T03:37:35.779Z",
+      "completedAt": "2026-02-26T03:37:35.782Z"
+    }
+  ],
+  "scan_history": [
+    {
+      "id": 1,
+      "userId": 3,
+      "objectId": 1,
+      "type": "checkin",
+      "scannedAt": "2026-02-25T10:00:00.000Z",
+      "scanCode": "CHECKIN_1"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "objectId": 1,
+      "type": "checkin",
+      "scannedAt": "2026-02-26T09:00:00.000Z",
+      "scanCode": "CHECKIN_1"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "objectId": 2,
+      "type": "checkin",
+      "scannedAt": "2026-02-26T10:30:00.000Z",
+      "scanCode": "CHECKIN_2"
+    },
+    {
+      "id": 4,
+      "userId": 3,
+      "objectId": 1,
+      "type": "collect_artifact",
+      "scannedAt": "2026-02-26T11:00:00.000Z",
+      "scanCode": "SEN_ART_1"
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "objectId": 3,
+      "type": "checkin",
+      "scannedAt": "2026-02-26T11:15:30.000Z",
+      "scanCode": "HANOI001"
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "objectId": 5,
+      "type": "collect_artifact",
+      "scannedAt": "2026-02-26T12:00:00.000Z",
+      "scanCode": "TRONGDONG001"
+    }
+  ],
   "user_characters": [
     {
       "id": 1,
@@ -3118,6 +3284,116 @@
       "currency": "petals",
       "description": "Thưởng huy hiệu: Bậc thầy lịch sử",
       "createdAt": "2026-02-15T10:28:35.761Z"
+    },
+    {
+      "id": 7,
+      "userId": 3,
+      "type": "earn",
+      "source": "checkin",
+      "sourceId": 1,
+      "amount": 50,
+      "currency": "coins",
+      "description": "Thưởng Check-in: Phố Cổ Hội An",
+      "createdAt": "2026-02-25T10:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "userId": 3,
+      "type": "earn",
+      "source": "checkin",
+      "sourceId": 2,
+      "amount": 50,
+      "currency": "coins",
+      "description": "Thưởng Check-in: Phố Cổ Hội An",
+      "createdAt": "2026-02-26T09:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "userId": 3,
+      "type": "earn",
+      "source": "checkin",
+      "sourceId": 3,
+      "amount": 50,
+      "currency": "coins",
+      "description": "Thưởng Check-in: Hoàng Thành Thăng Long",
+      "createdAt": "2026-02-26T10:30:00.000Z"
+    },
+    {
+      "id": 10,
+      "userId": 3,
+      "type": "earn",
+      "source": "artifact_scan",
+      "sourceId": 1,
+      "amount": 100,
+      "currency": "coins",
+      "description": "Thưởng Thu thập hiện vật",
+      "createdAt": "2026-02-26T11:00:00.000Z"
+    },
+    {
+      "id": 11,
+      "userId": 3,
+      "type": "earn",
+      "source": "artifact_scan",
+      "sourceId": 1,
+      "amount": 25,
+      "currency": "petals",
+      "description": "Thưởng Thu thập hiện vật",
+      "createdAt": "2026-02-26T11:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "userId": 3,
+      "type": "earn",
+      "source": "artifact_scan",
+      "sourceId": 7,
+      "amount": 100,
+      "currency": "coins",
+      "description": "Thưởng Thu thập hiện vật",
+      "createdAt": "2026-02-26T11:15:30.000Z"
+    },
+    {
+      "id": 13,
+      "userId": 3,
+      "type": "earn",
+      "source": "artifact_scan",
+      "sourceId": 7,
+      "amount": 25,
+      "currency": "petals",
+      "description": "Thưởng Thu thập hiện vật",
+      "createdAt": "2026-02-26T11:15:30.000Z"
+    },
+    {
+      "id": 14,
+      "userId": 3,
+      "type": "earn",
+      "source": "checkin",
+      "sourceId": 5,
+      "amount": 50,
+      "currency": "coins",
+      "description": "Thưởng Ghi danh: Hoàng Thành Thăng Long",
+      "createdAt": "2026-02-26T11:15:30.000Z"
+    },
+    {
+      "id": 15,
+      "userId": 3,
+      "type": "earn",
+      "source": "artifact_scan",
+      "sourceId": 6,
+      "amount": 100,
+      "currency": "coins",
+      "description": "Thưởng Thu thập hiện vật: Trống đồng Ngọc Lũ",
+      "createdAt": "2026-02-26T12:00:00.000Z"
+    },
+    {
+      "id": 16,
+      "userId": 3,
+      "type": "earn",
+      "source": "artifact_scan",
+      "sourceId": 6,
+      "amount": 25,
+      "currency": "petals",
+      "description": "Thưởng Thu thập hiện vật: Trống đồng Ngọc Lũ",
+      "createdAt": "2026-02-26T12:00:00.000Z"
     }
   ],
   "notifications": [
@@ -3139,7 +3415,7 @@
       "message": "Người dùng \"Đỗ Thị Hương\" đã thêm \"Trống đồng Ngọc Lũ\" vào danh sách yêu thích.",
       "type": "social",
       "refId": 2,
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-02-15T03:20:54.052Z",
       "updatedAt": "2026-02-15T03:20:54.052Z"
     },
@@ -3164,6 +3440,39 @@
       "isRead": false,
       "createdAt": "2026-02-22T15:17:13.294Z",
       "updatedAt": "2026-02-22T15:17:13.294Z"
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "title": "Hoàn thành nhiệm vụ",
+      "message": "Nhiệm vụ \"Khám phá Bảo tàng\" đã hoàn thành! Hãy vào mục Nhiệm vụ để nhận phần thưởng nhé.",
+      "type": "quest",
+      "refId": 4,
+      "isRead": false,
+      "createdAt": "2026-02-26T03:37:35.785Z",
+      "updatedAt": "2026-02-26T03:37:35.785Z"
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "title": "Mua sắm thành công! 🛒",
+      "message": "Bạn đã mua thành công \"P-Coin\" x1.",
+      "type": "system",
+      "refId": null,
+      "isRead": false,
+      "createdAt": "2026-02-26T09:58:46.978Z",
+      "updatedAt": "2026-02-26T09:58:46.978Z"
+    },
+    {
+      "id": 7,
+      "userId": 3,
+      "title": "Mua sắm thành công! 🛒",
+      "message": "Bạn đã mua thành công \"P-Coin\" x1.",
+      "type": "system",
+      "refId": null,
+      "isRead": false,
+      "createdAt": "2026-02-26T10:16:04.735Z",
+      "updatedAt": "2026-02-26T10:16:04.735Z"
     }
   ]
 }

@@ -65,6 +65,28 @@ class NotificationController extends BaseController {
       next(error);
     }
   };
+
+  broadcast = async (req, res, next) => {
+    try {
+      const { title, message, type, refId } = req.body;
+      
+      if (!title || !message) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Title and message are required for broadcasting' 
+        });
+      }
+
+      await this.service.notifyAll(title, message, type || 'system', refId);
+      
+      res.json({
+        success: true,
+        message: 'Broadcasting completed successfully'
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = new NotificationController();

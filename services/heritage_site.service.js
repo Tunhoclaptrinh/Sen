@@ -36,6 +36,35 @@ class HeritageSiteService extends ReviewableService {
     return super.beforeCreate(data);
   }
 
+  async create(data) {
+    const { autoCreateScanObject, ...rest } = data;
+    const result = await super.create(rest);
+
+    if (result.success && autoCreateScanObject) {
+      const item = result.data;
+      try {
+        const scanObject = {
+          code: `SITE_${item.id}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+          name: `Check-in: ${item.name}`,
+          type: 'heritage_site',
+          referenceId: item.id,
+          latitude: item.latitude,
+          longitude: item.longitude,
+          rewardCoins: 500,
+          rewardPetals: 2,
+          isActive: true
+        };
+        await db.create('scan_objects', scanObject);
+        console.log(`[HeritageService] Auto-created scan object for site ${item.id}`);
+      } catch (error) {
+        console.error(`[HeritageService] Failed to auto-create scan object:`, error);
+        // We don't fail the main creation if scan object fails
+      }
+    }
+
+    return result;
+  }
+
   /**
    * Transform data before update
    */

@@ -513,6 +513,15 @@ class GameController {
       next(error);
     }
   };
+
+  getScanHistory = async (req, res, next) => {
+    try {
+      const result = await gameService.getScanHistory(req.user.id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = new GameController();
