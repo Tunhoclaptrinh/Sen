@@ -93,7 +93,10 @@ class MongoAdapter {
       'game_badge.schema.js': 'game_badges',
       'game_achievement.schema.js': 'game_achievements',
       'scan_object.schema.js': 'scan_objects',
-      'shop_item.schema.js': 'shop_items'
+      'shop_item.schema.js': 'shop_items',
+      'history_article.schema.js': 'history_articles',
+      'learning_module.schema.js': 'learning_modules',
+      'voucher.schema.js': 'vouchers'
     };
 
     files.forEach(file => {

@@ -327,7 +327,8 @@ class BaseService {
    */
   async populateAuthor(data) {
     if (!data) return data;
-    const enriched = { ...data };
+    const obj = data && typeof data.toJSON === 'function' ? data.toJSON() : (data || {});
+    const enriched = { ...obj };
 
     const creatorId = enriched.createdBy || enriched.created_by;
 
@@ -711,7 +712,8 @@ class BaseService {
     if (options.includeRelations && this.schema) {
       data = await Promise.all(
         data.map(async (item) => {
-          const enriched = { ...item };
+          const obj = typeof item.toJSON === 'function' ? item.toJSON() : item;
+          const enriched = { ...obj };
 
           // Expand foreign keys
           for (const [field, rule] of Object.entries(this.schema)) {
