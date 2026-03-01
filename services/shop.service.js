@@ -2,23 +2,23 @@ const db = require('../config/database');
 const notificationService = require('./notification.service');
 
 exports.getShopItems = async (options = {}) => {
-    return db.findAllAdvanced('shop_items', options);
+    return await db.findAllAdvanced('shop_items', options);
 };
 
 exports.getUserInventory = async (userId) => {
     // Find inventory record for user
-    const userInv = db.findOne('user_inventory', { userId: userId });
+    const userInv = await db.findOne('user_inventory', { userId: userId });
     return userInv ? userInv.items : [];
 };
 
 exports.buyItem = async (userId, itemId, quantity = 1) => {
     // 1. Validate Item
     // Use findById since shop items have IDs
-    const item = db.findById('shop_items', itemId);
+    const item = await db.findById('shop_items', itemId);
     if (!item) throw new Error('Item not found');
 
     // 2. Validate User Balance
-    const progress = db.findOne('game_progress', { userId: userId });
+    const progress = await db.findOne('game_progress', { userId: userId });
     if (!progress) throw new Error('User game progress not found');
 
     const totalCost = item.price * quantity;
@@ -36,15 +36,15 @@ exports.buyItem = async (userId, itemId, quantity = 1) => {
     }
 
     // 3. Add to Inventory
-    let userInv = db.findOne('user_inventory', { userId: userId });
+    let userInv = await db.findOne('user_inventory', { userId: userId });
 
     // If no inventory record exists, create one using db.create (assigns ID automatically)
     if (!userInv) {
-        userInv = db.create('user_inventory', { userId: userId, items: [] });
+        userInv = await db.create('user_inventory', { userId: userId, items: [] });
     }
 
-    // Clone items array to avoid direct mutation before update (though adapter returns ref, cleaner to be explicit)
-    const currentItems = [...userInv.items];
+    // Clone items array to avoid direct mutation before update
+    const currentItems = [...(userInv.items || [])];
     const existingItemIndex = currentItems.findIndex(i => i.itemId === itemId);
 
     if (existingItemIndex > -1) {
@@ -64,13 +64,13 @@ exports.buyItem = async (userId, itemId, quantity = 1) => {
     // 4. Persist Changes (Atomic-like sequence)
 
     // Update Progress (Coins/Petals)
-    db.update('game_progress', progress.id, {
+    await db.update('game_progress', progress.id, {
         coins: newCoins,
         totalSenPetals: newPetals
     });
 
     // Update Inventory
-    db.update('user_inventory', userInv.id, {
+    await db.update('user_inventory', userInv.id, {
         items: currentItems
     });
 
@@ -99,13 +99,12 @@ exports.buyItem = async (userId, itemId, quantity = 1) => {
     // [New] Trigger Hidden Unlock: Buying "Trang phục chú Tễu" (ID 3) unlocks "Chú Tễu" (Character ID 1)
     if (itemId === 3) {
         const teuCharacterId = 1;
-        const existingChar = db.findOne('user_characters', { userId: userId, characterId: teuCharacterId });
-        if (!existingChar) {
-            db.create('user_characters', {
-                userId: userId,
-                characterId: teuCharacterId,
-                unlockedAt: new Date().toISOString(),
-                unlockType: 'bonus_with_skin'
+        const hasCharacter = progress.collectedCharacters && progress.collectedCharacters.includes(teuCharacterId);
+        
+        if (!hasCharacter) {
+            const updatedCharacters = [...(progress.collectedCharacters || []), teuCharacterId];
+            await db.update('game_progress', progress.id, {
+                collectedCharacters: updatedCharacters
             });
 
             // TRIGGER CHARACTER UNLOCK NOTIFICATION
@@ -137,19 +136,19 @@ exports.createItem = async (data) => {
         ...data,
         isActive: data.isActive !== undefined ? !!data.isActive : true,
     };
-    return db.create('shop_items', itemData);
+    return await db.create('shop_items', itemData);
 };
 
 exports.updateItem = async (id, data) => {
-    const item = db.findById('shop_items', id);
+    const item = await db.findById('shop_items', id);
     if (!item) throw new Error('Item not found');
 
-    return db.update('shop_items', id, data);
+    return await db.update('shop_items', id, data);
 };
 
 exports.deleteItem = async (id) => {
-    const item = db.findById('shop_items', id);
+    const item = await db.findById('shop_items', id);
     if (!item) throw new Error('Item not found');
 
-    return db.delete('shop_items', id);
+    return await db.delete('shop_items', id);
 };
