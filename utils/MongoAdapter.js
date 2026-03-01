@@ -96,7 +96,10 @@ class MongoAdapter {
       'shop_item.schema.js': 'shop_items',
       'history_article.schema.js': 'history_articles',
       'learning_module.schema.js': 'learning_modules',
-      'voucher.schema.js': 'vouchers'
+      'voucher.schema.js': 'vouchers',
+      'game_quest.schema.js': 'game_quests',
+      'user_quest.schema.js': 'user_quests',
+      'transaction.schema.js': 'transactions'
     };
 
     files.forEach(file => {
@@ -149,6 +152,7 @@ class MongoAdapter {
         if (!mongoose.models[entityName]) {
           const schema = new mongoose.Schema(mongooseFields, {
             timestamps: true,
+            strict: false, // Allow extra fields not in schema to be read/written
             toJSON: {
               virtuals: true,
               versionKey: false,
@@ -280,7 +284,7 @@ class MongoAdapter {
 
     return {
       success: true,
-      data: data, // toJSON transform will auto-hide _id
+      data: data.map(doc => doc.toJSON()), // toJSON transform will auto-hide _id
       pagination: {
         page,
         limit,
@@ -298,25 +302,29 @@ class MongoAdapter {
   async findAll(collection) {
     const Model = this.getModel(collection);
     if (!Model) return [];
-    return await Model.find();
+    const docs = await Model.find();
+    return docs.map(doc => doc.toJSON());
   }
 
   async findById(collection, id) {
     const Model = this.getModel(collection);
     if (!Model) return null;
-    return await Model.findOne({ id: parseInt(id) });
+    const doc = await Model.findOne({ id: parseInt(id) });
+    return doc ? doc.toJSON() : null;
   }
 
   async findOne(collection, query) {
     const Model = this.getModel(collection);
     if (!Model) return null;
-    return await Model.findOne(query);
+    const doc = await Model.findOne(query);
+    return doc ? doc.toJSON() : null;
   }
 
   async findMany(collection, query) {
     const Model = this.getModel(collection);
     if (!Model) return [];
-    return await Model.find(query);
+    const docs = await Model.find(query);
+    return docs.map(doc => doc.toJSON());
   }
 
   async create(collection, data) {
@@ -332,7 +340,7 @@ class MongoAdapter {
     delete data._id;
 
     const created = await Model.create(data);
-    return created;
+    return created ? created.toJSON() : null;
   }
 
   async update(collection, id, data) {
@@ -345,7 +353,7 @@ class MongoAdapter {
       data,
       { new: true, runValidators: true }
     );
-    return updated;
+    return updated ? updated.toJSON() : null;
   }
 
   async delete(collection, id) {

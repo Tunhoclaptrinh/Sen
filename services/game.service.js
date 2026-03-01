@@ -834,6 +834,7 @@ class GameService {
           await db.create('scan_history', {
             userId: userId,
             objectId: item.artifactId,
+            type: 'collect_artifact',
             scannedAt: new Date().toISOString(),
             scanCode: 'HO_REWARD_' + item.id
           });
@@ -2666,34 +2667,94 @@ class GameService {
     history.sort((a, b) => new Date(b.scannedAt) - new Date(a.scannedAt));
 
     const enriched = await Promise.all(history.map(async (item) => {
+      // --- ENRICH MISSING FIELDS ---
+      // Legacy records may be missing 'type' and 'scanCode' if migrated before schema included them.
+      // Infer them from scan_objects using objectId.
+      if (!item.type || !item.scanCode) {
+        const scanObj = await db.findById('scan_objects', item.objectId);
+        if (scanObj) {
+          if (!item.type) {
+            item.type = scanObj.type === 'heritage_site' ? 'checkin' : 'collect_artifact';
+          }
+          if (!item.scanCode) {
+            item.scanCode = scanObj.code;
+          }
+        }
+      }
+
+      // --- NAME LOOKUP ---
       let objectData = null;
       if (item.type === 'checkin') {
         objectData = await db.findById('heritage_sites', item.objectId);
       } else if (item.type === 'collect_artifact') {
         objectData = await db.findById('artifacts', item.objectId);
+        if (!objectData) {
+          const scanObj = await db.findById('scan_objects', item.objectId);
+          if (scanObj) {
+            let realImage = scanObj.image;
+            if (!realImage && scanObj.referenceId) {
+              if (scanObj.type === 'heritage_site') {
+                const site = await db.findById('heritage_sites', scanObj.referenceId);
+                realImage = site?.mainImage || site?.image || site?.thumbnail;
+              } else {
+                const art = await db.findById('artifacts', scanObj.referenceId);
+                realImage = art?.mainImage || art?.image;
+              }
+            }
+            objectData = { name: scanObj.name || scanObj.title, image: realImage };
+          }
+        }
       }
 
-      // Find rewards for this scan in transactions
-      const rewards = await db.findMany('transactions', { 
+      // Final fallback: if still no data, try scan_objects for any type (including legacy/missing types)
+      if (!objectData) {
+        const scanObj = await db.findById('scan_objects', item.objectId);
+        if (scanObj) {
+          let realImage = scanObj.image;
+          if (!realImage && scanObj.referenceId) {
+            if (scanObj.type === 'heritage_site') {
+              const site = await db.findById('heritage_sites', scanObj.referenceId);
+              realImage = site?.mainImage || site?.image || site?.thumbnail;
+            } else {
+              const art = await db.findById('artifacts', scanObj.referenceId);
+              realImage = art?.mainImage || art?.image;
+            }
+          }
+          objectData = { name: scanObj.name || scanObj.title, image: realImage };
+        }
+      }
+
+      // Find rewards for this scan matched by sourceId
+      // Try objectId directly first, then fall back to scan_objects.referenceId
+      let itemRewards = await db.findMany('transactions', { 
         userId: userId,
         source: item.type === 'checkin' ? 'checkin' : 'artifact_scan',
-        // In my seeding I used sourceId as the artifact/site ID or transaction sequence...
-        // Actually for checkin I should match by objectId. 
-        // Let's keep it simple for now or fetch based on timestamp proximity if sourceId is not perfect
+        sourceId: item.objectId
       });
+      // If no match, try looking up via scan_object's referenceId
+      if (itemRewards.length === 0) {
+        const scanObjForReward = await db.findById('scan_objects', item.objectId);
+        if (scanObjForReward?.referenceId) {
+          itemRewards = await db.findMany('transactions', {
+            userId: userId,
+            source: item.type === 'checkin' ? 'checkin' : 'artifact_scan',
+            sourceId: scanObjForReward.referenceId
+          });
+        }
+      }
 
-      // Filter rewards that happened at approximately the same time (± 5 seconds)
-      const eventTime = new Date(item.scannedAt).getTime();
-      const itemRewards = rewards.filter(r => {
-        const rewardTime = new Date(r.createdAt).getTime();
-        return Math.abs(rewardTime - eventTime) < 5000;
-      });
+
 
       return {
         ...item,
         objectName: objectData?.name || 'Unknown',
         objectImage: objectData?.image || (item.type === 'checkin' ? '/images/site-placeholder.jpg' : '/images/artifact-placeholder.jpg'),
-        rewards: itemRewards.map(r => ({ amount: r.amount, currency: r.currency }))
+        rewards: Object.entries(
+          itemRewards.reduce((acc, r) => {
+            acc[r.currency] = (acc[r.currency] || 0) + r.amount;
+            return acc;
+          }, {})
+        ).map(([currency, amount]) => ({ currency, amount }))
       };
     }));
 
