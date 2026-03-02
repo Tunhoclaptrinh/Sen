@@ -386,6 +386,18 @@ class MongoAdapter {
     return { data: items, total };
   }
 
+  async incrementField(collection, id, field) {
+    const Model = this.getModel(collection);
+    if (!Model) return null;
+
+    const updated = await Model.findOneAndUpdate(
+      { id: parseInt(id) },
+      { $inc: { [field]: 1 } },
+      { new: true }
+    );
+    return updated ? updated.toJSON() : null;
+  }
+
   saveData() { return true; }
 }
 
