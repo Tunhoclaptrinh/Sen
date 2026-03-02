@@ -14,7 +14,7 @@ module.exports = {
     status: {
         type: 'string',
         required: true,
-        enum: ['in_progress', 'completed', 'expired'],
+        enum: ['in_progress', 'completed', 'expired', 'abandoned'],
         default: 'in_progress',
         description: 'Trạng thái session'
     },

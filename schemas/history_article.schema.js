@@ -12,6 +12,7 @@ module.exports = {
   content: {
     type: 'string',
     required: true,
+    maxLength: 30000,
     description: 'Nội dung chi tiết'
   },
   image: {
