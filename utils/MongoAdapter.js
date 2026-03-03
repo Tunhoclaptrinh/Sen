@@ -99,7 +99,8 @@ class MongoAdapter {
       'voucher.schema.js': 'vouchers',
       'game_quest.schema.js': 'game_quests',
       'user_quest.schema.js': 'user_quests',
-      'transaction.schema.js': 'transactions'
+      'transaction.schema.js': 'transactions',
+      'ai_chat_history.schema.js': 'ai_chat_history'
     };
 
     files.forEach(file => {
@@ -398,7 +399,20 @@ class MongoAdapter {
     return updated ? updated.toJSON() : null;
   }
 
+  async count(collection, filter = {}) {
+    const Model = this.getModel(collection);
+    if (!Model) return 0;
+
+    // Build mongoose filter from simple key=value pairs
+    const mongoFilter = {};
+    for (const [key, val] of Object.entries(filter)) {
+      mongoFilter[key] = val;
+    }
+    return await Model.countDocuments(mongoFilter);
+  }
+
   saveData() { return true; }
+
 }
 
 module.exports = new MongoAdapter();

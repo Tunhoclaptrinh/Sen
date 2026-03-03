@@ -1,0 +1,25 @@
+# Dán danh sách email vào đây, mỗi email 1 dòng
+# Dòng bắt đầu bằng # sẽ bị bỏ qua
+sfinroawh@gmail.com
+maiducanh690430@gmail.com
+lehaianhp123452@gmail.com
+tasang525@gmail.com
+nguyennhuhuyen1012@gmail.com
+Nguyenhuyen27092k5@gmail.com
+anhpk.a3k48gtb@gmail.com
+nguyenthivui02022005@gmail.com
+Beyourluve2910@gmail.com
+nguyenthiphuong07062005@gmail.com
+thaophamthu1401@gmail.com
+tahuan1906@gmail.com
+daogamsvip@gmail.com
+viet.joestar@gmail.com
+duyyanhh113@gmail.com
+nguyenvanluan25032005@gmail.com
+dinhtran29092005@gmail.com
+cristyvu612@gmail.com
+nqtnqtnqt610@gmail.com
+minhtuantran210305@gmail.com
+ahihigyu255@gmail.com
+nguyentdat16@gmail.com
+nlan190707@gmail.com
