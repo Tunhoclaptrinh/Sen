@@ -10,7 +10,7 @@ module.exports = {
     type: 'string',
     required: true,
     minLength: 10,
-    maxLength: 2000,
+    maxLength: 30000,
     description: 'Mô tả bài học'
   },
   contentType: {

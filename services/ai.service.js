@@ -422,17 +422,12 @@ class AIService {
     try {
       const allCharacters = await db.findMany("game_characters", {});
 
-      // Lấy danh sách nhân vật user đã sở hữu
+      // Lấy danh sách nhân vật user đã sở hữu và tiến độ game
       let ownedIds = [];
-      if (userId) {
-        const ownedCharacters = await db.findMany("user_characters", { userId: userId });
-        ownedIds = ownedCharacters.map(uc => uc.characterId);
-      }
-
-      // Lấy tiến độ game của user (để check unlock requirement)
       let completedLevelIds = [];
       if (userId) {
         const progress = await db.findOne("game_progress", { userId: userId });
+        ownedIds = progress?.collectedCharacters || [];
         completedLevelIds = progress?.completedLevels || [];
       }
 
@@ -493,20 +488,21 @@ class AIService {
         return { success: false, message: "Không thể mua nhân vật mặc định", statusCode: 400 };
       }
 
-      // 3. Check đã sở hữu chưa
-      const existingOwnership = await db.findOne("user_characters", {
-        userId: userId,
-        characterId: characterId
-      });
-      if (existingOwnership) {
+      // 3. Lấy tiến độ game để kiểm tra sở hữu, unlock và số dư
+      const progress = await db.findOne("game_progress", { userId: userId });
+      if (!progress) {
+        return { success: false, message: "Không tìm thấy tiến độ game", statusCode: 404 };
+      }
+
+      const ownedIds = progress.collectedCharacters || [];
+      if (ownedIds.includes(characterId)) {
         return { success: false, message: "Bạn đã sở hữu nhân vật này rồi", statusCode: 400 };
       }
 
       // 4. Check đã unlock chưa (hoàn thành level yêu cầu)
       const unlockLevelId = character.unlockLevelId || character.unlock_level_id;
       if (unlockLevelId) {
-        const progress = await db.findOne("game_progress", { userId: userId });
-        const completedLevels = progress?.completedLevels || [];
+        const completedLevels = progress.completedLevels || [];
         if (!completedLevels.includes(unlockLevelId)) {
           return {
             success: false,
@@ -517,11 +513,6 @@ class AIService {
       }
 
       // 5. Check đủ tiền (Coins)
-      const progress = await db.findOne("game_progress", { userId: userId });
-      if (!progress) {
-        return { success: false, message: "Không tìm thấy tiến độ game", statusCode: 404 };
-      }
-
       // Use COINS instead of SEN PETALS
       const currentCoins = progress.coins || 0;
       const price = character.price || 0;
@@ -534,19 +525,16 @@ class AIService {
         };
       }
 
-      // 6. Trừ Coins và thêm ownership
+      // 6. Trừ Coins và Cập nhật danh sách nhân vật
+      const updatedCharacters = [...ownedIds, characterId];
       const updateData = {
-        coins: currentCoins - price
+        coins: currentCoins - price,
+        collectedCharacters: updatedCharacters
       };
 
       await db.update("game_progress", progress.id, updateData);
-
-      const ownership = await db.create("user_characters", {
-        userId: userId,
-        characterId: characterId,
-        unlockedAt: new Date().toISOString(),
-        unlockType: "purchase"
-      });
+      
+      const ownership = { characterId, unlockedAt: new Date().toISOString() };
 
       return {
         success: true,
@@ -570,12 +558,9 @@ class AIService {
     try {
       const allCharacters = await db.findMany("game_characters", {});
 
-      // Lấy danh sách đã sở hữu
-      const ownedCharacters = await db.findMany("user_characters", { userId: userId });
-      const ownedIds = ownedCharacters.map(uc => uc.characterId);
-
-      // Lấy tiến độ để check unlock
+      // Lấy danh sách đã sở hữu và tiến độ để check unlock
       const progress = await db.findOne("game_progress", { userId: userId });
+      const ownedIds = progress?.collectedCharacters || [];
       const completedLevels = progress?.completedLevels || [];
 
       // Filter: chưa sở hữu, không phải mặc định, và đã unlock

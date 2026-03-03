@@ -50,6 +50,23 @@ module.exports = {
     default: true,
     description: 'Có thể thu thập'
   },
+  isDefault: {
+    type: 'boolean',
+    required: false,
+    default: false,
+    description: 'Nhân vật mặc định (luôn mở khóa)'
+  },
+  price: {
+    type: 'number',
+    required: false,
+    default: 0,
+    description: 'Giá mua nhân vật'
+  },
+  unlockLevelId: {
+    type: 'number',
+    required: false,
+    description: 'Level cần hoàn thành để mở khóa'
+  },
   // Avatar: 2 trạng thái
   avatarLocked: {
     type: 'string',

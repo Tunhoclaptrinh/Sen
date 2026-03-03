@@ -3051,35 +3051,6 @@
       },
       "createdBy": 1,
       "status": "published"
-    },
-    {
-      "id": 5,
-      "title": "content_type",
-      "description": "content_typecontent_typecontent_typecontent_type",
-      "contentType": "article",
-      "contentUrl": "<div>\n<div>content_type\n<div>\n<div>content_type\n<div>\n<div>content_type\n<div>\n<div>content_type\n<div>\n<div>content_type</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
-      "difficulty": "easy",
-      "estimatedDuration": 30,
-      "thumbnail": "content_type",
-      "quiz": {
-        "passingScore": 50,
-        "questions": [
-          {
-            "point": 10,
-            "question": "content_type",
-            "correctAnswer": 0,
-            "options": [
-              "content_type",
-              "content_type"
-            ],
-            "id": 1770311636145
-          }
-        ]
-      },
-      "createdBy": 2,
-      "status": "published",
-      "createdAt": "2026-02-05T17:13:56.233Z",
-      "updatedAt": "2026-02-10T11:51:03.657Z"
     }
   ],
   "user_progress": [

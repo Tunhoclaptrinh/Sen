@@ -1,27 +1,40 @@
 /**
  * Upload Service
  * Handles file uploads, validation, processing, and storage
+ * Supports both Local Disk and Cloudinary via UPLOAD_PROVIDER environment variable.
  */
 
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const sharp = require('sharp'); // For image processing (install: npm install sharp)
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const sharp = require('sharp');
 
 class UploadService {
   constructor() {
     this.uploadDir = path.join(__dirname, '../database/uploads');
     this.maxFileSize = 5 * 1024 * 1024; // 5MB
     this.allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-    this.allowedAudioTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3']; // Add MP3 specific if needed
+    this.allowedAudioTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3'];
 
-    // Create upload directories
-    this.initUploadDirs();
+    this.useCloudinary = process.env.UPLOAD_PROVIDER === 'cloudinary';
+
+    if (this.useCloudinary) {
+      this.initCloudinary();
+    } else {
+      this.initUploadDirs();
+    }
   }
 
-  /**
-   * Initialize upload directories
-   */
+  initCloudinary() {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET
+    });
+  }
+
   initUploadDirs() {
     const dirs = [
       this.uploadDir,
@@ -38,34 +51,36 @@ class UploadService {
     dirs.forEach(dir => {
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
-        console.log(`✅ Created directory: ${dir}`);
       }
     });
   }
 
-  /**
-   * Configure multer storage
-   */
   getMulterStorage(folder = 'temp') {
-    return multer.diskStorage({
-      destination: (req, file, cb) => {
-        const uploadPath = path.join(this.uploadDir, folder);
-        if (!fs.existsSync(uploadPath)) {
-          fs.mkdirSync(uploadPath, { recursive: true });
+    if (this.useCloudinary) {
+      return new CloudinaryStorage({
+        cloudinary: cloudinary,
+        params: {
+          folder: `sen_web/${folder}`,
+          resource_type: 'auto',
         }
-        cb(null, uploadPath);
-      },
-      filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-      }
-    });
+      });
+    } else {
+      return multer.diskStorage({
+        destination: (req, file, cb) => {
+          const destPath = path.join(this.uploadDir, folder);
+          if (!fs.existsSync(destPath)) {
+            fs.mkdirSync(destPath, { recursive: true });
+          }
+          cb(null, destPath);
+        },
+        filename: (req, file, cb) => {
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+          cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+        }
+      });
+    }
   }
 
-  /**
-   * File filter for multer
-   */
   fileFilter(req, file, cb) {
     if (this.allowedImageTypes.includes(file.mimetype) || this.allowedAudioTypes.includes(file.mimetype)) {
       cb(null, true);
@@ -74,37 +89,22 @@ class UploadService {
     }
   }
 
-  /**
-   * Get multer middleware for single file upload
-   */
   getSingleUpload(fieldName = 'image', folder = 'temp') {
     return multer({
       storage: this.getMulterStorage(folder),
       fileFilter: this.fileFilter.bind(this),
-      limits: {
-        fileSize: this.maxFileSize
-      }
+      limits: { fileSize: this.maxFileSize }
     }).single(fieldName);
   }
 
-  /**
-   * Get multer middleware for multiple files upload
-   */
   getMultipleUpload(fieldName = 'images', maxCount = 5, folder = 'temp') {
     return multer({
       storage: this.getMulterStorage(folder),
       fileFilter: this.fileFilter.bind(this),
-      limits: {
-        fileSize: this.maxFileSize
-      }
+      limits: { fileSize: this.maxFileSize }
     }).array(fieldName, maxCount);
   }
 
-  /**
-   * Process uploaded image
-   * @param {string} filePath - Path to uploaded file
-   * @param {object} options - Processing options
-   */
   async processImage(filePath, options = {}) {
     try {
       const {
@@ -122,23 +122,15 @@ class UploadService {
 
       let sharpInstance = sharp(filePath);
 
-      // Resize if dimensions provided
       if (width || height) {
         sharpInstance = sharpInstance.resize(width, height, { fit });
       }
 
-      // Convert format and compress
-      if (format === 'jpeg') {
-        sharpInstance = sharpInstance.jpeg({ quality });
-      } else if (format === 'png') {
-        sharpInstance = sharpInstance.png({ quality });
-      } else if (format === 'webp') {
-        sharpInstance = sharpInstance.webp({ quality });
-      }
+      if (format === 'jpeg') sharpInstance = sharpInstance.jpeg({ quality });
+      else if (format === 'png') sharpInstance = sharpInstance.png({ quality });
+      else if (format === 'webp') sharpInstance = sharpInstance.webp({ quality });
 
       await sharpInstance.toFile(processedPath);
-
-      // Delete original file
       fs.unlinkSync(filePath);
 
       return {
@@ -147,382 +139,213 @@ class UploadService {
         filename: path.basename(processedPath)
       };
     } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
+      return { success: false, error: error.message };
     }
   }
 
-  /**
-   * Upload avatar
-   */
-  async uploadAvatar(file, userId) {
+  async _handleUpload(file, { localFolder, localPrefix, localProcessor, cloudTransform }) {
     try {
-      // Move to avatars folder
-      const newPath = path.join(this.uploadDir, 'avatars', `user-${userId}-${Date.now()}.jpeg`);
+      if (!file || !file.path) throw new Error('No uploaded file provided');
 
-      // Process: resize to 200x200
-      const result = await this.processImage(file.path, {
-        width: 200,
-        height: 200,
-        quality: 85,
-        format: 'jpeg',
-        fit: 'cover'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      // Move processed file
-      fs.renameSync(result.filePath, newPath);
-
-      // Generate URL
-      const url = `/uploads/avatars/${path.basename(newPath)}`;
-
-      return {
-        success: true,
-        url,
-        filename: path.basename(newPath),
-        path: newPath
-      };
-    } catch (error) {
-      // Cleanup on error
-      if (fs.existsSync(file.path)) {
-        fs.unlinkSync(file.path);
-      }
-      throw error;
-    }
-  }
-
-  /**
-   * Upload category image
-   */
-  async uploadCategoryImage(file, categoryId) {
-    try {
-      const newPath = path.join(this.uploadDir, 'categories', `category-${categoryId}-${Date.now()}.jpeg`);
-
-      const result = await this.processImage(file.path, {
-        width: 400,
-        height: 300,
-        quality: 80,
-        format: 'jpeg'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      fs.renameSync(result.filePath, newPath);
-
-      const url = `/uploads/categories/${path.basename(newPath)}`;
-
-      return {
-        success: true,
-        url,
-        filename: path.basename(newPath),
-        path: newPath
-      };
-    } catch (error) {
-      if (fs.existsSync(file.path)) {
-        fs.unlinkSync(file.path);
-      }
-      throw error;
-    }
-  }
-
-  /**
-   * Upload Heritage Site Image
-   */
-  async uploadHeritageSiteImage(file, siteId) {
-    try {
-      const newPath = path.join(this.uploadDir, 'heritage_sites', `site-${siteId}-${Date.now()}.jpeg`);
-
-      const result = await this.processImage(file.path, {
-        width: 800,
-        height: 600,
-        quality: 85,
-        format: 'jpeg'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      fs.renameSync(result.filePath, newPath);
-
-      return {
-        success: true,
-        url: `/uploads/heritage_sites/${path.basename(newPath)}`
-      };
-    } catch (error) {
-      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
-      throw error;
-    }
-  }
-
-  /**
-   * Upload Artifact Image
-   */
-  async uploadArtifactImage(file, artifactId) {
-    try {
-      const newPath = path.join(this.uploadDir, 'artifacts', `artifact-${artifactId}-${Date.now()}.jpeg`);
-
-      const result = await this.processImage(file.path, {
-        width: 800,
-        height: 800,
-        fit: 'inside', // Keep aspect ratio
-        quality: 85,
-        format: 'jpeg'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      fs.renameSync(result.filePath, newPath);
-
-      return {
-        success: true,
-        url: `/uploads/artifacts/${path.basename(newPath)}`
-      };
-    } catch (error) {
-      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
-      throw error;
-    }
-  }
-
-  /**
-   * Upload Exhibition Image
-    */
-  async uploadExhibitionImage(file, exhibitionId) {
-    try {
-      const newPath = path.join(this.uploadDir, 'exhibitions', `exhibition-${exhibitionId}-${Date.now()}.jpeg`);
-
-      const result = await this.processImage(file.path, {
-        width: 1200,
-        height: 600,
-        quality: 85,
-        format: 'jpeg'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      fs.renameSync(result.filePath, newPath);
-
-      return {
-        success: true,
-        url: `/uploads/exhibitions/${path.basename(newPath)}`
-      };
-    } catch (error) {
-      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
-      throw error;
-    }
-  }
-
-  /**
-   * Upload General File
-   */
-  async uploadGeneralFile(file) {
-    try {
-      const generalDir = path.join(this.uploadDir, 'general');
-      if (!fs.existsSync(generalDir)) {
-        fs.mkdirSync(generalDir, { recursive: true });
-      }
-
-      // If Audio, just move the file
-      if (file.mimetype.startsWith('audio/')) {
-        const ext = path.extname(file.originalname);
-        const newPath = path.join(generalDir, `audio-${Date.now()}${ext}`);
-        fs.renameSync(file.path, newPath);
+      if (this.useCloudinary) {
+        // file.path already has the cloudinary URL if CloudinaryStorage is used
+        // But we apply transformations to create an optimized URL
+        const optimizeUrl = cloudinary.url(file.filename, cloudTransform);
         return {
           success: true,
-          url: `/uploads/general/${path.basename(newPath)}`,
-          filename: path.basename(newPath)
+          url: optimizeUrl,
+          filename: file.filename,
+          path: optimizeUrl
+        };
+      } else {
+        const isAudio = file.mimetype.startsWith('audio/');
+        const ext = isAudio ? path.extname(file.originalname) : `.${localProcessor.format || 'jpeg'}`;
+        const newPath = path.join(this.uploadDir, localFolder, `${localPrefix}-${Date.now()}${ext}`);
+
+        if (isAudio) {
+          fs.renameSync(file.path, newPath);
+        } else {
+          const result = await this.processImage(file.path, localProcessor);
+          if (!result.success) throw new Error(result.error);
+          fs.renameSync(result.filePath, newPath);
+        }
+
+        const url = `/uploads/${localFolder}/${path.basename(newPath)}`;
+        return {
+          success: true,
+          url,
+          filename: path.basename(newPath),
+          path: newPath
         };
       }
-
-      // Default Image Handling
-      const newPath = path.join(generalDir, `file-${Date.now()}.jpeg`);
-
-      // General images: resize to reasonable max width, keep ratio
-      const result = await this.processImage(file.path, {
-        width: 1200,
-        height: 1200,
-        fit: 'inside',
-        quality: 85,
-        format: 'jpeg'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      fs.renameSync(result.filePath, newPath);
-
-      return {
-        success: true,
-        url: `/uploads/general/${path.basename(newPath)}`
-      };
     } catch (error) {
-      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+      if (this.useCloudinary) {
+        if (file && file.filename) await cloudinary.uploader.destroy(file.filename);
+      } else {
+        if (file && fs.existsSync(file.path)) fs.unlinkSync(file.path);
+      }
       throw error;
     }
   }
 
-  /**
-   * Upload Game Asset (Character, Badge, Level Thumbnail)
-   */
+  async uploadAvatar(file, userId) {
+    return this._handleUpload(file, {
+      localFolder: 'avatars',
+      localPrefix: `user-${userId}`,
+      localProcessor: { width: 200, height: 200, quality: 85, format: 'jpeg', fit: 'cover' },
+      cloudTransform: { width: 200, height: 200, crop: 'fill', quality: 85, format: 'jpg' }
+    });
+  }
+
+  async uploadCategoryImage(file, categoryId) {
+    return this._handleUpload(file, {
+      localFolder: 'categories',
+      localPrefix: `category-${categoryId}`,
+      localProcessor: { width: 400, height: 300, quality: 80, format: 'jpeg' },
+      cloudTransform: { width: 400, height: 300, crop: 'fill', quality: 80, format: 'jpg' }
+    });
+  }
+
+  async uploadHeritageSiteImage(file, siteId) {
+    return this._handleUpload(file, {
+      localFolder: 'heritage_sites',
+      localPrefix: `site-${siteId}`,
+      localProcessor: { width: 800, height: 600, quality: 85, format: 'jpeg' },
+      cloudTransform: { width: 800, height: 600, crop: 'fill', quality: 85, format: 'jpg' }
+    });
+  }
+
+  async uploadArtifactImage(file, artifactId) {
+    return this._handleUpload(file, {
+      localFolder: 'artifacts',
+      localPrefix: `artifact-${artifactId}`,
+      localProcessor: { width: 800, height: 800, fit: 'inside', quality: 85, format: 'jpeg' },
+      cloudTransform: { width: 800, height: 800, crop: 'fit', quality: 85, format: 'jpg' }
+    });
+  }
+
+  async uploadExhibitionImage(file, exhibitionId) {
+    return this._handleUpload(file, {
+      localFolder: 'exhibitions',
+      localPrefix: `exhibition-${exhibitionId}`,
+      localProcessor: { width: 1200, height: 600, quality: 85, format: 'jpeg' },
+      cloudTransform: { width: 1200, height: 600, crop: 'fill', quality: 85, format: 'jpg' }
+    });
+  }
+
+  async uploadGeneralFile(file) {
+    return this._handleUpload(file, {
+      localFolder: 'general',
+      localPrefix: 'file',
+      localProcessor: { width: 1200, height: 1200, fit: 'inside', quality: 85, format: 'jpeg' },
+      cloudTransform: { width: 1200, height: 1200, crop: 'fit', quality: 85, format: 'jpg' }
+    });
+  }
+
   async uploadGameAsset(file, type, id) {
-    try {
-      const newPath = path.join(this.uploadDir, 'game_assets', `${type}-${id}-${Date.now()}.png`);
-
-      // Game assets usually PNG for transparency
-      const result = await this.processImage(file.path, {
-        width: 512,
-        height: 512,
-        fit: 'inside',
-        quality: 90,
-        format: 'png'
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      fs.renameSync(result.filePath, newPath);
-
-      return {
-        success: true,
-        url: `/uploads/game_assets/${path.basename(newPath)}`
-      };
-    } catch (error) {
-      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
-      throw error;
-    }
+    return this._handleUpload(file, {
+      localFolder: 'game_assets',
+      localPrefix: `${type}-${id}`,
+      localProcessor: { width: 512, height: 512, fit: 'inside', quality: 90, format: 'png' },
+      cloudTransform: { width: 512, height: 512, crop: 'fit', quality: 90, format: 'png' }
+    });
   }
 
-  /**
-   * Delete file
-   */
   async deleteFile(url) {
     try {
-      // Extract path from URL
-      const filename = url.split('/').pop();
-      const folder = url.split('/').slice(-2, -1)[0];
-      const filePath = path.join(this.uploadDir, folder, filename);
+      if (this.useCloudinary && url.includes('cloudinary.com')) {
+        const parts = url.split('/');
+        const filenameWithExt = parts[parts.length - 1];
+        const filename = filenameWithExt.split('.')[0];
+        const folder = parts[parts.length - 2];
+        const publicId = `sen_web/${folder}/${filename}`;
+        
+        await cloudinary.uploader.destroy(publicId);
+        return { success: true, message: 'Cloudinary file deleted' };
+      } else {
+        const filename = url.split('/').pop();
+        const folder = url.split('/').slice(-2, -1)[0];
+        const filePath = path.join(this.uploadDir, folder, filename);
 
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        return {
-          success: true,
-          message: 'File deleted successfully'
-        };
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+          return { success: true, message: 'Local file deleted' };
+        }
+        return { success: false, message: 'Local file not found' };
       }
-
-      return {
-        success: false,
-        message: 'File not found'
-      };
     } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
+      return { success: false, error: error.message };
     }
   }
 
-  /**
-   * Get file info
-   */
   async getFileInfo(url) {
+    if (this.useCloudinary && url.includes('cloudinary.com')) {
+      return { success: true, data: { url, storedIn: 'cloudinary' } };
+    }
+    
     try {
       const filename = url.split('/').pop();
       const folder = url.split('/').slice(-2, -1)[0];
       const filePath = path.join(this.uploadDir, folder, filename);
 
       if (!fs.existsSync(filePath)) {
-        return {
-          success: false,
-          message: 'File not found'
-        };
+        return { success: false, message: 'File not found' };
       }
 
       const stats = fs.statSync(filePath);
-
       return {
         success: true,
-        data: {
-          filename,
-          size: stats.size,
-          created: stats.birthtime,
-          modified: stats.mtime,
-          path: filePath
-        }
+        data: { filename, size: stats.size, created: stats.birthtime, modified: stats.mtime, path: filePath }
       };
     } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
+      return { success: false, error: error.message };
     }
   }
 
-  /**
-   * Cleanup old files (older than X days)
-   */
   async cleanupOldFiles(days = 30) {
+    if (this.useCloudinary) {
+      return { success: true, message: 'Cloudinary manages old files via retention policies.' };
+    }
+
     const folders = ['avatars', 'products', 'restaurants', 'categories', 'temp'];
     const now = Date.now();
-    const maxAge = days * 24 * 60 * 60 * 1000; // Convert to milliseconds
+    const maxAge = days * 24 * 60 * 60 * 1000;
     let deletedCount = 0;
 
     for (const folder of folders) {
       const folderPath = path.join(this.uploadDir, folder);
+      if (!fs.existsSync(folderPath)) continue;
+      
       const files = fs.readdirSync(folderPath);
-
       for (const file of files) {
         const filePath = path.join(folderPath, file);
         const stats = fs.statSync(filePath);
-        const fileAge = now - stats.mtimeMs;
-
-        if (fileAge > maxAge) {
+        if (now - stats.mtimeMs > maxAge) {
           fs.unlinkSync(filePath);
           deletedCount++;
         }
       }
     }
 
-    return {
-      success: true,
-      message: `Deleted ${deletedCount} old files`,
-      deletedCount
-    };
+    return { success: true, message: `Deleted ${deletedCount} old files`, deletedCount };
   }
 
-  /**
-   * Get storage stats
-   */
   async getStorageStats() {
+    if (this.useCloudinary) {
+      return { success: true, data: { message: 'Cloudinary stats not retrieved.' } };
+    }
+
     const folders = ['avatars', 'products', 'restaurants', 'categories', 'temp'];
-    const stats = {
-      totalSize: 0,
-      totalFiles: 0,
-      byFolder: {}
-    };
+    const stats = { totalSize: 0, totalFiles: 0, byFolder: {} };
 
     for (const folder of folders) {
       const folderPath = path.join(this.uploadDir, folder);
-      const files = fs.readdirSync(folderPath);
+      if (!fs.existsSync(folderPath)) continue;
 
+      const files = fs.readdirSync(folderPath);
       let folderSize = 0;
       for (const file of files) {
-        const filePath = path.join(folderPath, file);
-        const fileStats = fs.statSync(filePath);
-        folderSize += fileStats.size;
+        folderSize += fs.statSync(path.join(folderPath, file)).size;
       }
 
       stats.byFolder[folder] = {
@@ -536,25 +359,15 @@ class UploadService {
     }
 
     stats.totalSizeFormatted = this.formatBytes(stats.totalSize);
-
-    return {
-      success: true,
-      data: stats
-    };
+    return { success: true, data: stats };
   }
 
-  /**
-   * Format bytes to human readable
-   */
   formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
-
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 }

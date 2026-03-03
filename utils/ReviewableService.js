@@ -61,7 +61,8 @@ class ReviewableService extends BaseService {
    */
   async populateLevels(item) {
     if (!item) return item;
-    const enriched = { ...item };
+    const obj = item && typeof item.toJSON === 'function' ? item.toJSON() : (item || {});
+    const enriched = { ...obj };
 
     // Determine which field to filter game_levels by based on collection name
     let filterField;

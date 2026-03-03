@@ -11,6 +11,17 @@ module.exports = {
         foreignKey: 'scan_objects',
         description: 'Object ID đã scan'
     },
+    type: {
+        type: 'string',
+        required: false,
+        enum: ['checkin', 'collect_artifact'],
+        description: 'Loại sự kiện scan'
+    },
+    scanCode: {
+        type: 'string',
+        required: false,
+        description: 'Mã quét QR'
+    },
     location: {
         type: 'object',
         required: false,
