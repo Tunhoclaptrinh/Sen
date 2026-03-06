@@ -17,7 +17,15 @@ class NotificationService extends BaseService {
       order: 'desc'
     });
 
-    const unreadCount = result.data.filter(n => !n.isRead).length;
+    // Optimize unread count calculation by capping at 11 (for "10+" display)
+    const allNotifs = await db.findAll('notifications');
+    let unreadCount = 0;
+    for (const n of allNotifs) {
+      if (n.userId === userId && !n.isRead) {
+        unreadCount++;
+        if (unreadCount > 10) break; // Capped for performance
+      }
+    }
 
     return {
       success: true,

@@ -21,8 +21,11 @@ const PERMISSIONS = {
     history_articles: ['create', 'read', 'update', 'delete', 'list'],
     game_content: ['create', 'read', 'update', 'delete', 'list', 'suggest'],
     learning_modules: ['create', 'read', 'update', 'delete', 'list'],
-    game_levels: ['create', 'read', 'update', 'delete', 'list'], // Added explicit game_levels
-    users: ['read'], // Xem profile cơ bản
+    game_levels: ['create', 'read', 'update', 'delete', 'list'],
+    game_play: ['play', 'submit_score', 'collect_reward', 'earn_rewards', 'scan_qr'],
+    user_data: ['read_own', 'update_own', 'delete_own'],
+    shop: ['purchase', 'use_item'],
+    users: ['read'],
     reviews: ['create', 'read', 'update', 'delete', 'list']
   },
 
