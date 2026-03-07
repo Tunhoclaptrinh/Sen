@@ -980,13 +980,37 @@ class GameService {
         return { success: false, message: 'Already answered this question', statusCode: 400 };
       }
 
-      const selectedOption = currentScreen.options?.find(o => o.text === answerId);
-      if (!selectedOption) {
-        return { success: false, message: 'Invalid answer', statusCode: 400 };
-      }
+      let isCorrect = false;
+      let pointsEarned = 0;
+      let explanation = null;
+      let correctAnswerText = null;
 
-      const isCorrect = selectedOption.isCorrect;
-      const pointsEarned = isCorrect ? (currentScreen.reward?.points || currentScreen.points || 20) : 0;
+      if (Array.isArray(answerId)) {
+        // Validate array answer
+        const correctOptions = currentScreen.options?.filter(o => o.isCorrect) || [];
+        const correctTexts = correctOptions.map(o => o.text);
+
+        // Exact match of correct options
+        if (answerId.length === correctTexts.length && answerId.every(ans => correctTexts.includes(ans))) {
+          isCorrect = true;
+          pointsEarned = currentScreen.reward?.points || currentScreen.points || 20;
+          explanation = correctOptions.find(o => o.explanation)?.explanation || null;
+        } else {
+          isCorrect = false;
+          correctAnswerText = correctTexts; // Trả về mảng để frontend tuỳ ý xử lý
+        }
+      } else {
+        // Single answer
+        const selectedOption = currentScreen.options?.find(o => o.text === answerId);
+        if (!selectedOption) {
+          return { success: false, message: 'Invalid answer', statusCode: 400 };
+        }
+
+        isCorrect = selectedOption.isCorrect;
+        pointsEarned = isCorrect ? (currentScreen.reward?.points || currentScreen.points || 20) : 0;
+        explanation = selectedOption.explanation;
+        correctAnswerText = isCorrect ? null : currentScreen.options?.find(o => o.isCorrect)?.text;
+      }
 
       const updatedSession = await db.update('game_sessions', sessionId, {
         answeredQuestions: [
@@ -1044,8 +1068,8 @@ class GameService {
           isCorrect: isCorrect,
           pointsEarned: pointsEarned,
           totalScore: updatedSession.score,
-          explanation: selectedOption.explanation,
-          correctAnswer: isCorrect ? null : currentScreen.options.find(o => o.isCorrect)?.text,
+          explanation: explanation,
+          correctAnswer: correctAnswerText,
           newBadges
         }
       };
