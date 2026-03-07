@@ -8,7 +8,7 @@ class LearningController extends ReviewableController {
 
   complete = async (req, res, next) => {
     try {
-      const { score, answers } = req.body;
+      const { score, answers, timeSpent } = req.body;
       if (score === undefined) {
         return res.status(400).json({
           success: false,
@@ -16,7 +16,7 @@ class LearningController extends ReviewableController {
         });
       }
 
-      const result = await this.service.completeModule(req.params.id, req.user.id, score, answers);
+      const result = await this.service.completeModule(req.params.id, req.user.id, score, answers, timeSpent);
       res.json(result);
     } catch (error) {
       next(error);

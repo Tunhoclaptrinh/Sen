@@ -145,8 +145,11 @@ module.exports = {
     required: false,
     description: 'Phần thưởng khi hoàn thành (JSON)',
     example: {
-      petals: 2,
-      coins: 100,
+      petals: 10,
+      coins: 50,
+      points: 100,
+      reviewPetals: 2,
+      reviewCoins: 10,
       character: 'teu_full_color',
       badges: ['badge_01']
     }
@@ -161,6 +164,12 @@ module.exports = {
     required: false,
     default: 70,
     description: 'Điểm tối thiểu để pass'
+  },
+  maxReviewRewards: {
+    type: 'number',
+    required: false,
+    default: 3,
+    description: 'Số lần ôn tập tối đa được nhận thưởng'
   },
 
   // === METADATA ===

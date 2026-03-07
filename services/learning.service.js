@@ -17,7 +17,7 @@ class LearningService extends ReviewableService {
     return super.beforeCreate(data);
   }
 
-  async completeModule(moduleId, userId, score, answers) {
+  async completeModule(moduleId, userId, score, answers, timeSpent) {
     const moduleIdInt = parseInt(moduleId);
     let finalScore = parseInt(score);
 
@@ -61,37 +61,48 @@ class LearningService extends ReviewableService {
       gameProgress = await gameService.initializeProgress(userId);
     }
 
+    if (!userId) {
+      return { success: true, message: 'Module completed (guest)', data: { score: finalScore, passed: finalScore >= (moduleItem.quiz?.passingScore || 70) } };
+    }
+
     // Check if module is already completed
-    const existingCompletionIndex = (gameProgress.completedModules || []).findIndex(m => parseInt(m.moduleId) === moduleIdInt);
-    const isAlreadyCompleted = existingCompletionIndex !== -1;
+    const existingEntry = (gameProgress.completedModules || []).find(m => parseInt(m.moduleId) === moduleIdInt);
+    const isAlreadyCompleted = !!existingEntry;
 
     const completedModule = {
       moduleId: moduleIdInt,
       completedDate: new Date().toISOString(),
       score: finalScore,
-      timeSpent: 0
+      reviewCount: 0,
+      timeSpent: timeSpent || 0
     };
 
     const passingScore = moduleItem.quiz?.passingScore || 70;
+    let currentReviewCount = existingEntry?.reviewCount || 0;
+    let maxReviewRewards = moduleItem.maxReviewRewards !== undefined ? moduleItem.maxReviewRewards : 3;
 
     // Points & Coins logic:
     // Configurable via moduleItem: rewardPoints, rewardCoins, reviewRewardPoints, reviewRewardCoins
     let points = 0;
     let coins = 0;
+    let petals = 0;
     if (finalScore >= passingScore) {
       if (!isAlreadyCompleted) {
         points = moduleItem.rewardPoints !== undefined ? moduleItem.rewardPoints : 50;
         coins = moduleItem.rewardCoins !== undefined ? moduleItem.rewardCoins : 0;
-      } else {
+        petals = moduleItem.rewardPetals !== undefined ? moduleItem.rewardPetals : 0;
+      } else if (currentReviewCount < maxReviewRewards) {
         points = moduleItem.reviewRewardPoints !== undefined ? moduleItem.reviewRewardPoints : 10;
         coins = moduleItem.reviewRewardCoins !== undefined ? moduleItem.reviewRewardCoins : 0;
+        petals = moduleItem.reviewRewardPetals !== undefined ? moduleItem.reviewRewardPetals : 0;
       }
     }
 
-    // Level calculation: Every 200 points = 1 level
+    // Level calculation: Every 1000 points = 1 level
     const newTotalPoints = (gameProgress.totalPoints || 0) + points;
-    const newTotalCoins = (gameProgress.totalCoins || 0) + coins;
-    const newLevel = Math.floor(newTotalPoints / 200) + 1;
+    const newTotalCoins = (gameProgress.coins || 0) + coins;
+    const newTotalPetals = (gameProgress.totalSenPetals || 0) + petals;
+    const newLevel = Math.floor(newTotalPoints / 1000) + 1;
 
     // Badge logic
     let newBadges = [...(gameProgress.badges || [])];
@@ -110,33 +121,56 @@ class LearningService extends ReviewableService {
       const existingEntries = newCompletedModules.filter(m => parseInt(m.moduleId) === moduleIdInt);
       const maxExistingScore = Math.max(...existingEntries.map(m => m.score || 0));
       const bestScore = Math.max(maxExistingScore, finalScore);
+      const updatedReviewCount = finalScore >= passingScore ? currentReviewCount + 1 : currentReviewCount;
 
       newCompletedModules = newCompletedModules.filter(m => parseInt(m.moduleId) !== moduleIdInt);
       newCompletedModules.push({
         moduleId: moduleIdInt,
         completedDate: new Date().toISOString(),
         score: bestScore,
-        timeSpent: 0
+        reviewCount: updatedReviewCount,
+        timeSpent: (existingEntry?.timeSpent || 0) + (timeSpent || 0)
       });
     } else {
       newCompletedModules.push(completedModule);
     }
 
+    // ✅ Sync with Game Level if linked
+    let newCompletedLevels = [...(gameProgress.completedLevels || [])];
+    if (moduleItem.gameLevelId) {
+      const levelId = parseInt(moduleItem.gameLevelId);
+      if (!newCompletedLevels.includes(levelId)) {
+        newCompletedLevels.push(levelId);
+      }
+    }
+
     // Update Progress
     await db.update('game_progress', gameProgress.id, {
+      completedLevels: newCompletedLevels,
       completedModules: newCompletedModules,
       totalPoints: newTotalPoints,
-      totalCoins: newTotalCoins,
+      coins: newTotalCoins,
+      totalSenPetals: newTotalPetals,
+      totalLearningTime: (gameProgress.totalLearningTime || 0) + (timeSpent || 0),
       level: Math.max(gameProgress.level, newLevel),
       badges: newBadges
     });
 
     // Notify User
     if (finalScore >= passingScore) {
+      const isRewardsGranted = !isAlreadyCompleted || (currentReviewCount < maxReviewRewards);
+      const rewardText = isRewardsGranted ? [
+        points > 0 ? `${points} cúp` : '',
+        coins > 0 ? `${coins} xu` : '',
+        petals > 0 ? `${petals} cánh sen` : ''
+      ].filter(Boolean).join(', ') : 'Bạn đã đạt giới hạn nhận thưởng cho bài học này';
+
       await notificationService.notify(
         userId,
-        'Hoàn thành bài học',
-        `Chúc mừng! Bạn đã hoàn thành bài học "${moduleItem.title}" với điểm số ${finalScore}% và nhận được ${points} điểm kinh nghiệm.`,
+        isAlreadyCompleted ? 'Ôn tập hoàn tất! 📚' : 'Hoàn thành bài học',
+        isAlreadyCompleted
+          ? `Bạn đã ôn tập bài học "${moduleItem.title}". ${isRewardsGranted ? `Nhận thêm: ${rewardText}.` : rewardText}`
+          : `Chúc mừng! Bạn đã hoàn thành bài học "${moduleItem.title}" với điểm số ${finalScore}% và nhận được ${rewardText}.`,
         'learning',
         moduleIdInt
       );
@@ -171,6 +205,7 @@ class LearningService extends ReviewableService {
         score: finalScore,
         pointsEarned: points,
         coinsEarned: coins,
+        petalsEarned: petals,
         passed: finalScore >= passingScore,
         currentLevel: Math.max(gameProgress.level, newLevel),
         isLevelUp: newLevel > gameProgress.level,
@@ -215,8 +250,12 @@ class LearningService extends ReviewableService {
         passingScore: module.quiz?.passingScore || 70,
         rewardPoints: module.rewardPoints !== undefined ? module.rewardPoints : 50,
         rewardCoins: module.rewardCoins !== undefined ? module.rewardCoins : 0,
+        rewardPetals: module.rewardPetals !== undefined ? module.rewardPetals : 0,
         reviewRewardPoints: module.reviewRewardPoints !== undefined ? module.reviewRewardPoints : 10,
         reviewRewardCoins: module.reviewRewardCoins !== undefined ? module.reviewRewardCoins : 0,
+        reviewRewardPetals: module.reviewRewardPetals !== undefined ? module.reviewRewardPetals : 0,
+        maxReviewRewards: module.maxReviewRewards !== undefined ? module.maxReviewRewards : 3,
+        reviewCount: completedData?.reviewCount || 0,
         completedAt: completedData?.completedDate
       };
     });

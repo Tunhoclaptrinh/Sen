@@ -23,11 +23,12 @@ class GameService {
    * Khởi tạo game progress cho user mới
    */
   async initializeProgress(userId) {
-    const existing = await db.findOne('game_progress', { userId: userId });
+    const numericUserId = Number(userId);
+    const existing = await db.findOne('game_progress', { userId: numericUserId });
     if (existing) return existing;
 
     return await db.create('game_progress', {
-      userId: userId,
+      userId: numericUserId,
       currentChapter: 1,
       totalSenPetals: 0,
       totalPoints: 0,
@@ -227,7 +228,8 @@ class GameService {
       };
     }
 
-    let progress = await db.findOne('game_progress', { userId: userId });
+    const numericUserId = Number(userId);
+    let progress = await db.findOne('game_progress', { userId: numericUserId });
     if (!progress) {
       progress = await this.initializeProgress(userId);
     }
@@ -268,27 +270,27 @@ class GameService {
 
     const lastClaim = progress.lastRewardClaim ? new Date(progress.lastRewardClaim) : null;
     const now = new Date();
-    
+
     // Check if already claimed today (reset at midnight)
-    if (lastClaim && 
-        lastClaim.getFullYear() === now.getFullYear() && 
-        lastClaim.getMonth() === now.getMonth() && 
-        lastClaim.getDate() === now.getDate()) {
+    if (lastClaim &&
+      lastClaim.getFullYear() === now.getFullYear() &&
+      lastClaim.getMonth() === now.getMonth() &&
+      lastClaim.getDate() === now.getDate()) {
       return { success: false, message: 'Bạn đã nhận thưởng hôm nay rồi!', statusCode: 400 };
     }
 
     // Calculate rewards
     const coinsReward = 200;
     const petalsReward = 10;
-    
+
     // Update streak (if claim yesterday, increment; if not, reset to 1)
     let newStreak = 1;
     if (lastClaim) {
       const yesterday = new Date(now);
       yesterday.setDate(yesterday.getDate() - 1);
-      if (lastClaim.getFullYear() === yesterday.getFullYear() && 
-          lastClaim.getMonth() === yesterday.getMonth() && 
-          lastClaim.getDate() === yesterday.getDate()) {
+      if (lastClaim.getFullYear() === yesterday.getFullYear() &&
+        lastClaim.getMonth() === yesterday.getMonth() &&
+        lastClaim.getDate() === yesterday.getDate()) {
         newStreak = (progress.streakDays || 0) + 1;
       }
     }
@@ -322,8 +324,8 @@ class GameService {
       createdAt: now.toISOString()
     });
 
-    return { 
-      success: true, 
+    return {
+      success: true,
       message: 'Điểm danh thành công!',
       data: {
         coins: coinsReward,
@@ -331,7 +333,7 @@ class GameService {
         streakDays: newStreak,
         totalCoins: updatedProgress.coins,
         totalPetals: updatedProgress.totalSenPetals
-      } 
+      }
     };
   }
 
@@ -344,7 +346,8 @@ class GameService {
    * Lấy danh sách chapters (cánh hoa sen)
    */
   async getChapters(userId) {
-    const progress = await this.getProgress(userId);
+    const numericUserId = Number(userId);
+    const progress = await this.getProgress(numericUserId);
     const chaptersData = await db.findAll('game_chapters');
     // Filter active chapters
     const activeChapters = chaptersData.filter(c => c.isActive !== false);
@@ -353,8 +356,9 @@ class GameService {
     // const enriched = await Promise.all(chapters.map(async (chapter, index) => {
     const enriched = await Promise.all(chapters.map(async (chapter) => {
       // RESPECT DB OVERRIDE (For testing/seeding)
-      const isUnlocked = (progress.data.unlockedChapters || []).includes(chapter.id) || ['blooming', 'full'].includes(chapter.petalState);
-      const isFinished = (progress.data.finishedChapters || []).includes(chapter.id) || chapter.petalState === 'full';
+      const chapterIdInt = Number(chapter.id);
+      let isUnlocked = (progress.data.unlockedChapters || []).includes(chapterIdInt) || ['blooming', 'full'].includes(chapter.petalState);
+      let isFinished = (progress.data.finishedChapters || []).includes(chapterIdInt) || chapter.petalState === 'full';
 
       const levels = await db.findMany('game_levels', { chapterId: chapter.id });
       const completedCount = levels.filter(l =>
@@ -366,16 +370,27 @@ class GameService {
       // Chapter N requires Previous Chapter to be FINISHED.
       let canUnlock = false;
       if (!isUnlocked) {
-        if (chapter.order === 1) {
-          canUnlock = true;
-        } else {
-          // Find previous chapter by order
-          const prevChapter = chapters.find(c => c.order === chapter.order - 1);
-          if (prevChapter && (progress.data.finishedChapters || []).includes(prevChapter.id)) {
-            // Check currency (Petals)
-            if (progress.data.totalSenPetals >= chapter.requiredPetals) {
-              canUnlock = true;
-            }
+        // Find prerequisite chapter
+        let prerequisiteMet = true;
+        let prerequisiteId = chapter.requiredChapterId;
+
+        // If no explicit requiredChapterId, fallback to order-based sequential (if order > 1)
+        if (prerequisiteId === undefined || prerequisiteId === null) {
+          if (chapter.order > 1) {
+            const prevChapter = chapters.find(c => Number(c.order) === Number(chapter.order) - 1);
+            if (prevChapter) prerequisiteId = Number(prevChapter.id);
+          }
+        }
+
+        if (prerequisiteId) {
+          prerequisiteMet = (progress.data.unlockedChapters || []).includes(Number(prerequisiteId));
+        }
+
+        if (prerequisiteMet) {
+          if (Number(chapter.requiredPetals) === 0) {
+            isUnlocked = true;
+          } else {
+            canUnlock = true;
           }
         }
       }
@@ -442,12 +457,37 @@ class GameService {
       playerBestScore: await this.getBestScore(level.id, userId)
     })));
 
+    // Prerequisite Check for petalState
+    let isUnlocked = (progress.data.unlockedChapters || []).includes(Number(chapter.id));
+    const isFinished = (progress.data.finishedChapters || []).includes(Number(chapter.id));
+
+    if (!isUnlocked && !isFinished) {
+      let prerequisiteId = chapter.requiredChapterId;
+      if (prerequisiteId === undefined || prerequisiteId === null) {
+        if (chapter.order > 1) {
+          const prevChapter = await db.findOne('game_chapters', { order: Number(chapter.order) - 1 });
+          if (prevChapter) prerequisiteId = Number(prevChapter.id);
+        }
+      }
+
+      let prerequisiteMet = true;
+      if (prerequisiteId) {
+        prerequisiteMet = (progress.data.unlockedChapters || []).includes(Number(prerequisiteId));
+      }
+
+      if (prerequisiteMet && Number(chapter.requiredPetals) === 0) {
+        isUnlocked = true;
+      }
+    }
+
     return {
       success: true,
       data: {
         ...chapter,
         levels: enrichedLevels,
-        isUnlocked: progress.data.unlockedChapters.includes(chapter.id)
+        isUnlocked: isUnlocked,
+        isFinished: isFinished,
+        petalState: isFinished ? 'full' : isUnlocked ? 'blooming' : 'locked'
       }
     };
   }
@@ -456,31 +496,38 @@ class GameService {
    * Mở khóa chapter
    */
   async unlockChapter(chapterId, userId) {
-    const chapter = await db.findById('game_chapters', chapterId);
+    const numericChapterId = Number(chapterId);
+    const numericUserId = Number(userId);
+    const chapter = await db.findById('game_chapters', numericChapterId);
     if (!chapter) {
       return { success: false, message: 'Chapter not found', statusCode: 404 };
     }
 
-    const progress = await db.findOne('game_progress', { userId: userId });
+    const progress = await db.findOne('game_progress', { userId: numericUserId });
 
     // 1. Check if already unlocked
-    if (progress.unlockedChapters.includes(parseInt(chapterId))) {
+    if ((progress.unlockedChapters || []).includes(numericChapterId)) {
       return { success: false, message: 'Chapter already unlocked', statusCode: 400 };
     }
 
-    // 2. Sequential Check
-    if (chapter.order > 1) {
-      // Find previous chapter
-      const prevChapter = await db.findOne('game_chapters', { order: chapter.order - 1 });
-      if (!prevChapter) {
-        return { success: false, message: 'Previous chapter configuration error', statusCode: 500 };
-      }
+    // 2. Prerequisite Check
+    let prerequisiteId = chapter.requiredChapterId;
 
-      // Check if previous chapter is finished
-      if (!progress.finishedChapters.includes(prevChapter.id)) {
+    // Fallback to order-based if no requiredChapterId
+    if (prerequisiteId === undefined || prerequisiteId === null) {
+      if (chapter.order > 1) {
+        const prevChapter = await db.findOne('game_chapters', { order: Number(chapter.order) - 1 });
+        if (prevChapter) prerequisiteId = Number(prevChapter.id);
+      }
+    }
+
+    if (prerequisiteId) {
+      if (!(progress.unlockedChapters || []).includes(Number(prerequisiteId))) {
+        const prereqChapterDetail = await db.findById('game_chapters', prerequisiteId);
+        const nameLabel = prereqChapterDetail ? prereqChapterDetail.name : `ID: ${prerequisiteId}`;
         return {
           success: false,
-          message: `You must finish Chapter ${prevChapter.order}: ${prevChapter.name} first!`,
+          message: `Bạn cần hoàn thành chương "${nameLabel}" trước!`,
           statusCode: 403
         };
       }
@@ -499,8 +546,8 @@ class GameService {
     const newPetalsCount = progress.totalSenPetals - chapter.requiredPetals;
 
     await db.update('game_progress', progress.id, {
-      unlockedChapters: [...progress.unlockedChapters, parseInt(chapterId)],
-      currentChapter: parseInt(chapterId),
+      unlockedChapters: [...(progress.unlockedChapters || []), numericChapterId],
+      currentChapter: numericChapterId,
       totalSenPetals: newPetalsCount
     });
 
@@ -677,7 +724,7 @@ class GameService {
   async startLevel(levelId, userId) {
 
     console.log(`[GameService] Starting level ${levelId} for user ${userId}`);
-    
+
     const isGuest = !userId; // Guest user if no userId
 
     // Close ALL existing in_progress sessions for this level/user (not just expired ones)
@@ -1487,102 +1534,153 @@ class GameService {
         console.error('Error calculating next level:', err);
       }
 
-      // ✅ CHECK REWARDS (Only for first time)
+      // ✅ CALCULATE REWARDS & UPDATE PROGRESS
       const alreadyCompleted = progress.completedLevels.includes(parseInt(levelId));
-      let rewardsData = null;
-      let newTotals = null;
+      const levelRewards = level.rewards || {};
+
+      // Review logic: Track count and respect max rewards
+      const levelReviewHistory = progress.levelReviewHistory || [];
+      const reviewEntry = levelReviewHistory.find(h => parseInt(h.levelId) === parseInt(levelId));
+      const currentReviewCount = reviewEntry?.count || 0;
+      const maxReviewRewards = level.maxReviewRewards !== undefined ? level.maxReviewRewards : 3;
+
+      let earnedPetals = 0;
+      let earnedCoins = 0;
+      let earnedPoints = finalScore;
+      let character = null;
 
       if (!alreadyCompleted) {
-        const rewards = level.rewards || {};
-        const newPetals = progress.totalSenPetals + (rewards.petals || 1);
-        const newCoins = progress.coins + (rewards.coins || 50);
-        const levelIdInt = parseInt(levelId);
-        const newCompleted = [...progress.completedLevels, levelIdInt];
-        let newCharacters = [...progress.collectedCharacters];
-        if (rewards.character && !newCharacters.includes(rewards.character)) {
-          newCharacters.push(rewards.character);
+        earnedPetals = levelRewards.petals || 1;
+        earnedCoins = levelRewards.coins || 50;
+        character = levelRewards.character || null;
+      } else if (currentReviewCount < maxReviewRewards) {
+        // Review Rewards: Use config or fallback to 10%
+        earnedPetals = levelRewards.reviewPetals !== undefined ? levelRewards.reviewPetals : 0;
+        earnedCoins = levelRewards.reviewCoins !== undefined ? levelRewards.reviewCoins : 10;
+        earnedPoints = levelRewards.reviewPoints !== undefined ? levelRewards.reviewPoints : Math.round(finalScore * 0.1);
+      } else {
+        // Limit reached: No rewards
+        earnedPetals = 0;
+        earnedCoins = 0;
+        earnedPoints = 0;
+      }
+
+      // Update basic progress stats
+      const newTotalPointsRequested = (progress.totalPoints || 0) + earnedPoints;
+      const newTotalCoinsRequested = (progress.coins || 0) + earnedCoins;
+      const newTotalPetalsRequested = (progress.totalSenPetals || 0) + earnedPetals;
+      const newTotalLearningTime = (progress.totalLearningTime || 0) + (timeSpent || session?.timeSpent || 0);
+
+      let newCompleted = [...progress.completedLevels];
+      let newCharacters = [...progress.collectedCharacters];
+      let finishedChapters = [...(progress.finishedChapters || [])];
+      let newCompletedModules = [...(progress.completedModules || [])];
+
+      if (!alreadyCompleted) {
+        newCompleted.push(parseInt(levelId));
+        if (character && !newCharacters.includes(character)) {
+          newCharacters.push(character);
         }
 
+        // Chapter Finish Check
         const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
-        // Kiểm tra xem tất cả level trong chapter đã có trong danh sách hoàn thành chưa
         const allCompleted = chapterLevels.every(l => newCompleted.includes(l.id));
-
-        let finishedChapters = [...(progress.finishedChapters || [])];
         if (allCompleted && !finishedChapters.includes(level.chapterId)) {
           finishedChapters.push(level.chapterId);
         }
 
-        // Update Progress
-        await db.update('game_progress', progress.id, {
-          completedLevels: newCompleted,
-          totalSenPetals: newPetals,
-          totalPoints: progress.totalPoints + finalScore,
-          coins: newCoins,
-          collectedCharacters: newCharacters,
-          finishedChapters: finishedChapters
-        });
-
-        // TRIGGER BADGE CHECK (Level Reached & Level Up)
-        // Calculate Level based on Total Points (e.g. 1000 points = 1 level)
-        const newTotalPoints = progress.totalPoints + finalScore;
-        const calculatedLevel = Math.floor(newTotalPoints / 1000) + 1;
-
-        if (calculatedLevel > progress.level) {
-          // Level Up!
-          await db.update('game_progress', progress.id, { level: calculatedLevel });
-          try {
-            const badgeResult = await badgeService.checkAndUnlock(userId, 'level_reached', calculatedLevel);
-            newBadges = badgeResult;
-          } catch (e) { console.error('Badge check failed', e); }
-
-          // CHECK CHARACTERS COLLECTED BADGE
-          try {
-            const charCount = newCharacters.length;
-            const charBadge = await badgeService.checkAndUnlock(userId, 'characters_collected', charCount);
-            if (charBadge && charBadge.length > 0) {
-              newBadges = [...(newBadges || []), ...charBadge];
-            }
-          } catch (e) { console.error('Character badge check failed', e); }
+        // Sync with Learning Module
+        if (level.learningModuleId) {
+          const moduleId = parseInt(level.learningModuleId);
+          if (!newCompletedModules.some(m => parseInt(m.moduleId) === moduleId)) {
+            newCompletedModules.push({
+              moduleId: moduleId,
+              completedDate: new Date().toISOString(),
+              score: finalScore,
+              timeSpent: timeSpent || session.timeSpent || 0
+            });
+          }
         }
+      }
 
-        rewardsData = {
-          petals: rewards.petals || 1,
-          coins: rewards.coins || 50,
-          character: rewards.character || null
-        };
+      // 💾 PERSIST PROGRESS updates
+      await db.update('game_progress', progress.id, {
+        completedLevels: newCompleted,
+        completedModules: newCompletedModules,
+        totalSenPetals: newTotalPetalsRequested,
+        totalPoints: newTotalPointsRequested,
+        coins: newTotalCoinsRequested,
+        collectedCharacters: newCharacters,
+        finishedChapters: finishedChapters,
+        totalLearningTime: newTotalLearningTime,
+        levelReviewHistory: (() => {
+          const history = [...(progress.levelReviewHistory || [])];
+          const idx = history.findIndex(h => parseInt(h.levelId) === parseInt(levelId));
+          if (idx !== -1) {
+            history[idx] = { ...history[idx], count: (history[idx].count || 0) + 1, lastAttempt: new Date().toISOString() };
+          } else {
+            history.push({ levelId: parseInt(levelId), count: 1, lastAttempt: new Date().toISOString() });
+          }
+          return history;
+        })()
+      });
 
-        newTotals = {
-          petals: newPetals,
-          points: progress.totalPoints + finalScore,
-          coins: newCoins
-        };
+      // TRIGGER BADGE CHECK & LEVEL UP
+      const calculatedLevel = Math.floor(newTotalPointsRequested / 1000) + 1;
+      if (calculatedLevel > progress.level) {
+        await db.update('game_progress', progress.id, { level: calculatedLevel });
+        try {
+          const badgeResult = await badgeService.checkAndUnlock(userId, 'level_reached', calculatedLevel);
+          newBadges = badgeResult;
+        } catch (e) { console.error('Badge check failed', e); }
 
-        // DETECT RANK PROMOTION
-        const oldRankInfo = this.calculateRank(progress.totalPoints || 0);
-        const newRankInfo = this.calculateRank(progress.totalPoints + finalScore);
+        // Character check (only on Level Up for performance or logic consistency)
+        try {
+          const charCount = newCharacters.length;
+          const charBadge = await badgeService.checkAndUnlock(userId, 'characters_collected', charCount);
+          if (charBadge && charBadge.length > 0) {
+            newBadges = [...(newBadges || []), ...charBadge];
+          }
+        } catch (e) { console.error('Character badge check failed', e); }
+      }
 
-        if (newRankInfo.currentRank !== oldRankInfo.currentRank) {
-          try {
-            await notificationService.notify(
-              userId,
-              'Danh hiệu mới! 🏆',
-              `Chúc mừng! Bạn đã đạt được danh hiệu mới: "${newRankInfo.currentRank}"!`,
-              'system'
-            );
-          } catch (e) { console.error('Rank notification failed', e); }
-        }
+      rewardsData = {
+        petals: earnedPetals,
+        coins: earnedCoins,
+        character: character,
+        isReview: alreadyCompleted
+      };
 
-        // TRIGGER LEVEL COMPLETED NOTIFICATION
+      newTotals = {
+        petals: newTotalPetalsRequested,
+        points: newTotalPointsRequested,
+        coins: newTotalCoinsRequested
+      };
+
+      // Rank & Notifications
+      const oldRankInfo = this.calculateRank(progress.totalPoints || 0);
+      const newRankInfo = this.calculateRank(newTotalPointsRequested);
+
+      if (newRankInfo.currentRank !== oldRankInfo.currentRank) {
         try {
           await notificationService.notify(
-            userId,
-            'Hoàn thành màn chơi! ✨',
-            `Chúc mừng! Bạn đã vượt qua màn chơi "${level.name}" với ${finalScore} điểm!`,
-            'learning',
-            level.id
+            userId, 'Danh hiệu mới! 🏆',
+            `Chúc mừng! Bạn đã đạt được danh hiệu mới: "${newRankInfo.currentRank}"!`,
+            'system'
           );
-        } catch (e) { console.error('Level notification failed', e); }
+        } catch (e) { console.error('Rank notification failed', e); }
       }
+
+      try {
+        await notificationService.notify(
+          userId, alreadyCompleted ? 'Ôn tập hoàn tất! 📚' : 'Hoàn thành màn chơi! ✨',
+          alreadyCompleted
+            ? `Bạn vừa ôn tập lại màn "${level.name}". Nhận thêm ${earnedCoins} xu và ${earnedPoints} cúp!`
+            : `Chúc mừng! Bạn đã vượt qua màn chơi "${level.name}" với ${earnedPoints} cúp!`,
+          'learning', level.id
+        );
+      } catch (e) { console.error('Level notification failed', e); }
+
 
       // TRIGGER QUESTS
       try {
@@ -2423,9 +2521,9 @@ class GameService {
     const now = new Date();
     // Using simple YYYY-MM-DD from local time for comparison
     const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    
+
     const lastClaimDate = progress.lastRewardClaim ? new Date(progress.lastRewardClaim) : null;
-    const lastClaim = lastClaimDate 
+    const lastClaim = lastClaimDate
       ? `${lastClaimDate.getFullYear()}-${lastClaimDate.getMonth() + 1}-${lastClaimDate.getDate()}`
       : null;
 
@@ -2662,7 +2760,7 @@ class GameService {
    */
   async getScanHistory(userId) {
     const history = await db.findMany('scan_history', { userId: userId });
-    
+
     // Sort by date desc
     history.sort((a, b) => new Date(b.scannedAt) - new Date(a.scannedAt));
 
@@ -2726,7 +2824,7 @@ class GameService {
 
       // Find rewards for this scan matched by sourceId
       // Try objectId directly first, then fall back to scan_objects.referenceId
-      let itemRewards = await db.findMany('transactions', { 
+      let itemRewards = await db.findMany('transactions', {
         userId: userId,
         source: item.type === 'checkin' ? 'checkin' : 'artifact_scan',
         sourceId: item.objectId
@@ -2763,9 +2861,9 @@ class GameService {
       totalCheckins: history.filter(h => h.type === 'checkin').length,
       totalArtifacts: history.filter(h => h.type === 'collect_artifact').length,
       uniqueSites: new Set(history.filter(h => h.type === 'checkin').map(h => h.objectId)).size,
-      totalCoinsEarned: enriched.reduce((sum, item) => 
+      totalCoinsEarned: enriched.reduce((sum, item) =>
         sum + item.rewards.filter(r => r.currency === 'coins').reduce((s, r) => s + r.amount, 0), 0),
-      totalPetalsEarned: enriched.reduce((sum, item) => 
+      totalPetalsEarned: enriched.reduce((sum, item) =>
         sum + item.rewards.filter(r => r.currency === 'petals').reduce((s, r) => s + r.amount, 0), 0)
     };
 

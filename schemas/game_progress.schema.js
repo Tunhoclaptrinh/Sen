@@ -16,7 +16,7 @@ module.exports = {
     type: 'number',
     required: false,
     default: 0,
-    description: 'Tổng số cánh hoa sen'
+    description: 'Tổng số Sen hoa (Petals)'
   },
   totalPoints: {
     type: 'number',
@@ -50,7 +50,13 @@ module.exports = {
   completedLevels: {
     type: 'array',
     required: false,
-    description: 'Levels đã hoàn thành'
+    description: 'Levels đã hoàn thành (IDs)'
+  },
+  levelReviewHistory: {
+    type: 'array',
+    required: false,
+    default: [],
+    description: 'Lịch sử ôn tập màn chơi (ID và số lần)'
   },
   collectedCharacters: {
     type: 'array',
@@ -84,6 +90,23 @@ module.exports = {
     required: false,
     default: 0,
     description: 'Số ngày chơi liên tiếp'
+  },
+  completedModules: {
+    type: 'array',
+    required: false,
+    default: [],
+    description: 'Danh sách bài học đã hoàn thành'
+  },
+  totalLearningTime: {
+    type: 'number',
+    required: false,
+    default: 0,
+    description: 'Tổng thời gian học tập (phút)'
+  },
+  lastRewardClaim: {
+    type: 'string', // ISO date string
+    required: false,
+    description: 'Lần cuối nhận thưởng hàng ngày'
   },
   lastLogin: {
     type: 'date',

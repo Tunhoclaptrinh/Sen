@@ -71,6 +71,48 @@ module.exports = {
       ]
     }
   },
+  rewardPoints: {
+    type: 'number',
+    required: false,
+    default: 50,
+    description: 'Cúp thưởng (XP) lần đầu'
+  },
+  rewardCoins: {
+    type: 'number',
+    required: false,
+    default: 0,
+    description: 'Xu thưởng lần đầu'
+  },
+  rewardPetals: {
+    type: 'number',
+    required: false,
+    default: 0,
+    description: 'Cánh sen thưởng lần đầu'
+  },
+  reviewRewardPoints: {
+    type: 'number',
+    required: false,
+    default: 10,
+    description: 'Cúp thưởng khi ôn tập'
+  },
+  reviewRewardCoins: {
+    type: 'number',
+    required: false,
+    default: 0,
+    description: 'Xu thưởng khi ôn tập'
+  },
+  reviewRewardPetals: {
+    type: 'number',
+    required: false,
+    default: 0,
+    description: 'Cánh sen thưởng khi ôn tập'
+  },
+  gameLevelId: {
+    type: 'number',
+    required: false,
+    foreignKey: 'game_levels',
+    description: 'ID màn chơi game liên kết (nếu có)'
+  },
   isActive: {
     type: 'boolean',
     required: false,
@@ -109,5 +151,11 @@ module.exports = {
     type: 'array',
     required: false,
     description: 'Bài viết lịch sử liên quan'
+  },
+  maxReviewRewards: {
+    type: 'number',
+    required: false,
+    default: 3,
+    description: 'Số lần ôn tập tối đa được nhận thưởng'
   }
 };
