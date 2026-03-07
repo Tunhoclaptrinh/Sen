@@ -642,15 +642,7 @@ class GameService {
       return progress.completedLevels.includes(level.requiredLevel);
     }
 
-    // Implicit requirement: Previous level in same chapter must be completed
-    if (chapterLevels.length > 0) {
-      const prevLevel = chapterLevels.find(l => l.order === level.order - 1);
-      if (prevLevel) {
-        return progress.completedLevels.includes(prevLevel.id);
-      }
-    }
-
-    // Fallback for cases without chapterLevels or if previous level missing in config
+    // No explicit requirement -> unlocked
     return true;
   }
 
