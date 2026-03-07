@@ -972,13 +972,16 @@ class GameService {
         return { success: false, message: 'Current screen is not a quiz', statusCode: 400 };
       }
 
-      const hasAnswered = session.answeredQuestions.some(
+      const previousAnswer = session.answeredQuestions.find(
         q => q.screenId === currentScreen.id
       );
 
-      if (hasAnswered) {
-        return { success: false, message: 'Already answered this question', statusCode: 400 };
+      if (previousAnswer && previousAnswer.isCorrect) {
+        return { success: false, message: 'Already answered this question correctly', statusCode: 400 };
       }
+
+      // Keep only other answers so we can overwrite previous incorrect attempts
+      const otherAnswers = session.answeredQuestions.filter(q => q.screenId !== currentScreen.id);
 
       let isCorrect = false;
       let pointsEarned = 0;
@@ -1014,7 +1017,7 @@ class GameService {
 
       const updatedSession = await db.update('game_sessions', sessionId, {
         answeredQuestions: [
-          ...session.answeredQuestions,
+          ...otherAnswers,
           {
             screenId: currentScreen.id,
             answer: answerId,
@@ -1357,13 +1360,13 @@ class GameService {
         break;
 
       case 'QUIZ':
-        const hasAnswered = session.answeredQuestions.some(
-          q => q.screenId === screen.id
+        const hasAnsweredCorrectly = session.answeredQuestions.some(
+          q => q.screenId === screen.id && q.isCorrect
         );
-        if (!hasAnswered) {
+        if (!hasAnsweredCorrectly) {
           return {
             success: false,
-            message: 'Must answer the question first',
+            message: 'Must answer the question correctly first',
             statusCode: 400
           };
         }
