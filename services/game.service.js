@@ -1428,6 +1428,8 @@ class GameService {
 
     const isGuest = !userId; // Guest user if no userId
     let newBadges = []; // Moved outside to avoid scoping error
+    let rewardsData = null;
+    let newTotals = null;
 
     try {
       const session = await db.findOne('game_sessions', {
