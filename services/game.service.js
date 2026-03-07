@@ -594,23 +594,36 @@ class GameService {
   async getLevels(chapterId, userId) {
     const progress = await this.getProgress(userId);
     const levels = await db.findMany('game_levels', { chapterId: parseInt(chapterId) });
+    const levelReviewHistory = progress.data.levelReviewHistory || [];
     // Sort levels
     levels.sort((a, b) => a.order - b.order);
 
-    const enriched = levels.map(level => ({
-      id: level.id,
-      name: level.name,
-      type: level.type,
-      difficulty: level.difficulty,
-      order: level.order,
-      image: level.image,
-      thumbnail: level.thumbnail,
-      backgroundImage: level.backgroundImage,
-      isCompleted: progress.data.completedLevels.includes(level.id),
-      isLocked: !this.canPlayLevel(level, progress.data, levels),
-      rewards: level.rewards,
-      requiredLevel: level.requiredLevel
-    }));
+    const enriched = levels.map(level => {
+      const isCompleted = progress.data.completedLevels.includes(level.id);
+      const reviewEntry = levelReviewHistory.find(h => parseInt(h.levelId) === parseInt(level.id));
+      const rawReviewCount = reviewEntry?.count || 0;
+      const maxReviewRewards = level.maxReviewRewards !== undefined ? level.maxReviewRewards : 3;
+      const reviewCount = isCompleted
+        ? Math.min(maxReviewRewards, Math.max(0, rawReviewCount - 1))
+        : 0;
+
+      return {
+        id: level.id,
+        name: level.name,
+        type: level.type,
+        difficulty: level.difficulty,
+        order: level.order,
+        image: level.image,
+        thumbnail: level.thumbnail,
+        backgroundImage: level.backgroundImage,
+        isCompleted: isCompleted,
+        isLocked: !this.canPlayLevel(level, progress.data, levels),
+        rewards: level.rewards,
+        requiredLevel: level.requiredLevel,
+        reviewCount: reviewCount,
+        maxReviewRewards: maxReviewRewards
+      };
+    });
 
     return { success: true, data: enriched };
   }
@@ -1574,6 +1587,17 @@ class GameService {
         }
       }
 
+      const updatedLevelReviewHistory = (() => {
+        const history = [...(progress.levelReviewHistory || [])];
+        const idx = history.findIndex(h => parseInt(h.levelId) === parseInt(levelId));
+        if (idx !== -1) {
+          history[idx] = { ...history[idx], count: (history[idx].count || 0) + 1, lastAttempt: new Date().toISOString() };
+        } else {
+          history.push({ levelId: parseInt(levelId), count: 1, lastAttempt: new Date().toISOString() });
+        }
+        return history;
+      })();
+
       // 💾 PERSIST PROGRESS updates
       await db.update('game_progress', progress.id, {
         completedLevels: newCompleted,
@@ -1584,17 +1608,13 @@ class GameService {
         collectedCharacters: newCharacters,
         finishedChapters: finishedChapters,
         totalLearningTime: newTotalLearningTime,
-        levelReviewHistory: (() => {
-          const history = [...(progress.levelReviewHistory || [])];
-          const idx = history.findIndex(h => parseInt(h.levelId) === parseInt(levelId));
-          if (idx !== -1) {
-            history[idx] = { ...history[idx], count: (history[idx].count || 0) + 1, lastAttempt: new Date().toISOString() };
-          } else {
-            history.push({ levelId: parseInt(levelId), count: 1, lastAttempt: new Date().toISOString() });
-          }
-          return history;
-        })()
+        levelReviewHistory: updatedLevelReviewHistory
       });
+
+      const updatedReviewEntry = updatedLevelReviewHistory.find(h => parseInt(h.levelId) === parseInt(levelId));
+      const reviewCountForDisplay = alreadyCompleted
+        ? Math.min(maxReviewRewards, Math.max(1, (updatedReviewEntry?.count || 0) - 1))
+        : 0;
 
       // TRIGGER BADGE CHECK & LEVEL UP
       const calculatedLevel = Math.floor(newTotalPointsRequested / 1000) + 1;
@@ -1618,6 +1638,8 @@ class GameService {
       rewardsData = {
         petals: earnedPetals,
         coins: earnedCoins,
+        trophies: earnedPoints,
+        points: earnedPoints,
         character: character,
         isReview: alreadyCompleted
       };
@@ -1720,6 +1742,12 @@ class GameService {
           nextLevelId: nextLevelId,
           rewards: rewardsData, // null if revision
           newTotals: newTotals, // null if revision
+          reviewProgress: alreadyCompleted
+            ? {
+              current: reviewCountForDisplay,
+              total: maxReviewRewards
+            }
+            : null,
           isCompleted: alreadyCompleted,
           newBadges: newBadges || []
         }

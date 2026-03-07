@@ -20,6 +20,13 @@ module.exports = {
     maxLength: 2000,
     description: 'Mô tả màn chơi'
   },
+  type: {
+    type: 'enum',
+    enum: ['story', 'quiz', 'mixed'],
+    required: false,
+    default: 'story',
+    description: 'Loại màn chơi'
+  },
 
   difficulty: {
     type: 'enum',
