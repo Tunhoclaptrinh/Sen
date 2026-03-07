@@ -365,26 +365,12 @@ class GameService {
         progress.data.completedLevels.includes(l.id)
       ).length;
 
-      // Sequential Check:
-      // Chapter 1 is always unlockable (if not already unlocked).
-      // Chapter N requires Previous Chapter to be FINISHED.
+      // Prerequisite check: only enforce explicit requiredChapterId.
       let canUnlock = false;
       if (!isUnlocked) {
-        // Find prerequisite chapter
-        let prerequisiteMet = true;
-        let prerequisiteId = chapter.requiredChapterId;
-
-        // If no explicit requiredChapterId, fallback to order-based sequential (if order > 1)
-        if (prerequisiteId === undefined || prerequisiteId === null) {
-          if (chapter.order > 1) {
-            const prevChapter = chapters.find(c => Number(c.order) === Number(chapter.order) - 1);
-            if (prevChapter) prerequisiteId = Number(prevChapter.id);
-          }
-        }
-
-        if (prerequisiteId) {
-          prerequisiteMet = (progress.data.unlockedChapters || []).includes(Number(prerequisiteId));
-        }
+        const prerequisiteId = chapter.requiredChapterId;
+        const hasPrerequisite = prerequisiteId !== undefined && prerequisiteId !== null;
+        const prerequisiteMet = !hasPrerequisite || (progress.data.unlockedChapters || []).includes(Number(prerequisiteId));
 
         if (prerequisiteMet) {
           if (Number(chapter.requiredPetals) === 0) {
@@ -419,6 +405,7 @@ class GameService {
         petalImageBloom: chapter.petalImageBloom || "",
         petalImageFull: chapter.petalImageFull || "",
         requiredPetals: chapter.requiredPetals || 0,
+        requiredChapterId: chapter.requiredChapterId ?? null,
         isUnlocked: isUnlocked,
         isFinished: isFinished,
         totalLevels: levels.length,
@@ -462,18 +449,9 @@ class GameService {
     const isFinished = (progress.data.finishedChapters || []).includes(Number(chapter.id));
 
     if (!isUnlocked && !isFinished) {
-      let prerequisiteId = chapter.requiredChapterId;
-      if (prerequisiteId === undefined || prerequisiteId === null) {
-        if (chapter.order > 1) {
-          const prevChapter = await db.findOne('game_chapters', { order: Number(chapter.order) - 1 });
-          if (prevChapter) prerequisiteId = Number(prevChapter.id);
-        }
-      }
-
-      let prerequisiteMet = true;
-      if (prerequisiteId) {
-        prerequisiteMet = (progress.data.unlockedChapters || []).includes(Number(prerequisiteId));
-      }
+      const prerequisiteId = chapter.requiredChapterId;
+      const hasPrerequisite = prerequisiteId !== undefined && prerequisiteId !== null;
+      const prerequisiteMet = !hasPrerequisite || (progress.data.unlockedChapters || []).includes(Number(prerequisiteId));
 
       if (prerequisiteMet && Number(chapter.requiredPetals) === 0) {
         isUnlocked = true;
@@ -510,18 +488,9 @@ class GameService {
       return { success: false, message: 'Chapter already unlocked', statusCode: 400 };
     }
 
-    // 2. Prerequisite Check
-    let prerequisiteId = chapter.requiredChapterId;
-
-    // Fallback to order-based if no requiredChapterId
-    if (prerequisiteId === undefined || prerequisiteId === null) {
-      if (chapter.order > 1) {
-        const prevChapter = await db.findOne('game_chapters', { order: Number(chapter.order) - 1 });
-        if (prevChapter) prerequisiteId = Number(prevChapter.id);
-      }
-    }
-
-    if (prerequisiteId) {
+    // 2. Prerequisite Check (explicit requiredChapterId only)
+    const prerequisiteId = chapter.requiredChapterId;
+    if (prerequisiteId !== undefined && prerequisiteId !== null) {
       if (!(progress.unlockedChapters || []).includes(Number(prerequisiteId))) {
         const prereqChapterDetail = await db.findById('game_chapters', prerequisiteId);
         const nameLabel = prereqChapterDetail ? prereqChapterDetail.name : `ID: ${prerequisiteId}`;

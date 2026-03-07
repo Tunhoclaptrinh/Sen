@@ -30,6 +30,12 @@ module.exports = {
     default: 0,
     description: 'Số cánh hoa sen cần để mở'
   },
+  requiredChapterId: {
+    type: 'number',
+    required: false,
+    foreignKey: 'game_chapters',
+    description: 'Chương tiên quyết cần mở trước khi có thể mở chương này'
+  },
   image: {
     type: 'string',
     required: false,
