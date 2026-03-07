@@ -609,7 +609,9 @@ class GameService {
 
       return {
         id: level.id,
+        chapterId: level.chapterId,
         name: level.name,
+        description: level.description,
         type: level.type,
         difficulty: level.difficulty,
         order: level.order,

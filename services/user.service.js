@@ -172,8 +172,47 @@ class UserService extends BaseService {
     };
   }
 
-  async permanentDeleteUser(userId) {
-    const user = await db.findById('users', userId);
+  async _deleteByQueries(collection, queries = [], { dryRun = false } = {}) {
+    const matchedById = new Map();
+
+    for (const query of queries) {
+      const items = await db.findMany(collection, query);
+      for (const item of items) {
+        if (!item || item.id === undefined || item.id === null) continue;
+        if (!matchedById.has(item.id)) {
+          matchedById.set(item.id, item);
+        }
+      }
+    }
+
+    const matchedItems = Array.from(matchedById.values());
+
+    if (!dryRun) {
+      for (const item of matchedItems) {
+        await db.delete(collection, item.id);
+      }
+    }
+
+    return {
+      count: matchedItems.length,
+      items: matchedItems
+    };
+  }
+
+  async purgeUserData(userId, options = {}) {
+    const numericUserId = Number(userId);
+    const deleteUserRecord = options.deleteUserRecord !== false;
+    const dryRun = options.dryRun === true;
+
+    if (!Number.isFinite(numericUserId)) {
+      return {
+        success: false,
+        message: 'ID người dùng không hợp lệ',
+        statusCode: 400
+      };
+    }
+
+    const user = await db.findById('users', numericUserId);
 
     if (!user) {
       return {
@@ -184,42 +223,144 @@ class UserService extends BaseService {
     }
 
     const deleted = {
-      user: 1,
-      gameProgress: 0,
-      gameSessions: 0,
-      userInventory: 0,
-      scanHistory: 0,
+      users: 0,
+      game_progress: 0,
+      game_sessions: 0,
+      user_inventory: 0,
+      scan_history: 0,
       favorites: 0,
+      reviews: 0,
       collections: 0,
-      notifications: 0
+      notifications: 0,
+      ai_chat_history: 0,
+      transactions: 0,
+      user_quests: 0,
+      user_characters: 0,
+      user_vouchers: 0,
+      welfare_history: 0,
     };
 
-    // Helper to delete many
-    const deleteRelated = async (collection, filter) => {
-      const items = await db.findMany(collection, filter);
-      for (const item of items) {
-        await db.delete(collection, item.id);
-        const camelCollection = collection.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
-        if (deleted[camelCollection] !== undefined) deleted[camelCollection]++;
+    const scrubbed = {
+      createdByCleared: 0,
+      byCollection: {}
+    };
+
+    const reviewTargets = new Map();
+
+    const deletePlan = [
+      { collection: 'game_progress', queries: [{ userId: numericUserId }] },
+      { collection: 'game_sessions', queries: [{ userId: numericUserId }] },
+      { collection: 'user_inventory', queries: [{ userId: numericUserId }] },
+      { collection: 'scan_history', queries: [{ userId: numericUserId }] },
+      { collection: 'favorites', queries: [{ userId: numericUserId }] },
+      { collection: 'collections', queries: [{ userId: numericUserId }, { createdBy: numericUserId }] },
+      { collection: 'notifications', queries: [{ userId: numericUserId }] },
+      { collection: 'ai_chat_history', queries: [{ userId: numericUserId }] },
+      { collection: 'transactions', queries: [{ userId: numericUserId }] },
+      { collection: 'user_quests', queries: [{ userId: numericUserId }] },
+      { collection: 'user_characters', queries: [{ userId: numericUserId }] },
+      { collection: 'user_vouchers', queries: [{ userId: numericUserId }] },
+      { collection: 'welfare_history', queries: [{ userId: numericUserId }] },
+    ];
+
+    for (const item of deletePlan) {
+      const result = await this._deleteByQueries(item.collection, item.queries, { dryRun });
+      deleted[item.collection] = result.count;
+    }
+
+    const reviewResult = await this._deleteByQueries('reviews', [
+      { userId: numericUserId },
+      { createdBy: numericUserId }
+    ], { dryRun });
+    deleted.reviews = reviewResult.count;
+
+    for (const review of reviewResult.items) {
+      if (!review || !review.type || review.referenceId === undefined || review.referenceId === null) continue;
+      const key = `${review.type}:${review.referenceId}`;
+      if (!reviewTargets.has(key)) {
+        reviewTargets.set(key, {
+          type: review.type,
+          referenceId: Number(review.referenceId)
+        });
+      }
+    }
+
+    const createdByCollections = [
+      'heritage_sites',
+      'artifacts',
+      'exhibitions',
+      'history_articles',
+      'learning_modules',
+      'game_chapters',
+      'game_levels'
+    ];
+
+    for (const collection of createdByCollections) {
+      const items = await db.findMany(collection, { createdBy: numericUserId });
+      scrubbed.byCollection[collection] = items.length;
+      scrubbed.createdByCleared += items.length;
+
+      if (!dryRun) {
+        for (const content of items) {
+          await db.update(collection, content.id, {
+            createdBy: null,
+            updatedAt: new Date().toISOString()
+          });
+        }
+      }
+    }
+
+    if (!dryRun && reviewTargets.size > 0) {
+      const reviewService = require('./review.service');
+      for (const target of reviewTargets.values()) {
+        await reviewService.updateItemRating(target.type, target.referenceId);
+      }
+    }
+
+    if (deleteUserRecord) {
+      if (!dryRun) {
+        await db.delete('users', numericUserId);
+      }
+      deleted.users = 1;
+    }
+
+    return {
+      success: true,
+      message: dryRun
+        ? 'Dry run: đã quét dữ liệu liên quan tới người dùng'
+        : 'Đã dọn dẹp dữ liệu liên quan tới người dùng thành công',
+      data: {
+        userId: numericUserId,
+        email: user.email,
+        deleteUserRecord,
+        dryRun,
+        deleted,
+        scrubbed,
+        affectedReviewItems: reviewTargets.size
       }
     };
+  }
 
-    // Delete all related data
-    await deleteRelated('game_progress', { userId: userId });
-    await deleteRelated('game_sessions', { userId: userId });
-    await deleteRelated('user_inventory', { userId: userId });
-    await deleteRelated('scan_history', { userId: userId });
-    await deleteRelated('favorites', { userId: userId });
-    await deleteRelated('collections', { userId: userId });
-    await deleteRelated('notifications', { userId: userId });
+  async delete(id) {
+    return this.permanentDeleteUser(id);
+  }
 
-    // Finally delete user
-    await db.delete('users', userId);
+  async permanentDeleteUser(userId) {
+    const result = await this.purgeUserData(userId, {
+      deleteUserRecord: true,
+      dryRun: false
+    });
+
+    if (!result.success) {
+      return result;
+    }
 
     return {
       success: true,
       message: 'Đã xóa vĩnh viễn người dùng và tất cả dữ liệu liên quan',
-      deleted
+      deleted: result.data.deleted,
+      scrubbed: result.data.scrubbed,
+      affectedReviewItems: result.data.affectedReviewItems
     };
   }
 

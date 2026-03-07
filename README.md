@@ -575,7 +575,6 @@ sen-backend/
 │   ├── user.schema.js                  # User validation
 │   ├── heritage_site.schema.js         # Heritage site schema
 │   ├── artifact.schema.js              # Artifact schema
-│   ├── category.schema.js              # Category schema
 │   ├── cultural_category.schema.js     # Cultural category schema
 │   ├── exhibition.schema.js            # Exhibition schema
 │   ├── collection.schema.js            # Collection schema
@@ -1335,7 +1334,6 @@ Database Collections (db.json):
   artifacts: [],
   timelines: [],
   exhibitions: [],
-  categories: [],
   cultural_categories: [],
 
   // User Content
@@ -1356,7 +1354,6 @@ Database Collections (db.json):
   // Learning
   learning_modules: [],
   game_quests: [],
-  user_progress: [],
 
   // Other
   promotions: [],

@@ -4,13 +4,14 @@
  * Default file: scripts/emails.txt
  */
 
-require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sen_db';
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
+
+const MONGO_URI = process.env.DATABASE_URL || process.env.MONGODB_URI;
 const DEFAULT_PASSWORD = 'Sen@2026';
 const DEFAULT_ROLE = 'customer';
 const DEFAULT_PHONE = '0000000000';
@@ -63,7 +64,12 @@ async function main() {
   }
 
   console.log(`📋 Tìm thấy ${lines.length} email. Đang kết nối MongoDB...`);
-  await mongoose.connect(MONGODB_URI);
+
+  if (!MONGO_URI) {
+    throw new Error('Missing DATABASE_URL (or MONGODB_URI)');
+  }
+
+  await mongoose.connect(MONGO_URI);
   console.log('✅ Kết nối thành công!\n');
 
   await initMaxId();

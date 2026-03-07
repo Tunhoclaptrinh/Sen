@@ -112,7 +112,7 @@ class BadgeService extends ReviewableService {
   }
 
   async getStats() {
-    const allBadges = await db.findAll('badges');
+    const allBadges = await db.findAll('game_badges');
     const allProgress = await db.findAll('game_progress');
 
     let totalAwarded = 0;

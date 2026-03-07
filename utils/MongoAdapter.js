@@ -75,7 +75,6 @@ class MongoAdapter {
       'heritage_site.schema.js': 'heritage_sites',
       'artifact.schema.js': 'artifacts',
       'cultural_category.schema.js': 'cultural_categories',
-      'category.schema.js': 'categories',
       'exhibition.schema.js': 'exhibitions',
       'timeline.schema.js': 'timelines',
       'collection.schema.js': 'collections',
@@ -89,6 +88,9 @@ class MongoAdapter {
       'game_progress.schema.js': 'game_progress',
       'game_session.schema.js': 'game_sessions',
       'user_inventory.schema.js': 'user_inventory',
+      'user_character.schema.js': 'user_characters',
+      'user_voucher.schema.js': 'user_vouchers',
+      'welfare_history.schema.js': 'welfare_history',
       'scan_history.schema.js': 'scan_history',
       'game_badge.schema.js': 'game_badges',
       'game_achievement.schema.js': 'game_achievements',
@@ -151,6 +153,8 @@ class MongoAdapter {
         }
 
         if (!mongoose.models[entityName]) {
+          const collectionName = mongoose.pluralize()(entityName);
+
           const schema = new mongoose.Schema(mongooseFields, {
             timestamps: true,
             strict: false, // Allow extra fields not in schema to be read/written
@@ -181,8 +185,8 @@ class MongoAdapter {
             }
           }
 
-          this.models[entityName] = mongoose.model(entityName, schema);
-          console.log(`✅ Model created: ${entityName}`);
+          this.models[entityName] = mongoose.model(entityName, schema, collectionName);
+          console.log(`✅ Model created: ${entityName} -> ${collectionName}`);
         } else {
           this.models[entityName] = mongoose.models[entityName];
         }

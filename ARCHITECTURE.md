@@ -252,7 +252,6 @@ sen-backend/
 │   ├── user.schema.js              # User validation schema
 │   ├── heritage_site.schema.js     # Heritage site schema
 │   ├── artifact.schema.js          # Artifact schema
-│   ├── category.schema.js          # Category schema
 │   ├── cultural_category.schema.js # Cultural category schema
 │   ├── exhibition.schema.js        # Exhibition schema
 │   ├── collection.schema.js        # Collection schema
@@ -857,7 +856,6 @@ Database Collections:
   artifacts: [],                // Cultural artifacts
   timelines: [],                // Historical timelines
   exhibitions: [],              // Exhibitions/events
-  categories: [],               // Content categories
   cultural_categories: [],      // Cultural classifications
   
   // User Content
@@ -878,7 +876,6 @@ Database Collections:
   // Learning & Quests
   learning_modules: [],         // Educational content
   game_quests: [],              // Quest missions
-  user_progress: [],            // Learning progress
   
   // Other
   promotions: [],               // Promotional campaigns

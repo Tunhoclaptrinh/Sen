@@ -301,10 +301,10 @@
       "id": 2,
       "userId": 3,
       "currentChapter": 2,
-      "totalSenPetals": 73,
-      "totalPoints": 890,
+      "totalSenPetals": 109,
+      "totalPoints": 935,
       "level": 5,
-      "coins": 1870,
+      "coins": 2101,
       "unlockedChapters": [
         1,
         2
@@ -314,7 +314,8 @@
         2,
         3,
         4,
-        5
+        5,
+        19
       ],
       "collectedCharacters": [],
       "badges": [
@@ -325,15 +326,23 @@
           "earnedAt": "2026-03-07T08:11:39.649Z"
         },
         "newbie",
-        "perfect_score"
+        "perfect_score",
+        "quiz_master",
+        {
+          "id": 1,
+          "name": "Nhà thám hiểm",
+          "icon": "🗺️",
+          "earnedAt": "2026-02-10T07:34:08.188Z"
+        },
+        "beginner_explorer"
       ],
       "achievements": [],
       "museumOpen": false,
       "museumIncome": 0,
-      "streakDays": 0,
-      "lastRewardClaim": null,
+      "streakDays": 1,
+      "lastRewardClaim": "2026-02-01T17:30:06.126Z",
       "lastLogin": "2026-03-07T08:10:26.504Z",
-      "createdAt": "2026-03-07T08:10:26.504Z",
+      "createdAt": "2026-02-01T17:30:03.415Z",
       "completedModules": [
         {
           "moduleId": 3,
@@ -380,7 +389,15 @@
         1
       ],
       "totalCoins": 50,
-      "totalLearningTime": 11
+      "totalLearningTime": 1168,
+      "levelReviewHistory": [
+        {
+          "levelId": 1,
+          "count": 4,
+          "lastAttempt": "2026-03-07T09:59:33.377Z"
+        }
+      ],
+      "updatedAt": "2026-03-07T11:27:07.832Z"
     },
     {
       "id": 3,
@@ -402,7 +419,7 @@
       "streakDays": 0,
       "lastRewardClaim": null,
       "lastLogin": "2026-03-07T08:35:03.618Z",
-      "createdAt": "2026-03-07T08:35:03.618Z",
+      "createdAt": "2026-02-04T15:23:38.338Z",
       "completedModules": [],
       "completedQuestsCount": 0,
       "unlockedThemes": [
@@ -412,7 +429,10 @@
       "unlockedAvatars": [],
       "activeAvatar": null,
       "hintCharges": 0,
-      "shieldCharges": 0
+      "shieldCharges": 0,
+      "finishedChapters": [],
+      "totalLearningTime": 0,
+      "updatedAt": "2026-03-07T11:27:07.832Z"
     }
   ],
   "cultural_categories": [
@@ -2823,74 +2843,7 @@
       "createdAt": "2024-01-01T00:00:00Z"
     }
   ],
-  "game_progress_legacy": [
-    {
-      "id": 1,
-      "userId": 3,
-      "currentChapter": 1,
-      "totalSenPetals": 109,
-      "totalPoints": 579,
-      "level": 1,
-      "coins": 2101,
-      "unlockedChapters": [
-        1
-      ],
-      "completedLevels": [
-        1,
-        2,
-        3,
-        4,
-        19
-      ],
-      "collectedCharacters": [],
-      "badges": [
-        "quiz_master",
-        {
-          "id": 1,
-          "name": "Nhà thám hiểm",
-          "icon": "🗺️",
-          "earnedAt": "2026-02-10T07:34:08.188Z"
-        },
-        "beginner_explorer"
-      ],
-      "achievements": [],
-      "museumOpen": false,
-      "museumIncome": 0,
-      "streakDays": 1,
-      "lastRewardClaim": "2026-02-01T17:30:06.126Z",
-      "lastLogin": "2026-02-01T17:30:03.415Z",
-      "createdAt": "2026-02-01T17:30:03.415Z",
-      "completedModules": [],
-      "completedQuestsCount": 4,
-      "finishedChapters": [
-        1
-      ]
-    },
-    {
-      "id": 2,
-      "userId": 1,
-      "currentChapter": 1,
-      "totalSenPetals": 0,
-      "totalPoints": 0,
-      "level": 1,
-      "coins": 1000,
-      "unlockedChapters": [
-        1
-      ],
-      "completedLevels": [],
-      "collectedCharacters": [],
-      "badges": [],
-      "achievements": [],
-      "museumOpen": false,
-      "museumIncome": 0,
-      "streakDays": 0,
-      "lastRewardClaim": null,
-      "lastLogin": "2026-02-04T15:23:38.338Z",
-      "createdAt": "2026-02-04T15:23:38.338Z",
-      "completedModules": [],
-      "completedQuestsCount": 0
-    }
-  ],
+  "game_progress_legacy": [],
   "game_sessions": [
     {
       "id": 1,
@@ -3188,7 +3141,7 @@
       "id": 10,
       "userId": 3,
       "levelId": 7,
-      "status": "in_progress",
+      "status": "abandoned",
       "isGuest": false,
       "currentScreenId": "s7_1",
       "currentScreenIndex": 0,
@@ -3202,7 +3155,9 @@
       "timeSpent": 0,
       "hintsUsed": 0,
       "startedAt": "2026-03-07T08:20:04.433Z",
-      "lastActivity": "2026-03-07T08:20:04.433Z"
+      "lastActivity": "2026-03-07T08:20:04.433Z",
+      "expiredAt": "2026-03-07T09:59:48.713Z",
+      "expiredReason": "New session started"
     },
     {
       "id": 11,
@@ -3417,7 +3372,7 @@
       "id": 20,
       "userId": 3,
       "levelId": 5,
-      "status": "in_progress",
+      "status": "abandoned",
       "isGuest": false,
       "currentScreenId": "s5_intro",
       "currentScreenIndex": 0,
@@ -3431,7 +3386,187 @@
       "timeSpent": 0,
       "hintsUsed": 0,
       "startedAt": "2026-03-07T08:33:56.094Z",
-      "lastActivity": "2026-03-07T08:33:56.094Z"
+      "lastActivity": "2026-03-07T08:33:56.094Z",
+      "expiredAt": "2026-03-07T09:59:40.578Z",
+      "expiredReason": "New session started"
+    },
+    {
+      "id": 21,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "isGuest": false,
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-03-07T09:38:34.903Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 158,
+      "totalScreens": 4,
+      "completedScreens": [
+        "intro_d1",
+        "intro_d2",
+        "story_video",
+        "intro_q1"
+      ],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-03-07T09:38:21.199Z",
+      "lastActivity": "2026-03-07T09:38:36.018Z",
+      "completedAt": "2026-03-07T09:38:36.047Z"
+    },
+    {
+      "id": 22,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "isGuest": false,
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-03-07T09:40:16.026Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 159,
+      "totalScreens": 4,
+      "completedScreens": [
+        "intro_d1",
+        "intro_d2",
+        "story_video",
+        "intro_q1"
+      ],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-03-07T09:40:09.237Z",
+      "lastActivity": "2026-03-07T09:40:16.771Z",
+      "completedAt": "2026-03-07T09:40:16.835Z"
+    },
+    {
+      "id": 23,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "isGuest": false,
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-03-07T09:59:12.560Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 130,
+      "totalScreens": 4,
+      "completedScreens": [
+        "intro_d1",
+        "intro_d2",
+        "story_video",
+        "intro_q1"
+      ],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-03-07T09:40:26.513Z",
+      "lastActivity": "2026-03-07T09:59:13.270Z",
+      "completedAt": "2026-03-07T09:59:13.317Z"
+    },
+    {
+      "id": 24,
+      "userId": 3,
+      "levelId": 1,
+      "status": "completed",
+      "isGuest": false,
+      "currentScreenId": "intro_q1",
+      "currentScreenIndex": 3,
+      "collectedItems": [],
+      "answeredQuestions": [
+        {
+          "screenId": "intro_q1",
+          "answer": "100 người con",
+          "isCorrect": true,
+          "points": 100,
+          "answeredAt": "2026-03-07T09:59:32.450Z"
+        }
+      ],
+      "timelineOrder": [],
+      "score": 159,
+      "totalScreens": 4,
+      "completedScreens": [
+        "intro_d1",
+        "intro_d2",
+        "story_video",
+        "intro_q1"
+      ],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-03-07T09:59:23.166Z",
+      "lastActivity": "2026-03-07T09:59:33.334Z",
+      "completedAt": "2026-03-07T09:59:33.373Z"
+    },
+    {
+      "id": 25,
+      "userId": 3,
+      "levelId": 5,
+      "status": "in_progress",
+      "isGuest": false,
+      "currentScreenId": "s5_ho",
+      "currentScreenIndex": 1,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 10,
+      "totalScreens": 3,
+      "completedScreens": [
+        "s5_intro"
+      ],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-03-07T09:59:40.582Z",
+      "lastActivity": "2026-03-07T09:59:41.941Z"
+    },
+    {
+      "id": 26,
+      "userId": 3,
+      "levelId": 7,
+      "status": "in_progress",
+      "isGuest": false,
+      "currentScreenId": "s7_1",
+      "currentScreenIndex": 0,
+      "collectedItems": [],
+      "answeredQuestions": [],
+      "timelineOrder": [],
+      "score": 0,
+      "totalScreens": 2,
+      "completedScreens": [],
+      "screenStates": {},
+      "timeSpent": 0,
+      "hintsUsed": 0,
+      "startedAt": "2026-03-07T09:59:48.717Z",
+      "lastActivity": "2026-03-07T09:59:48.717Z"
     }
   ],
   "learning_modules": [
@@ -3748,40 +3883,6 @@
       "createdBy": 1,
       "status": "published",
       "gameLevelId": 5
-    }
-  ],
-  "user_progress": [
-    {
-      "id": 1,
-      "userId": 3,
-      "completedModules": [],
-      "completedQuests": [],
-      "totalPoints": 800,
-      "level": 5,
-      "badges": [],
-      "achievements": [],
-      "streak": 0,
-      "totalLearningTime": 0,
-      "bookmarkedArtifacts": [],
-      "bookmarkedSites": []
-    },
-    {
-      "id": 1769167111754,
-      "userId": 1,
-      "completedModules": [],
-      "totalPoints": 0,
-      "level": 1,
-      "badges": []
-    },
-    {
-      "id": 1769167111756,
-      "userId": 2,
-      "completedModules": [],
-      "totalPoints": 300,
-      "level": 2,
-      "badges": [
-        "hard_worker"
-      ]
     }
   ],
   "ai_chat_history": [
@@ -4972,6 +5073,50 @@
       "isRead": false,
       "createdAt": "2026-03-07T09:12:27.390Z",
       "updatedAt": "2026-03-07T09:12:27.390Z"
+    },
+    {
+      "id": 68,
+      "userId": 3,
+      "title": "Ôn tập hoàn tất! 📚",
+      "message": "Bạn vừa ôn tập lại màn \"Huyền thoại Rồng Tiên\". Nhận thêm 10 xu và 13 cúp!",
+      "type": "learning",
+      "refId": 1,
+      "isRead": false,
+      "createdAt": "2026-03-07T09:59:13.344Z",
+      "updatedAt": "2026-03-07T09:59:13.344Z"
+    },
+    {
+      "id": 69,
+      "userId": 3,
+      "title": "Chương hoàn tất! 🌸",
+      "message": "Tuyệt vời! Bạn đã hoàn thành toàn bộ chương \"Hào Khí Lạc Hồng\"!",
+      "type": "learning",
+      "refId": 1,
+      "isRead": false,
+      "createdAt": "2026-03-07T09:59:13.360Z",
+      "updatedAt": "2026-03-07T09:59:13.360Z"
+    },
+    {
+      "id": 70,
+      "userId": 3,
+      "title": "Ôn tập hoàn tất! 📚",
+      "message": "Bạn vừa ôn tập lại màn \"Huyền thoại Rồng Tiên\". Nhận thêm 0 xu và 0 cúp!",
+      "type": "learning",
+      "refId": 1,
+      "isRead": false,
+      "createdAt": "2026-03-07T09:59:33.399Z",
+      "updatedAt": "2026-03-07T09:59:33.399Z"
+    },
+    {
+      "id": 71,
+      "userId": 3,
+      "title": "Chương hoàn tất! 🌸",
+      "message": "Tuyệt vời! Bạn đã hoàn thành toàn bộ chương \"Hào Khí Lạc Hồng\"!",
+      "type": "learning",
+      "refId": 1,
+      "isRead": false,
+      "createdAt": "2026-03-07T09:59:33.421Z",
+      "updatedAt": "2026-03-07T09:59:33.421Z"
     }
   ],
   "vouchers": [
