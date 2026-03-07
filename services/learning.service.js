@@ -33,13 +33,15 @@ class LearningService extends ReviewableService {
       let totalPoints = 0;
       let earnedPoints = 0;
 
-      moduleItem.quiz.questions.forEach(q => {
+      moduleItem.quiz.questions.forEach((q, idx) => {
         const questionPoint = q.point || 10;
         totalPoints += questionPoint;
 
+        const qKey = q.id !== undefined ? q.id : idx;
+
         // Check if answer is correct
         // Note: answers keys might be strings in JSON
-        if (answers[q.id] !== undefined && parseInt(answers[q.id]) === q.correctAnswer) {
+        if (answers[qKey] !== undefined && parseInt(answers[qKey]) === q.correctAnswer) {
           earnedPoints += questionPoint;
         }
       });
@@ -72,16 +74,23 @@ class LearningService extends ReviewableService {
 
     const passingScore = moduleItem.quiz?.passingScore || 70;
 
-    // Points logic:
-    // - 50 points for first time completion (if passed or no quiz)
-    // - 0 points for re-completion (even if score improved, to prevent farming)
+    // Points & Coins logic:
+    // Configurable via moduleItem: rewardPoints, rewardCoins, reviewRewardPoints, reviewRewardCoins
     let points = 0;
-    if (!isAlreadyCompleted && finalScore >= passingScore) {
-      points = 50;
+    let coins = 0;
+    if (finalScore >= passingScore) {
+      if (!isAlreadyCompleted) {
+        points = moduleItem.rewardPoints !== undefined ? moduleItem.rewardPoints : 50;
+        coins = moduleItem.rewardCoins !== undefined ? moduleItem.rewardCoins : 0;
+      } else {
+        points = moduleItem.reviewRewardPoints !== undefined ? moduleItem.reviewRewardPoints : 10;
+        coins = moduleItem.reviewRewardCoins !== undefined ? moduleItem.reviewRewardCoins : 0;
+      }
     }
 
     // Level calculation: Every 200 points = 1 level
     const newTotalPoints = (gameProgress.totalPoints || 0) + points;
+    const newTotalCoins = (gameProgress.totalCoins || 0) + coins;
     const newLevel = Math.floor(newTotalPoints / 200) + 1;
 
     // Badge logic
@@ -95,10 +104,29 @@ class LearningService extends ReviewableService {
       newBadges.push('perfect_score'); // Badge: Điểm Tuyệt Đối
     }
 
+    // Deduplicate and update score
+    let newCompletedModules = [...(gameProgress.completedModules || [])];
+    if (isAlreadyCompleted) {
+      const existingEntries = newCompletedModules.filter(m => parseInt(m.moduleId) === moduleIdInt);
+      const maxExistingScore = Math.max(...existingEntries.map(m => m.score || 0));
+      const bestScore = Math.max(maxExistingScore, finalScore);
+
+      newCompletedModules = newCompletedModules.filter(m => parseInt(m.moduleId) !== moduleIdInt);
+      newCompletedModules.push({
+        moduleId: moduleIdInt,
+        completedDate: new Date().toISOString(),
+        score: bestScore,
+        timeSpent: 0
+      });
+    } else {
+      newCompletedModules.push(completedModule);
+    }
+
     // Update Progress
     await db.update('game_progress', gameProgress.id, {
-      completedModules: [...(gameProgress.completedModules || []), completedModule],
+      completedModules: newCompletedModules,
       totalPoints: newTotalPoints,
+      totalCoins: newTotalCoins,
       level: Math.max(gameProgress.level, newLevel),
       badges: newBadges
     });
@@ -142,6 +170,7 @@ class LearningService extends ReviewableService {
         moduleTitle: moduleItem.title,
         score: finalScore,
         pointsEarned: points,
+        coinsEarned: coins,
         passed: finalScore >= passingScore,
         currentLevel: Math.max(gameProgress.level, newLevel),
         isLevelUp: newLevel > gameProgress.level,
@@ -166,7 +195,10 @@ class LearningService extends ReviewableService {
     const completedModuleIds = [...new Set(rawCompletedIds.filter(id => allModuleIds.includes(id)))];
 
     const path = allModules.map(module => {
-      const completedData = gameProgress?.completedModules?.find(m => m.moduleId === module.id);
+      const allCompletedData = gameProgress?.completedModules?.filter(m => m.moduleId === module.id) || [];
+      const completedData = allCompletedData.length > 0
+        ? allCompletedData.reduce((prev, curr) => ((prev.score || 0) > (curr.score || 0) ? prev : curr))
+        : undefined;
 
       return {
         id: module.id,
@@ -180,6 +212,11 @@ class LearningService extends ReviewableService {
         thumbnail: module.thumbnail,
         isCompleted: completedModuleIds.includes(module.id),
         score: completedData?.score,
+        passingScore: module.quiz?.passingScore || 70,
+        rewardPoints: module.rewardPoints !== undefined ? module.rewardPoints : 50,
+        rewardCoins: module.rewardCoins !== undefined ? module.rewardCoins : 0,
+        reviewRewardPoints: module.reviewRewardPoints !== undefined ? module.reviewRewardPoints : 10,
+        reviewRewardCoins: module.reviewRewardCoins !== undefined ? module.reviewRewardCoins : 0,
         completedAt: completedData?.completedDate
       };
     });
