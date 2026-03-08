@@ -45,7 +45,20 @@ class MongoAdapter {
     };
 
     this.initConnection();
+    this.createCounterModel();
     this.loadSchemasAsModels();
+  }
+
+  createCounterModel() {
+    if (!mongoose.models['counter']) {
+      const counterSchema = new mongoose.Schema({
+        _id: { type: String, required: true },
+        seq: { type: Number, default: 0 }
+      });
+      this.Counter = mongoose.model('counter', counterSchema);
+    } else {
+      this.Counter = mongoose.models['counter'];
+    }
   }
 
   async initConnection() {
@@ -371,15 +384,44 @@ class MongoAdapter {
   }
 
   async getNextId(collection) {
-    const Model = this.getModel(collection);
-    if (!Model) return 1;
+    if (!this.Counter) {
+      this.createCounterModel();
+    }
 
     try {
-      // Find max 'id'
+      // Atomic increment using findOneAndUpdate
+      const counter = await this.Counter.findOneAndUpdate(
+        { _id: collection },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+      );
+
+      // If seq is 1, it means it's a new counter or was reset.
+      // We should check if there's existing data to seeded the counter correctly.
+      if (counter.seq === 1) {
+        const Model = this.getModel(collection);
+        if (Model) {
+          const lastItem = await Model.findOne().sort({ id: -1 }).select('id').lean();
+          if (lastItem && lastItem.id >= 1) {
+            // Seed the counter with the max ID found
+            const seededCounter = await this.Counter.findOneAndUpdate(
+              { _id: collection },
+              { $set: { seq: lastItem.id + 1 } },
+              { new: true }
+            );
+            return seededCounter.seq;
+          }
+        }
+      }
+
+      return counter.seq;
+    } catch (error) {
+      console.error(`❌ Error generating next ID for ${collection}:`, error);
+      // Fallback to max + 1 logic if counter fails
+      const Model = this.getModel(collection);
+      if (!Model) return 1;
       const lastItem = await Model.findOne().sort({ id: -1 }).select('id').lean();
       return lastItem ? lastItem.id + 1 : 1;
-    } catch (error) {
-      return 1;
     }
   }
 
