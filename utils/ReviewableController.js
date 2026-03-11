@@ -10,6 +10,17 @@ class ReviewableController extends BaseController {
   }
 
   /**
+   * [OVERRIDE] Check ownership - Allow researchers to view any published content
+   */
+  checkOwnership(item, req) {
+    if (req.user && req.user.role === 'researcher') {
+      // Allow viewing ANY published content (Game play mode)
+      if (item.status === 'published') return true;
+    }
+    return super.checkOwnership(item, req);
+  }
+
+  /**
    * Submit item for review
    */
   submitReview = async (req, res, next) => {

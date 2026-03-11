@@ -66,7 +66,6 @@ class JsonAdapter {
       // Learning
       learning_modules: [],
       game_quests: [],
-      user_progress: []
     };
   }
 

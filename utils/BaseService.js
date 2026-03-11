@@ -263,7 +263,7 @@ class BaseService {
 
     switch (rule.type) {
       case "number":
-        return Number(value);
+        return value === "" ? null : Number(value);
       case "boolean":
         const boolStr = String(value).toLowerCase();
         return ["true", "1", "yes"].includes(boolStr);

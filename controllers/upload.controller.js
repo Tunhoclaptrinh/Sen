@@ -87,7 +87,7 @@ class UploadController {
       const { categoryId } = req.params;
 
       // Check category exists
-      const category = await db.findById('categories', categoryId);
+      const category = await db.findById('cultural_categories', categoryId);
       if (!category) {
         return res.status(404).json({
           success: false,
@@ -105,7 +105,7 @@ class UploadController {
       }
 
       // Update category image in database
-      const updatedCategory = await db.update('categories', categoryId, {
+      const updatedCategory = await db.update('cultural_categories', categoryId, {
         image: result.url,
         updatedAt: new Date().toISOString()
       });

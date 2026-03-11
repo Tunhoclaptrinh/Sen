@@ -202,7 +202,7 @@ class QuestService extends BaseService {
     await notificationService.notify(
       userId,
       'Nhận phần thưởng nhiệm vụ',
-      `Bạn đã nhận được phần thưởng từ nhiệm vụ "${quest.title}": ${quest.rewards.petals || 0} Cánh Sen, ${quest.rewards.coins || 0} Xu và ${quest.rewards.experience || 0} kinh nghiệm.`,
+      `Bạn đã nhận được phần thưởng từ nhiệm vụ "${quest.title}": ${quest.rewards.petals || 0} Cánh Sen, ${quest.rewards.coins || 0} Xu và ${quest.rewards.experience || 0} cúp.`,
       'quest',
       questId
     );

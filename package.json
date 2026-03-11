@@ -10,7 +10,10 @@
     "query": "node tools/run-query.js",
     "fix-sequences": "node tools/fix-sequences.js",
     "test-ai": "node tools/test-ai.js",
-    "migrate": "node scripts/migrate_camelcase.js"
+    "migrate-mongo": "node scripts/migrate_to_mongo.js",
+    "cleanup-user": "node scripts/cleanup_user_data.js",
+    "cleanup-orphans": "node scripts/cleanup_orphan_data.js",
+    "reset-game": "node scripts/reset_game.js"
   },
   "keywords": [
     "cultural-heritage",
