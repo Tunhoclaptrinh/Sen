@@ -151,7 +151,7 @@ class MongoAdapter {
         }
 
         if (!mongoose.models[entityName]) {
-          const schema = new mongoose.Schema(mongooseFields, {
+          const schemaOptions = {
             timestamps: true,
             strict: false, // Allow extra fields not in schema to be read/written
             toJSON: {
@@ -163,8 +163,16 @@ class MongoAdapter {
               }
             },
             toObject: { virtuals: true },
-            id: false // Disable Mongoose's default virtual 'id' since we have a real one
-          });
+            id: false, // Disable Mongoose's default virtual 'id' since we have a real one
+            suppressReservedKeysWarning: true
+          };
+
+          // Override Mongoose pluralization if a specific collection name is provided
+          if (schemaDef.collection) {
+            schemaOptions.collection = schemaDef.collection;
+          }
+
+          const schema = new mongoose.Schema(mongooseFields, schemaOptions);
 
           // Setup Virtuals for populate
           const rels = this.relations[entityName];

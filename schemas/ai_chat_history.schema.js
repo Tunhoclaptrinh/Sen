@@ -1,4 +1,5 @@
 module.exports = {
+  collection: 'ai_chat_history',
   userId: {
     type: 'number',
     required: true,

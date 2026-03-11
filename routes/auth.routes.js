@@ -12,6 +12,13 @@ router.post('/register',
   authController.register
 );
 
+// Google Form Register Webhook
+router.post('/google-form-register',
+  validateFields('user', ['email']),
+  authController.registerFromWebhook
+);
+
+
 // Login - custom validate email + password
 router.post('/login',
   validateFields('user', ['email', 'password']),
