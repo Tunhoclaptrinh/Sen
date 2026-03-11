@@ -1,0 +1,24 @@
+{
+    "user_hint_attempts": [
+        {
+            "id": 1,
+            "userId": 3,
+            "levelId": 1,
+            "questionId": "intro_q1",
+            "hintLevel": 0,
+            "userQuestion": "Bao nhiêu người con?",
+            "aiResponse": "Hãy nhớ lại truyền thuyết bọc trăm trứng nhé! 🥚",
+            "createdAt": "2026-02-13T08:45:00Z"
+        },
+        {
+            "id": 2,
+            "userId": 3,
+            "levelId": 1,
+            "questionId": "intro_q1",
+            "hintLevel": 1,
+            "userQuestion": "Vẫn chưa hiểu",
+            "aiResponse": "Từ 'trăm' trong câu chuyện có ý nghĩa gì nhỉ? 🤔",
+            "createdAt": "2026-02-13T08:46:30Z"
+        }
+    ]
+}
