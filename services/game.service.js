@@ -88,30 +88,43 @@ class GameService {
       const now = Date.now();
       const allSessions = await db.findAll('game_sessions');
 
+      const GUEST_TIMEOUT = 2 * 60 * 60 * 1000; // 2 hours for guests
+      const HARD_DELETE_RETENTION = 30 * 24 * 60 * 60 * 1000; // 30 days retention for all session history
+
       let expiredCount = 0;
+      let deletedCount = 0;
 
       for (const session of allSessions) {
-        // Chỉ cleanup sessions đang in_progress
-        if (session.status !== 'in_progress') continue;
-
         const startTime = new Date(session.startedAt).getTime();
         const lastActivity = session.lastActivity
           ? new Date(session.lastActivity).getTime()
           : startTime;
 
-        // Check theo lastActivity (quan trọng hơn startedAt)
-        if (now - lastActivity > timeout) {
-          await db.update('game_sessions', session.id, {
-            status: 'expired',
-            expiredAt: new Date().toISOString(),
-            expiredReason: 'Session timeout (24 hours inactive)'
-          });
-          expiredCount++;
+        // 1. HARD DELETE OLD DATA (Older than 30 days, or guest older than 2 hours)
+        const isVeryOld = now - lastActivity > HARD_DELETE_RETENTION;
+        const isGuestOld = session.isGuest && (now - lastActivity > GUEST_TIMEOUT);
+
+        if (isVeryOld || isGuestOld) {
+          await db.delete('game_sessions', session.id);
+          deletedCount++;
+          continue;
+        }
+
+        // 2. MARK AS EXPIRED (For in_progress sessions that reached timeout)
+        if (session.status === 'in_progress') {
+          if (now - lastActivity > timeout) {
+            await db.update('game_sessions', session.id, {
+              status: 'expired',
+              expiredAt: new Date().toISOString(),
+              expiredReason: 'Session timeout'
+            });
+            expiredCount++;
+          }
         }
       }
 
-      if (expiredCount > 0) {
-        console.log(`🧹 Cleaned up ${expiredCount} expired sessions`);
+      if (expiredCount > 0 || deletedCount > 0) {
+        console.log(`🧹 Session cleanup: Marked ${expiredCount} expired, Deleted ${deletedCount} old/guest sessions`);
       }
     } catch (error) {
       console.error('❌ Session cleanup error:', error);
@@ -124,7 +137,7 @@ class GameService {
   async getActiveSession(levelId, userId) {
     const session = await db.findOne('game_sessions', {
       levelId: levelId,
-      userId: userId,
+      userId: userId || null,
       status: 'in_progress'
     });
 
@@ -263,7 +276,7 @@ class GameService {
    * Nhận thưởng hàng ngày
    */
   async getDailyReward(userId) {
-    const progress = await db.findOne('game_progress', { userId: userId });
+    const progress = await db.findOne('game_progress', { userId: userId || null });
     if (!progress) {
       return { success: false, message: 'User progress not found', statusCode: 404 };
     }
@@ -305,7 +318,7 @@ class GameService {
 
     // Create transaction record
     await db.create('transactions', {
-      userId: userId,
+      userId: userId || null,
       amount: coinsReward,
       currency: 'coins',
       type: 'credit',
@@ -315,7 +328,7 @@ class GameService {
     });
 
     await db.create('transactions', {
-      userId: userId,
+      userId: userId || null,
       amount: petalsReward,
       currency: 'petals',
       type: 'credit',
@@ -652,7 +665,7 @@ class GameService {
   async getBestScore(levelId, userId) {
     const sessions = await db.findMany('game_sessions', {
       levelId: levelId,
-      userId: userId,
+      userId: userId || null,
       status: 'completed'
     });
 
@@ -678,7 +691,7 @@ class GameService {
 
     const playCountData = await db.findMany('game_sessions', {
       levelId: level.id,
-      userId: userId
+      userId: userId || null
     });
 
     return {
@@ -706,7 +719,7 @@ class GameService {
     // Close ALL existing in_progress sessions for this level/user (not just expired ones)
     const existingSessions = await db.findMany('game_sessions', {
       levelId: levelId,
-      userId: userId,
+      userId: userId || null,
       status: 'in_progress'
     });
 
@@ -729,7 +742,7 @@ class GameService {
 
     // For guests, skip permission/progress checks
     if (!isGuest) {
-      const progress = await db.findOne('game_progress', { userId: userId });
+      const progress = await db.findOne('game_progress', { userId: userId || null });
       const chapterLevels = await db.findMany('game_levels', { chapterId: level.chapterId });
 
       if (!this.canPlayLevel(level, progress, chapterLevels)) {
@@ -748,7 +761,7 @@ class GameService {
     }
 
     const session = await db.create('game_sessions', {
-      userId: userId,
+      userId: userId || null,
       levelId: levelId,
       status: 'in_progress',
       isGuest: isGuest,  // Mark as guest session
@@ -829,78 +842,74 @@ class GameService {
     const updatedSession = await db.update('game_sessions', session.id, {
       collectedItems: [...session.collectedItems, clueId],
       score: session.score + (item.points || 10),
-      lastActivity: new Date().toISOString() // UPDATE LAST ACTIVITY
+      lastActivity: new Date().toISOString()
     });
 
-    // Calculate required items from screen.items or level.clues
-    const allItems = currentScreen.items || level.clues || [];
-    const requiredItems = currentScreen.requiredItems || allItems.length;
-    const allCollected = updatedSession.collectedItems.length >= requiredItems;
-
-    // TRIGGER QUEST UPDATE
-    try {
-      const questService = require('./quest.service');
-      await questService.checkAndAdvance(userId, 'collect_artifact', 1);
-    } catch (e) {
-      console.error('Quest trigger failed', e);
-    }
-
-    // TRIGGER MUSEUM ARTIFACT UNLOCK
-    if (item.artifactId) {
+    if (userId) {
+      // TRIGGER QUEST UPDATE
       try {
-        const existingScan = await db.findOne('scan_history', {
-          userId: userId,
-          objectId: item.artifactId
-        });
+        const questService = require('./quest.service');
+        await questService.checkAndAdvance(userId, 'collect_artifact', 1);
+      } catch (e) {
+        console.error('Quest trigger failed', e);
+      }
 
-        if (!existingScan) {
-          await db.create('scan_history', {
-            userId: userId,
-            objectId: item.artifactId,
-            type: 'collect_artifact',
-            scannedAt: new Date().toISOString(),
-            scanCode: 'HO_REWARD_' + item.id
+      // TRIGGER MUSEUM ARTIFACT UNLOCK
+      if (item.artifactId) {
+        try {
+          const existingScan = await db.findOne('scan_history', {
+            userId: userId || null,
+            objectId: item.artifactId
           });
-          console.log(`[GameService] Added artifact ${item.artifactId} to museum for user ${userId}`);
 
-          // TRIGGER NOTIFICATION
-          try {
-            await notificationService.notify(
-              userId,
-              'Tìm thấy hiện vật mới! 🏺',
-              `Bạn vừa tìm thấy "${item.name}"! Hiện vật này đã được thêm vào bảo tàng của bạn.`,
-              'artifact',
-              item.artifactId
-            );
-          } catch (e) {
-            console.error('Notification failed', e);
+          if (!existingScan) {
+            await db.create('scan_history', {
+              userId: userId || null,
+              objectId: item.artifactId,
+              type: 'collect_artifact',
+              scannedAt: new Date().toISOString(),
+              scanCode: 'HO_REWARD_' + item.id
+            });
+            console.log(`[GameService] Added artifact ${item.artifactId} to museum for user ${userId}`);
+
+            // TRIGGER NOTIFICATION
+            try {
+              await notificationService.notify(
+                userId,
+                'Tìm thấy hiện vật mới! 🏺',
+                `Bạn vừa tìm thấy "${item.name}"! Hiện vật này đã được thêm vào bảo tàng của bạn.`,
+                'artifact',
+                item.artifactId
+              );
+            } catch (e) {
+              console.error('Notification failed', e);
+            }
           }
+        } catch (e) {
+          console.error('Museum artifact unlock failed', e);
+        }
+      }
+
+      // TRIGGER BADGE CHECK (Artifacts Scanned)
+      try {
+        const scanHistory = await db.findMany('scan_history', { userId: userId || null });
+        const badgeResult = await badgeService.checkAndUnlock(userId, 'artifacts_scanned', scanHistory.length);
+        newBadges = badgeResult;
+      } catch (e) {
+        console.error('Badge check failed', e);
+      }
+
+      // TRIGGER BADGE CHECK (Clues Collected)
+      try {
+        const allSessions = await db.findMany('game_sessions', { userId: userId || null });
+        const totalClues = allSessions.reduce((sum, s) => sum + (s.collectedItems || []).length, 0);
+        const cluesBadge = await badgeService.checkAndUnlock(userId, 'clues_collected', totalClues);
+        if (cluesBadge && cluesBadge.length > 0) {
+          newBadges = [...newBadges, ...cluesBadge];
         }
       } catch (e) {
-        console.error('Museum artifact unlock failed', e);
+        console.error('Clues badge check failed', e);
       }
-    }
-
-    // TRIGGER BADGE CHECK (Artifacts Scanned)
-    let newBadges = [];
-    try {
-      const scanHistory = await db.findMany('scan_history', { userId: userId });
-      const badgeResult = await badgeService.checkAndUnlock(userId, 'artifacts_scanned', scanHistory.length);
-      newBadges = badgeResult;
-    } catch (e) {
-      console.error('Badge check failed', e);
-    }
-
-    // TRIGGER BADGE CHECK (Clues Collected)
-    try {
-      const allSessions = await db.findMany('game_sessions', { userId: userId });
-      const totalClues = allSessions.reduce((sum, s) => sum + (s.collectedItems || []).length, 0);
-      const cluesBadge = await badgeService.checkAndUnlock(userId, 'clues_collected', totalClues);
-      if (cluesBadge && cluesBadge.length > 0) {
-        newBadges = [...newBadges, ...cluesBadge];
-      }
-    } catch (e) {
-      console.error('Clues badge check failed', e);
     }
 
     return {
@@ -938,7 +947,7 @@ class GameService {
     try {
       const session = await db.findOne('game_sessions', {
         id: parseInt(sessionId),
-        userId: userId,
+        userId: userId || null,
         status: 'in_progress'
       });
 
@@ -1038,20 +1047,16 @@ class GameService {
 
       // TRIGGER BADGE CHECK (Quizzes Completed - Approximate as correct answers)
       let newBadges = [];
-      if (isCorrect) {
+      if (isCorrect && userId) {
         try {
-          const allSessions = await db.findMany('game_sessions', { userId: userId });
+          const allSessions = await db.findMany('game_sessions', { userId: userId || null });
           let correctCount = 0;
           allSessions.forEach(s => {
             if (s.answeredQuestions) {
               correctCount += s.answeredQuestions.filter(q => q.isCorrect).length;
             }
           });
-          // Add current one if not yet saved/reflected (it is saved above)
-          // Actually it is saved in updatedSession, but we iterate all sessions.
-          // Simplified: just query DB.
           const badgeResult = await badgeService.checkAndUnlock(userId, 'perfect_quiz', correctCount);
-          // Reuse 'perfect_quiz' for 'Correct Answers' count condition for now.
           newBadges = badgeResult;
         } catch (e) { console.error('Badge check failed', e); }
       }
@@ -1083,7 +1088,7 @@ class GameService {
     try {
       const session = await db.findOne('game_sessions', {
         id: parseInt(sessionId),
-        userId: userId,
+        userId: userId || null,
         status: 'in_progress'
       });
 
@@ -1205,7 +1210,7 @@ class GameService {
     try {
       const session = await db.findOne('game_sessions', {
         id: parseInt(sessionId),
-        userId: userId,
+        userId: userId || null,
         status: 'in_progress'
       });
 
@@ -1437,7 +1442,7 @@ class GameService {
     try {
       const session = await db.findOne('game_sessions', {
         levelId: levelId,
-        userId: userId,
+        userId: userId || null,
         status: 'in_progress'
       });
 
@@ -1506,7 +1511,7 @@ class GameService {
       }
 
       // ✅ For authenticated users, continue with progress updates
-      const progress = await db.findOne('game_progress', { userId: userId });
+      const progress = await db.findOne('game_progress', { userId: userId || null });
       let nextLevelId = null;
       try {
         const allLevels = await db.findAll('game_levels');

@@ -39,7 +39,7 @@ const requireAuth = (req, res, next) => {
   next();
 };
 
-router.get('/progress', requireAuth, gameController.getProgress);
+router.get('/progress', gameController.getProgress);
 router.post('/leaderboard/reset', requireAuth, checkPermission('game_content', 'update'), gameController.resetUserScore);
 router.get('/daily-reward', requireAuth, checkPermission('game_play', 'earn_rewards'), gameController.getDailyReward);
 

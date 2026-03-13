@@ -1,9 +1,15 @@
 module.exports = {
     userId: {
         type: 'number',
-        required: true,
+        required: false,
         foreignKey: 'users',
-        description: 'User ID'
+        description: 'User ID (Optional for guests)'
+    },
+    isGuest: {
+        type: 'boolean',
+        required: false,
+        default: false,
+        description: 'Session của khách (không đăng nhập)'
     },
     levelId: {
         type: 'number',
