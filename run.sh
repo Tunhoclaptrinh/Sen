@@ -20,10 +20,11 @@ show_menu() {
     echo "  [4] Reset Game     (Clear User Progress)"
     echo "  [5] Query Tool     (Query database)"
     echo "  [6] Test AI        (Test AI chatbot)"
-    echo "  [7] Start Prod     (docker compose up -d)"
+    echo "  [7] Start Prod     (docker compose up)"
     echo "  [8] View Logs"
-    echo "  [9] Stop All      (docker compose down)"
-    echo "  [10] Exit"
+    echo "  [9] Stop All       (docker compose down)"
+    echo "  [10] Start Tunnel (Ngrok Webhook via Docker)"
+    echo "  [11] Exit"
     echo ""
 }
 
@@ -41,7 +42,7 @@ run_exec() {
     else
         echo ""
         echo "[Error] Backend Server is NOT running."
-        echo "Please start the server first (Select [2] Dev or [8] Prod)."
+        echo "Please start the server first (Select [2] Dev or [7] Prod)."
         echo ""
         return
     fi
@@ -66,7 +67,7 @@ start_docker() {
     
     # Load .env variables
     if [ -f .env ]; then
-        export $(cat .env | grep -v '^#' | xargs)
+        set -a; source .env; set +a
     fi
     
     echo ""
@@ -75,14 +76,14 @@ start_docker() {
     case $profile in
         build)
             echo "[Docker] Building development images..."
-            docker compose -f $DOCKER_DEV --profile dev build
+            docker compose --env-file .env -f $DOCKER_DEV --profile dev build
             echo ""
             echo "[Docker] Building production images..."
-            docker compose -f $DOCKER_PROD build
+            docker compose --env-file .env -f $DOCKER_PROD build
             echo "[OK] All images built successfully"
             ;;
         dev)
-            docker compose -f $DOCKER_DEV --profile dev up
+            docker compose --env-file .env -f $DOCKER_DEV --profile dev up
             ;;
         seed)
             run_exec "npm run seed" "Full Database Seeding" "true"
@@ -97,9 +98,7 @@ start_docker() {
             run_exec "npm run test-ai" "AI Chatbot Test" "false"
             ;;
         prod)
-            docker compose -f $DOCKER_PROD up -d
-            echo ""
-            echo "[OK] Production server running at http://localhost:3000"
+            docker compose --env-file .env -f $DOCKER_PROD up
             ;;
         logs)
             CONTAINERS=$(docker ps --filter "name=sen-backend" --format "{{.Names}}" 2>/dev/null)
@@ -111,9 +110,25 @@ start_docker() {
             fi
             ;;
         down)
-            docker compose -f $DOCKER_DEV --profile dev down 2>/dev/null
-            docker compose -f $DOCKER_PROD down 2>/dev/null
+            docker compose --env-file .env -f $DOCKER_DEV --profile dev down 2>/dev/null
+            docker compose --env-file .env -f $DOCKER_PROD down 2>/dev/null
             echo "[OK] All containers stopped"
+            ;;
+        ngrok)
+            if [ -z "$NGROK_AUTHTOKEN" ]; then
+                echo "[Error] NGROK_AUTHTOKEN chưa được cấu hình!"
+                echo "1. Vào web: https://dashboard.ngrok.com/get-started/your-authtoken"
+                echo "2. Copy cái mã Token (ví dụ: 2bX...abcd)"
+                echo "3. Mở file Backend/.env và thêm dòng: NGROK_AUTHTOKEN=mã_của_bạn"
+                echo "4. Chạy lại tính năng Tunnel này"
+                echo "---------------------------------------------------"
+                return
+            fi
+            
+            echo "[Info] Khởi động Ngrok Tunnel cho cổng 3000..."
+            echo "[Lưu ý] Hãy copy đường link HTTPS màu xanh lá cây để dán vào Webhook!"
+            echo "---------------------------------------------------"
+            docker run --net host -it --rm -e NGROK_AUTHTOKEN=$NGROK_AUTHTOKEN ngrok/ngrok http 3000
             ;;
     esac
 }
@@ -121,7 +136,7 @@ start_docker() {
 # CLI Argument Handler
 if [ $# -gt 0 ]; then
     case $1 in
-        build|dev|prod|logs|down) start_docker $1; exit 0 ;;
+        build|dev|prod|logs|down|ngrok) start_docker $1; exit 0 ;;
         seed) start_docker "seed"; exit 0 ;;
         reset) start_docker "reset"; exit 0 ;;
         query) start_docker "query"; exit 0 ;;
@@ -152,11 +167,12 @@ while true; do
         7) start_docker "prod"; break ;;
         8) start_docker "logs" ;;
         9) start_docker "down" ;;
-        10) echo "Goodbye!"; exit 0 ;;
+        10) start_docker "ngrok" ;;
+        11) echo "Goodbye!"; exit 0 ;;
         *) echo "[Error] Invalid choice!"; sleep 1 ;;
     esac
     
-    if [ "$choice" != "10" ]; then
+    if [ "$choice" != "11" ]; then
         echo ""
         read -p "Press Enter to continue..."
     fi
