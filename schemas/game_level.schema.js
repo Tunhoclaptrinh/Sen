@@ -185,6 +185,11 @@ module.exports = {
     required: false,
     description: 'Thumbnail cho level'
   },
+  backgroundImage: {
+    type: 'string',
+    required: false,
+    description: 'Ảnh nền cho level (alias cho thumbnail)'
+  },
 
   backgroundMusic: {
     type: 'string',

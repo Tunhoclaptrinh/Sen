@@ -1,15 +1,14 @@
 module.exports = {
   type: {
     type: 'enum',
-    enum: ['heritage_site', 'artifact'],
+    enum: ['heritage_site', 'artifact', 'exhibition', 'history_article'],
     required: true,
     description: 'Loại đánh giá'
   },
-  heritageSiteId: {
+  referenceId: {
     type: 'number',
     required: true,
-    foreignKey: 'heritage_sites',
-    description: 'Di sản'
+    description: 'ID của mục được đánh giá'
   },
   rating: {
     type: 'number',

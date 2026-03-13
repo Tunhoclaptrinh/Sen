@@ -115,7 +115,7 @@ class JsonAdapter {
     const keyMap = {
       heritage_sites: {
         artifacts: 'heritageSiteId',
-        reviews: 'heritageSiteId',
+        reviews: 'referenceId',
         timelines: 'heritageSiteId',
         exhibitions: 'heritageSiteId'
       },
