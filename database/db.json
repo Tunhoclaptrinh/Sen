@@ -1029,6 +1029,7 @@
       "chapterId": 1,
       "name": "Huyền thoại Rồng Tiên",
       "description": "Câu chuyện về cội nguồn dân tộc Việt Nam qua truyền thuyết Lạc Long Quân và Âu Cơ.",
+      "knowledgeBase": "Trong màn chơi này, Sen cần nhấn mạnh rằng Lạc Long Quân là con của Kinh Dương Vương và Long Nữ. Âu Cơ là con của Đế Lai. Bọc trăm trứng nở ra 100 người con trai khôi ngô tuấn tú. Đây là thông tin bí mật: Mật mã của level này là SEN2026.",
       "type": "story",
       "difficulty": "easy",
       "order": 1,

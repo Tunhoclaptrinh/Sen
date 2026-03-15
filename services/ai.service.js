@@ -92,12 +92,15 @@ class AIService {
       const character = await this.getCharacterContext(context, userId);
 
       // 2. LẤY LỊCH SỬ CHO REFLECTION
-      const history = await this._getFormattedHistory(
+      let history = await this._getFormattedHistory(
         userId,
         context.characterId
       );
 
-      // 3. GỌI SANG PYTHON FASTAPI (Render có thể cold start, cần timeout 60s)
+      // 3. INJECT GAME CONTEXT (LEVEL/CHAPTER/KNOWLEDGE BASE)
+      history = await this._injectLevelContext(history, context);
+
+      // 4. GỌI SANG PYTHON FASTAPI (Render có thể cold start, cần timeout 60s)
       const response = await axios.post(
         PYTHON_SERVICE_URL.trim(),
         {
@@ -185,10 +188,13 @@ class AIService {
       const character = await this.getCharacterContext(context, userId);
 
       // 2. LẤY LỊCH SỬ
-      const history = await this._getFormattedHistory(
+      let history = await this._getFormattedHistory(
         userId,
         context.characterId
       );
+
+      // 2.5 INJECT GAME CONTEXT
+      history = await this._injectLevelContext(history, context);
 
       // 3. CHUẨN BỊ FORM DATA
       const form = new FormData();
@@ -350,6 +356,37 @@ class AIService {
       return formatted;
     } catch (error) {
       return [];
+    }
+  }
+
+  /**
+   * Inject Level/Chapter/KnowledgeBase context into history system message
+   */
+  async _injectLevelContext(history, context) {
+    if (!context || !context.levelId) return history;
+
+    try {
+      const level = await db.findById("game_levels", context.levelId);
+      if (!level) return history;
+
+      const chapter = await db.findById("game_chapters", level.chapterId);
+      
+      let contextContent = `📍 CONTEXT:
+- Level: "${level.name}"
+- Chapter: "${chapter ? chapter.name : 'N/A'}"`;
+
+      if (level.knowledgeBase) {
+        contextContent += `\n- KIẾN THỨC RIÊNG: ${level.knowledgeBase}`;
+      }
+
+      // Prepend as a system message
+      return [
+        { role: "system", content: contextContent },
+        ...history
+      ];
+    } catch (error) {
+      console.error("Error injecting level context:", error);
+      return history;
     }
   }
 

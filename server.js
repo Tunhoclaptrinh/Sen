@@ -5,8 +5,8 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5,
+  windowMs: 1 * 60 * 1000, // 15 minutes
+  max: 100,
   message: 'Too many login attempts, please try again later'
 });
 
